@@ -41,6 +41,7 @@ nav:
   Categories:
     - '/'
     # - { Categories All: '/blog/categories/' }
+    - { java: '/blog/categories/#java'}
     - { 알고리즘 문제풀이: '/blog/categories/#알고리즘-문제풀이' }
     - { etc: '/blog/categories/#etc' }
     # - { Tags: '/blog/tags/' }
