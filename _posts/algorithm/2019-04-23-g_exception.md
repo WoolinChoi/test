@@ -1,7 +1,7 @@
 ---
 layout: post
 title: exception
-category: git
+category: javabasic
 tags: [java, exception]
 comments: false
 ---
