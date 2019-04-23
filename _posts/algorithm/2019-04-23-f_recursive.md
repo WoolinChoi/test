@@ -2,7 +2,7 @@
 layout: post
 title: recursive
 category: git
-tags: [java][recursive][ASumTest][Factorial][Fibonacci]
+tags: [java, recursive, ASumTest, Factorial, Fibonacci]
 comments: false
 ---
 

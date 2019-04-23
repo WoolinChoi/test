@@ -2,7 +2,7 @@
 layout: post
 title: exception
 category: git
-tags: [java][exception]
+tags: [java, exception]
 comments: false
 ---
 
