@@ -67,63 +67,53 @@ public class Fibonacci {
 }
 ~~~
 
-## 문제
-[문제1] f(4)를 호출한다면?
+## [문제1]
+f(4)를 호출한다면?
 ~~~java
 public static void f ( int N ) {
     System.out.println(N);
     if( N > 0 ) f ( N-1);
 }
-~~~
-[풀이]
-~~~shell
-4 f(3)
-4 3 f(2)
-4 3 2 f(1)
-4 3 2 1
-~~~
-[답]
-~~~shell
-4 3 2 1
-~~~
+/*
+ * 4 f(3)
+ * 4 3 f(2) f(1)
+ * 4 3 2 1
+ *
+ * 4 3 2 1
+ */
+ ~~~
 
-## 문제
-[문제2] g(4)를 호출한다면?
+## [문제2]
+g(4)를 호출한다면?
 ~~~java
 public static void g ( int N) {
     if( N > 0 ) g( N-1);
     System.out.println(N);
 }
-~~~
-[풀이]
-~~~shell
-g(3) 4
-g(2) 3 4
-g(1) 2 3 4
-g(0) 1 2 3 4
-0 1 2 3 4
-~~~
-[답]
-~~~shell
-0 1 2 3 4
+/*
+ * g(3) 4
+ * g(2) 3 4
+ * g(1) 2 3 4
+ * g(0) 1 2 3 4
+ * 0 1 2 3 4
+ * 
+ * 0 1 2 3 4
+ */
 ~~~
 
- ## 문제
- [문제3] h(4)를 호출한다면?
- ~~~java
+## [문제3] 
+h(4)를 호출한다면?
+~~~java
 public static void h ( int N ) {
     System.out.println(N);
     if( N > 0 ) h ( N -2 );
     System.out.println(N);
 }
-~~~
-[풀이]
-~~~shell
-4 h(2) (4)
-4 2 h(0) (2) (4)
-4 2 0 0 2 4
-~~~
-[답]
-~~~shell
-4 2 0 0 2 4
+/*
+ * 4 h(2) (4)
+ * 4 2 h(0) (2) (4)
+ * 4 2 0 0 2 4
+ *
+ * 4 2 0 0 2 4
+ */
 ~~~

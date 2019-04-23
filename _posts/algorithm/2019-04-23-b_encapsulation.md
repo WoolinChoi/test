@@ -72,7 +72,7 @@ public class Student {
 }
 ~~~
 
-## 문제
+## [문제1]
 ![문제1](/assets/post-img/java/00.png)
 [calculatorExpr]
 ~~~java

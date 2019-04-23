@@ -148,21 +148,22 @@ public class Ex04_throw {
 // 5 6 7 13 14 15 16 17 18 19 20 8 9 10 11
 ~~~
 
-## 문제
+## [문제1]
+다음 문장들 중에서 올바른 메소드 정의는?
 ~~~java
-[문제1] 다음 문장들 중에서 올바른 메소드 정의는?
 (1) void method () throw MyException {throws MyException(); }
 (2) void method () throw MyException {throws new MyException(); }
 (3) void method () throws MyException {throw MyException(); }
 (4) void method () throws MyException {throw new MyException(); }
 
-[답]
-4
+/*
+ * 4
+ */
 ~~~
 
-## 문제
+## [문제2]
+다음 프로그램의 출력결과는?
 ~~~java
-[문제2] 다음 프로그램의 출력결과는?
 class Test{
     static void method() {
         throw new Exception();
@@ -179,14 +180,14 @@ class Test{
 (2) “예외처리”가출력된다
 (3) 실행은 성공하나 아무것도 출력되지 않는다.
 (4) 실행시 예외가 발생하여 프로그램이 비정상적으로 종료한다.
-
-[답]
-1
+/*
+ * 1
+ */
 ~~~
 
-## 문제
+## [문제3]
+다음 프로그램의 출력결과는?
 ~~~java
-[문제3] 다음 프로그램의 출력결과는?
 class Test{
     public static void main( String [] args ) { 
         try{
@@ -200,14 +201,14 @@ class Test{
 (2) 컴파일 에러는 없으나 실행시 예외가 발생한다.
 (3) 실행은 성공하나 아무것도 출력되지 않는다.
 (4) “FINALLY”라는 문장이 출력된다.
-
-[답]
-4
+/*
+ * 4
+ */
 ~~~
 
-## 문제
+## [문제4]
+다음 프로그램의출력 결과는?
 ~~~java
-[문제4] 다음 프로그램의출력 결과는?
 class Test{
     public static void main( String [] args ) { 
         try{
@@ -221,14 +222,14 @@ class Test{
 (2) 컴파일 에러는 없으나 실행시 예외가 발생한다.
 (3) 실행은 성공하나 아무것도 출력되지 않는다.
 (4) “FINALLY”라는 문장이 출력된다.
-
-[답]
-3
+/*
+ * 3
+ */
 ~~~
 
-## 문제
+## [문제5]
+다음 프로그램에서 출력 결과로 “try”라는 단어가 몇 번 출력되나?
 ~~~java
-[문제5] 다음 프로그램에서 출력 결과로 “try”라는 단어가 몇 번 출력되나?
 class Test{
     static void method( int i ) throws Exception {
         if ( i % 2 == 0 ) throw new Exception();
@@ -244,14 +245,13 @@ class Test{
         }
     }
 }
-
-[답]
-2
+/*
+ * 2
+ */
 ~~~
-
-## 문제
+## [문제6]
+다음 프로그램의출력 결과는?
 ~~~java
-[문제6] 다음 프로그램의출력 결과는?
 import java.io.IOException;
 class Test{
     static void method() throws IOException {
@@ -276,14 +276,14 @@ class Test{
 (3) IOEXCEPTION – FINALLY – END
 (4) EXCEPTION – FINALLY – END
 (5) TRY – IOEXCEPTION – END
-
-[답]
-3
+/*
+ * 3
+ */
 ~~~
 
-## 문제
+## [문제7]
+다음 프로그램의출력 결과는?
 ~~~java
-[문제7] 다음 프로그램의출력 결과는?
 import java.io.IOException;
 class Test{
     static void method() throws IOException {
@@ -308,14 +308,14 @@ class Test{
 (3) IOEXCEPTION – FINALLY – END
 (4) EXCEPTION – FINALLY – END
 (5) TRY – IOEXCEPTION – END
-
-[답]
-1
+/*
+ * 1
+ */
 ~~~
 
-## 문제
+## [문제8]
+다음 프로그램의출력 결과는?
 ~~~java
-[문제8] 다음 프로그램의출력 결과는?
 class Test{
     static String str = “”;
     static void method( int i ){
@@ -336,7 +336,7 @@ class Test{
         System.out.println(str);
     }
 }
-
-[답]
-A C D B C
+/*
+ * A C D B C
+ */
 ~~~
