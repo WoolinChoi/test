@@ -155,7 +155,6 @@ public class Ex04_throw {
 (2) void method () throw MyException {throws new MyException(); }
 (3) void method () throws MyException {throw MyException(); }
 (4) void method () throws MyException {throw new MyException(); }
-
 /*
  * 4
  */
@@ -197,13 +196,15 @@ class Test{
         }
     }
 }
+/*
+ * 4
+ */
+~~~
+~~~shell
 (1) 컴파일 에러가 발생한다
 (2) 컴파일 에러는 없으나 실행시 예외가 발생한다.
 (3) 실행은 성공하나 아무것도 출력되지 않는다.
 (4) “FINALLY”라는 문장이 출력된다.
-/*
- * 4
- */
 ~~~
 
 ## [문제4]
@@ -218,13 +219,15 @@ class Test{
         }
     }
 }
+/*
+ * 3
+ */
+~~~
+~~~shell
 (1) 컴파일 에러가 발생한다
 (2) 컴파일 에러는 없으나 실행시 예외가 발생한다.
 (3) 실행은 성공하나 아무것도 출력되지 않는다.
 (4) “FINALLY”라는 문장이 출력된다.
-/*
- * 3
- */
 ~~~
 
 ## [문제5]
@@ -249,6 +252,7 @@ class Test{
  * 2
  */
 ~~~
+
 ## [문제6]
 다음 프로그램의출력 결과는?
 ~~~java
@@ -271,14 +275,16 @@ class Test{
         System.out.println(“END”);
     }
 }
+/*
+ * 3
+ */
+~~~
+~~~shell
 (1) 컴파일 에러
 (2) 실행시 예외발생으로 프로그램 비정상 종료
 (3) IOEXCEPTION – FINALLY – END
 (4) EXCEPTION – FINALLY – END
 (5) TRY – IOEXCEPTION – END
-/*
- * 3
- */
 ~~~
 
 ## [문제7]
@@ -303,15 +309,15 @@ class Test{
         System.out.println(“END”);
     }
 }
+/*
+ * 1
+ */
+~~~
 (1) 컴파일 에러
 (2) 실행시 예외발생으로 프로그램 비정상 종료
 (3) IOEXCEPTION – FINALLY – END
 (4) EXCEPTION – FINALLY – END
 (5) TRY – IOEXCEPTION – END
-/*
- * 1
- */
-~~~
 
 ## [문제8]
 다음 프로그램의출력 결과는?
