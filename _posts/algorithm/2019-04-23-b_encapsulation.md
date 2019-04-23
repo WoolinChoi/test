@@ -1,8 +1,8 @@
 ---
 layout: post
 title: encapsulation
-category: OOP
-tags: [java, OOP, encapsulation]
+category: oop
+tags: [java, oop, encapsulation]
 comments: false
 ---
 
