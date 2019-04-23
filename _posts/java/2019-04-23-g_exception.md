@@ -313,11 +313,13 @@ class Test{
  * 1
  */
 ~~~
+~~~shell
 (1) 컴파일 에러
 (2) 실행시 예외발생으로 프로그램 비정상 종료
 (3) IOEXCEPTION – FINALLY – END
 (4) EXCEPTION – FINALLY – END
 (5) TRY – IOEXCEPTION – END
+~~~
 
 ## [문제8]
 다음 프로그램의출력 결과는?
