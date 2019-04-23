@@ -8,6 +8,14 @@ comments: false
 
 # [operator]()
 
+## 오늘의 목표
+~~~shell
+1. 연산자
+
+JVM : 자바를 구동하는 가상머신
+자바는 서버와 운영체제로부터 종속적이지 않습니다.
+~~~
+
 ## IncDec
 ~~~java
 /*
@@ -53,10 +61,5 @@ public class Ex02_Not {
 			System.out.println(~a); // 음수, +(0)에서 이진논리로 인해서 -(1)이 된다.
 	}
 }
-
-~~~
-
-##
-~~~java
 
 ~~~
