@@ -17,8 +17,8 @@ public class Main {
 		s.setKor(100);
 		s.setEng(88);
 		s.setMath(77);
+		System.out.println("이름: " + s.getName());
 		System.out.println("총합: " + s.calTotal());
-		// s.total = 300;
 		System.out.println("평균: " + s.calAverage());
 	}
 }
@@ -28,8 +28,8 @@ public class Main {
 ~~~java
 /*
  *  캡슐화: 권한관련부여
- *  1. 멤버변수 - private
- *  2. 멤버메소드 - public
+ *  1. 멤버변수 - private(다른클래스에서 접근 허용 안함)
+ *  2. 멤버메소드 - public(모든 접근 허용)
  */
 public class Student {
 	private String name;				// 멤버변수
@@ -72,9 +72,8 @@ public class Student {
 }
 ~~~
 
-## [문제1]
+## [복습]
 ![문제1](/assets/post-img/java/00.png)
-[calculatorExpr]
 ~~~java
 public class CalculatorExpr {
 	private int num1;
@@ -100,9 +99,6 @@ public class CalculatorExpr {
 		return division;
 	}
 	// setter/getter
-	public int getAddition() {
-		return addition;
-	}
 	public int getNum1() {
 		return num1;
 	}
@@ -114,6 +110,9 @@ public class CalculatorExpr {
 	}
 	public void setNum2(int num2) {
 		this.num2 = num2;
+	}
+	public int getAddition() {
+		return addition;
 	}
 	public void setAddition(int addition) {
 		this.addition = addition;
@@ -138,8 +137,6 @@ public class CalculatorExpr {
 	}
 }
 ~~~
-
-[CalculatorTest]
 ~~~java
 import java.util.Scanner;
 public class CalculatorTest {
