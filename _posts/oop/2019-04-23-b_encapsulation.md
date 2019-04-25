@@ -72,8 +72,10 @@ public class Student {
 }
 ~~~
 
-## [복습]
-![문제1](/assets/post-img/java/00.png)
+## 연습
+[연습]()
+
+[CalculatorExpr]
 ~~~java
 public class CalculatorExpr {
 	private int num1;
@@ -137,6 +139,8 @@ public class CalculatorExpr {
 	}
 }
 ~~~
+
+[CalculatorTest]
 ~~~java
 import java.util.Scanner;
 public class CalculatorTest {
@@ -145,25 +149,25 @@ public class CalculatorTest {
 		output(arrex[0], arrex[1], false);
 		char ch = 'y';
 		while(true) {
-			System.out.println("다시하시겠습니까? y|n");
+			System.out.println("다시하시겠습니까?(y|n)");
 			Scanner input2 = new Scanner(System.in);
 			ch = input2.next().charAt(0);
 			if(ch == 'n') {
-				System.out.println("종료되었습니다.");
+				System.out.println("종료되었습니다");
 				break;
 			}else if(ch == 'y') {
 				int[] arr = inputEx();
 				output(arr[0], arr[1], true);
 			}else {
-				System.out.println("잘못입력하였습니다.");
+				System.out.println("잘못입력하였습니다");
 			}
 		}
 	}
 	static int[] inputEx() {
 		Scanner input = new Scanner(System.in);
-		System.out.println("첫번째 숫자를 입력해주세요.");
+		System.out.println("첫번째 숫자를 입력해주세요");
 		int num1 = input.nextInt();
-		System.out.println("두번째 숫자를 입력해주세요.");
+		System.out.println("두번째 숫자를 입력해주세요");
 		int num2 = input.nextInt();
 		int[] arr = {num1, num2};
 		return arr;

@@ -73,7 +73,7 @@ public class Ex03_Arithmetic {
 		// 1. 숫자하나를 입력받기(Scanner - import java.util.*)
 		// 2. 홀수인지 짝수인지 연산하여 출력(% : 나머지 연산자)
 		Scanner input = new Scanner(System.in);
-		System.out.println("숫자 하나 입력=>");
+		System.out.println("숫자 하나 입력->");
 		int su = input.nextInt();
 		if( su % 2 == 0) {
 			System.out.println("짝수");
@@ -127,7 +127,7 @@ public class Ex05_GenneralLogical {
 		// (1) 대문자인지 출력
 		// (2) 대문자인지 소문자인지 그외인지 출력
 		Scanner input = new Scanner(System.in);
-		System.out.print("문자 하나 입력=>");
+		System.out.print("문자 하나 입력->");
 		char ch = input.next().charAt(0); // 기본형만 casting 된다.
 //		if(Character.isUpperCase(ch) == true) {
 //			System.out.println("대문자입니다.");
@@ -248,13 +248,13 @@ public class Ex09_Samhang {
 //		System.out.println("큰수: " + max);	
 //		[삼항연산자] 세 정수가 A, B, C가 주어진다. 이 때, 두번째로 큰 정수를 출력하는 프로그램을 작성하시오.
 		Scanner input = new Scanner(System.in);
-		System.out.println("세 정수를 입력하시오.");
+		System.out.println("세 정수를 입력하시오");
 		int a = input.nextInt();
 		int b = input.nextInt();
 		int c = input.nextInt();
 		int second = ((a >= b && b >= c && a >= c) || (c >= b && b >= a && c >= a))? 
 				b : ((b >= a && a >= c && b >= c) || (c >= b && b >= a && c >= a))? a : c;
-		System.out.println("두번째 큰수:" + second);
+		System.out.println("두번째 큰수: " + second);
 	}
 }
 ~~~
