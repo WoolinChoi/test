@@ -15,7 +15,6 @@ comments: false
 2. final - 변경불가
 
 3. interface - 구조(틀)
-
 // interface는 100% 추상, 표준화시키기위해서
 interface B{
     inte B;    // public static final
