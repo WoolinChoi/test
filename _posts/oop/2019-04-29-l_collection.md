@@ -64,7 +64,6 @@ public class ArrayListEx2 {
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}
-		
 	}
 	static ArrayList<Student> method() {
 		ArrayList<Student> list = new ArrayList<Student>();
@@ -182,6 +181,34 @@ public class HashMapEx {
 				System.out.println("존재하지 않는 아이디입니다");
 				continue;
 			}
+		}
+	}
+}
+~~~
+
+## StackQueueEx
+~~~java
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+public class StackQueueEx {
+	public static void main(String[] args) {
+		// Stack - LIFO(Last In First Out)
+		Stack stack = new Stack();
+		stack.push("A");
+		stack.push("B");
+		stack.push("C");
+		while(!stack.isEmpty()) {
+			System.out.println(stack.pop());
+		}
+//		System.out.println(stack.pop()); // 데이타가 없어 예외 발생
+		// Queue - FIFO(First In First Out)
+		Queue queue = new LinkedList();
+		queue.offer("가");
+		queue.offer("나");
+		queue.offer("다");
+		while(!queue.isEmpty()) {
+			System.out.println(queue.poll());
 		}
 	}
 }
