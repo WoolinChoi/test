@@ -1,8 +1,8 @@
 ---
 layout: post
 title: ioDataStream
-category: basicClass
-tags: [java, basicClass, ioDataStream]
+category: class
+tags: [java, class, ioDataStream]
 comments: false
 ---
 

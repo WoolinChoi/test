@@ -1,12 +1,12 @@
 ---
 layout: post
 title: ioByteStream
-category: basicClass
-tags: [java, basicClass, ioByteStream]
+category: class
+tags: [java, class, ioByteStream]
 comments: false
 ---
 
-# [sample]()
+# [ioByteStream]()
 
 ## 오늘의 학습
 ~~~shell

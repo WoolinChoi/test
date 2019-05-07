@@ -1,12 +1,12 @@
 ---
 layout: post
-title: ioOReaderWriter
-category: basicClass
-tags: [java, basicClass, ioOReaderWriter]
+title: ioReaderWriter
+category: class
+tags: [java, class, ioReaderWriter]
 comments: false
 ---
 
-# [ioOReaderWriter]()
+# [ioReaderWriter]()
 
 ## ReaderWriterTest
 ~~~java
