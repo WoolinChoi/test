@@ -1,7 +1,7 @@
 ---
 layout: post
 title: operator
-category: javabasic
+category: java
 tags: [java, operator]
 comments: false
 ---

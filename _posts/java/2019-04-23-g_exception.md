@@ -1,7 +1,7 @@
 ---
 layout: post
 title: exception
-category: javabasic
+category: java
 tags: [java, exception]
 comments: false
 ---

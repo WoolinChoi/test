@@ -41,10 +41,13 @@ nav:
   Categories:
     - '/'
     # - { Categories All: '/blog/categories/' }
-    - { javabasic: '/blog/categories/#javabasic' }
+    - { java: '/blog/categories/#java' }
     - { oop: '/blog/categories/#oop' }
+    - { gui: '/blog/categories/#gui' }
+    - { class: '/blog/categories/#class' }
+    - { oracle: '/blog/categories/#oracle' }
+    - { project: '/blog/categories/#project' }
     - { git: '/blog/categories/#git' }
-    - { etc: '/blog/categories/#etc' }
     # - { Tags: '/blog/tags/' }
   About:
     - '/about/'

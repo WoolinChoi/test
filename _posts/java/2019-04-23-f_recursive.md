@@ -1,7 +1,7 @@
 ---
 layout: post
 title: recursive
-category: javabasic
+category: java
 tags: [java, recursive, ASumTest, Factorial, Fibonacci]
 comments: false
 ---

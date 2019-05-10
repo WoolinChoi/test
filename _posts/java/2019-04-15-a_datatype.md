@@ -1,7 +1,7 @@
 ---
 layout: post
 title: datatype
-category: javabasic
+category: java
 tags: [java, datatype]
 comments: false
 ---
