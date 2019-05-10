@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ioReaderWriter
-category: git
+category: class
 tags: [java, class, ioReaderWriter]
 comments: false
 ---

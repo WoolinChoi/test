@@ -1,7 +1,7 @@
 ---
 layout: post
 title: infoEventTest
-category: git
+category: gui
 tags: [java, gui, infoEventTest]
 comments: false
 ---

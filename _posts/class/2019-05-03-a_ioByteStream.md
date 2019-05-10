@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ioByteStream
-category: git
+category: class
 tags: [java, class, ioByteStream]
 comments: false
 ---

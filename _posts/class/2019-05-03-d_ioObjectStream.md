@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ioObjectStream
-category: git
+category: class
 tags: [java, class, ioObjectStream]
 comments: false
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ioOthers
-category: git
+category: class
 tags: [java, class, ioOthers]
 comments: false
 ---
