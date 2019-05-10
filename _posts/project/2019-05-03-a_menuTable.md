@@ -1,7 +1,7 @@
 ---
 layout: post
 title: menuTable
-category: project
+category: git
 tags: [java, project, menuTable]
 comments: false
 ---

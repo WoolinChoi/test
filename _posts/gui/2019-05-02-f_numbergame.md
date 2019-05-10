@@ -1,7 +1,7 @@
 ---
 layout: post
 title: numbergame
-category: gui
+category: git
 tags: [java, gui, numbergame]
 comments: false
 ---

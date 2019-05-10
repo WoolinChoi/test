@@ -1,7 +1,7 @@
 ---
 layout: post
 title: comboBox
-category: gui
+category: git
 tags: [java, gui, comboBox]
 comments: false
 ---
