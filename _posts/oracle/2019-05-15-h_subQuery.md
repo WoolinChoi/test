@@ -8,7 +8,7 @@ comments: false
 
 # [subQuery]()
 
-## subQuery
+## SubQuery
 ~~~sql
 -- 1. 연도별로 입사자들의 최소급여, 최대 급여, 급여의 총합 그리고 평균 급여를 구하시오
 SELECT to_char(hire_date, 'YYYY') year, min(salary) minsal, max(salary) maxsal, sum(salary) sumsal, round(avg(salary)) avgsal 
@@ -89,7 +89,7 @@ SELECT *
 FROM emp e
 WHERE NOT EXISTS (SELECT * FROM emp e2 WHERE e.empno = e2.mgr);
 
--- 부서별 급여통계 테이블 생성
+-- 부서별 급여 통계 테이블 생성
 create table stat_salary(
              stat_date  date not null,      -- 날짜
              dept_no    number,             -- 부서
@@ -141,4 +141,33 @@ SELECT job FROM emp WHERe deptno = 30;
 SELECT e.deptno, e.ename, e.job
 FROM emp_copy e
 WHERE e.deptno = 10 AND e.job IN (SELECT e2.job FROM emp_copy e2 WHERE e2.deptno = 30);
+
+-- [연습]
+-- 1. 업무가 jones와 같거나 월급이 ford의 월급 이상인 사원의 정보를 이름, 업무, 부서번호, 급여를 출력(단, 업무별, 월급이 많은 순으로)
+SELECT deptno, ename, job, sal
+FROM emp 
+WHERE job = (SELECT job FROM emp WHERE ename = 'JONES') OR sal >= (SELECT sal FROM emp WHERE ename = 'FORD')
+ORDER BY job ASC, sal DESC;
+
+-- 2. scott 또는 ward와 월급이 같은 사원의 정보를 이름, 업무, 급여를 출력
+SELECT ename, job, sal
+FROM emp
+WHERE sal = ANY (SELECT sal FROM emp WHERE ename IN ('SCOTT', 'WARD'));
+
+-- 3. chicago에서 근무하는 사원과 같은 업무를 하는 사원의 이름, 업무를 출력
+SELECT ename, job
+FROM emp
+WHERE job IN (SELECT DISTINCT e.job FROM emp e INNER JOIN dept d ON e.deptno = d.deptno WHERE loc = 'CHICAGO')
+ORDER BY job;
+
+-- 4. 부서별로 월급이 평균 월급보다 높은 사원을 부서번호, 이름, 급여를 출력
+SELECT e.deptno, e.ename, e.sal
+FROM emp e INNER JOIN (SELECT deptno, round(avg(sal)) avg FROM emp GROUP BY deptno) e2
+ON e.deptno = e2.deptno
+WHERE e.sal > e2.avg;
+
+-- 5. 말단 사원의 사번, 이름, 업무, 부서번호를 출력
+SELECT empno, ename, job, deptno
+FROM emp
+WHERE hiredate = (SELECT max(hiredate) FROM emp);
 ~~~

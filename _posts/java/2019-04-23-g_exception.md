@@ -95,7 +95,7 @@ public class Ex02_TryCatch2 {
 }
 ~~~
 
-## throws
+## Throws
 ~~~java
 import java.io.FileInputStream;
 public class Ex03_throws {
@@ -123,7 +123,7 @@ public class MyException extends Exception {
 }
 ~~~
 
-## throw
+## Throw
 ~~~java
 public class Ex04_throw {
 	public static void main(String[] args) {

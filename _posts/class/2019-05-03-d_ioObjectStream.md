@@ -127,7 +127,7 @@ class UIForm extends JFrame {
 }
 ~~~
 
-## person implements Serializable
+## Person implements Serializable
 ~~~java
 import java.io.Serializable;
 public class person implements Serializable {

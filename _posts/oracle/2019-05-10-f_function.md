@@ -8,7 +8,7 @@ comments: false
 
 # [function]()
 
-## function
+## Function
 ~~~sql
 -- [숫자형 함수]
 -- 사원명, 급여, 월급(급여/12)를 출력하되 월급은 십단위에서 반올림하여 출력
