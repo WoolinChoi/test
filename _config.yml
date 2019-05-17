@@ -46,6 +46,7 @@ nav:
     - { gui: '/blog/categories/#gui' }
     - { class: '/blog/categories/#class' }
     - { oracle: '/blog/categories/#oracle' }
+    - { jdbc: '/blog/categories/#jdbc' }
     - { project: '/blog/categories/#project' }
     - { git: '/blog/categories/#git' }
     # - { Tags: '/blog/tags/' }
