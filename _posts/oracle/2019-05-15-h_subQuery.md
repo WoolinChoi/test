@@ -202,7 +202,10 @@ WHERE e.sal > e2.avg;
 SELECT empno, ename, job, deptno
 FROM emp
 WHERE hiredate = (SELECT max(hiredate) FROM emp);
+~~~
 
+## [연습2]
+~~~sql
 -- [연습]
 -- 1. Zlotkey와 동일한 부서에 속한 모든 사원의 이름과 입사일을 표시하는 질의를 작성하십시오.(Zlotkey는 제외하십시오.)
 SELECT last_name "사원", hire_date "입사일"
@@ -210,10 +213,6 @@ FROM employees e
 WHERE (e.department_id IN (SELECT department_id FROM employees WHERE last_name = 'Zlotkey')) AND e.last_name != 'Zlotkey';
 
 -- 2. 급여가 평균 급여보다 많은 모든 사원의 사원 번호와 이름을 표시하는 질의를 작성하고 결과를 급여에 대해 오름차순으로 정렬하십시오.
-SELECT e.employee_id "사원번호", e.first_name || e.last_name "이름", e.salary "급여"
-FROM employees e INNER JOIN (SELECT round(avg(salary)) avg FROM employees) e2
-ON e.salary > e2.avg;
-
 SELECT e.employee_id "사원번호", e.first_name || e.last_name "이름", e.salary "급여"
 FROM employees e INNER JOIN (SELECT avg(salary) avg FROM employees) e2
 ON e.salary > e2.avg
@@ -256,7 +255,7 @@ WHERE e.salary > (SELECT round(avg(salary)) avg FROM employees)
 AND e.department_id IN (SELECT department_id FROM employees WHERE last_name LIKE '%u%');
 ~~~
 
-## [연습2]
+## [연습3]
 ~~~sql
 -- 회원 테이블
 create table ex_member(
