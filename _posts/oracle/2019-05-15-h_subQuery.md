@@ -172,7 +172,7 @@ FROM emp
 WHERE hiredate = (SELECT max(hiredate) FROM emp);
 ~~~
 
-## [연습]
+## 연습
 ~~~sql
 -- [연습]
 -- 1. 업무가 jones와 같거나 월급이 ford의 월급 이상인 사원의 정보를 이름, 업무, 부서번호, 급여를 출력(단, 업무별, 월급이 많은 순으로)
@@ -204,7 +204,7 @@ FROM emp
 WHERE hiredate = (SELECT max(hiredate) FROM emp);
 ~~~
 
-## [연습2]
+## 연습2
 ~~~sql
 -- [연습]
 -- 1. Zlotkey와 동일한 부서에 속한 모든 사원의 이름과 입사일을 표시하는 질의를 작성하십시오.(Zlotkey는 제외하십시오.)
@@ -255,7 +255,7 @@ WHERE e.salary > (SELECT round(avg(salary)) avg FROM employees)
 AND e.department_id IN (SELECT department_id FROM employees WHERE last_name LIKE '%u%');
 ~~~
 
-## [연습3]
+## 연습3
 ~~~sql
 -- 회원 테이블
 create table ex_member(
