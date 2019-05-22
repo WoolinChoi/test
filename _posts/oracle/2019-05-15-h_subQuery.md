@@ -255,7 +255,7 @@ WHERE e.salary > (SELECT round(avg(salary)) avg FROM employees)
 AND e.department_id IN (SELECT department_id FROM employees WHERE last_name LIKE '%u%');
 ~~~
 
-## 연습3
+## 시퀀스(sequence)
 ~~~sql
 -- 회원 테이블
 create table ex_member(
