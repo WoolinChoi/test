@@ -73,8 +73,6 @@ public class Student {
 ~~~
 
 ## 연습
-[연습]()
-
 [CalculatorExpr]
 ~~~java
 public class CalculatorExpr {

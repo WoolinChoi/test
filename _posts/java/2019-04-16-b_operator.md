@@ -8,14 +8,6 @@ comments: false
 
 # [operator]()
 
-## 오늘의 학습
-~~~shell
-1. 연산자
-
-JVM : 자바를 구동하는 가상머신
-자바는 서버와 운영체제로부터 종속적이지 않습니다.
-~~~
-
 ## IncDec
 ~~~java
 /*

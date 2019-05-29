@@ -8,7 +8,7 @@ comments: false
 
 # [menuTable]()
 
-## menuTable
+## MenuTable
 ~~~java
 import java.awt.*;
 import java.awt.event.*;

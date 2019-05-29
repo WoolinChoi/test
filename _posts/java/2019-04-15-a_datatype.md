@@ -8,29 +8,6 @@ comments: false
 
 # [datatype]()
 
-## 오늘의 학습
-~~~shell
-1. JDK 설치
-	- JAVA.HOME
-	- Path에 추가   %JAVA_HOME%\bin
-
-2. IDE -> eclipse
-
-3. 변수 : 값 하나를 메모리에 저장하기 위해 메모리 이름
-    + 
-   데이타 타입
-	(1) 기본형
-		- 논리형 : boolean
-		- 문자형 : char
-		- 정수형 : int / long
-		- 실수형 : double
-
-	(2) 참조형 : 클래스, 배열
-		new 연산자 이용해서 heap에 메모리 할당
-
-	[#] string
-~~~
-
 ## Naming
 ~~~java
 /*

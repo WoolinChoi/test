@@ -8,33 +8,6 @@ comments: false
 
 # [abstract]()
 
-## 오늘의 학습
-~~~java
-1. abstract - 미완성, overriding의 강제성 주려고, overriding은 다형성주려고
-
-2. final - 변경불가
-
-3. interface - 구조(틀)
-// interface는 100% 추상, 표준화시키기위해서
-interface B{
-    inte B;    // public static final
-    void B(); // public abstract
-}
-class BB implements B{
-    void B(){}
-}
-// abstract는 하나가 추상이면 클래스도 추상시켜줘야한다
-class A {
-    int A;
-    A{}{}
-    void A(){}
-    abstract void AA();
-}
-class B extends A{
-    void AA(){}
-}
-~~~
-
 ## Item
 ~~~java
 // 부모클래스
