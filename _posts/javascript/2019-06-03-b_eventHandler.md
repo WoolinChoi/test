@@ -14,7 +14,7 @@ comments: false
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 이벤트 핸들러 연결 </title>
+<title>Called</title>
 <script type="text/javascript">
 /* 	function btn_click(){
 		alert('이벤트방식');
@@ -38,7 +38,7 @@ comments: false
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 이벤트 핸들러 연결 </title>
+<title>Handler</title>
 <script type="text/javascript">
 /* 	window.onload = init;
 	function init(){
@@ -68,7 +68,7 @@ comments: false
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 이벤트 리스너 연결 </title>
+<title>Listener</title>
 <script type="text/javascript">
 /* 	window.onload = function(){
 		var btn = document.getElementById('btn');
@@ -109,7 +109,7 @@ comments: false
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title> 이벤트 </title>
+<title>Test</title>
 </head>
 <body onload="alert('무척이나 반갑습니다')" onunload="alert('가긴어딜가..가지맛!! 돌아와줘!')">
 	<input type="button" value="눌려~~~~" onclick="alert('누르라고 누르긴')"><br><br><br>

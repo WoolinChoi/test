@@ -13,7 +13,7 @@ comments: false
 <!DOCTYPE html>
 <html>
 <head>
-<title> Document 예제 </title>
+<title>DocumentOpen</title>
 <meta charset="UTF-8">
 <style type="text/css">
 </style>
