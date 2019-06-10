@@ -16,7 +16,8 @@ comments: false
 <meta charset="UTF-8">
 <title>Called</title>
 <script type="text/javascript">
-/* 	function btn_click(){
+/* 	
+	function btn_click(){
 		alert('이벤트방식');
 	} 
 */
@@ -40,20 +41,33 @@ comments: false
 <meta charset="UTF-8">
 <title>Handler</title>
 <script type="text/javascript">
-/* 	window.onload = init;
+/*  	
+	window.onload = init;
 	function init(){
 		var btn = document.getElementById('btn');
 		btn.onclick = btn_click;
 		function btn_click(){
 			alert('이벤트방식2');
 		}
-	} 
+	}  
 */
 	window.onload = function(){
 		document.getElementById('btn').onclick = function(){
 			alert('이벤트방식2');
 		}
 	}
+	
+/* 
+ 	// 이벤트 정보를 확인 해준다
+ 	window.onload = init;
+	function init(){
+		var btn = document.getElementById('btn');
+		btn.onclick = btn_click;
+		function btn_click(e){
+			alert('이벤트방식2' + e);
+		}
+	}  
+*/
 </script>
 </head>
 <body>
@@ -70,7 +84,8 @@ comments: false
 <meta charset="UTF-8">
 <title>Listener</title>
 <script type="text/javascript">
-/* 	window.onload = function(){
+/* 	
+	window.onload = function(){
 		var btn = document.getElementById('btn');
 		btn.addEventListener('click', btn_click);
 		function btn_click(){
