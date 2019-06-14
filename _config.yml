@@ -50,6 +50,7 @@ nav:
     - { webfrontend: '/blog/categories/#webfrontend' }
     - { javascript: '/blog/categories/#javascript' }
     - { jquery: '/blog/categories/#jquery' }
+    - { jsp: '/blog/categories/#jsp' }
     - { project: '/blog/categories/#project' }
     - { git: '/blog/categories/#git' }
     # - { Tags: '/blog/tags/' }
