@@ -51,8 +51,9 @@ nav:
     - { javascript: '/blog/categories/#javascript' }
     - { jquery: '/blog/categories/#jquery' }
     - { jsp: '/blog/categories/#jsp' }
+    - { ajax: '/blog/categories/#ajax' }
     - { project: '/blog/categories/#project' }
-    - { git: '/blog/categories/#git' }
+    - { setting: '/blog/categories/#setting' }
     # - { Tags: '/blog/tags/' }
   About:
     - '/about/'
