@@ -85,7 +85,7 @@ comments: false
 
 <!-- <body> -->
 <body>
-	<h2>고객정보 입력 </h2>
+	<h2>고객정보 입력</h2>
 	<form name="inForm" method="post">
 	<table border = 1>
 		<tr>
@@ -110,7 +110,7 @@ comments: false
 	<br>
 	<hr>
 	
-	<h2>고객정보 목록보기 </h2>
+	<h2>고객정보 목록보기</h2>
 	<table border='0' width="510"> 
 		<tr>
 			<td align="right"><input type="button" value="가져오기" onclick="getData()"></td>
