@@ -18,6 +18,7 @@ comments: false
 	<meta charset="UTF-8">
 	<title>Page</title>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			// 네이버 버튼을 눌렸을 때
@@ -73,24 +74,52 @@ comments: false
 			}); // click-end
 			
 			// 날씨 버튼을 눌렀을 때
-			$("#kma").click(function(){
+			$('#kma').click(function(){      
 				$.ajax({
-					type : "POST",
-					url : "./jsp/ProxyKma.jsp",
-					success : function(content){
-// 						alert($("category", data).text());
-						var data = $("data", content);
-// 						alert($(data[0]).html());
-						$("#result").empty();
-						data.each(function(){
-							var hour = $("hour", this).text();
-							var temp = $("temp", this).text();
-							$("#result").append("·" + hour + "시 " + temp + "도" + "<br/>");
-						}); // each-end
-					} // success-end
-				}); // ajax-end	
+					type : 'POST',
+					url : './jsp/ProxyKma.jsp',
+					success : drawBasic 
+				}) // ajax-end
+			   
+				// 구글 차트
+				google.charts.load('current', {packages: ['corechart', 'line']});
+				google.charts.setOnLoadCallback(drawBasic);
+	
+				// success가 됬을 때
+				function drawBasic(content) {
+					var array = new Array();
+					// alert($('category',content).text());
+		            var data = $('data', content)
+		            // alert($(data[0]).html());
+		            $('#result').empty();
+		            for(var i = 0; i < data.length; i++ ) {
+						var hour = $(data[i]).find('hour').html();
+						var temp = $(data[i]).find('temp').html();
+		            	var array_sub = new Array(hour,parseInt(temp));   
+						array.push(array_sub);
+//							$('#result').append(hour+"시"+temp+"도"+'<br/>');   
+					} // for-end 
+				
+					var data = new google.visualization.DataTable();
+					data.addColumn('string', 'hour');
+					data.addColumn('number', 'temp');
+				      
+					data.addRows(array);
+					var options = {'title':'서초구 시간별 온도',
+						'width':1000,
+						'height':400,
+						'hAxis' : {
+							'title': 'Hour'
+						},
+						'vAxis' : {
+							'title' : 'Temp'
+						}
+					};
+					var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+					chart.draw(data, options);
+				} // drawBasic-end
 			}); // click-end
-		});
+		}); // function-end
 	</script>
 </head>
 
@@ -101,6 +130,7 @@ comments: false
 	<button id="daum">다음</button>
 	<button id="kma">날씨</button>
 	<div id="result"></div>
+	<div id="chart_div"></div>
 </body>
 </html>
 ~~~
