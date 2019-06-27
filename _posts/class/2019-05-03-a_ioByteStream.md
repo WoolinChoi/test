@@ -8,30 +8,6 @@ comments: false
 
 # [ioByteStream]()
 
-## 오늘의 학습
-~~~shell
-1. 자바 입출력 - 파일관리
-
-* java IO(Input Output) - 자바입출력
-
-	입출력 - Stream
-		- java.io 패키지
-		
-	1. byte 스트림
-		- InputStream - FileInputStream
-		- OutputStream - FileOutputStream
-
-        + 필터 스트림
-            - DataOutputStream - DataInputStream
-            - ObjectOutputStream - ObjectInputStream(*직렬화필수)
-		
-	2. char 스트림
-		- Reader - FileReader
-		- Writer - FileWriter
-		
-	cf. ReandomAccessFile : 입출력스트림
-~~~
-
 ## InputTestFirst
 ~~~java
 /*
