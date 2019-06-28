@@ -227,7 +227,7 @@ public class InfoEvtTest {
 }
 ~~~
 
-## Person extends Object
+## Person
 ~~~java
 public class Person extends Object {
 	// 변수

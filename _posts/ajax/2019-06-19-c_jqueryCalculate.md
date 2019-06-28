@@ -70,7 +70,7 @@ comments: false
 </html>
 ~~~
 
-## CalcFormJson_Jsp
+## CalcFormJson_jsp
 ~~~jsp
 <%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -138,7 +138,7 @@ comments: false
 </html>
 ~~~
 
-## CalcFormXml_Jsp
+## CalcFormXml_jsp
 ~~~jsp
 <?xml version='1.0' encoding='UTF-8' ?>
 <%@ page language="java" contentType="text/xml; charset=UTF-8"
@@ -206,7 +206,7 @@ comments: false
 </html>
 ~~~
 
-## CalcForm_Jsp
+## CalcForm_jsp
 ~~~jsp
 <%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>

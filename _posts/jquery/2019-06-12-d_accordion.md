@@ -44,7 +44,7 @@ comments: false
 </html>
 ~~~
 
-## Accordion_Js
+## Accordion_js
 ~~~java
 $(function(){
 	$('.accordion').each(function(){
@@ -63,7 +63,7 @@ $(function(){
 });
 ~~~
 
-## Accordion_Css
+## Accordion_css
 ~~~css
 *{
 	margin:0;

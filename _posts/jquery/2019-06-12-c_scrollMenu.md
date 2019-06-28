@@ -113,7 +113,7 @@ comments: false
 </html>
 ~~~
 
-## scrollMenu_Js
+## scrollMenu_js
 ~~~java
 $(function(){
 	$('#navigation>ul>li').hover(function(){
@@ -129,7 +129,7 @@ $(function(){
 });
 ~~~
 
-## Base_Css
+## Base_css
 ~~~css
 body{
 	font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;

@@ -38,7 +38,7 @@ comments: false
 </html>
 ~~~
 
-## AjaxGetCsv_Server
+## AjaxGetCsv_server
 ~~~jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -98,7 +98,7 @@ comments: false
 </html>
 ~~~
 
-## AjaxPostCsv_Server
+## AjaxPostCsv_server
 ~~~jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -153,7 +153,7 @@ comments: false
 </html>
 ~~~
 
-## AjaxPostXml_Server
+## AjaxPostXml_server
 ~~~jsp
 <%@ page language="java" contentType="text/xml; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -209,7 +209,7 @@ comments: false
 </html>
 ~~~
 
-## AjaxPostJson_Server
+## AjaxPostJson_server
 ~~~jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

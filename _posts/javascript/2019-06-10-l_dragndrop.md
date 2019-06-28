@@ -46,7 +46,7 @@ comments: false
 </html>
 ~~~
 
-## events_Js
+## events_js
 ~~~java
 window.onload = function(){
 	// 캔버스에 트리 이미지 삽입
@@ -90,7 +90,7 @@ window.onload = function(){
 }
 ~~~
 
-## events_Js2
+## events_js2
 ~~~java
 window.onload = function(){
 	// 캔버스에 트리 이미지 삽입
@@ -135,7 +135,7 @@ window.onload = function(){
 }
 ~~~
 
-## events_Js3
+## events_js3
 ~~~java
 window.onload = function(){
 	// 캔버스에 트리 이미지 삽입
@@ -179,7 +179,7 @@ window.onload = function(){
 }
 ~~~
 
-## view_Css
+## view_css
 ~~~css
 @charset "utf-8";
 

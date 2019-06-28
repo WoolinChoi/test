@@ -8,7 +8,7 @@ comments: false
 
 # [videoShop]()
 
-## VideoShop extends JFrame
+## VideoShop
 ~~~java
 import java.awt.*;
 import javax.swing.*;
@@ -66,7 +66,7 @@ public class OracleCon {
 }
 ~~~
 
-## CustomerModel implements CustomerDao
+## CustomerModel
 ~~~java
 import java.sql.*;
 import model.dao.CustomerDao;
@@ -180,7 +180,7 @@ public class CustomerModel implements CustomerDao {
 }
 ~~~
 
-## VideoModel implements VideoDao
+## VideoModel
 ~~~java
 import java.sql.*;
 import java.util.ArrayList;
@@ -389,7 +389,7 @@ public class VideoModel implements VideoDao{
 }
 ~~~
 
-## RentModel implements RentDao
+## RentModel
 ~~~java
 import java.sql.*;
 import java.util.ArrayList;
@@ -537,7 +537,7 @@ public class RentModel implements RentDao {
 }
 ~~~
 
-## interface CustomerDao
+## CustomerDao
 ~~~java
 import model.vo.Customer;
 /** 고객관리 JDBC 연결 */
@@ -551,7 +551,7 @@ public interface CustomerDao {
 }
 ~~~
 
-## interface VideoDao
+## VideoDao
 ~~~java
 import java.util.ArrayList;
 import model.vo.Video;
@@ -565,7 +565,7 @@ public interface VideoDao {
 }
 ~~~
 
-## interface RentDao
+## RentDao
 ~~~java
 import java.util.ArrayList;
 public interface RentDao {
@@ -678,7 +678,7 @@ public class Video {
 }
 ~~~
 
-## CustomerView extends JPanel
+## CustomerView
 ~~~java
 import java.awt.*;
 import java.awt.event.*;
@@ -920,7 +920,7 @@ public class CustomerView extends JPanel {
 }		
 ~~~
 
-## VideoView extends JPanel
+## VideoView
 ~~~java
 import java.awt.*;
 import java.awt.event.*;
@@ -1238,7 +1238,7 @@ public class VideoView extends JPanel {
 }
 ~~~
 
-## RentView extends JPanel
+## RentView
 ~~~java
 import java.awt.*;
 import java.awt.event.*;

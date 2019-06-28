@@ -8,7 +8,7 @@ comments: false
 
 # [bookSite]()
 
-## bookSite
+## BookSite
 ~~~html
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
@@ -388,7 +388,7 @@ comments: false
 </html>
 ~~~
 
-## BookSite_Js
+## BookSite_js
 ~~~java
 $(function(){
 	// #######[1] 날짜 출력 ########
