@@ -53,7 +53,8 @@ nav:
     - { jsp: '/blog/categories/#jsp' }
     - { ajax: '/blog/categories/#ajax' }
     - { framework: '/blog/categories/#framework' }
-    - { di: '/blog/categories/#di' }  
+    - { di: '/blog/categories/#di' }
+    - { aop: '/blog/categories/#aop' }   
     - { project: '/blog/categories/#project' }
     - { setting: '/blog/categories/#setting' }
     # - { Tags: '/blog/tags/' }

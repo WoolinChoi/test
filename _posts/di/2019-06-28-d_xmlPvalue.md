@@ -15,8 +15,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class MainApp {
 	public static void main(String[] args) {
-		ApplicationContext context = new 
-				ClassPathXmlApplicationContext("ex1_xml3_pvalue/applicationContext.xml");
+		ApplicationContext context =
+				new ClassPathXmlApplicationContext("ex1_xml3_pvalue/applicationContext.xml");
 		
 		MemberDAO dao = context.getBean("dao1", MemberDAO.class);
 		dao.insert();
