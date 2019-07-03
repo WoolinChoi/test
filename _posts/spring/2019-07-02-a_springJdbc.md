@@ -133,6 +133,7 @@ import board.BoardVO;
 // DAO(Data Access Object)
 @Repository
 public class BoardDAOSpring {
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
@@ -207,8 +208,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import board.BoardService;
 import board.BoardVO;
+
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
+
 	@Autowired
 	private BoardDAOSpring boardDAO;
 
