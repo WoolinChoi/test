@@ -55,7 +55,8 @@ nav:
     - { framework: '/blog/categories/#framework' }
     - { di: '/blog/categories/#di' }
     - { aop: '/blog/categories/#aop' }
-    - { spring: '/blog/categories/#spring' }   
+    - { spring: '/blog/categories/#spring' }
+    - { linux: '/blog/categories/#linux' }   
     - { project: '/blog/categories/#project' }
     - { setting: '/blog/categories/#setting' }
     # - { Tags: '/blog/tags/' }

@@ -187,7 +187,6 @@ window.onload = function(){
 /* 	float : right; */
 }
 
-
 .gifts {
 	float : left;
 	width : 400px;

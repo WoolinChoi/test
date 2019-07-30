@@ -229,7 +229,7 @@ tr.td_mouseover{
 }
 ~~~
 
-## Scroll_Css
+## Scroll_css
 ~~~css
 /* intro 문단에 스크롤 만들기 */
 #intro{
