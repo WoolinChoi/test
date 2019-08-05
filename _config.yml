@@ -56,7 +56,8 @@ nav:
     - { di: '/blog/categories/#di' }
     - { aop: '/blog/categories/#aop' }
     - { spring: '/blog/categories/#spring' }
-    - { linux: '/blog/categories/#linux' }   
+    - { linux: '/blog/categories/#linux' }
+    - { hadoop: '/blog/categories/#hadoop' }   
     - { project: '/blog/categories/#project' }
     - { setting: '/blog/categories/#setting' }
     # - { Tags: '/blog/tags/' }
