@@ -17,6 +17,7 @@ comments: false
 ## 실습
 * WordCount2
     1. sample.WordCount2.java 생성
+
     ~~~java
     package sample;
 
@@ -117,6 +118,7 @@ comments: false
         } // end of main
     } // end of WordCount2
     ~~~
+
     2. WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab1.jar sample.WordCount2 /input/data/wiki/10K.ID.CONTENTS /output/wordcount2
@@ -125,6 +127,7 @@ comments: false
 
 * TopNMain
     1. sample2class.TopNMain 생성
+
     ~~~java
     package sample2class;
 
@@ -280,6 +283,7 @@ comments: false
         } // end of main
     } // end of TopNMain
     ~~~
+
     2. WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab2.jar sample2class.TopNMain /output/wordcount2/part-r-00000 /output/topn1 10
@@ -288,6 +292,7 @@ comments: false
 
 * CountTrigram
     1. sample2class.CountTrigram 생성
+
     ~~~java
     package sample2class;
 
@@ -401,6 +406,7 @@ comments: false
         } // end of main
     } // end of CountTrigram 
     ~~~
+
     2. WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab3.jar sample2class.CountTrigram /input/data/wiki/10K.ID.CONTENS /output/trigram1/part-r-00000
@@ -409,4 +415,298 @@ comments: false
     <br> 5) hdfs dfs -cat /output/trigram1/part-r-00000 | head - 20
     <br> 6) hdfs dfs -cat /output/trigram1/topN/part-r-00000 | head - 20
 
+* DepartureDelayCount
+    1. airline1.depdelayclass.DepartureDelayCount 생성
+
+    ~~~java
+    package airline1.depdelayclass;
+
+    import org.apache.hadoop.conf.Configuration;
+    import org.apache.hadoop.fs.Path;
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Job;
+    import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+    import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+    public class DepartureDelayCount 
+    {	
+        public static void main(String[] args) 	throws Exception 
+        {	
+            if(args.length != 2)
+            { 
+                System.err.println("Usage: DepartureDelayCount <input> <output>");
+                System.exit(2); 
+            } // end of if
+            
+            Configuration conf = new Configuration();		
+            Job job=Job.getInstance(conf, "DepartureDelayCount");
+            
+            // 입력 파일 경로
+            FileInputFormat.addInputPath(job, new Path(args[0]));
+            // 출력 디렉토리 경로
+            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            
+            job.setJarByClass(DepartureDelayCount.class);
+            job.setMapperClass(DepartureDelayCountMapper.class);//지연시간
+            job.setReducerClass(DelayCountReducer.class);
+            
+            // 입력포맷과 출력포맷 지정
+            job.setInputFormatClass(TextInputFormat.class);
+            job.setOutputFormatClass(TextOutputFormat.class);
+            
+            // 입출력 자료형 지정
+            job.setOutputKeyClass(Text.class);
+            job.setOutputValueClass(IntWritable.class);
+            
+            // mapreduce job 실행(끝날때까지 대기)
+            job.waitForCompletion(true);
+        } // end of main
+    } // end of DepartureDelayCount
+    ~~~
+
+    2. airline1.depdelayclass.DepartureDelayCountMapper 생성
+
+    ~~~java
+    package airline1.depdelayclass;
+
+    import org.apache.hadoop.conf.Configuration;
+    import org.apache.hadoop.fs.Path;
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Job;
+    import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+    import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+    public class DepartureDelayCount 
+    {	
+        public static void main(String[] args) 	throws Exception 
+        {	
+            if(args.length != 2)
+            { 
+                System.err.println("Usage: DepartureDelayCount <input> <output>");
+                System.exit(2); 
+            } // end of if
+            
+            Configuration conf=new Configuration();		
+            Job job=Job.getInstance(conf, "DepartureDelayCount");
+            
+            // 입력 파일 경로
+            FileInputFormat.addInputPath(job, new Path(args[0]));
+            // 출력 디렉토리 경로
+            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            
+            job.setJarByClass(DepartureDelayCount.class);
+            job.setMapperClass(DepartureDelayCountMapper.class);//지연시간
+            job.setReducerClass(DelayCountReducer.class);
+            
+            // 입력포맷과 출력포맷 지정
+            job.setInputFormatClass(TextInputFormat.class);
+            job.setOutputFormatClass(TextOutputFormat.class);
+            
+            // 입출력 자료형 지정
+            job.setOutputKeyClass(Text.class);
+            job.setOutputValueClass(IntWritable.class);
+            
+            // mapreduce job 실행(끝날때까지 대기)
+            job.waitForCompletion(true);
+        } // end of main
+    } // end of DepartureDelayCount
+    ~~~
+
+    3. airline1.depdelayclass.DelayCountReducer 생성
+
+    ~~~java
+    package airline1.depdelayclass;
+
+    import java.io.IOException;
+
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Reducer;
+
+    /*
+        Reducer<입력Key, 입력Value, 출력Key, 출력Value)
+        입력 : <1998, 5> 1
+        출력 : <1998, 5> 10 (합산값)
+    */
+    public class DelayCountReducer extends Reducer<Text, IntWritable, Text, IntWritable>
+    {
+        private IntWritable result = new IntWritable();
+        
+        // key, list(value)
+        @Override
+        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException 
+        {
+            // 계산 결과를 합치는 코드
+            int sum = 0;
+            for(IntWritable val : values) {
+                sum += val.get();
+            } // end of for
+            
+            result.set(sum); // java int형 -> hadoop LongWritable형으로 지정
+            context.write(key, result);
+        } // end of reduce
+    } // end of DelayCountReducer
+    ~~~
+
+    4. 자료준비(/home/hadoop/data에 생성)
+    <br> 1) wget http://stat-computing.org/dataexpo/2009/1987.csv.bz2
+    <br> 2) bzip2 -d 1987.csv.bz2
+    <br> 3) sed -e '1d' 1987.csv > 1987_temp.csv
+    <br> 4) mv 1987_temp.csv 1987.csv
+    <br> 5) hdfs dfs -mkdir /input/airline
+    <br> 6) hdfs dfs -put /home/data/1987.csv /input/airline
+    <br> 7) hdfs dfs -ls /input/airline
+
+    5. WinCSP 업로드 후
+    <br> 1) ls /home/hadoop/source
+    <br> 2) yarn jar /home/hadoop/source/lab4.jar airline1.depdelayclass.DepartureDelayCount /input/airline/1987.csv /output/depdelay
+    <br> 3) hdfs dfs -ls /output/depdelay
+    <br> 4) hdfs dfs -cat /output/depdelay/part-r-00000
+
+* ArrdelayCount
+    1. airline2.arrdelayclass.ArrdelayCount 생성
+
+    ~~~java
+    package airline2.arrdelayclass;
+
+    import org.apache.hadoop.conf.Configuration;
+    import org.apache.hadoop.fs.Path;
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Job;
+    import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+    import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+    import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+
+    public class ArrdelayCount 
+    {	
+        public static void main(String[] args) 	throws Exception 
+        {	
+            if(args.length != 2)
+            { 
+                System.err.println("Usage: ArrdelayCount <input> <output>");
+                System.exit(2); 
+            } // end of if
+            
+            Configuration conf = new Configuration();		
+            Job job = Job.getInstance(conf, "ArrdelayCount");
+            
+            // 입력 파일 경로
+            FileInputFormat.addInputPath(job, new Path(args[0]));
+            // 출력 디렉토리 경로
+            FileOutputFormat.setOutputPath(job, new Path(args[1]));
+            
+            job.setJarByClass(ArrdelayCount.class);
+            job.setMapperClass(ArrdelayCountMapper.class);//지연시간
+            job.setReducerClass(ArrdelayCountReducer.class);
+            
+            // 입력포맷과 출력포맷 지정
+            job.setInputFormatClass(TextInputFormat.class);
+            job.setOutputFormatClass(TextOutputFormat.class);
+            
+            // 입출력 자료형 지정
+            job.setOutputKeyClass(Text.class);
+            job.setOutputValueClass(IntWritable.class);
+            
+            // mapreduce job 실행(끝날때까지 대기)
+            job.waitForCompletion(true);
+        } // end of main
+    } // end of ArrdelayCount
+    ~~~
+
+    2. airline2.arrdelayclass.ArrdelayCountMapper 생성
+
+    ~~~java
+    package airline2.arrdelayclass;
+
+    import java.io.IOException;
+
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.LongWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Mapper;
+
+    import airline.common.AirlinePerformanceParser;
+
+    // Mapper<입력Key, 입력Value, 출력Key, 출력Value>
+    public class ArrdelayCountMapper extends Mapper<LongWritable, Text, Text, IntWritable>
+    {
+    /*
+        입력키 : 줄 번호
+        입력값 : airline 한 줄 
+    */
+        private Text outputKey = new Text(); // map 출력키
+        private final static IntWritable outputValue = new IntWritable(1); // map 출력값
+        
+        @Override
+        protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException 
+        {
+            AirlinePerformanceParser parser = new AirlinePerformanceParser(value);
+            outputKey.set(parser.getYear() + "," + parser.getMonth());
+            if(parser.getArriveDelayTime() > 0 )
+            {
+                context.write(outputKey, outputValue);
+    /*
+                출력키 : 1997, 10
+                출력값 : 1
+                몇년도 몇월에 총 몇 번 지연되었다.
+    */
+            } // end of if
+        } // end of map
+    } // end of ArrdelayCountMapper
+    ~~~
+
+    3. airline2.arrdelayclass.ArrdelayCountReducer 생성
+
+    ~~~java
+    package airline2.arrdelayclass;
+
+    import java.io.IOException;
+
+    import org.apache.hadoop.io.IntWritable;
+    import org.apache.hadoop.io.Text;
+    import org.apache.hadoop.mapreduce.Reducer;
+
+    /*
+        Reducer<입력Key, 입력Value, 출력Key, 출력Value)
+        입력 : <1998,5> 1
+        출력 : <1998,5> 10 (합산값)
+    */
+    public class ArrdelayCountReducer extends Reducer<Text, IntWritable, Text, IntWritable>
+    {
+        private IntWritable result = new IntWritable();
+        
+        // key, list(value)
+        @Override
+        protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException 
+        {
+            // 계산 결과를 합치는 코드
+            int sum = 0;
+            for(IntWritable val : values) {
+                sum += val.get();
+            } // end of for
+            
+            result.set(sum); // java int형 -> hadoop LongWritable형으로 지정
+            context.write(key, result);
+        } // end of reduce
+    } // end of ArrdelayCountReducer
+    ~~~
+
+    4. WinCSP 업로드 후
+    <br> 1) ls /home/hadoop/source
+    <br> 2) yarn jar /home/hadoop/source/lab5.jar airline2.arrdelayclass.ArrdelayCount /input/airline/1987.csv /output/arrdelay
+    <br> 3) hdfs dfs -ls /output/arrdelay
+    <br> 4) hdfs dfs -cat /output/arrdelay/part-r-00000
+
 ## 정리
+* MapReduce
+    - 구글에서 대용량 데이터 처리를 분산 병렬 컴퓨팅에서 처리하기 위한 목적으로 제작하여 2004년 발표한 소프트웨어 프레임워크
+* HDFS
+    - 수십 테라바이트 또는 페타바이트 이상의 대용량 파일을 분산된 서버에 저장하고, 그 저장된 데이터를 빠르게 처리할 수 있게 하는 파일시스템
