@@ -16,7 +16,7 @@ comments: false
 
 ## 실습
 * WordCount2
-    1. sample.WordCount2.java 생성
+    - sample.WordCount2.java 생성
 
     ~~~java
     package sample;
@@ -119,14 +119,14 @@ comments: false
     } // end of WordCount2
     ~~~
 
-    2. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab1.jar sample.WordCount2 /input/data/wiki/10K.ID.CONTENTS /output/wordcount2
     <br> 3) hdfs dfs -ls /output/wordcount2
     <br> 4) hdfs dfs -cat /output/wordcount2/part-r-00000
 
 * TopNMain
-    1. sample2class.TopNMain 생성
+    - sample2class.TopNMain 생성
 
     ~~~java
     package sample2class;
@@ -284,14 +284,14 @@ comments: false
     } // end of TopNMain
     ~~~
 
-    2. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab2.jar sample2class.TopNMain /output/wordcount2/part-r-00000 /output/topn1 10
     <br> 3) hdfs dfs -ls /output/topn1
     <br> 4) hdfs dfs -cat /output/topn1/part-r-00000
 
 * CountTrigram
-    1. sample2class.CountTrigram 생성
+    - sample2class.CountTrigram 생성
 
     ~~~java
     package sample2class;
@@ -407,7 +407,7 @@ comments: false
     } // end of CountTrigram 
     ~~~
 
-    2. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab3.jar sample2class.CountTrigram /input/data/wiki/10K.ID.CONTENS /output/trigram1/part-r-00000
     <br> 3) hdfs dfs -ls /output/trigram1
@@ -416,7 +416,7 @@ comments: false
     <br> 6) hdfs dfs -cat /output/trigram1/topN/part-r-00000 | head - 20
 
 * DepartureDelayCount
-    1. airline1.depdelayclass.DepartureDelayCount 생성
+    - airline1.depdelayclass.DepartureDelayCount 생성
 
     ~~~java
     package airline1.depdelayclass;
@@ -467,7 +467,7 @@ comments: false
     } // end of DepartureDelayCount
     ~~~
 
-    2. airline1.depdelayclass.DepartureDelayCountMapper 생성
+    - airline1.depdelayclass.DepartureDelayCountMapper 생성
 
     ~~~java
     package airline1.depdelayclass;
@@ -518,7 +518,7 @@ comments: false
     } // end of DepartureDelayCount
     ~~~
 
-    3. airline1.depdelayclass.DelayCountReducer 생성
+    - airline1.depdelayclass.DelayCountReducer 생성
 
     ~~~java
     package airline1.depdelayclass;
@@ -554,7 +554,7 @@ comments: false
     } // end of DelayCountReducer
     ~~~
 
-    4. 자료준비(/home/hadoop/data에 생성)
+    - 자료준비(/home/hadoop/data에 생성)
     <br> 1) wget http://stat-computing.org/dataexpo/2009/1987.csv.bz2
     <br> 2) bzip2 -d 1987.csv.bz2
     <br> 3) sed -e '1d' 1987.csv > 1987_temp.csv
@@ -563,14 +563,14 @@ comments: false
     <br> 6) hdfs dfs -put /home/data/1987.csv /input/airline
     <br> 7) hdfs dfs -ls /input/airline
 
-    5. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab4.jar airline1.depdelayclass.DepartureDelayCount /input/airline/1987.csv /output/depdelay
     <br> 3) hdfs dfs -ls /output/depdelay
     <br> 4) hdfs dfs -cat /output/depdelay/part-r-00000
 
 * ArrdelayCount
-    1. airline2.arrdelayclass.ArrdelayCount 생성
+    - airline2.arrdelayclass.ArrdelayCount 생성
 
     ~~~java
     package airline2.arrdelayclass;
@@ -621,7 +621,7 @@ comments: false
     } // end of ArrdelayCount
     ~~~
 
-    2. airline2.arrdelayclass.ArrdelayCountMapper 생성
+    - airline2.arrdelayclass.ArrdelayCountMapper 생성
 
     ~~~java
     package airline2.arrdelayclass;
@@ -663,7 +663,7 @@ comments: false
     } // end of ArrdelayCountMapper
     ~~~
 
-    3. airline2.arrdelayclass.ArrdelayCountReducer 생성
+    - airline2.arrdelayclass.ArrdelayCountReducer 생성
 
     ~~~java
     package airline2.arrdelayclass;
@@ -699,7 +699,7 @@ comments: false
     } // end of ArrdelayCountReducer
     ~~~
 
-    4. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab5.jar airline2.arrdelayclass.ArrdelayCount /input/airline/1987.csv /output/arrdelay
     <br> 3) hdfs dfs -ls /output/arrdelay

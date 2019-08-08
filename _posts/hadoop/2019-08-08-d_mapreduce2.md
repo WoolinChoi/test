@@ -15,7 +15,7 @@ comments: false
 
 ## 실습
 * DelayCount
-    1. airline3.genericclass.DelayCount 생성
+    - airline3.genericclass.DelayCount 생성
 
     ~~~java
     package airline3.genericclass;
@@ -85,7 +85,7 @@ comments: false
     } // end of DelayCount
     ~~~
 
-    2. airline3.genericclass.DelayCountMapper 생성
+    - airline3.genericclass.DelayCountMapper 생성
 
     ~~~java
     package airline3.genericclass;
@@ -136,7 +136,7 @@ comments: false
     } // end of DelayCountMapper
     ~~~
 
-    3. airline3.genericclass.DelayCountReducer 생성
+    - airline3.genericclass.DelayCountReducer 생성
 
     ~~~java
     package airline3.genericclass;
@@ -172,7 +172,7 @@ comments: false
     } // end of DelayCountReducer
     ~~~
 
-    4. WinCSP 업로드 후
+    - WinCSP 업로드 후
     <br> 1) ls /home/hadoop/source
     <br> 2) yarn jar /home/hadoop/source/lab6.jar airline3.genericclass.DelayCount -D workType=departure /input/airline/1987.csv /output/delaycount_departure
     <br> 3) hdfs dfs -ls /output/delaycount_departure
@@ -242,6 +242,7 @@ comments: false
     ~~~
 
     <br> 3) flume-ng agent --conf-file $FLUME_HOME/conf/flume-syslog.properties --name agent -Dflume.root.logger=INFO,console
+
     <br> 4) [hadoop@dn02 ~]$ for((i=0;i<10;i++)); do ssh dn01; done
     <br> 5) [hadoop@dn02 ~]$ for((i=0;i<10;i++)); do logout; done
 
