@@ -9,7 +9,7 @@ comments: false
 # [mapreduce]()
 
 ## 학습
-* MapReduce 이해하기
+* MapReduce 개념
 * WordCount2.java 수정 - 자료형 변경
 * jar 파일 생성하여 nn01의 ~/source로 전송
 * yarn으로 실행(입력: 10K.ID.CONTENTS)
