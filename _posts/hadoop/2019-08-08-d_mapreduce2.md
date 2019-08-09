@@ -16,7 +16,6 @@ comments: false
 ## 실습
 * DelayCount
     - airline3.genericclass.DelayCount 생성
-
     ~~~java
     package airline3.genericclass;
 
@@ -86,7 +85,6 @@ comments: false
     ~~~
 
     - airline3.genericclass.DelayCountMapper 생성
-
     ~~~java
     package airline3.genericclass;
 
@@ -137,7 +135,6 @@ comments: false
     ~~~
 
     - airline3.genericclass.DelayCountReducer 생성
-
     ~~~java
     package airline3.genericclass;
 
@@ -244,6 +241,7 @@ comments: false
     <br> 3) flume-ng agent --conf-file $FLUME_HOME/conf/flume-syslog.properties --name agent -Dflume.root.logger=INFO,console
 
     <br> 4) [hadoop@dn02 ~]$ for((i=0;i<10;i++)); do ssh dn01; done
+    
     <br> 5) [hadoop@dn02 ~]$ for((i=0;i<10;i++)); do logout; done
 
 * Bitcoin
@@ -309,24 +307,23 @@ comments: false
     2. WinCSP 업로드 후
     <br> 1) [hadoop@dn02 ~]$ ssh dno1
     <br> 2) [hadoop@dn01 ~]$ ls /home/hadoop/source
-    <br> 3) java -jar /home/hadoop/source/bitcoin.jar temp.MainApp 
+    <br> 3) [hadoop@dn01 ~]$ java -jar /home/hadoop/source/bitcoin.jar temp.MainApp 
 
 * Pig 설치
     1. 노드에서 root 계정에서 설치
     <br> 1) [root@dn01 ~]$ cd /tmp 
     <br> 2) [root@dn01 tmp]$ wget http://apache.tt.co.kr/pig/pig-0.17.0/pig-0.17.0.tar.gz
-    <br> 3) tar zxvf pig-0.17.0.tar.gz
-    <br> 4) mkdir -p /opt/pig/0.17.0
-    <br> 5) ls -l /opt/pig/0.17.0
-    <br> 6) mv pig-0.17.0/* /opt/pig/0.17.0
-    <br> 7) ln -s /opt/pig/0.17.0 /opt/pig/current
-    <br> 8) ls -l /opt/pig 
-    <br> 9) chown -R hadoop:hadoop /opt/pig
-    <br> 10) ls -l /opt/pig
+    <br> 3) [root@dn01 tmp]$ tar zxvf pig-0.17.0.tar.gz
+    <br> 4) [root@dn01 tmp]$ mkdir -p /opt/pig/0.17.0
+    <br> 5) [root@dn01 tmp]$ ls -l /opt/pig/0.17.0
+    <br> 6) [root@dn01 tmp]$ mv pig-0.17.0/* /opt/pig/0.17.0
+    <br> 7) [root@dn01 tmp]$ ln -s /opt/pig/0.17.0 /opt/pig/current
+    <br> 8) [root@dn01 tmp]$ ls -l /opt/pig 
+    <br> 9) [root@dn01 tmp]$ chown -R hadoop:hadoop /opt/pig
+    <br> 10) [root@dn01 tmp]$ ls -l /opt/pig
 
     2. dn01 노드의 hadoop 계정에서 환경변수 설정
-    <br> 1) su - hadoop
-    <br> 2) vi ~/.bash_profile
+    <br> 2) [hadoop@dn01 ~]$ vi ~/.bash_profile
 
     ~~~shell
     #### PIG 0.17.0 ######################
@@ -336,22 +333,22 @@ comments: false
     #### PIG 0.17.0 ######################
     ~~~
 
-    <br> 6) source ~/.bash_profile
+    <br> 6) [hadoop@dn01 ~]$ source ~/.bash_profile
 
     3. Pig 실행
     <br> 1) [hadoop@dn01 ~]$ mkdir pig_data
-    <br> 2) cd pig_data
+    <br> 2) [hadoop@dn01 pig_data]$ cd pig_data
     <br> 3) [hadoop@dn01 pig_data]$ pig -x local
 
     4. pig_data
-    <br> 1) [hadoop@dn01 ~]$ hdfs dfs -mkdir -p /input/pig_data
-    <br> 2) hdfs dfs -ls /input/pig_data
-    <br> 3) hdfs dfs -put ./* /input/pig_data
-    <br> 4) hdfs dfs -ls /input/pig_data
-    <br> 5) pig -x local
-    <br> 6) groceries = load 'file:///home/hadoop/pig_data/data/groceries.csv' using PigStorage(',');
-    <br> 7) dump groceries
+    <br> 1) [hadoop@dn01 pig_data]$ hdfs dfs -mkdir -p /input/pig_data
+    <br> 2) [hadoop@dn01 pig_data]$ hdfs dfs -ls /input/pig_data
+    <br> 3) [hadoop@dn01 pig_data]$ hdfs dfs -put ./* /input/pig_data
+    <br> 4) [hadoop@dn01 pig_data]$ hdfs dfs -ls /input/pig_data
+    <br> 5) [hadoop@dn01 pig_data]$ pig -x local
+    <br> 6) grunt> groceries = load 'file:///home/hadoop/pig_data/data/groceries.csv' using PigStorage(',');
+    <br> 7) grunt> dump groceries
 
 ## 정리
 * 행렬곱
- - 곱셈 결과 나오는 행렬의 크기는 (앞 행렬의 행의 수)×(뒤 행렬의 열의 수)가 됩니다. 즉, 앞 행렬이 m * n 크기이고 뒤 행렬이 n * r 크기인 경우 곱은 m * r 크기의 행렬이 된다.
+    - 곱셈 결과 나오는 행렬의 크기는 (앞 행렬의 행의 수)×(뒤 행렬의 열의 수)가 됩니다. 즉, 앞 행렬이 m * n 크기이고 뒤 행렬이 n * r 크기인 경우 곱은 m * r 크기의 행렬이 된다.
