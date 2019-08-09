@@ -2,7 +2,7 @@
 layout: post
 title: mapreduce
 category: hadoop
-tags: [hadoop]
+tags: [hadoop, mapreduce]
 comments: false
 ---
 

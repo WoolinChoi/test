@@ -2,7 +2,7 @@
 layout: post
 title: mapreduce2
 category: hadoop
-tags: [hadoop]
+tags: [hadoop, mapreduce]
 comments: false
 ---
 
@@ -16,6 +16,7 @@ comments: false
 ## 실습
 * DelayCount
     - airline3.genericclass.DelayCount 생성
+
     ~~~java
     package airline3.genericclass;
 
@@ -85,6 +86,7 @@ comments: false
     ~~~
 
     - airline3.genericclass.DelayCountMapper 생성
+
     ~~~java
     package airline3.genericclass;
 
@@ -135,6 +137,7 @@ comments: false
     ~~~
 
     - airline3.genericclass.DelayCountReducer 생성
+    
     ~~~java
     package airline3.genericclass;
 
