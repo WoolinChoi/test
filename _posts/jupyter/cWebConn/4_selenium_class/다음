@@ -1,0 +1,16 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+# 0. 페이스북 로그인 정보
+myID = '아이디값'
+myPW = '비밀번호값'
+
+driver = webdriver.Chrome('./webdriver/chromedriver.exe')
+driver.implicitly_wait(3)
+
+driver.get('https://logins.daum.net/accounts/signinform.do?url=https%3A%2F%2Fwww.daum.net%2F')
+elem = driver.find_element_by_name('id')
+elem.send_keys(myID)
+elem = driver.find_element_by_name('pw')
+elem.send_keys(myPW)
+elem.send_keys(Keys.RETURN)
