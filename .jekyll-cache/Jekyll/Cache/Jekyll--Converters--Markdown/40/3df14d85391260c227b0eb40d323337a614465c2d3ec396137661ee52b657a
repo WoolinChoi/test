@@ -1,0 +1,98 @@
+I"�<h1 id="ecosystem"><a href="">ecosystem</a></h1>
+
+<h2 id="zeppelin">zeppelin</h2>
+<ul>
+  <li>설치
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# cd /tmp
+2) [root@dn01 tmp]# wget http://apache.mirror.cdnetworks.com/zeppelin/zeppelin-0.8.1/zeppelin-0.8.1-bin-all.tgz 
+3) [root@dn01 tmp]# tar xzvf zeppelin-0.8.1-bin-all.tgz
+4) [root@dn01 tmp]# mkdir -p /opt/zeppelin/0.8.1
+5) [root@dn01 tmp]# mv zeppelin-0.8.1-bin-all/* /opt/zeppelin/0.8.1
+6) [root@dn01 tmp]# ln -s /opt/zeppelin/0.8.1 /opt/zeppelin/current
+7) [root@dn01 tmp]# chown -R hadoop:hadoop /opt/zeppelin/
+8) [root@dn01 tmp]# su - hadoop
+</code></pre></div>    </div>
+  </li>
+  <li>환경변수 설정
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">########### zeppelin 0.8.1 ########</span>
+<span class="nb">export </span><span class="nv">ZEPPELIN_HOME</span><span class="o">=</span>/opt/zeppelin/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$ZEPPELIN_HOME</span>/bin
+<span class="c">########### zeppelin 0.8.1 ########</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</code></pre></div>    </div>
+  </li>
+  <li>zeppelin 환경변수 설정
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~] <span class="nb">cd</span> <span class="nv">$ZEPPELIN_HOME</span>/conf
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf] <span class="nv">$ </span><span class="nb">mv </span>zeppelin-site.xml.template zeppelin-site.xml
+3<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf] vi zeppelin-site.xml    <span class="c"># Value값만 변경</span>
+<span class="c">########### zeppelin-site.xml ############</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;zeppelin.server.addr&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;192.168.56.102&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;Server address&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;zeppelin.server.port&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;8888&lt;/value&gt;      # 8080이 사용중이면 다른 번호로 바꿈/8088 또는 6060 등</span>
+<span class="c"># &lt;description&gt;Server port.&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c">########### zeppelin-site.xml ############</span>
+4<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">mv </span>zeppelin-env.sh.template zeppelin-env.sh
+5<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf] <span class="nv">$ </span>vi zeppelin-env.sh
+<span class="c">########### zeppelin-env.sh ###########</span>
+<span class="nb">export </span><span class="nv">ZEPPELIN_PORT</span><span class="o">=</span>8888       <span class="c"># 밑에 추가 입력</span>
+<span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark/current
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk/current
+<span class="c">########### zeppelin-env.sh ###########</span>
+6<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf] <span class="nv">$ </span><span class="nb">mv </span>shiro.ini.template shiro.ini
+7<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf] vi shiro.ini  <span class="c"># 기존 추가</span>
+<span class="c">########### shiro.ini ###########</span>
+<span class="c">#/api/version = anon</span>
+<span class="c">#/** = anon</span>
+/<span class="k">**</span> <span class="o">=</span> authc
+<span class="c">##################################</span>
+admin <span class="o">=</span> admin, admin
+<span class="c">#admin = password1</span>
+<span class="c">#user1 = password2, role1, role2</span>
+<span class="c">#user2 = password3, role3</span>
+<span class="c">#user3 = password4, role2</span>
+<span class="c">########### shiro.ini ###########</span>
+8<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~] <span class="nb">cd</span> <span class="nv">$ZEPPELIN_HOME</span>
+9<span class="o">)</span> <span class="o">[</span>hadoop@dn01 current] ./bin/zeppelin-daemon.sh restart    <span class="c"># 설정변경 후 재시작</span>
+</code></pre></div>    </div>
+  </li>
+  <li>실행
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~] hive <span class="nt">--servie</span> hiveserver2    <span class="c"># hive 사용시 하이브서버킨 후 실행</span>
+1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~] <span class="nb">cd</span> <span class="nv">$ZEPPELIN_HOME</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 current] ./bin/zeppelin-daemon.sh start
+3<span class="o">)</span> http://192.168.56.102:8888
+</code></pre></div>    </div>
+  </li>
+  <li>zeppelin 정지
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 current] ./bin/zeppelin-daemon.sh stop
+</code></pre></div>    </div>
+  </li>
+  <li>Hive 인터프리터 Zeppelin 추가하기
+    <ul>
+      <li>http://192.168.56.102:8888 접속후</li>
+      <li>admin 권한의 유저로 로그인</li>
+      <li>admin &gt; Interperter 메뉴 클릭</li>
+      <li>Create 클릭후 내용 입력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) Interperter Name 
+Interperter Name    hive
+Interperter group   jdbc
+2) Properties
+default.driver	        org.apache.hive.jdbc.HiveDriver
+default.url	            jdbc:hive2://localhost:10000
+default.user	        hiveUser
+default.password	    hivePassword
+3) Dependencies
+org.apache.hive:hive-jdbc:0.14.0	
+org.apache.hadoop:hadoop-common:2.6.0
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

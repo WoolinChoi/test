@@ -1,0 +1,92 @@
+I"T'<h1 id="accordion"><a href="">accordion</a></h1>
+
+<h2 id="accordion-1">Accordion</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>jQuery test<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"css/styles.css"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../lib/jquery-3.4.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"accordion"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>하나<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>당신은 전세계3%의 인간이다. 거리를 마음껏 걸어다닐 수 있으며, 국토에 바다가 있고, 초고속인터넷이 있으며,눈이있다. <span class="nt">&lt;/dd&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>둘<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>오늘걸으면 내일은 뛰어야 하지만 오늘뛰면 내일은 걷는다.일찍일어나는 새가 벌레를 잡지만, 일찍일어난 벌레는 새한테 죽는다.
+		<span class="nt">&lt;/dd&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>셋<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>1. 포기란 김장할때 쓰는 말이다.   2. 남자는 얼굴보다 돈   3. 10분만 공부 더하면 남편얼굴 바뀐다.     4. 미쳐야 공부할맛 난다.     5. 부러질 지언정 굽히지는 않는다.      6. 인생 한방이다.       7. 원인을 밝혀라 (  , 좋은일이든 나쁜일이든 원인을 밝혀 내가 잘못된 것을 확인하는 차원 )      8. 잡초같은 인생 살자 ( , 잡초는 누가 심어주지 않아도 , 생명력이 강하여 혼자 살수 있기 때문에 )
+		<span class="nt">&lt;/dd&gt;</span>
+	<span class="nt">&lt;/dl&gt;</span>
+	<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"accordion"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>하나<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>당신은 전세계3%의 인간이다. 거리를 마음껏 걸어다닐 수 있으며, 국토에 바다가 있고, 초고속인터넷이 있으며,눈이있다. <span class="nt">&lt;/dd&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>둘<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>오늘걸으면 내일은 뛰어야 하지만 오늘뛰면 내일은 걷는다.일찍일어나는 새가 벌레를 잡지만, 일찍일어난 벌레는 새한테 죽는다.
+		<span class="nt">&lt;/dd&gt;</span>
+		<span class="nt">&lt;dt&gt;</span>셋<span class="nt">&lt;/dt&gt;</span>
+		<span class="nt">&lt;dd&gt;</span>1. 포기란 김장할때 쓰는 말이다.   2. 남자는 얼굴보다 돈   3. 10분만 공부 더하면 남편얼굴 바뀐다.     4. 미쳐야 공부할맛 난다.     5. 부러질 지언정 굽히지는 않는다.      6. 인생 한방이다.       7. 원인을 밝혀라 (  , 좋은일이든 나쁜일이든 원인을 밝혀 내가 잘못된 것을 확인하는 차원 )      8. 잡초같은 인생 살자 ( , 잡초는 누가 심어주지 않아도 , 생명력이 강하여 혼자 살수 있기 때문에 )
+		<span class="nt">&lt;/dd&gt;</span>
+	<span class="nt">&lt;/dl&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="accordion_js">Accordion_js</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">accordion</span><span class="err">'</span><span class="o">).</span><span class="na">each</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="kt">var</span> <span class="n">allDt</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">dt</span><span class="err">'</span><span class="o">);</span>
+		<span class="kt">var</span> <span class="n">allDd</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">dd</span><span class="err">'</span><span class="o">);</span>
+		
+		<span class="n">allDd</span><span class="o">.</span><span class="na">hide</span><span class="o">();</span>
+		<span class="n">allDt</span><span class="o">.</span><span class="na">css</span><span class="o">(</span><span class="err">'</span><span class="n">cursor</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">pointer</span><span class="err">'</span><span class="o">);</span>
+		
+		<span class="n">allDt</span><span class="o">.</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+<span class="c1">//			allDd.hide();</span>
+<span class="c1">//			$(this).next().show();</span>
+			<span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">next</span><span class="o">().</span><span class="na">toggle</span><span class="o">();</span>
+		<span class="o">});</span>
+	<span class="o">});</span>
+<span class="o">});</span>
+</code></pre></div></div>
+
+<h2 id="accordion_css">Accordion_css</h2>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span><span class="p">{</span>
+	<span class="nl">margin</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+	<span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+	<span class="nl">line-height</span><span class="p">:</span><span class="m">1.4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span><span class="p">{</span>
+	<span class="nl">padding</span><span class="p">:</span><span class="m">40px</span><span class="p">;</span>
+	<span class="nl">font-family</span><span class="p">:</span><span class="n">Arial</span><span class="p">,</span> <span class="n">Helvetica</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">dl</span><span class="p">{</span>
+	<span class="nl">width</span><span class="p">:</span><span class="m">320px</span><span class="p">;</span>
+	<span class="nl">margin</span><span class="p">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span>
+
+    <span class="nt">dt</span><span class="p">{</span>
+            <span class="nl">padding</span><span class="p">:</span><span class="m">6px</span> <span class="m">10px</span> <span class="m">6px</span><span class="p">;</span>
+            <span class="nl">background</span><span class="p">:</span><span class="m">#444</span> <span class="sx">url('../imgs/bg.png')</span> <span class="nb">repeat-y</span> <span class="m">100%</span> <span class="m">0</span><span class="p">;</span>
+            <span class="nl">color</span><span class="p">:</span><span class="m">#fff</span><span class="p">;</span>
+            <span class="nl">margin</span><span class="p">:</span><span class="m">0</span> <span class="m">0</span> <span class="m">3px</span><span class="p">;</span>
+            <span class="nl">font-weight</span><span class="p">:</span><span class="nb">bold</span><span class="p">;</span>
+            <span class="nl">border-radius</span><span class="p">:</span><span class="m">8px</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="p">;</span>
+            <span class="nl">border-left</span><span class="p">:</span><span class="m">2px</span> <span class="nb">solid</span> <span class="m">#444</span><span class="p">;</span>
+            <span class="nl">border-top</span><span class="p">:</span><span class="m">2px</span> <span class="nb">solid</span> <span class="m">#444</span><span class="p">;</span>
+    <span class="p">}</span>
+        
+    <span class="nt">dd</span><span class="p">{</span>
+            <span class="nl">padding</span><span class="p">:</span><span class="m">8px</span> <span class="m">10px</span> <span class="m">12px</span><span class="p">;</span>
+            <span class="nl">width</span><span class="p">:</span><span class="m">298px</span><span class="p">;</span>
+            <span class="nl">border-left</span><span class="p">:</span><span class="m">2px</span> <span class="nb">solid</span> <span class="m">#444</span><span class="p">;</span>
+            <span class="nl">background</span><span class="p">:</span><span class="m">#eee</span><span class="p">;</span>
+            <span class="nl">margin</span><span class="p">:</span><span class="m">-3px</span> <span class="m">0</span> <span class="m">3px</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+:ET

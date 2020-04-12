@@ -1,0 +1,389 @@
+I"_<h1 id="menutable"><a href="">menuTable</a></h1>
+
+<h2 id="menutable-1">MenuTable</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuTable</span> <span class="o">{</span>
+	
+    <span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+    
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">menu</span><span class="o">;</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">hamburger_list</span><span class="o">;</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">chicken_list</span><span class="o">;</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">dessert_list</span><span class="o">;</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">drink_list</span><span class="o">;</span>
+    
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">hamburger_price</span><span class="o">;</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">chicken_price</span><span class="o">;</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">dessert_price</span><span class="o">;</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">drink_price</span><span class="o">;</span>
+    
+    <span class="nc">JButton</span><span class="o">[]</span> <span class="n">bmenu</span><span class="o">;</span>
+    <span class="nc">JButton</span><span class="o">[]</span> <span class="n">bhamburger</span><span class="o">;</span>
+    <span class="nc">JButton</span><span class="o">[]</span> <span class="n">bchicken</span><span class="o">;</span>
+    <span class="nc">JButton</span><span class="o">[]</span> <span class="n">bdessert</span><span class="o">;</span>
+    <span class="nc">JButton</span><span class="o">[]</span> <span class="n">bdrink</span><span class="o">;</span>
+    
+    <span class="nc">JButton</span> <span class="n">pay</span><span class="o">;</span>
+    
+    <span class="nc">JTextField</span> <span class="n">name_cat</span><span class="o">;</span>
+    <span class="nc">JTextField</span> <span class="n">name_good</span><span class="o">;</span>
+    <span class="nc">JTextField</span> <span class="n">name_price</span><span class="o">;</span>
+    <span class="nc">JTextField</span> <span class="n">name_sum</span><span class="o">;</span>
+    
+    <span class="nc">JTextArea</span> <span class="n">sel_cat</span><span class="o">;</span>
+    <span class="nc">JTextArea</span> <span class="n">sel_good</span><span class="o">;</span>
+    <span class="nc">JTextArea</span> <span class="n">sel_price</span><span class="o">;</span>
+    <span class="nc">JTextArea</span> <span class="n">sum</span><span class="o">;</span>
+    
+    <span class="nc">String</span> <span class="n">save_cat</span><span class="o">;</span>
+    <span class="nc">String</span> <span class="n">save_good</span><span class="o">;</span>
+    <span class="nc">String</span> <span class="n">save_price</span><span class="o">;</span>
+    
+    <span class="kt">int</span> <span class="n">save_sum</span><span class="o">;</span>
+    
+    <span class="nc">MenuTable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"패스트푸드 메뉴판"</span><span class="o">);</span>
+ 
+        <span class="n">menu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">"햄버거"</span><span class="o">,</span> <span class="s">"치킨"</span><span class="o">,</span> <span class="s">"디저트"</span><span class="o">,</span> <span class="s">"드링크"</span><span class="o">};</span>
+        <span class="n">bmenu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="n">menu</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">menu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bmenu</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="n">menu</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="n">hamburger_list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">"불고기버거"</span><span class="o">,</span> <span class="s">"치킨버거"</span><span class="o">,</span>
+                <span class="s">"새우버거"</span><span class="o">,</span> <span class="s">"와규"</span><span class="o">,</span>
+                <span class="s">"한우불고기"</span><span class="o">,</span> <span class="s">"AZ버거"</span><span class="o">,</span> <span class="s">"핫크리스피버거"</span><span class="o">,</span>
+                <span class="s">"T-Rex"</span><span class="o">,</span> <span class="s">"비프바베큐버거"</span><span class="o">};</span> 
+        <span class="n">chicken_list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">"치킨휠레(4조각)"</span><span class="o">,</span>
+                <span class="s">"화이어윙(2조각)"</span><span class="o">,</span> <span class="s">"화이어윙(4조각)"</span><span class="o">,</span>
+                <span class="s">"치킨1조각"</span><span class="o">,</span> <span class="s">"치킨휠레(2조각)"</span><span class="o">,</span> <span class="s">"패밀리팩"</span><span class="o">,</span>
+                <span class="s">"치킨풀팩"</span><span class="o">,</span> <span class="s">"치킨하프팩"</span><span class="o">,</span> <span class="s">"순살치킨하프팩"</span><span class="o">};</span>
+        <span class="n">dessert_list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">"치킨너켓"</span><span class="o">,</span> <span class="s">"롱치즈스틱"</span><span class="o">,</span>
+                <span class="s">"해쉬브라운"</span><span class="o">,</span> <span class="s">"콘셀러드"</span><span class="o">,</span>
+                <span class="s">"선데아이스크림"</span><span class="o">,</span> <span class="s">"쉑쉑치킨"</span><span class="o">,</span>
+                <span class="s">"양념감자"</span><span class="o">,</span> <span class="s">"오징어링"</span><span class="o">,</span> <span class="s">"포테이토"</span><span class="o">};</span>
+        <span class="n">drink_list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]</span> <span class="o">{</span><span class="s">"아이스아메리카노"</span><span class="o">,</span>
+                <span class="s">"핫아메리카노"</span><span class="o">,</span> <span class="s">"콜라"</span><span class="o">,</span> <span class="s">"사이다"</span><span class="o">,</span>
+                <span class="s">"오렌지주스"</span><span class="o">,</span> <span class="s">"우유"</span><span class="o">,</span> <span class="s">"레몬에이드"</span><span class="o">,</span>
+                <span class="s">"초코밀크쉐이크"</span><span class="o">,</span> <span class="s">"딸기밀크쉐이크"</span><span class="o">};</span>
+        
+        <span class="n">hamburger_price</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">3800</span><span class="o">,</span> <span class="mi">2700</span><span class="o">,</span> <span class="mi">3800</span><span class="o">,</span> <span class="mi">7800</span><span class="o">,</span>
+                <span class="mi">6900</span><span class="o">,</span> <span class="mi">6500</span><span class="o">,</span> <span class="mi">4800</span><span class="o">,</span> <span class="mi">3600</span><span class="o">,</span> <span class="mi">2000</span><span class="o">};</span>
+        <span class="n">chicken_price</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">4400</span><span class="o">,</span> <span class="mi">2400</span><span class="o">,</span> <span class="mi">4400</span><span class="o">,</span> <span class="mi">2300</span><span class="o">,</span>
+                <span class="mi">2400</span><span class="o">,</span> <span class="mi">13600</span><span class="o">,</span> <span class="mi">18800</span><span class="o">,</span> <span class="mi">9300</span><span class="o">,</span> <span class="mi">8900</span><span class="o">};</span>      
+        <span class="n">dessert_price</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">1000</span><span class="o">,</span> <span class="mi">1700</span><span class="o">,</span> <span class="mi">1000</span><span class="o">,</span> <span class="mi">1500</span><span class="o">,</span>
+                <span class="mi">1500</span><span class="o">,</span> <span class="mi">2500</span><span class="o">,</span> <span class="mi">2000</span><span class="o">,</span> <span class="mi">2000</span><span class="o">,</span> <span class="mi">2000</span><span class="o">};</span> 
+        <span class="n">drink_price</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]</span> <span class="o">{</span><span class="mi">2000</span><span class="o">,</span> <span class="mi">1500</span><span class="o">,</span> <span class="mi">1000</span><span class="o">,</span> <span class="mi">1000</span><span class="o">,</span>
+                <span class="mi">2500</span><span class="o">,</span> <span class="mi">1000</span><span class="o">,</span> <span class="mi">2500</span><span class="o">,</span> <span class="mi">2100</span><span class="o">,</span> <span class="mi">2100</span><span class="o">};</span>
+        
+        <span class="n">bhamburger</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="n">hamburger_list</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="n">bchicken</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="n">chicken_list</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="n">bdessert</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="n">dessert_list</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>  
+        <span class="n">bdrink</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="n">drink_list</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        
+        <span class="n">save_cat</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="n">save_good</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="n">save_price</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="n">save_sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 전체적인 레이아웃을 만드는 함수
+     * 카테고리(햄버거, 치킨, 디저트, 드링크)별 세부 레이아웃은
+     * smenu 카테고리 구분 오브젝트를 인자로 받아,
+     * selectMenu(smenu, p_center) 함수를 호출하여 만든다.
+     */</span>
+    <span class="kt">void</span> <span class="nf">addLayout</span><span class="o">(</span><span class="nc">Object</span> <span class="n">smenu</span><span class="o">)</span> <span class="o">{</span>
+    	<span class="c1">// 프레임 객체 선언</span>
+        <span class="n">name_cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"카테고리"</span><span class="o">,</span> <span class="mi">11</span><span class="o">);</span>
+        <span class="n">name_good</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"상품"</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">name_price</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"가격"</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">name_sum</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"결제금액"</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">name_cat</span><span class="o">.</span><span class="na">setHorizontalAlignment</span><span class="o">(</span><span class="nc">JTextField</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">name_good</span><span class="o">.</span><span class="na">setHorizontalAlignment</span><span class="o">(</span><span class="nc">JTextField</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">name_price</span><span class="o">.</span><span class="na">setHorizontalAlignment</span><span class="o">(</span><span class="nc">JTextField</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">name_sum</span><span class="o">.</span><span class="na">setHorizontalAlignment</span><span class="o">(</span><span class="nc">JTextField</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">sel_cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">11</span><span class="o">);</span>
+        <span class="n">sel_good</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">sel_price</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">sum</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+        <span class="n">pay</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"결제하기"</span><span class="o">);</span>
+        
+        <span class="c1">// 왼쪽 패널 설정</span>
+        <span class="nc">JPanel</span> <span class="n">p_left</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">p_left</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">menu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">p_left</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bmenu</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="n">bmenu</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">setPreferredSize</span><span class="o">(</span><span class="k">new</span> <span class="nc">Dimension</span><span class="o">(</span><span class="mi">270</span><span class="o">,</span> <span class="mi">45</span><span class="o">));</span>
+            <span class="n">bmenu</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">40</span><span class="o">));</span>
+        <span class="o">}</span>
+        
+        <span class="c1">// 밑 패널 설정</span>
+        <span class="nc">JPanel</span> <span class="n">p_bottom</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">p_bottom</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+        <span class="nc">JPanel</span> <span class="n">nametext</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">nametext</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+        <span class="nc">JPanel</span> <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">name</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+        <span class="n">name</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">name_cat</span><span class="o">);</span>
+        <span class="n">name</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">name_good</span><span class="o">);</span>
+        <span class="n">name</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">name_price</span><span class="o">);</span>
+        <span class="n">name</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">name_sum</span><span class="o">);</span>
+        <span class="nc">JPanel</span> <span class="n">text</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sel_cat</span><span class="o">);</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sel_good</span><span class="o">);</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sel_price</span><span class="o">);</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+        <span class="n">nametext</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+        <span class="n">nametext</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">text</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+        <span class="n">p_bottom</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">nametext</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">p_bottom</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pay</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>
+        
+        <span class="c1">// 가운데 패널 설정</span>
+        <span class="nc">JPanel</span> <span class="n">p_center</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">p_center</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+        <span class="c1">// selectMenu 함수를 실행하여 사용자가 선택한 카테고리의 레이아웃을 불러온다.</span>
+        <span class="n">selectMenu</span><span class="o">(</span><span class="n">smenu</span><span class="o">,</span> <span class="n">p_center</span><span class="o">);</span>
+        
+        <span class="c1">// 글꼴 설정</span>
+        <span class="n">name_cat</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">30</span><span class="o">));</span>
+        <span class="n">name_good</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">30</span><span class="o">));</span>
+        <span class="n">name_price</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">30</span><span class="o">));</span>
+        <span class="n">name_sum</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">30</span><span class="o">));</span>
+        
+        <span class="n">sel_cat</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">25</span><span class="o">));</span>
+        <span class="n">sel_good</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">25</span><span class="o">));</span>
+        <span class="n">sel_price</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">25</span><span class="o">));</span>
+        <span class="n">sum</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">25</span><span class="o">));</span>
+        <span class="n">pay</span><span class="o">.</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span> <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">50</span><span class="o">));</span>
+        
+        <span class="c1">// 프레임 영역</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_left</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_center</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_bottom</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">1650</span><span class="o">,</span> <span class="mi">1000</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="n">f</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * addLayout() 함수로부터 호출된다.
+     * 카테고리(햄버거, 치킨, 디저트, 드링크)별 세부 레이아웃을 구성하는 역할을 한다.
+     */</span>
+    <span class="kt">void</span> <span class="nf">selectMenu</span><span class="o">(</span><span class="nc">Object</span> <span class="n">smenu</span><span class="o">,</span> <span class="nc">JPanel</span> <span class="n">p_center</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 햄버거 카테고리에서 각각의 상품을 선택할 수 있는 버튼 생성</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">hamburger_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bhamburger</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"선택"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 치킨 카테고리에서 각각의 상품을 선택할 수 있는 버튼 생성</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">chicken_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bchicken</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"선택"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 디저트 카테고리에서 각각의 상품을 선택할 수 있는 버튼 생성</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dessert_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bdessert</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"선택"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 드링크 카테고리에서 각각의 상품을 선택할 수 있는 버튼 생성</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">drink_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bdrink</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"선택"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 햄버거 카테고리 레이아웃 생성</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">smenu</span> <span class="o">==</span> <span class="n">bmenu</span><span class="o">[</span><span class="mi">0</span><span class="o">])</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">hamburger_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"img/hamburger/h"</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">".jpg"</span><span class="o">)));</span>
+                <span class="nc">JPanel</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">hamburger_list</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">23</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">hamburger_price</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bhamburger</span><span class="o">[</span><span class="n">i</span><span class="o">]).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+            <span class="o">}</span>
+            
+        <span class="c1">// 치킨 카테고리 레이아웃 생성</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">smenu</span> <span class="o">==</span> <span class="n">bmenu</span><span class="o">[</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">chicken_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"img/chicken/c"</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">".jpg"</span><span class="o">)));</span>
+                <span class="nc">JPanel</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">chicken_list</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">23</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">chicken_price</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bchicken</span><span class="o">[</span><span class="n">i</span><span class="o">]).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+            <span class="o">}</span>
+            
+        <span class="c1">// 디저트 카테고리 레이아웃 생성</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">smenu</span> <span class="o">==</span> <span class="n">bmenu</span><span class="o">[</span><span class="mi">2</span><span class="o">])</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dessert_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"img/dessert/d"</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">".jpg"</span><span class="o">)));</span>
+                <span class="nc">JPanel</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">dessert_list</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">23</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">dessert_price</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bdessert</span><span class="o">[</span><span class="n">i</span><span class="o">]).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+            <span class="o">}</span>
+            
+        <span class="c1">// 드링크 카테고리 레이아웃 생성</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">drink_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"img/drink/k"</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">".jpg"</span><span class="o">)));</span>
+                <span class="nc">JPanel</span> <span class="n">j</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">drink_list</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">23</span><span class="o">));</span>
+                <span class="n">j</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">drink_price</span><span class="o">[</span><span class="n">i</span><span class="o">]),</span>
+                        <span class="nc">JLabel</span><span class="o">.</span><span class="na">CENTER</span><span class="o">)).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
+                <span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bdrink</span><span class="o">[</span><span class="n">i</span><span class="o">]).</span><span class="na">setFont</span><span class="o">(</span><span class="k">new</span> <span class="nc">Font</span><span class="o">(</span><span class="s">"san-serif"</span><span class="o">,</span>
+                        <span class="nc">Font</span><span class="o">.</span><span class="na">PLAIN</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">BtnHdlr</span> <span class="n">bh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BtnHdlr</span><span class="o">();</span>
+        <span class="c1">// 카테고리(햄버거, 치킨, 디저트, 드링크) 선택 버튼 ActionListener 연결</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">menu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bmenu</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 햄버거 카테고리의 각각의 상품 선택하는 버튼 ActionListener 연결</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">hamburger_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bhamburger</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 치킨 카테고리의 각각의 상품 선택하는 버튼 ActionListener 연결</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">chicken_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bchicken</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 디저트 카테고리의 각각의 상품 선택하는 버튼 ActionListener 연결</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dessert_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bdessert</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 드링크 카테고리의 각각의 상품 선택하는 버튼 ActionListener 연결</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">drink_list</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">bdrink</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 결제하기 버튼 ActionListener 연결</span>
+        <span class="n">pay</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">class</span> <span class="nc">BtnHdlr</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Object</span> <span class="n">evt</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+            <span class="cm">/*
+             카테고리(햄버거, 치킨, 디저트, 드링크) 선택 버튼이 눌렸을 때,
+             해당 카테고리 레이아웃을 불러온다.
+             */</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">bmenu</span><span class="o">[</span><span class="mi">0</span><span class="o">])</span> <span class="o">|</span> <span class="n">evt</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">bmenu</span><span class="o">[</span><span class="mi">1</span><span class="o">])</span> <span class="o">|</span>
+                    <span class="n">evt</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">bmenu</span><span class="o">[</span><span class="mi">2</span><span class="o">])</span> <span class="o">|</span> <span class="n">evt</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">bmenu</span><span class="o">[</span><span class="mi">3</span><span class="o">]))</span> <span class="o">{</span>
+                <span class="n">addLayout</span><span class="o">(</span><span class="n">evt</span><span class="o">);</span>
+                <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">save_sum</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 원"</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="cm">/*
+             결제하기 버튼이 눌렸을 때 최종 결제금액이 맞는지 확인하는 메시지 창이 뜬 후,
+             사용자가 확인버튼을 누르면 상품선택 상세 내용이 리셋된다.
+             */</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">pay</span><span class="o">.</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+                <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span>
+                        <span class="n">save_sum</span> <span class="o">+</span> <span class="s">"원 결제하시겠습니까?"</span><span class="o">);</span>
+                <span class="n">save_cat</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+                <span class="n">save_good</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+                <span class="n">save_price</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+                <span class="n">save_sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="cm">/*
+             햄버거 카테고리의 각각의 상품 선택하는 버튼이 눌렸을 때,
+             해당 카테고리, 상품명, 가격, 누적 결제금액을 TextArea에 출력한다.
+             */</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bhamburger</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">bhamburger</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">save_cat</span> <span class="o">+=</span> <span class="s">"햄버거\n"</span><span class="o">;</span>
+                    <span class="n">save_good</span> <span class="o">+=</span> <span class="n">hamburger_list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+                    <span class="n">save_price</span> <span class="o">+=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">hamburger_price</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="s">" 원\n"</span><span class="o">;</span>
+                    <span class="n">save_sum</span> <span class="o">+=</span> <span class="n">hamburger_price</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                    <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                    <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                    <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">save_sum</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 원"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="cm">/*
+             치킨 카테고리의 각각의 상품 선택하는 버튼이 눌렸을 때,
+             해당 카테고리, 상품명, 가격, 누적 결제금액을 TextArea에 출력한다.
+             */</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bchicken</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">bchicken</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">save_cat</span> <span class="o">+=</span> <span class="s">"치킨\n"</span><span class="o">;</span>
+                    <span class="n">save_good</span> <span class="o">+=</span> <span class="n">chicken_list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+                    <span class="n">save_price</span> <span class="o">+=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">chicken_price</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="s">" 원\n"</span><span class="o">;</span>
+                    <span class="n">save_sum</span> <span class="o">+=</span> <span class="n">chicken_price</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                    <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                    <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                    <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">save_sum</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 원"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="cm">/*
+             디저트 카테고리의 각각의 상품 선택하는 버튼이 눌렸을 때,
+             해당 카테고리, 상품명, 가격, 누적 결제금액을 TextArea에 출력한다.
+             */</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bdessert</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">bdessert</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">save_cat</span> <span class="o">+=</span> <span class="s">"디저트\n"</span><span class="o">;</span>
+                    <span class="n">save_good</span> <span class="o">+=</span> <span class="n">dessert_list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+                    <span class="n">save_price</span> <span class="o">+=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">dessert_price</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="s">" 원\n"</span><span class="o">;</span>
+                    <span class="n">save_sum</span> <span class="o">+=</span> <span class="n">dessert_price</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                    <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                    <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                    <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">save_sum</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 원"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="cm">/*
+             드링크 카테고리의 각각의 상품 선택하는 버튼이 눌렸을 때,
+             해당 카테고리, 상품명, 가격, 누적 결제금액을 TextArea에 출력한다.
+             */</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">bdrink</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">evt</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">bdrink</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">toString</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">save_cat</span> <span class="o">+=</span> <span class="s">"드링크\n"</span><span class="o">;</span>
+                    <span class="n">save_good</span> <span class="o">+=</span> <span class="n">drink_list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+                    <span class="n">save_price</span> <span class="o">+=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">drink_price</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">+</span> <span class="s">" 원\n"</span><span class="o">;</span>
+                    <span class="n">save_sum</span> <span class="o">+=</span> <span class="n">drink_price</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">sel_cat</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_cat</span><span class="o">);</span>
+                    <span class="n">sel_good</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_good</span><span class="o">);</span>
+                    <span class="n">sel_price</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">save_price</span><span class="o">);</span>
+                    <span class="n">sum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">save_sum</span><span class="o">)</span> <span class="o">+</span> <span class="s">" 원"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MenuTable</span> <span class="n">table</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MenuTable</span><span class="o">();</span>
+        <span class="n">table</span><span class="o">.</span><span class="na">addLayout</span><span class="o">(</span><span class="s">"drink"</span><span class="o">);</span>
+        <span class="n">table</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

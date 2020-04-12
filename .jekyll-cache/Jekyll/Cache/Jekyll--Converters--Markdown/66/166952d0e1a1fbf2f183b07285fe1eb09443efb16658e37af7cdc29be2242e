@@ -1,0 +1,541 @@
+I"�<h1 id="booksite"><a href="">bookSite</a></h1>
+
+<h2 id="booksite-1">BookSite</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/1999/xhtml"</span> <span class="na">lang=</span><span class="s">"ko"</span> <span class="na">xml:lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"content-type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"google-translate-customization"</span> <span class="na">content=</span><span class="s">"6f1073ba568f1202-9c8990a4b3025b3e-ga74e3ea243d3f01d-14"</span><span class="nt">&gt;&lt;/meta&gt;</span> <span class="c">&lt;!-- 세계 언어선택 메타 태그 --&gt;</span>
+<span class="nt">&lt;title&gt;</span>BookSite<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"css/base.css"</span> <span class="na">media=</span><span class="s">"all"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"css/main.css"</span> <span class="na">media=</span><span class="s">"all"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/jquery-1.10.2.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- 제이쿼리 라이이브러리 연동 --&gt;</span>
+
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/jquery.bxslider.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>  <span class="c">&lt;!-- bxSlider 플러그인 연동 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/jquery-ui-1.10.4.custom.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- UI 플러그인 연동 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/jquery.cookie.js"</span><span class="nt">&gt;&lt;/script&gt;</span>  <span class="c">&lt;!-- 쿠키 플러그인 연동 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/scripts.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"wrap"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dl</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;dt&gt;</span>스킵메뉴<span class="nt">&lt;/dt&gt;</span>
+ <span class="nt">&lt;dd&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#container"</span><span class="nt">&gt;</span>본문바로가기<span class="nt">&lt;/a&gt;&lt;/dd&gt;</span>
+<span class="nt">&lt;/dl&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"header"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h1&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/logo.gif"</span> <span class="na">alt=</span><span class="s">"이지스 퍼블리싱"</span> <span class="nt">/&gt;&lt;/a&gt;&lt;/h1&gt;</span>
+  <span class="nt">&lt;dl</span> <span class="na">id=</span><span class="s">"util_menu"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"hide"</span><span class="nt">&gt;</span>유틸메뉴<span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dd</span> <span class="na">class=</span><span class="s">"util_first"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ul&gt;</span>
+           <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"login_wrap"</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/util_menu_1.gif"</span> <span class="na">alt=</span><span class="s">"로그인"</span> <span class="nt">/&gt;</span>
+           <span class="nt">&lt;/a&gt;</span>
+             <span class="c">&lt;!-- #######				로그인 폼			 ########--&gt;</span>
+             <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"#"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"log_f"</span> <span class="na">id=</span><span class="s">"login_f"</span><span class="nt">&gt;</span>
+               <span class="nt">&lt;fieldset&gt;</span>
+                 <span class="nt">&lt;legend&gt;</span>로그인<span class="nt">&lt;/legend&gt;</span>
+                 <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"user_id"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_id"</span><span class="nt">&gt;</span>
+                      <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/login_title_id.gif"</span> <span class="na">alt=</span><span class="s">"아이디"</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/label&gt;</span>
+                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"user_id"</span> <span class="na">id=</span><span class="s">"user_id"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;/p&gt;</span>
+                 <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"user_pw"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_pw"</span><span class="nt">&gt;</span>
+                      <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/login_title_pw.gif"</span> <span class="na">alt=</span><span class="s">"아이디"</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/label&gt;</span>
+                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"user_pw"</span> <span class="na">id=</span><span class="s">"user_pw"</span> <span class="nt">/&gt;&lt;/p&gt;</span>
+                 <span class="nt">&lt;p&gt;</span>
+                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"save_id"</span> <span class="na">id=</span><span class="s">"save_id"</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"save_id"</span><span class="nt">&gt;</span> 비밀번호 저장<span class="nt">&lt;/label&gt;</span>
+                 <span class="nt">&lt;/p&gt;</span>
+                 <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"log_btn"</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"image"</span> <span class="na">src=</span><span class="s">"images/login_btn.gif"</span> <span class="na">alt=</span><span class="s">"로그인버튼"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;/p&gt;</span>
+                 <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"join_btn_wrap"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>회원가입<span class="nt">&lt;/a&gt;</span>
+                     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"sch_id_btn"</span><span class="nt">&gt;</span>아이이디/비밀번호 찾기<span class="nt">&lt;/a&gt;</span>
+                 <span class="nt">&lt;/p&gt;</span>
+                 <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"login_close_btn"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/login_close_btn.gif"</span> <span class="na">alt=</span><span class="s">"닫기버튼"</span> <span class="nt">/&gt;</span>
+                     <span class="nt">&lt;/a&gt;</span>
+                 <span class="nt">&lt;/p&gt;</span>
+               <span class="nt">&lt;/fieldset&gt;</span>
+             <span class="nt">&lt;/form&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_menu_2.gif"</span> <span class="na">alt=</span><span class="s">"회원가입"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_menu_3.gif"</span> <span class="na">alt=</span><span class="s">"도서목록"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_menu_4.gif"</span> <span class="na">alt=</span><span class="s">"원고지원"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_menu_5.gif"</span> <span class="na">alt=</span><span class="s">"사이트맵"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"zoom"</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;li&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_zoom_1.gif"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"zoom_in"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_zoom_2.gif"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"zoom_return"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_zoom_3.gif"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+           <span class="nt">&lt;li&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"zoom_out"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/util_zoom_4.gif"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+           <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"print_btn"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/util_print.gif"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"google_translate_element"</span><span class="nt">&gt;&lt;/div&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+  <span class="nt">&lt;/dl&gt;</span>
+  <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"#"</span> <span class="na">method=</span><span class="s">"get"</span> <span class="na">name=</span><span class="s">"sch_f"</span> <span class="na">id=</span><span class="s">"sch_f"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;fieldset&gt;</span>
+        <span class="nt">&lt;legend&gt;</span>검색폼<span class="nt">&lt;/legend&gt;</span>
+        <span class="nt">&lt;p&gt;</span>
+           <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"keyword"</span> <span class="na">id=</span><span class="s">"keyword"</span> <span class="na">title=</span><span class="s">"검색어입력"</span> <span class="nt">/&gt;</span>
+           <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"image"</span> <span class="na">src=</span><span class="s">"images/header_sch_btn.gif"</span> <span class="na">alt=</span><span class="s">"검색"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/p&gt;</span>
+     <span class="nt">&lt;/fieldset&gt;</span>
+  <span class="nt">&lt;/form&gt;</span>
+  
+  <span class="c">&lt;!--  ######## 전체 메뉴 ########  --&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"total_btn"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_btn_out.gif"</span> <span class="na">alt=</span><span class="s">"전체메뉴"</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"total_menu"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;dl&gt;</span>
+        <span class="nt">&lt;dt&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_title_1.gif"</span> <span class="na">alt=</span><span class="s">"홈"</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+        <span class="nt">&lt;dd&gt;</span>
+           <span class="nt">&lt;ul&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>홈으로이동<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+           <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;/dl&gt;</span>
+     <span class="nt">&lt;dl&gt;</span>
+        <span class="nt">&lt;dt&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_title_2.gif"</span> <span class="na">alt=</span><span class="s">"홈"</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+        <span class="nt">&lt;dd&gt;</span>
+           <span class="nt">&lt;ul&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>회사소개<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>출간분야<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>찾아오시는 길<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+           <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;/dl&gt;</span>
+     <span class="nt">&lt;dl&gt;</span>
+        <span class="nt">&lt;dt&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_title_1.gif"</span> <span class="na">alt=</span><span class="s">"홈"</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+        <span class="nt">&lt;dd&gt;</span>
+           <span class="nt">&lt;ul&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>신간도서<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>인기도서<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>추천도서<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+           <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;/dl&gt;</span>
+     <span class="nt">&lt;dl&gt;</span>
+        <span class="nt">&lt;dt&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_title_1.gif"</span> <span class="na">alt=</span><span class="s">"홈"</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+        <span class="nt">&lt;dd&gt;</span>
+           <span class="nt">&lt;ul&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>고객문의<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>자료요청<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>자주묻는 질문<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+           <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;/dl&gt;</span>
+     <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"total_close"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/allmenu_close_btn.gif"</span> <span class="na">alt=</span><span class="s">"전체메뉴 닫기"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+  
+  <span class="c">&lt;!-- ####### 날짜 출력 ########--&gt;</span>
+  <span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">"date_wrap"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"year"</span><span class="nt">&gt;</span>0000<span class="nt">&lt;/span&gt;</span> 년
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"month"</span><span class="nt">&gt;</span>00<span class="nt">&lt;/span&gt;</span> 월
+      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"date"</span><span class="nt">&gt;</span>00<span class="nt">&lt;/span&gt;</span>일
+   <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;hr/&gt;</span>
+
+<span class="c">&lt;!-- ####### 팝배너 ######## --&gt;</span>
+<span class="nt">&lt;hr/&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"contents_top"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"roll_banner_wrap"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;h3&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_title.gif"</span> <span class="na">alt=</span><span class="s">"알림판"</span> <span class="nt">/&gt;&lt;/h3&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"roll_btn1 roll"</span> <span class="nt">&gt;</span>
+     	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_1_over.gif"</span> <span class="na">alt=</span><span class="s">"버튼1"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"roll_btn2 roll"</span><span class="nt">&gt;</span>
+     	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_2_out.gif"</span> <span class="na">alt=</span><span class="s">"버튼2"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"roll_btn3 roll"</span><span class="nt">&gt;</span>
+     	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_3_out.gif"</span> <span class="na">alt=</span><span class="s">"버튼3"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"roll_btn4 roll"</span><span class="nt">&gt;</span>
+     	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_4_out.gif"</span> <span class="na">alt=</span><span class="s">"버튼4"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dl&gt;</span>
+       <span class="nt">&lt;dd&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_banner_1.gif"</span> <span class="na">alt=</span><span class="s">"배너1"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/dd&gt;</span>
+       <span class="nt">&lt;dd&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_banner_2.gif"</span> <span class="na">alt=</span><span class="s">"배너2"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/dd&gt;</span>
+       <span class="nt">&lt;dd&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_banner_3.gif"</span> <span class="na">alt=</span><span class="s">"배너3"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/dd&gt;</span>
+       <span class="nt">&lt;dd&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_banner_4.gif"</span> <span class="na">alt=</span><span class="s">"배너4"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;/dl&gt;</span>
+     <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"ctl_btn"</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"playBtn"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_play_on.gif"</span> <span class="na">alt=</span><span class="s">"재생버튼"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/a&gt;</span> 
+       <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">class=</span><span class="s">"stopBtn"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/pop_btn_stop_off.gif"</span> <span class="na">alt=</span><span class="s">"정지버튼"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/a&gt;</span>
+     <span class="nt">&lt;/p&gt;</span>
+   <span class="nt">&lt;/div&gt;</span>
+   
+   <span class="c">&lt;!--  ########## 탭메뉴 ##########  --&gt;</span>
+   <span class="nt">&lt;dl</span> <span class="na">id=</span><span class="s">"tabmenu"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"tab_btn1"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_btn_1_over.gif"</span> <span class="na">alt=</span><span class="s">"공지사항"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+       <span class="nt">&lt;ul&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>공지사항 관련된 내용입니다.<span class="nt">&lt;/a&gt;&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>공지사항 관련된 내용입니다.<span class="nt">&lt;/a&gt;&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>공지사항 관련된 내용입니다.<span class="nt">&lt;/a&gt;&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>공지사항 관련된 내용입니다.<span class="nt">&lt;/a&gt;&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>공지사항 관련된 내용입니다.<span class="nt">&lt;/a&gt;&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+       <span class="nt">&lt;/ul&gt;</span>
+       <span class="nt">&lt;p&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_more_btn.gif"</span> <span class="na">alt=</span><span class="s">"더보기"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/p&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"tab_btn2"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_btn_2_out.gif"</span> <span class="na">alt=</span><span class="s">"질문과답변"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+       <span class="nt">&lt;ul&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>질문과답변 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>질문과답변 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>질문과답변 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>질문과답변 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>질문과답변 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+       <span class="nt">&lt;/ul&gt;</span>
+       <span class="nt">&lt;p&gt;</span>
+          <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_more_btn.gif"</span> <span class="na">alt=</span><span class="s">"더보기"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/p&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+     <span class="nt">&lt;dt</span> <span class="na">class=</span><span class="s">"tab_btn3"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_btn_3_out.gif"</span> <span class="na">alt=</span><span class="s">"저자문의"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+     <span class="nt">&lt;/dt&gt;</span>
+     <span class="nt">&lt;dd&gt;</span>
+       <span class="nt">&lt;ul&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+         <span class="nt">&lt;li&gt;</span>
+           <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>저자문의 관련된 내용입니다.<span class="nt">&lt;/a&gt;</span>
+           <span class="nt">&lt;span&gt;</span>2014-03-01<span class="nt">&lt;/span&gt;</span>
+         <span class="nt">&lt;/li&gt;</span>
+       <span class="nt">&lt;/ul&gt;</span>
+       <span class="nt">&lt;p&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/tab_more_btn.gif"</span> <span class="na">alt=</span><span class="s">"더보기"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+       <span class="nt">&lt;/p&gt;</span>
+     <span class="nt">&lt;/dd&gt;</span>
+   <span class="nt">&lt;/dl&gt;</span>
+   <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"consult_wrap"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;li&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/banner_consult.gif"</span> <span class="na">alt=</span><span class="s">"출판상담문의 02-3235-1722"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+     <span class="nt">&lt;li&gt;</span>
+     <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/banner_support.gif"</span> <span class="na">alt=</span><span class="s">"원고 양식 다운받기 및 지원 easy@easypub.co.kr"</span> <span class="na">usemap=</span><span class="s">"#support"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;map</span> <span class="na">name=</span><span class="s">"support"</span> <span class="na">id=</span><span class="s">"support"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;area</span> <span class="na">shape=</span><span class="s">"rect"</span> <span class="na">coords=</span><span class="s">"9,29,126,53"</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">alt=</span><span class="s">"원고 양식 다운 받기"</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/map&gt;</span>
+     <span class="nt">&lt;/li&gt;</span>
+   <span class="nt">&lt;/ul&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+ 
+ <span class="c">&lt;!-- ########### 베스트북  슬라이더 #############  --&gt;</span>
+ <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"bestbook_zone"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;h3&gt;</span>
+      <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_title.gif"</span> <span class="na">alt=</span><span class="s">"이지스퍼블리싱 베스트 책"</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;/h3&gt;</span>
+   <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"best_bg"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;ul&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_1.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;&lt;span&gt;</span>
+              <span class="nt">&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자
+            <span class="nt">&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_2.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_3.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_4.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_5.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_6.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_7.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_8.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_9.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+              <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;</span>
+              <span class="nt">&lt;/a&gt;</span>
+       <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_list_10.png"</span> <span class="na">alt=</span><span class="s">""</span> <span class="nt">/&gt;</span>
+             <span class="nt">&lt;span&gt;&lt;strong&gt;</span>책 제목<span class="nt">&lt;/strong&gt;</span>책 저자<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;/ul&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"prev_btn"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_btn_left.png"</span> <span class="na">alt=</span><span class="s">"이전으로 이동"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/a&gt;</span>
+      <span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"next_btn"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/bestbook_btn_right.png"</span> <span class="na">alt=</span><span class="s">"다음으로 이동"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/a&gt;</span>
+      <span class="nt">&lt;/p&gt;</span>
+   <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span> <span class="c">&lt;!-- close of bestbook_zone --&gt;</span>
+<span class="nt">&lt;/div&gt;</span> <span class="c">&lt;!-- close of container --&gt;</span>
+<span class="nt">&lt;/div&gt;</span> <span class="c">&lt;!-- close of wrap --&gt;</span>
+<span class="nt">&lt;hr/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="booksite_js">BookSite_js</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+	<span class="c1">// #######[1] 날짜 출력 ########</span>
+	<span class="c1">// 현재 날짜 가져오기</span>
+	<span class="kt">var</span> <span class="n">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Date</span><span class="o">();</span>			<span class="c1">// 현재 날짜</span>
+	<span class="kt">var</span> <span class="n">yyyy</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="na">getFullYear</span><span class="o">();</span>	<span class="c1">// 현재 년도</span>
+	<span class="kt">var</span> <span class="n">mm</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="na">getMonth</span><span class="o">()+</span><span class="mi">1</span><span class="o">;</span>	<span class="c1">// 현재 월</span>
+	<span class="kt">var</span> <span class="n">dd</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="na">getDate</span><span class="o">();</span>		<span class="c1">// 현재 일</span>
+	<span class="c1">// 가져온 날짜를 text에 붙히기</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">year</span><span class="err">'</span><span class="o">).</span><span class="na">text</span><span class="o">(</span><span class="n">yyyy</span><span class="o">)</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">month</span><span class="err">'</span><span class="o">).</span><span class="na">text</span><span class="o">(</span><span class="n">mm</span><span class="o">)</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">date</span><span class="err">'</span><span class="o">).</span><span class="na">text</span><span class="o">(</span><span class="n">dd</span><span class="o">)</span>
+	
+	<span class="c1">// ########[2] 검색어폼 ########</span>
+	<span class="c1">// 갖다대면 없어지고 마우스 때면 나타나게 한다.</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">keyword</span><span class="err">'</span><span class="o">).</span><span class="na">mouseover</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">keyword</span><span class="err">'</span><span class="o">).</span><span class="na">css</span><span class="o">(</span><span class="err">'</span><span class="n">background</span><span class="o">-</span><span class="n">position</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="mi">0</span> <span class="o">-</span><span class="mi">500</span><span class="n">px</span><span class="err">'</span><span class="o">);</span>
+	<span class="o">}).</span><span class="na">mouseout</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">keyword</span><span class="err">'</span><span class="o">).</span><span class="na">css</span><span class="o">(</span><span class="err">'</span><span class="n">background</span><span class="o">-</span><span class="n">position</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="mi">0</span> <span class="mi">0</span><span class="err">'</span><span class="o">);</span>
+	<span class="o">});</span>
+	
+	<span class="c1">// ########[3] 탭메뉴 ########</span>
+	<span class="c1">// 탭메뉴 지점</span>
+	<span class="kt">var</span> <span class="n">anchors</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">tabmenu</span><span class="err">'</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">dt</span><span class="err">'</span><span class="o">);</span>
+	<span class="c1">// 탭메뉴 지점의 내용</span>
+	<span class="kt">var</span> <span class="n">panelDivs</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">tabmenu</span><span class="err">'</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">dd</span><span class="err">'</span><span class="o">);</span>
+	<span class="c1">// 더보기</span>
+	<span class="kt">var</span> <span class="n">seeMore</span> <span class="o">=</span> <span class="n">panelDivs</span><span class="o">.</span><span class="na">children</span><span class="o">(</span><span class="sc">'p'</span><span class="o">);</span>
+	
+	<span class="c1">// 탭메뉴 지점 첫번째 이름에 addClass를 통해 'on'붙혀준다.</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">tabmenu</span><span class="err">'</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="nl">dt:</span><span class="n">first</span><span class="err">'</span><span class="o">).</span><span class="na">addClass</span><span class="o">(</span><span class="err">'</span><span class="n">on</span><span class="err">'</span><span class="o">);</span>
+	
+	<span class="c1">// 마지막지점 탭메뉴 지점에 on을 찾는다.</span>
+	<span class="kt">var</span> <span class="n">lastAnchors</span> <span class="o">=</span> <span class="n">anchors</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">on</span><span class="err">'</span><span class="o">);</span>
+	<span class="c1">// 마지막 지점의 내용의 다음꺼를 찾아준다.</span>
+	<span class="kt">var</span> <span class="n">lastPanelDivs</span> <span class="o">=</span> <span class="n">lastAnchors</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+
+	<span class="kt">var</span> <span class="n">img_over</span> <span class="o">=</span> <span class="n">lastAnchors</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="nl">img:</span><span class="n">first</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">);</span>   <span class="c1">// *_over</span>
+	<span class="kt">var</span> <span class="n">img_out</span> <span class="o">=</span> <span class="n">img_over</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="err">'</span><span class="n">_over</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">_out</span><span class="err">'</span><span class="o">);</span>   <span class="c1">// *_out</span>
+	
+	<span class="c1">// ####[*] 더보기가 눌려졌을 때 </span>
+	<span class="n">seeMore</span><span class="o">.</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 새창으로 띄우기</span>
+		<span class="kt">var</span> <span class="n">winObj</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="sc">' '</span><span class="o">,</span> <span class="err">'</span><span class="n">widow</span><span class="o">-</span><span class="n">name</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">width</span><span class="o">=</span><span class="mi">480</span><span class="o">,</span> <span class="n">heigth</span><span class="o">=</span><span class="mi">400</span><span class="err">'</span><span class="o">);</span>
+		<span class="c1">// 공지사항 더보기</span>
+		<span class="k">if</span><span class="o">(</span><span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">seeMore</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="mi">0</span><span class="o">))){</span>
+			<span class="n">winObj</span><span class="o">.</span><span class="na">location</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="s">"http://www.easyspub.co.kr/12_Menu/BoardList/C200/PUB"</span><span class="o">;</span>
+		<span class="c1">// 질문과답변 더보기</span>
+		<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">seeMore</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="mi">1</span><span class="o">))){</span>
+			<span class="n">winObj</span><span class="o">.</span><span class="na">location</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="s">"http://www.easyspub.co.kr/40_Menu/QnaWrite/PUB"</span><span class="o">;</span>
+		<span class="c1">// 저자문의 더보기</span>
+		<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">is</span><span class="o">(</span><span class="n">seeMore</span><span class="o">.</span><span class="na">eq</span><span class="o">(</span><span class="mi">2</span><span class="o">))){</span>
+			<span class="n">winObj</span><span class="o">.</span><span class="na">location</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="s">"http://www.easyspub.co.kr/20_Menu/BookList/PUB"</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">});</span>
+
+	<span class="c1">// 지점을 클릭했을 때</span>
+	<span class="n">anchors</span><span class="o">.</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 마지막 지점의 removeClass를 통해 on을 지워준다.</span>
+		<span class="n">lastAnchors</span><span class="o">.</span><span class="na">removeClass</span><span class="o">(</span><span class="err">'</span><span class="n">on</span><span class="err">'</span><span class="o">);</span>
+		<span class="c1">// 마지막 지점의 내용을 숨긴다.</span>
+		<span class="n">lastPanelDivs</span><span class="o">.</span><span class="na">hide</span><span class="o">();</span>
+		<span class="n">lastAnchors</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">,</span> <span class="n">img_out</span><span class="o">);</span>   <span class="c1">// *_out 기존것.</span>
+		
+		<span class="c1">// 현재 지점에 addClass에 on을 붙혀준다.</span>
+		<span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">addClass</span><span class="o">(</span><span class="err">'</span><span class="n">on</span><span class="err">'</span><span class="o">);</span>
+		
+		<span class="n">lastAnchors</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		
+		<span class="n">img_out</span> <span class="o">=</span> <span class="n">lastAnchors</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">);</span>   <span class="c1">// *_out 바뀔것 원래.</span>
+		<span class="n">img_over</span> <span class="o">=</span> <span class="n">img_out</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="err">'</span><span class="n">_out</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">_over</span><span class="err">'</span><span class="o">);</span>   <span class="c1">// *_over 바뀔것</span>
+		<span class="n">lastAnchors</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">,</span> <span class="n">img_over</span><span class="o">);</span>
+		<span class="n">lastPanelDivs</span> <span class="o">=</span> <span class="n">lastAnchors</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+		<span class="n">lastPanelDivs</span><span class="o">.</span><span class="na">show</span><span class="o">();</span>
+	<span class="o">});</span>
+
+	<span class="c1">// ########[4] 베스트북 이미지 슬라이더(bxSlider 이용) ########</span>
+    <span class="c1">// 슬라이더 설정</span>
+    <span class="kt">var</span> <span class="n">slider</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">best_bg</span> <span class="o">&gt;</span> <span class="n">ul</span><span class="err">'</span><span class="o">).</span><span class="na">bxSlider</span><span class="o">({</span>
+       <span class="n">minSlides</span> <span class="o">:</span> <span class="mi">5</span><span class="o">,</span>    <span class="c1">// 최소 노출 갯수</span>
+       <span class="n">maxSlides</span> <span class="o">:</span> <span class="mi">5</span><span class="o">,</span>    <span class="c1">// 최대 노출 갯수</span>
+       <span class="n">slideMargin</span> <span class="o">:</span> <span class="mi">10</span><span class="o">,</span>    <span class="c1">// 슬라이드의 간격</span>
+       <span class="n">slideWidth</span> <span class="o">:</span> <span class="mi">150</span><span class="o">,</span>    <span class="c1">// 슬라이드의 너비</span>
+       <span class="n">auto</span> <span class="o">:</span> <span class="kc">true</span><span class="o">,</span>    <span class="c1">// 자동 실행 여부</span>
+       <span class="n">speed</span> <span class="o">:</span> <span class="mi">500</span><span class="o">,</span>    <span class="c1">// 이동 속도 설정</span>
+       <span class="n">moveSlides</span> <span class="o">:</span> <span class="mi">1</span><span class="o">,</span>    <span class="c1">// 슬라이드 이동 갯수</span>
+       <span class="nl">pager:</span> <span class="kc">false</span>    <span class="c1">// 현재 위치 페이징 표시 여부 설정</span>
+    <span class="o">});</span>
+    <span class="c1">// 이전버튼을 클릭하면 이전슬라이드로 전환</span>
+    <span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">prev_btn</span><span class="err">'</span><span class="o">).</span><span class="na">on</span><span class="o">(</span><span class="err">'</span><span class="n">click</span><span class="err">'</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+       <span class="n">slider</span><span class="o">.</span><span class="na">goToPrevSlide</span><span class="o">();</span>    <span class="c1">// 이전 슬라이드 배너로 이동</span>
+    <span class="o">});</span>
+    <span class="c1">// 다음버튼을 클릭하면 다음슬라이드로 전환</span>
+    <span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">next_btn</span><span class="err">'</span><span class="o">).</span><span class="na">on</span><span class="o">(</span><span class="err">'</span><span class="n">click</span><span class="err">'</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+       <span class="n">slider</span><span class="o">.</span><span class="na">goToNextSlide</span><span class="o">();</span>    <span class="c1">// 다음 슬라이드 배너로 이동</span>
+    <span class="o">});</span>
+    <span class="c1">// 슬라이더 왼쪽에 공간을 줌</span>
+    <span class="n">slider</span><span class="o">.</span><span class="na">css</span><span class="o">(</span> <span class="err">'</span><span class="n">margin</span><span class="o">-</span><span class="n">left</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="mi">10</span><span class="n">px</span><span class="err">'</span> <span class="o">);</span>
+    
+	<span class="c1">// ########[5] 로그인 ########</span>
+	<span class="c1">// 로그인  클릭</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">login_wrap</span><span class="o">&gt;</span><span class="n">a</span><span class="err">'</span><span class="o">).</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 폼의 animate() 이용하여 top 위치를 20px로 지정</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">login_f</span><span class="err">'</span><span class="o">).</span><span class="na">animate</span><span class="o">({</span>
+			<span class="err">'</span><span class="n">top</span><span class="err">'</span> <span class="o">:</span> <span class="err">'</span><span class="mi">20</span><span class="n">px</span><span class="err">'</span>
+		<span class="o">});</span>
+	<span class="o">});</span>
+	<span class="c1">// 폼의 닫기 클릭 </span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">login_close_btn</span><span class="o">&gt;</span><span class="n">a</span><span class="err">'</span><span class="o">).</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 폼의 animate() 이용하여 top 위치를 -500px로 지정</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">login_f</span><span class="err">'</span><span class="o">).</span><span class="na">animate</span><span class="o">({</span>
+			<span class="err">'</span><span class="n">top</span><span class="err">'</span> <span class="o">:</span> <span class="err">'</span><span class="o">-</span><span class="mi">500</span><span class="n">px</span><span class="err">'</span>
+		<span class="o">});</span>
+	<span class="o">});</span>
+	
+	<span class="c1">// ########[6] 전체메뉴 보이기 ########</span>
+	<span class="c1">// 전체 메뉴 클릭</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">total_btn</span><span class="o">&gt;</span><span class="n">a</span><span class="err">'</span><span class="o">).</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 전체 메뉴 보여주기</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">total_menu</span><span class="err">'</span><span class="o">).</span><span class="na">show</span><span class="o">(</span><span class="mi">500</span><span class="o">);</span>
+	<span class="o">});</span>
+	<span class="c1">// 전체 메뉴 닫기 클릭</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">total_close</span><span class="o">&gt;</span><span class="n">a</span><span class="err">'</span><span class="o">).</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 전체 메뉴 닫아주기</span>
+		<span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">total_menu</span><span class="err">'</span><span class="o">).</span><span class="na">hide</span><span class="o">();</span>
+	<span class="o">});</span>
+	
+	<span class="c1">// #######[7] 팝배너 ########</span>
+	<span class="c1">// 팝배너 설정</span>
+	<span class="kt">var</span> <span class="n">popBanner</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">roll_banner_wrap</span><span class="o">&gt;</span><span class="n">dl</span><span class="err">'</span><span class="o">).</span><span class="na">bxSlider</span><span class="o">({</span>
+	       <span class="n">minSlides</span> <span class="o">:</span> <span class="mi">1</span><span class="o">,</span>	<span class="c1">// 최소 노출 갯수</span>
+	       <span class="n">auto</span> <span class="o">:</span> <span class="kc">true</span><span class="o">,</span>		<span class="c1">// 자동 실행 여부</span>
+	       <span class="n">speed</span> <span class="o">:</span> <span class="mi">500</span><span class="o">,</span>		<span class="c1">// 이동 속도 설정</span>
+	       <span class="n">moveSlides</span> <span class="o">:</span> <span class="mi">1</span>	<span class="c1">// 슬라이드 이동 갯수		</span>
+	<span class="o">});</span>
+	<span class="c1">// 팝배너 버튼</span>
+	<span class="kt">var</span> <span class="n">bannerButton</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'#</span><span class="n">roll_banner_wrap</span><span class="o">&gt;</span><span class="n">dt</span><span class="err">'</span><span class="o">);</span>
+	<span class="kt">var</span> <span class="n">lastButtonImg</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">roll</span><span class="o">:</span><span class="n">first</span><span class="err">'</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="sc">'a'</span><span class="o">);</span>
+	<span class="c1">// 팝배너버튼을 클릭 했을 때 </span>
+	<span class="n">bannerButton</span><span class="o">.</span><span class="na">click</span><span class="o">(</span><span class="n">function</span><span class="o">(){</span>
+		<span class="c1">// 숫자버튼 슬라이드부터 재생</span>
+		<span class="n">popBanner</span><span class="o">.</span><span class="na">goToSlide</span><span class="o">(</span><span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">index</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+		<span class="kt">var</span> <span class="n">buttonImg</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">);</span>
+		<span class="c1">// 지금 button _over을 _out로 변경</span>
+		<span class="n">buttonImg</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">,</span> <span class="n">buttonImg</span><span class="o">.</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">).</span><span class="na">replace</span><span class="o">(</span><span class="err">'</span><span class="n">_out</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">_over</span><span class="err">'</span><span class="o">));</span>
+		<span class="c1">// 누른 button의 _out을 _over로 변경</span>
+		<span class="n">lastButtonImg</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">,</span> <span class="n">lastButtonImg</span><span class="o">.</span><span class="na">find</span><span class="o">(</span><span class="err">'</span><span class="n">img</span><span class="err">'</span><span class="o">).</span><span class="na">attr</span><span class="o">(</span><span class="err">'</span><span class="n">src</span><span class="err">'</span><span class="o">).</span><span class="na">replace</span><span class="o">(</span><span class="err">'</span><span class="n">_over</span><span class="err">'</span><span class="o">,</span> <span class="err">'</span><span class="n">_out</span><span class="err">'</span><span class="o">));</span>
+		<span class="n">lastButtonImg</span> <span class="o">=</span> <span class="err">$</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">find</span><span class="o">(</span><span class="sc">'a'</span><span class="o">);</span> <span class="c1">// 지금 버튼</span>
+	<span class="o">});</span>
+	<span class="c1">// 재생버튼을 클릭할 떼</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">playBtn</span><span class="err">'</span><span class="o">).</span><span class="na">on</span><span class="o">(</span><span class="err">'</span><span class="n">click</span><span class="err">'</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+		<span class="n">popBanner</span><span class="o">.</span><span class="na">startAuto</span><span class="o">();</span>    <span class="c1">// 슬라이드 재생</span>
+	<span class="o">});</span>
+	<span class="c1">// 정지버튼을 클릭할 때</span>
+	<span class="err">$</span><span class="o">(</span><span class="err">'</span><span class="o">.</span><span class="na">stopBtn</span><span class="err">'</span><span class="o">).</span><span class="na">on</span><span class="o">(</span><span class="err">'</span><span class="n">click</span><span class="err">'</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+		<span class="n">popBanner</span><span class="o">.</span><span class="na">stopAuto</span><span class="o">();</span>    <span class="c1">// 슬라이드 정지</span>
+	<span class="o">});</span>	
+<span class="o">});</span>
+</code></pre></div></div>
+:ET

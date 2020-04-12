@@ -1,0 +1,180 @@
+I"�E<h1 id="cookie"><a href="">cookie</a></h1>
+
+<h2 id="setcookie">SetCookie</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>		
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>SetCookie<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;b&gt;</span>Simple Cookie Example<span class="nt">&lt;/b&gt;&lt;hr/&gt;</span>
+<span class="nt">&lt;%</span>	
+	<span class="c1">// 1. Cookie 객체 생성</span>
+	<span class="nc">Cookie</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"yourId"</span><span class="o">,</span> <span class="s">"xxxx"</span><span class="o">);</span>
+	<span class="c1">// 2. 속성 부여(선택)</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
+	<span class="c1">// 3. 클라이언트에 쿠키 전송</span>
+	<span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;br&gt;&lt;a</span> <span class="na">href=</span><span class="s">"01_GetCookie.jsp"</span><span class="nt">&gt;</span>쿠키검색<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="getcookie">GetCookie</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>GetCookie<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>	
+<span class="nt">&lt;h1&gt;</span>Cookie 정보 알아내기<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h4&gt;</span>다음은 클라이언트 브라우저의 쿠키에서 얻어온 값 : <span class="nt">&lt;/h4&gt;&lt;br&gt;&lt;br&gt;</span>
+<span class="nt">&lt;%</span>	
+	<span class="c1">// 1. 클라이언트로부터 Cookie를 얻어옴 </span>
+	<span class="nc">Cookie</span><span class="o">[]</span> <span class="n">c</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+	<span class="c1">// 2. 쿠키 이름 중에 "yourid"가 있다면 그 쿠키의 값을 출력</span>
+	<span class="c1">// &amp;&amp;로 null값이 false면 뒤를 실행안한다.</span>
+	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">c</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">c</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="k">if</span><span class="o">((</span><span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getName</span><span class="o">()).</span><span class="na">equals</span><span class="o">(</span><span class="s">"yourId"</span><span class="o">)){</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">c</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getValue</span><span class="o">()</span> <span class="o">+</span> <span class="s">"님 접속중"</span><span class="o">);</span>		
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;br&gt;&lt;a</span> <span class="na">href=</span><span class="s">"01_ChangeCookie.jsp"</span><span class="nt">&gt;</span>쿠키값 변경<span class="nt">&lt;/a&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;br&gt;&lt;a</span> <span class="na">href=</span><span class="s">"01_RemoveCookie.jsp"</span><span class="nt">&gt;</span>쿠키제거<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="changecookie">ChangeCookie</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.net.URLEncoder"</span> <span class="nt">%&gt;</span>
+<span class="c">&lt;!-- 쿠키는 response로 전송해서 저장하고 쿠키를 받아올때는 request로 받아온다 --&gt;</span>		
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>ChangeCookie<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>	
+<span class="nt">&lt;b&gt;</span>Simple Cookie Example<span class="nt">&lt;/b&gt;&lt;hr&gt;</span>
+<span class="nt">&lt;%</span>	
+	<span class="c1">// 그 이름과 새 값으로 새 쿠키를 만들고 전송</span>
+	<span class="nc">Cookie</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"yourId"</span><span class="o">,</span> <span class="s">"yyyy"</span><span class="o">);</span>
+	<span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;br&gt;&lt;a</span> <span class="na">href=</span><span class="s">"01_GetCookie.jsp"</span><span class="nt">&gt;</span>쿠키검색<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="removecookie">RemoveCookie</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>	
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>RemoveCookie<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;b&gt;</span>Simple Cookie Example<span class="nt">&lt;/b&gt;&lt;hr&gt;</span>
+<span class="nt">&lt;%</span>	
+	<span class="c1">// 해당 쿠키이름의 쿠키를 만들고 유효시간을 0으로 지정하고 전송</span>
+	<span class="nc">Cookie</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"yourId"</span><span class="o">,</span> <span class="s">""</span><span class="o">);</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+	<span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;br&gt;&lt;a</span> <span class="na">href=</span><span class="s">"01_GetCookie.jsp"</span><span class="nt">&gt;</span>쿠키검색<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="loginform">LoginForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>LoginForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>로그인 확인하기<span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"02_LoginService.jsp"</span> <span class="na">method=</span><span class="s">"get"</span><span class="nt">&gt;</span>
+	사용자: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'User'</span> <span class="na">type=</span><span class="s">'text'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	비밀번호: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'Pass'</span> <span class="na">type=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'login'</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="loginservice">LoginService</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>LoginService<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 이전화면 폼에서 넘겨받는 값</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"User"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"Pass"</span><span class="o">);</span>
+
+	<span class="c1">// 실제로는 DB에서 가져와야하는 값</span>
+	<span class="nc">String</span> <span class="n">saveUser</span> <span class="o">=</span> <span class="s">"woolin"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">savePass</span> <span class="o">=</span> <span class="s">"1234"</span><span class="o">;</span>
+
+	<span class="c1">// user, password가 같을 때 로그인 성공, 그렇지 않으면 로그인 실패</span>
+	<span class="k">if</span><span class="o">((</span><span class="n">user</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">saveUser</span><span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">pass</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">savePass</span><span class="o">)))</span> <span class="o">{</span>
+		<span class="c1">// 1. Cookie 객체 생성</span>
+		<span class="nc">Cookie</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"user"</span><span class="o">,</span> <span class="s">"saveUser"</span><span class="o">);</span>
+		<span class="c1">// 2. 속성 부여(선택)</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">setMaxAge</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
+		<span class="c1">// 3. 클라이언트에 쿠키 전송</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+
+	<span class="nt">&lt;h2&gt;&lt;%=</span> <span class="n">user</span> <span class="nt">%&gt;</span>님, 성공적으로 로그인하셨슴다...<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"02_MainPage.jsp"</span><span class="nt">&gt;</span>들어가기<span class="nt">&lt;/a&gt;</span>
+	
+<span class="nt">&lt;%</span>
+	<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+<span class="nt">%&gt;</span>
+
+	<span class="nt">&lt;h2&gt;</span>로그인에 실패했슴다...<span class="nt">&lt;/h2&gt;</span>
+	<span class="nt">&lt;p&gt;&lt;a</span> <span class="na">href=</span><span class="s">"02_LoginForm.jsp"</span><span class="nt">&gt;</span>되돌아가기<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="o">}</span>			
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="mainpage">MainPage</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>MainPage<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="c1">// 1. 클라이언트로부터 Cookie를 받아옴</span>
+	<span class="nc">Cookie</span><span class="o">[]</span> <span class="n">c</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+	
+	<span class="c1">// 2. 쿠키 이름 중에 "saveUser"가 있다면 그 쿠키의 값을 얻어와 변수에 저장</span>
+	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">c</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">c</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="k">if</span><span class="o">((</span><span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">getName</span><span class="o">()).</span><span class="na">equals</span><span class="o">(</span><span class="s">"saveUser"</span><span class="o">)){</span>
+			<span class="n">user</span> <span class="o">=</span> <span class="n">c</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">getValue</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 3. user가 null이면 sendRedirect해준다.</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">user</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"02_LoginForm.jsp"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="nt">%&gt;</span>
+
+	<span class="nt">&lt;h2&gt;</span>이 페이지는 로그인을 하셔야만 볼 수 있는 페이지 입니다<span class="nt">&lt;/h2&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;%=</span> <span class="n">user</span> <span class="nt">%&gt;</span>님, 로그인 중입니다.
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

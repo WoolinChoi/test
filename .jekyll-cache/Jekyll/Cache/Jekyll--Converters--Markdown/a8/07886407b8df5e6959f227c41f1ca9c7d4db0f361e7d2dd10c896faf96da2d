@@ -1,0 +1,152 @@
+I""6<h1 id="multi"><a href="">multi</a></h1>
+
+<h2 id="func">func</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+[ 파이썬에서 쓰레드 생성 방법 ]
+1- threading.Thread의 생성자에 호출할 객체를 target으로 지정 ( 주로 사용되는 듯 )
+2- threading.Thread의 서브클래스를 만들고 run() 오버라이딩   ( 우리에게 익숙 )
+
+[ 파이썬 쓰레드의 특성 ]
+    1. 파이썬은 GIL(Global Interpreter Lock) 특성의 제약사항으로
+        파이썬의 스레드는 병렬 실행 효과를 가지지 않는다.
+    2. 쓰레드는 종료하는 terminate() 함수가 없단다.
+        ( 쓰레드에서 없다는 것이지 다른 대체 방식은 존재한다.
+          지속적으로 발전하고 변경되기에 추후 상황을 다시 확인해야 합니다 )
+
+    파이썬 쓰레드의 주요 메소드
+        - start()
+        - run()
+        - join()
+        - getName()
+        - setName()
+        - is_alive()
+        - isDaemon()
+"""</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">tname</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'쓰레드 </span><span class="si">%</span><span class="s">s : </span><span class="si">%</span><span class="s">d 번째 </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">(),</span> <span class="n">n</span><span class="p">,</span> <span class="n">tname</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="c1"># 1. 일반메소드 호출하듯이
+</span>    <span class="n">func</span><span class="p">(</span><span class="s">'나는 메인'</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'------------------------------------'</span><span class="p">)</span>
+
+    <span class="c1"># 2. 쓰레드 호출하듯이
+</span>    <span class="n">p</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">'만든쓰레드'</span><span class="p">,))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">메인종료'</span><span class="p">)</span>
+
+<span class="s">"""
+[참고] 자바처럼 sleep()메소드는 쓰레드이 있는 것이 아니라 time 모듈에 있는 거 사용해야 하나
+    import time
+    time.sleep(2)  - 2초
+"""</span>
+</code></pre></div></div>
+
+<h2 id="class">class</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">class</span> <span class="nc">MyThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>  <span class="c1"># threading.Thread 클래스 상속
+</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tname</span><span class="p">):</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># 반드시 부모 함수 호출하여 (기본값 초기화해야 한다)
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">tname</span> <span class="o">=</span> <span class="n">tname</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># 오버라이딩
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tname</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="c1"># print(self.tname, ' : ', str(i)) # 문자열 붙이는 방식과 다르군 ( 이거실행 range(5)만해도 됨 )
+</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">MyThread</span><span class="p">(</span><span class="s">'차틀만들기'</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">MyThread</span><span class="p">(</span><span class="s">'엔진부착'</span><span class="p">)</span>
+    <span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">t2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="s">"""
+    # print('------------ main 함수 종료--------------')
+    t1.join()
+    t2.join()
+    print('------------ main 함수 종료--------------')
+    """</span>
+
+<span class="s">"""
+[참고] 동기화를 하기 위해 threading.Event() 사용하면 된다지만 
+"""</span>
+</code></pre></div></div>
+
+<h2 id="timer">timer</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    threading.Timer
+        - 일정 시간 경과 후에 쓰레드 실행
+"""</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">thread_func</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Thread....'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">thread_func</span><span class="p">)</span> <span class="c1"># 5초후에 쓰레드를 시작
+</span>    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1"># 3초후에 취소하면 5초후에 시작하려는 쓰레드가 취소되어 아무것도 출력되지 않는다
+</span>    <span class="c1"># time.sleep(3)
+</span>    <span class="c1"># t.cancel()
+</span></code></pre></div></div>
+
+<h2 id="multiprocessing">multiprocessing</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    기존의 파이썬은 여러 모듈에서 프로세스를 다루는 함수와 메소드를 따로 제공하여 중복성이 심했다고 한다.
+    파이썬은 multiprocessing 모듈이 thread 모듈보다 나중에 설계되었다고 한다.
+
+    파이썬은 병렬처리를 위해 쓰레드를 사용하지 않고 multiprocessing 모듈을 사용한다.
+    multiprocessing 모듈은 스레딩 모듈과 유사한 API를 사용한다.
+    또한 스레드 대신 하위 프로세스를 사용하여 전역 인터프리터 잠금을 효과적으로 처리한다.
+    유닉스 계열과 윈도우 모두 실행된다.
+"""</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">tname</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'프로세스 </span><span class="si">%</span><span class="s">s : '</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()),</span> <span class="n">tname</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">func</span><span class="p">(</span><span class="s">'나는 메인'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">'나는 별도의 프로세스'</span><span class="p">,))</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="c1"># p.join() # 추후에 확인
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">'메인종료'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="terminate">terminate</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">tname</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'프로세스 </span><span class="si">%</span><span class="s">s : '</span> <span class="o">%</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()),</span> <span class="n">tname</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">loopy</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">func</span><span class="p">(</span><span class="s">'반복구문 시작'</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s"> Number </span><span class="si">%</span><span class="s">s of </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">func</span><span class="p">(</span><span class="s">'나는 메인'</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">loopy</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">'나는 반복구문'</span><span class="p">,))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'메인종료'</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

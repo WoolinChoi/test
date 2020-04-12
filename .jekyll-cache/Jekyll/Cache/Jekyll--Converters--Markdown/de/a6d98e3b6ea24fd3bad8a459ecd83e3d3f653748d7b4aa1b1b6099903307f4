@@ -1,0 +1,344 @@
+I"��<h1 id="network3"><a href="">network3</a></h1>
+
+<h2 id="chatserver-implements-runnable">ChatServer implements Runnable</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChatServer</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>
+	<span class="nc">ArrayList</span> <span class="n">vc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ServerSocket</span> <span class="n">ss</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">ss</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerSocket</span><span class="o">(</span><span class="mi">1234</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+		<span class="o">}</span>
+		
+		<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Socket</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Client 가 접속시도 :"</span> <span class="o">+</span> <span class="n">s</span><span class="o">);</span>
+				
+				<span class="nc">ChatService</span> <span class="n">cs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ChatService</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+				<span class="n">cs</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+				<span class="c1">// ArrayList를 줌으로써 채팅방이 계속 늘어난다.</span>
+				<span class="n">vc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cs</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// run ends</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="o">[]</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ChatServer</span> <span class="n">cs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ChatServer</span><span class="o">();</span>
+		<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="n">cs</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+<span class="kd">class</span> <span class="nc">ChatService</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">myname</span> <span class="o">=</span> <span class="s">"quest"</span><span class="o">;</span>
+		<span class="nc">BufferedReader</span> <span class="n">in</span><span class="o">;</span>
+		<span class="nc">OutputStream</span> <span class="n">out</span><span class="o">;</span>
+		
+		<span class="nc">ChatService</span><span class="o">(</span><span class="nc">Socket</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+				<span class="n">out</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+		<span class="o">}</span> <span class="c1">// 생성자 종료</span>
+		
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">msg</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+				<span class="nc">StringTokenizer</span> <span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+				
+				<span class="k">if</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">countTokens</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">();</span>
+					
+					<span class="k">if</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">"/name"</span><span class="o">))</span> <span class="o">{</span>
+						<span class="n">temp</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">();</span>
+						<span class="n">putMessageAll</span><span class="o">(</span><span class="n">myname</span> <span class="o">+</span> <span class="s">"님의 이름이 "</span> <span class="o">+</span> <span class="n">temp</span> <span class="o">+</span> <span class="s">"으로 바뀌었습니다."</span><span class="o">);</span>
+						<span class="n">myname</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+						
+						<span class="c1">// 추가2: 멤버 목록 추가</span>
+						<span class="n">changeList</span><span class="o">();</span>
+						<span class="k">continue</span><span class="o">;</span>
+					<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"&gt;"</span><span class="o">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+						<span class="nc">String</span> <span class="n">towhom</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+						<span class="n">temp</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">();</span>
+						<span class="n">putMessageTo</span><span class="o">(</span><span class="n">towhom</span><span class="o">,</span> <span class="s">"(속삭임)"</span> <span class="o">+</span> <span class="n">temp</span><span class="o">);</span>
+						<span class="k">continue</span><span class="o">;</span>
+					<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">"/start"</span><span class="o">))</span> <span class="o">{</span>
+						<span class="c1">// 추가	</span>
+						<span class="c1">// 방에 처음 들어왔을때 멤버들에게 인사</span>
+						<span class="n">myname</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">();</span>
+						<span class="n">putMessageAll</span><span class="o">(</span><span class="n">myname</span> <span class="o">+</span> <span class="s">"님이 입장하셨습니다"</span><span class="o">);</span>
+	
+						<span class="c1">// 추가2: 멤버 목록 보여주기</span>
+						<span class="n">changeList</span><span class="o">();</span>
+						<span class="k">continue</span><span class="o">;</span>
+					<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">temp</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">"/exit"</span><span class="o">))</span> <span class="o">{</span>
+						<span class="c1">// 추가3: 클라이언트측에서 종료할때</span>
+						<span class="n">putMessageAll</span><span class="o">(</span><span class="n">myname</span> <span class="o">+</span> <span class="s">"님이 퇴실하셨습니다"</span><span class="o">);</span>
+						
+						<span class="c1">// 추가4: 멤버목록에서 제거</span>
+						<span class="n">vc</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>						
+						<span class="n">changeList</span><span class="o">();</span>
+						<span class="k">continue</span><span class="o">;</span>
+					<span class="o">}</span>
+				<span class="o">}</span>
+				<span class="n">putMessageAll</span><span class="o">(</span><span class="n">myname</span> <span class="o">+</span> <span class="s">"&gt;"</span> <span class="o">+</span> <span class="n">msg</span><span class="o">);</span>
+			
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span><span class="k">return</span><span class="o">;}</span>
+			
+		<span class="o">}</span>
+	<span class="o">}</span><span class="c1">// run ends</span>
+	
+	<span class="c1">// 추가2: 멤버 목록 보여주기</span>
+	<span class="kt">void</span> <span class="nf">changeList</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"/member  "</span><span class="o">;</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vc</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="nc">ChatService</span> <span class="n">cs</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ChatService</span><span class="o">)</span><span class="n">vc</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+				<span class="n">msg</span> <span class="o">+=</span> <span class="n">cs</span><span class="o">.</span><span class="na">myname</span> <span class="o">+</span> <span class="s">" "</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="n">putMessageAll</span><span class="o">(</span><span class="n">msg</span><span class="o">)</span> <span class="o">;</span> <span class="c1">//&lt;-------  여기서 \n을 절대 주면 안됨</span>
+	<span class="o">}</span>
+
+	<span class="kt">void</span> <span class="nf">putMessageAll</span><span class="o">(</span><span class="nc">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vc</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">ChatService</span> <span class="n">cs</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ChatService</span><span class="o">)</span> <span class="n">vc</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">cs</span><span class="o">.</span><span class="na">putMessage</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">vc</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">--);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// putMessageAll ends</span>
+	
+	<span class="kt">void</span> <span class="nf">putMessageTo</span><span class="o">(</span><span class="nc">String</span> <span class="n">towhom</span><span class="o">,</span> <span class="nc">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vc</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++</span> <span class="o">)</span> <span class="o">{</span>
+			<span class="nc">ChatService</span> <span class="n">cs</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ChatService</span><span class="o">)</span><span class="n">vc</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">towhom</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">cs</span><span class="o">.</span><span class="na">myname</span><span class="o">))</span> <span class="o">{</span>
+				<span class="k">try</span><span class="o">{</span>
+					<span class="n">cs</span><span class="o">.</span><span class="na">putMessage</span><span class="o">(</span><span class="n">towhom</span> <span class="o">+</span> <span class="s">"&gt;"</span> <span class="o">+</span> <span class="n">msg</span><span class="o">);</span>
+					<span class="k">break</span><span class="o">;</span>
+				<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// putMessageTo ends</span>
+	
+	<span class="kt">void</span> <span class="nf">putMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">msg</span><span class="o">)</span>
+		<span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">((</span><span class="n">msg</span> <span class="o">+</span> <span class="s">"\r\n"</span><span class="o">).</span><span class="na">getBytes</span><span class="o">());</span>
+		<span class="o">}</span>
+ <span class="o">}</span> <span class="c1">// ChatService class ends</span>
+<span class="o">}</span> <span class="c1">// ChatServer class ends</span>
+</code></pre></div></div>
+
+<h2 id="chatclient-implements-actionlistener">ChatClient implements ActionListener</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">ChatClient</span> <span class="kd">implements</span> <span class="nc">ActionListener</span><span class="o">,</span> <span class="nc">Runnable</span> <span class="o">{</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	
+	<span class="nc">JTextField</span> <span class="n">connTF</span><span class="o">,</span> <span class="n">sendTF</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">connB</span><span class="o">,</span> <span class="n">sendB</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	
+	<span class="nc">Socket</span> <span class="n">s</span><span class="o">;</span>
+	<span class="nc">BufferedReader</span> <span class="n">in</span><span class="o">;</span>
+	<span class="nc">OutputStream</span> <span class="n">out</span><span class="o">;</span>
+	
+	<span class="c1">// 추가0 : 대화명을 바꾸기</span>
+	<span class="nc">JTextField</span> <span class="n">changeNameTF</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">changeNameB</span><span class="o">;</span>
+	
+	<span class="c1">// 추가2 : 방인원의 대명 보여주기</span>
+	<span class="c1">// 변수 선언</span>
+	<span class="nc">JList</span> <span class="n">memberList</span><span class="o">;</span>
+	<span class="nc">Vector</span> <span class="n">list</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">ChatClient</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"Chat Client"</span><span class="o">);</span>
+		
+		<span class="n">connTF</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">sendTF</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">connB</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"접 속"</span><span class="o">);</span>
+		<span class="n">sendB</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"확 인"</span><span class="o">);</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">15</span><span class="o">,</span><span class="mi">40</span><span class="o">);</span>
+		
+		<span class="c1">// 추가0: 대화명 바꾸기</span>
+		<span class="n">changeNameTF</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"guest"</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+		<span class="n">changeNameB</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"바꾸기"</span><span class="o">);</span>
+		<span class="nc">JPanel</span> <span class="n">p_changeName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_changeName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"대화명 : "</span><span class="o">),</span><span class="s">"West"</span><span class="o">);</span>
+		<span class="n">p_changeName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">changeNameTF</span><span class="o">,</span> <span class="s">"Center"</span><span class="o">);</span>
+		<span class="n">p_changeName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">changeNameB</span><span class="o">,</span> <span class="s">"East"</span><span class="o">);</span>
+		
+		<span class="nc">JPanel</span> <span class="n">p_serverName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_serverName</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">p_serverName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"서버입력 : "</span><span class="o">),</span><span class="s">"West"</span><span class="o">);</span>
+		<span class="n">p_serverName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">connTF</span><span class="o">,</span> <span class="s">"Center"</span><span class="o">);</span>
+		<span class="n">p_serverName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">connB</span><span class="o">,</span> <span class="s">"East"</span><span class="o">);</span>
+		
+		<span class="nc">JPanel</span> <span class="n">p_north</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_north</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_changeName</span><span class="o">);</span>
+		<span class="n">p_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_serverName</span><span class="o">);</span>
+		
+		<span class="nc">JPanel</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p2</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">p2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"메세지입력 : "</span><span class="o">),</span><span class="s">"West"</span><span class="o">);</span>
+		<span class="n">p2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sendTF</span><span class="o">,</span><span class="s">"Center"</span><span class="o">);</span>
+		<span class="n">p2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">sendB</span><span class="o">,</span> <span class="s">"East"</span><span class="o">);</span>
+		
+		<span class="c1">// 추가2 : 방인원의 대명 보여주기</span>
+		<span class="n">memberList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JList</span><span class="o">();</span>
+		<span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">();</span>
+		
+		<span class="nc">JPanel</span> <span class="n">p_east</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"North"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"   우 리 방 멤 버   "</span><span class="o">));</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">memberList</span> <span class="o">);</span>
+		
+		<span class="n">f</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"North"</span><span class="o">,</span> <span class="n">p_north</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">ta</span><span class="o">));</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">p2</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"East"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">p_east</span><span class="o">));</span>
+		
+		<span class="c1">// f.setSize(500, 300);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">pack</span><span class="o">();</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">connTF</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">connB</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">sendTF</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">sendB</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		
+		<span class="c1">// 추가0: 대화명 바꾸기</span>
+		<span class="n">changeNameTF</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">changeNameB</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		
+		<span class="c1">// 윈도우에 x 버튼 처리</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">addWindowListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">WindowAdapter</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">windowClosing</span><span class="o">(</span><span class="nc">WindowEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">isConnected</span><span class="o">())</span> <span class="o">{</span>
+					<span class="k">try</span> <span class="o">{</span>
+						<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"/exit bye\n"</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+						<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+						<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+						<span class="n">s</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+					<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+					<span class="o">}</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span> <span class="c1">// 생성자 종료</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">connTF</span> <span class="o">||</span> <span class="n">o</span> <span class="o">==</span> <span class="n">connB</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">connProc</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">sendTF</span> <span class="o">||</span> <span class="n">o</span> <span class="o">==</span> <span class="n">sendB</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">sendProc</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">changeNameTF</span> <span class="o">||</span> <span class="n">o</span> <span class="o">==</span> <span class="n">changeNameB</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">changeNameProc</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// actionPerformed ends</span>
+	
+	<span class="kt">void</span> <span class="nf">changeNameProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"대화명을 바꿉니다"</span><span class="o">);</span>
+		<span class="c1">// "/name 대화명\n" 서버에 전송</span>
+		<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"/name "</span> <span class="o">+</span> <span class="n">changeNameTF</span><span class="o">.</span><span class="na">getText</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"실패"</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kt">void</span> <span class="nf">connProc</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		JOptionPane.showMessageDialog(null, "서버에 접속합니다");</span>
+		<span class="c1">// 소켓생성 및 입출력 스트림 얻어오기</span>
+		<span class="c1">// 무조건 예외처리</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">s</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">s</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Socket</span><span class="o">(</span><span class="n">connTF</span><span class="o">.</span><span class="na">getText</span><span class="o">(),</span> <span class="mi">1234</span><span class="o">);</span>
+			<span class="n">out</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
+			<span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">()));</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"접속성공"</span><span class="o">);</span>
+			
+			<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">this</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+			
+			<span class="n">enterRoom</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"접속실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// connProc endssd</span>
+	
+	<span class="kt">void</span> <span class="nf">enterRoom</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// "\start 대화명 \n"</span>
+		<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"/start "</span> <span class="o">+</span> <span class="n">changeNameTF</span><span class="o">.</span><span class="na">getText</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"실패"</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">while</span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">isConnected</span><span class="o">())</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+				<span class="nc">StringTokenizer</span> <span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+				<span class="nc">String</span> <span class="n">keyword</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">();</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">keyword</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"/member"</span><span class="o">))</span> <span class="o">{</span>
+					<span class="c1">// 뒤의 단어를 리스트 출력</span>
+<span class="c1">//					memberList.removeAll();</span>
+					<span class="n">list</span><span class="o">.</span><span class="na">removeAllElements</span><span class="o">();</span>
+					<span class="k">while</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">hasMoreTokens</span><span class="o">())</span> <span class="o">{</span>
+						<span class="c1">// 각 대화명들이 Vector 추가</span>
+						<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">());</span>
+					<span class="o">}</span>
+					<span class="n">memberList</span><span class="o">.</span><span class="na">setListData</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+					<span class="k">continue</span><span class="o">;</span>
+				<span class="o">}</span>
+				<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">msg</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+				<span class="k">return</span><span class="o">;</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kt">void</span> <span class="nf">sendProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"메세지를 전송합니다"</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">sendTF</span><span class="o">.</span><span class="na">getText</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">getBytes</span><span class="o">());</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"메세지전송 실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// sendProc ends</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">new</span> <span class="nf">ChatClient</span><span class="o">();</span>
+
+	<span class="o">}</span>
+<span class="o">}</span> <span class="c1">// ChatClient ends</span>
+</code></pre></div></div>
+:ET

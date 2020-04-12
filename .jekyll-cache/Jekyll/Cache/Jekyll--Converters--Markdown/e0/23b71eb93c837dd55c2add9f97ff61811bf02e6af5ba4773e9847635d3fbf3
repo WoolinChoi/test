@@ -1,0 +1,58 @@
+I"'<h1 id="sample"><a href="">sample</a></h1>
+
+<h2 id="awttest-extends-jframe">AwtTest extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Java GUI
+ *     - AWT - 1.2 이전
+ *     - Swing - 1.2 이후
+ *     
+ * Java - Write Once Run Anywhere
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AwtTest</span> <span class="kd">extends</span> <span class="nc">JFrame</span><span class="o">{</span>
+	<span class="c1">// 1. 멤버변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b1</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">b2</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JRadioButton</span> <span class="n">cb1</span><span class="o">,</span> <span class="n">cb2</span><span class="o">;</span>
+	<span class="nc">AwtTest</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">(</span><span class="s">"나의 두번째창"</span><span class="o">);</span>
+		<span class="c1">// 2. 객체 생성</span>
+		<span class="n">b1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"OK"</span><span class="o">);</span>
+		<span class="n">b2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Cancel"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">30</span><span class="o">);</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+		<span class="n">cb1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JRadioButton</span><span class="o">(</span><span class="s">"Male"</span><span class="o">);</span>
+		<span class="n">cb2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JRadioButton</span><span class="o">(</span><span class="s">"Female"</span><span class="o">);</span>
+		<span class="nc">ButtonGroup</span> <span class="n">bg</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ButtonGroup</span><span class="o">();</span>
+		<span class="n">bg</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cb1</span><span class="o">);</span>
+		<span class="n">bg</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cb2</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 3. 붙이기</span>
+<span class="c1">//		FlowLayout fl = new FlowLayout(); // 원래 방법</span>
+		<span class="c1">// 한번쓰일 때 한해서만</span>
+<span class="c1">//		setLayout(new FlowLayout()); // 윗줄 상단 중앙에 배치 - 컴포넌트의 크기가 고정 </span>
+<span class="c1">//		setLayout(new GridLayout(3, 2)); // 행과 열에 배치 - 컴포넌트 크기가 변경됨</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span> <span class="c1">// NORTH, SOUTH, CENTER, WEST, EAST 영역에 배치</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b1</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b2</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">tf</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">ta</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="nc">JPanel</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cb1</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cb2</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>
+		<span class="c1">// 4. 화면에 출력</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">480</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">AwtTest</span> <span class="n">at</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AwtTest</span><span class="o">();</span>
+		<span class="n">at</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,190 @@
+I"*s<h1 id="info"><a href="">info</a></h1>
+
+<h2 id="infotest">InfoTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 기본 창 만들기
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoTest</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bAdd</span><span class="o">,</span> <span class="n">bShow</span><span class="o">,</span> <span class="n">bSearch</span><span class="o">,</span> <span class="n">bDelete</span><span class="o">,</span> <span class="n">bCancel</span><span class="o">,</span> <span class="n">bExit</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfId</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">,</span> <span class="n">tfSex</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">;</span>
+	<span class="c1">// 2. 멤버 객체 생성</span>
+	<span class="nc">InfoTest</span><span class="o">()</span> <span class="o">{</span>
+	<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"DBTest"</span><span class="o">);</span>
+	<span class="n">bAdd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Add"</span><span class="o">);</span>
+	<span class="n">bShow</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Show"</span><span class="o">);</span>
+	<span class="n">bSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Search"</span><span class="o">);</span>
+	<span class="n">bDelete</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Delete"</span><span class="o">);</span>
+	<span class="n">bCancel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Cancel"</span><span class="o">);</span>
+	<span class="n">bExit</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Exit"</span><span class="o">);</span>
+	<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>
+	<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+	<span class="n">tfId</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="n">tfTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="n">tfSex</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="n">tfHome</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// South 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bAdd</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bShow</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSearch</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bDelete</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCancel</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bExit</span><span class="o">);</span>
+		<span class="c1">// West 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Name"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"ID"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfId</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Tel"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfTel</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Sex"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfSex</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Age"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Home"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHome</span><span class="o">);</span>
+		<span class="c1">// 프레임영역에 붙이기</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_south</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ta</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">700</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">InfoTest</span> <span class="n">it</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InfoTest</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="infotest2">InfoTest2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 기본 계산기 만들기
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoTest2</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언 </span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JButton</span><span class="o">[]</span> <span class="n">button</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">[</span><span class="mi">15</span><span class="o">];</span>
+	<span class="nc">String</span><span class="o">[]</span> <span class="n">label</span> <span class="o">={</span><span class="s">"1"</span><span class="o">,</span> <span class="s">"2"</span><span class="o">,</span> <span class="s">"3"</span><span class="o">,</span> <span class="s">"4"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">,</span> <span class="s">"6"</span><span class="o">,</span> <span class="s">"7"</span><span class="o">,</span> <span class="s">"8"</span><span class="o">,</span> <span class="s">"9"</span><span class="o">,</span> <span class="s">"+"</span><span class="o">,</span> <span class="s">"0"</span><span class="o">,</span> <span class="s">"="</span><span class="o">,</span> <span class="s">"-"</span><span class="o">,</span> <span class="s">"*"</span><span class="o">,</span> <span class="s">"/"</span><span class="o">};</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 2. 멤버 객체 선언</span>
+	<span class="nc">InfoTest2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"유치원 계산기"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">button</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">button</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="n">label</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JPanel</span> <span class="n">p_center</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">button</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">button</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>		
+		<span class="c1">// 프레임영역에 붙이기</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_center</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tf</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">350</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">InfoTest2</span> <span class="n">it</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InfoTest2</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="infotest3">InfoTest3</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 기본 창에 이미지 넣기
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoTest3</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bAdd</span><span class="o">,</span> <span class="n">bShow</span><span class="o">,</span> <span class="n">bSearch</span><span class="o">,</span> <span class="n">bDelete</span><span class="o">,</span> <span class="n">bCancel</span><span class="o">,</span> <span class="n">bExit</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfId</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">,</span> <span class="n">tfSex</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">;</span>
+	<span class="c1">// 2. 멤버 객체 생성</span>
+	<span class="nc">InfoTest3</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"DBTest"</span><span class="o">);</span>
+		<span class="n">bAdd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Add"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"src/imgs/a.png"</span><span class="o">));</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">setRolloverIcon</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"src/imgs/b.png"</span><span class="o">));</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">setPressedIcon</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"src/imgs/c.png"</span><span class="o">));</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">setMnemonic</span><span class="o">(</span><span class="sc">'i'</span><span class="o">);</span> <span class="c1">// Alt + i</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">setVerticalTextPosition</span><span class="o">(</span><span class="nc">JButton</span><span class="o">.</span><span class="na">BOTTOM</span><span class="o">);</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">setHorizontalTextPosition</span><span class="o">(</span><span class="nc">JButton</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">bShow</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Show"</span><span class="o">);</span>
+		<span class="n">bSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Search"</span><span class="o">);</span>
+		<span class="n">bDelete</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Delete"</span><span class="o">);</span>
+		<span class="n">bCancel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Cancel"</span><span class="o">);</span>
+		<span class="n">bExit</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Exit"</span><span class="o">);</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>
+		<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfId</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfSex</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfHome</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// South 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bAdd</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bShow</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSearch</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bDelete</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCancel</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bExit</span><span class="o">);</span>
+		<span class="c1">// West 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Name"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"ID"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfId</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Tel"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfTel</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Sex"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfSex</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Age"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Home"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHome</span><span class="o">);</span>
+		<span class="c1">// 프레임영역에 붙이기</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_south</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ta</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">700</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">InfoTest3</span> <span class="n">it</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InfoTest3</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

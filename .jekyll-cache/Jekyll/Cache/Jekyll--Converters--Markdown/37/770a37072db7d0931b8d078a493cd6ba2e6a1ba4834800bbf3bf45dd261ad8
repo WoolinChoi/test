@@ -1,0 +1,96 @@
+I"�4<h1 id="useful"><a href="">useful</a></h1>
+
+<h2 id="equalsex">EqualsEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EqualsEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Student</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"012345"</span><span class="o">,</span> <span class="s">"홍길동"</span><span class="o">);</span>
+		<span class="nc">Student</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"012345"</span><span class="o">,</span> <span class="s">"홍길동"</span><span class="o">);</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">b</span><span class="o">))</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"동일인"</span><span class="o">);</span>
+		<span class="k">else</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"다른학생"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">b</span><span class="o">);</span> 
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Student</span> <span class="kd">extends</span> <span class="nc">Object</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">hakbum</span><span class="o">,</span> <span class="n">name</span><span class="o">;</span>
+	<span class="c1">// 생성자 함수</span>
+	<span class="nc">Student</span><span class="o">(){}</span>
+	<span class="nc">Student</span><span class="o">(</span><span class="nc">String</span> <span class="n">hakbum</span><span class="o">,</span> <span class="nc">String</span> <span class="n">name</span><span class="o">){</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">hakbum</span> <span class="o">=</span> <span class="n">hakbum</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">// Object에 있는 equals를 바꿔준다</span>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// obj를 Student로 형변환 해준다</span>
+		<span class="nc">Student</span> <span class="n">other</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Student</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">hakbum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">other</span><span class="o">.</span><span class="na">hakbum</span><span class="o">))</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="k">else</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="s">"["</span> <span class="o">+</span> <span class="n">hakbum</span> <span class="o">+</span> <span class="s">"]"</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="cloneex">CloneEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CloneEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="o">{</span><span class="s">"안녕"</span><span class="o">,</span> <span class="s">"헬로우"</span><span class="o">,</span> <span class="s">"올라"</span><span class="o">,</span> <span class="s">"곤니찌와"</span><span class="o">};</span>
+<span class="c1">//		String[] copy = array; // 얕은 복사</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">copy</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span> <span class="c1">// 깉은 복사</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">array</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">copy</span><span class="o">));</span>
+		<span class="n">copy</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="o">;</span>
+		<span class="n">copy</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="s">"Hola"</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">array</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">copy</span><span class="o">));</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="enumtest">EnumTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// enum : 상수들의 모임</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Size</span> <span class="n">size</span> <span class="o">=</span> <span class="nc">Size</span><span class="o">.</span><span class="na">SMALL</span><span class="o">;</span> <span class="c1">// 추후에 화면에서 넘어오는 값</span>
+		<span class="k">switch</span><span class="o">(</span><span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="no">SMALL</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"작은거"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="no">MEDIUM</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"중간거"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="no">LARGE</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"큰거"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">enum</span> <span class="nc">Size</span><span class="o">{</span>
+	<span class="no">SMALL</span><span class="o">,</span>
+	<span class="no">MEDIUM</span><span class="o">,</span>
+	<span class="no">LARGE</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="enumex">EnumEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EnumEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">Names</span> <span class="n">n</span> <span class="o">:</span> <span class="nc">Names</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">job</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="na">salary</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="names">Names</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// enum을 클래스와 유사 사용</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Names</span> <span class="o">{</span>
+	<span class="no">GILDONG</span><span class="o">(</span><span class="s">"개발자"</span><span class="o">){</span>
+		<span class="nc">String</span> <span class="nf">salary</span><span class="o">()</span> <span class="o">{</span><span class="k">return</span> <span class="s">"추가급여대상"</span><span class="o">;}</span>
+	<span class="o">},</span>
+	<span class="no">GILJA</span><span class="o">(</span><span class="s">"디자이너"</span><span class="o">),</span>
+	<span class="no">GILJUN</span><span class="o">(</span><span class="s">"팀장"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">job</span><span class="o">;</span>
+	<span class="nc">Names</span><span class="o">(</span><span class="nc">String</span> <span class="n">job</span><span class="o">)</span> <span class="o">{</span><span class="k">this</span><span class="o">.</span><span class="na">job</span> <span class="o">=</span> <span class="n">job</span><span class="o">;}</span>
+	<span class="nc">String</span> <span class="nf">salary</span><span class="o">()</span> <span class="o">{</span><span class="k">return</span> <span class="s">"고정급여"</span><span class="o">;}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

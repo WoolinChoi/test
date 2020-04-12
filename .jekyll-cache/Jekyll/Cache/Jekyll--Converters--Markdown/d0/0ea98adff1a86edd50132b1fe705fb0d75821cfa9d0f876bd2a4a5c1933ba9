@@ -1,0 +1,221 @@
+I"�R<h1 id="system"><a href="">system</a></h1>
+
+<h2 id="참고">참고</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[참고]  https://docs.python.org/3/
+
+********************************************************************
+@ PATHLIB이 제공하는 클래스
+
+    클래스     이름	        설명	기반                              클래스
+    pathlib.PurePath	    순수 경로 클래스의 기반 클래스	없음
+    pathlib.PurePosixPath	Windows 이외 용도의 순수 경로 클래스	PurePath
+    pathlib.PureWindowsPath	Windows용 순수 경로 클래스	PurePath
+    pathlib.Path	        구상 경로 클래스의 기반 클래스	PurePath
+    pathlib.PosixPath	    Windows 이외 용도의 구상 경로 클래스	PurePosixPath, Path
+    pathlib.WindowsPath	    Windows용 구상 경로 클래스	PureWindowsPath, Path
+
+    PurePath, Path는 인스턴스화하면 플랫폼에 따라 적절한 서브클래스를 반환하므로,
+    명시적으로 서브클래스를 이용하는 경우는 많지 않습니다.
+
+********************************************************************
+@ 구상 경로 다루기 - PATH
+    Path는 구상 경로의 기반 클래스입니다.
+    인스턴스화하면 Windows일 때는 WindowsPath 클래스,
+    Windows가 아닐 때는 PosixPath 클래스의 인스턴스 객체가 됩니다.
+    구상 경로의 기능은 파일 시스템에 접근하기 때문에, 기본적으로 운영체제 상에 조작 대상 파일 경로가 존재해야 합니다.
+
+@ PATH 클래스의 메서드
+    함수 이름	    설명                                                          	반환값
+    Path.cwd()	    현재 디렉터리를 나타내는 경로 객체를 반환한다. 클래스 메서드이다.	경로 객체
+    Path.chmod(mode)경로의 권한(permission)을 변경한다.	                            None
+    Path.exists()	경로가 존재하면 True를 반환한다.	                                bool
+    Path.glob(pattern)	경로가 가리키는 디렉터리 아래의 pattern에 일치하는 파일을 경로 객체로서 반환하는 발생자(generator)를 반환한다.	발생자
+    Path.is_dir()	경로가 디렉터리면 True를 반환한다.                               	bool
+    Path.is.file()	경로가 파일이면 True를 반환한다.	                                bool
+    Path.iterdir()	경로 아래에 존재하는 파일이나 디렉터리를 경로 객체로서 반환하는 발생자를 반환한다.	발생자
+    Path.mkdir(mode=0o777, parents=False)	경로를 새로운 디렉터리로 생성한다.	        None
+    Path.rename(target)	경로의 이름을 변경한다. 인수 target에는 문자열이나 경로 객체를 지정한다.	None
+    Path.resolve()	경로를 절대 경로로 하고, 심볼릭 링크를 해제한다.	                경로 객체
+    Path.rmdir()	경로가 가리키는 디렉터리를 삭제한다.	                            None
+
+
+********************************************************************
+@ 순수 경로 다루기 - PUREPATH
+    PurePath는 순수 경로의 기반 클래스입니다.
+    인스턴스화하면 Windows일 떄는 PureWindowsPath 클래스,
+    Windows가 아닐 떄는 PurePosixPath 클래스의 인스턴스 객체가 됩니다.
+    순수 경로의 기능은 파일 시스템에 접근하지 않기 때문에,
+    운영체제 상에 존재하지 않는 파일 경로를 다룰 수도 있습니다.
+
+--------------------------------------------------------------------
+@ PUREPATH 클래스의 속성
+    속성 이름	        설명	                                반환값
+    PurePath.drive	    WindowsPath일 때는 드라이브              문자
+                        PosixPath일 때 빈 문자를 반환한다.	      str
+    PurePath.root	    루트를 나타내는 문자를 반환한다.	       str
+    PurePath.anchor	    드라이브와 루트를 결합한 문자열을 반환한다.	str
+    PurePath.parents	경로의 상위 경로에 접근할 수 있는 시퀀스이다.	경로 객체를 요소로 하는 시퀀스
+    PurePath.parent	    경로의 바로 위 경로이다.	            경로 객체
+    PurePath.name	    경로 요소의 맨 끝을 나타내는 문자열을 반환한다.	str
+    PurePath.suffix	    경로 요소의 맨 끝에 확장자가 있으면 해당 확장자를 반환한다.	str
+    PurePath.suffixes	경로 요소의 맨 끝 확장자를 리스트로 반환한다.	list
+    PurePath.stem	    경로 요소의 맨 끝에서 확장자를 빼고 반환한다.	str
+
+@ PUREPATH 클래스의 메서드
+    함수 이름	                설명	                                              반환값
+    PurePath.is_absolute()	    경로가 절대 경로이면 True를 반환한다.	                bool
+    PurePath.joinpath(*other)	경로에 인수 other로 지정한 모든 경로를 연결한다.	    경로 객체
+    PurePath.match(pattern)	    glob 형식의 이누 pattern과 일치하면 True를 반환한다.	bool
+</code></pre></div></div>
+
+<h2 id="path">Path</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+ - import pathlib 만 선언하면
+        Path클래스 사용시 pathlib.Path라고 명시해야 한다. 
+"""</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="c1"># p = Path("C:\windows")
+# p = Path(".")   # 현재 경로
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">".."</span><span class="p">)</span>    <span class="c1"># 부모 경로를 찾는다.
+</span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>    <span class="c1"># 상대 경로를 찾는다.
+</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>    <span class="c1"># 부모 경로를 기준으로 자식 경로를 찾는다. 하위 디렉터리와 파일도 자식으로 취급한다.
+</span>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>    <span class="c1"># 하위 파일은 취급하지 않는다.
+</span>        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 위와 동일하게 comprehension 방식
+</span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># (2) glob() 이용
+</span><span class="n">sub</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">"**/*.py"</span><span class="p">))</span>    <span class="c1"># 자손 디렉터리 중에서 py파일만 찾기
+</span><span class="k">print</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+
+<span class="c1"># 자손디렉터리 중에서 data 디렉터리 안에 csv 파일만 찾기
+</span><span class="n">sub</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">"**/data/*.csv"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="purepath">PurePath</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+# Path는 파일 시스템에 접근하기 때문에, 기본적으로 운영체제 상에 조작 대상 파일 경로가 존재해야 합니다.
+# PurePath는 순수 경로의 기반 클래스입니다.
+# 파일 시스템에 접근하지 않기 때문에, 운영체제 상에 존재하지 않는 파일 경로를 다룰 수도 있습니다.
+"""</span>
+<span class="c1">#-------------------------------------------------------------------
+# 1 - 존재하지 않는 파일
+</span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PurePath</span>
+<span class="c1"># p = PurePath("a:/babo/myclass/myjob")     # 윈도우는 \ 경로(파이썬에서는 \도 되고, /됨)
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">PurePath</span><span class="p">(</span><span class="s">"</span><span class="se">\\</span><span class="s">192.168.0.45</span><span class="err">\</span><span class="s">share</span><span class="err">\</span><span class="s">myjob"</span><span class="p">)</span>
+<span class="c1">#-------------------------------------------------------------------
+# 2. 실제 경로로 아닌 가짜 경로를 관리하는 PurePath를 어디에 사용할까?
+# 아마도 경로나 파일명만 조작할 때 사용하지 않을까?
+# 해당 경로나 파일명이 현재 컴퓨터가 아니기에 이름만 관리하는 작업이 필요할 듯 싶다
+</span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">drive</span><span class="p">)</span>
+
+<span class="c1"># 3. 경로 붙이기
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">PurePath</span><span class="p">(</span><span class="s">"mywork"</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/</span> <span class="s">"python"</span> <span class="o">/</span> <span class="s">"myclass"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s">"java"</span><span class="p">,</span> <span class="s">"ourjo"</span><span class="p">,</span> <span class="s">"best"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="n">subdir</span> <span class="o">=</span> <span class="p">{</span><span class="s">"python"</span><span class="p">,</span> <span class="s">"java"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">}</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">subdir</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="c1"># 4. 부모경로 찾기
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">PurePath</span><span class="p">(</span><span class="s">"C:/windows/System32/direvers/etc/hosts"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>    <span class="c1"># 몇번째 부모찾기
+</span><span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parents</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>    <span class="c1"># 자기 위치 위의 경로
+</span></code></pre></div></div>
+
+<h2 id="createpath">createPath</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># ------------------------------------------------
+# 1. 경로의 상태보기
+</span><span class="k">print</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>    <span class="c1"># 현재 경로
+</span><span class="k">print</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>   <span class="c1"># Home 경로, windows C:/users/계정명, 리눅스(hadoop) : /home/hadoop/
+</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"Ex03_createPath.py"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">())</span>    <span class="c1"># 리눅스 스타일
+</span>
+<span class="c1"># ----------------------------------------------------
+# 2. 경로(파일) 생성시간 알아보기
+</span><span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"Ex03_createPath.py"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()[</span><span class="n">stat</span><span class="o">.</span><span class="n">ST_CTIME</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()[</span><span class="n">stat</span><span class="o">.</span><span class="n">ST_CTIME</span><span class="p">]))</span>
+
+<span class="c1"># ------------------------------------------------
+# 3. 디렉토리 생성
+</span><span class="n">p2</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi"</span><span class="p">)</span>
+<span class="n">p2</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">p3</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi2/myclass/python"</span><span class="p">)</span>
+<span class="n">p3</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># ------------------------------------------------
+# 4. 파일 생성
+# imsi / a.txt  파일에 "홍길동 화이팅" 생성
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi/a.txt"</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s">"wt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">"홍길동 화이팅"</span><span class="p">)</span>
+
+<span class="c1"># touch()
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi/z.txt"</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+
+<span class="c1"># a.txt 파일명을 test.txt 파일명으로 변경
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi/test.txt"</span><span class="p">)</span>
+<span class="c1"># p.rename("imsi/test.txt")
+</span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"imsi/test.txt"</span><span class="p">)</span>
+
+<span class="c1"># ------------------------------------------------
+#  5. 경로 제거
+</span><span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi"</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>    <span class="c1"># 빈 디렉터리가 아니면 Error
+</span>
+<span class="c1"># 파일 지우기(imsi/z.txt 지우기)
+</span><span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi/z.txt"</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+
+<span class="c1"># os 모듈
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"imsi/z.txt"</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="etc">etc</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+경로 이동은  Path 모듈로 안되어 os 모듈이 필요하다
+"""</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># print(Path.cwd())
+# os.chdir("C:\Windows")
+# print(Path.cwd())    # os 모듈로 디렉터리를 바꿀 수 있다.
+</span>
+
+<span class="c1"># 리눅스에서 주로 사용
+</span><span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"HOMEPATH"</span><span class="p">])</span>    <span class="c1"># 윈도우경우 \Users\Playdata
+</span><span class="n">sub</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">"hadoop/myproject/myjob"</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">"HOMEPATH"</span><span class="p">],</span> <span class="n">sub</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1">#------------------------------------------------------------
+</span><span class="kn">import</span> <span class="nn">shutil</span>
+<span class="c1"># shutil.rmtree("imsi")    # 비어있지 않은 디렉터리도 지워버림
+# shutil.copy("Ex00.txt", Path("copy.txt"))    # 디렉터리가 존재했을때 파일 copy가 가능
+</span><span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s">"."</span><span class="p">,</span> <span class="s">"../f_copy"</span><span class="p">)</span>    <span class="c1"># 디렉터리까지 copy가 가능
+</span></code></pre></div></div>
+:ET

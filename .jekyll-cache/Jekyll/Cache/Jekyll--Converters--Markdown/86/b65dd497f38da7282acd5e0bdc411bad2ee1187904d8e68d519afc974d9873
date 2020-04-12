@@ -1,0 +1,124 @@
+I"�-<h1 id="closure"><a href="">closure</a></h1>
+
+<h2 id="functionreturn">functionReturn</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>functionReturn<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="c1">//-------------------------------------------------------------------------</span>
+<span class="c1">//  즉시 실행 함수</span>
+<span class="c1">//	 - 함수를 변수에 직접 할당하는 것이 아니라 함수의 결과물을 할당하기 위해 즉시 실행 함수를 사용</span>
+<span class="c1">//	- 추후에 클로져와 관련</span>
+	<span class="kd">var</span> <span class="nx">func</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">num: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">num</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;hr/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}(</span><span class="mi">10</span><span class="p">);</span>
+	
+	<span class="c1">// 자바스크립트는 함수도 리턴할 수 있다.</span>
+<span class="cm">/*
+	var byensu = function(num){
+		var fun = function(){
+			num--;
+			document.write('&gt; num = ' + num + '&lt;br/&gt;');
+		}
+		return fun;
+	}(10);
+*/</span>
+	<span class="c1">// 축약형 : return에 함수를 바로 넣는다.</span>
+	<span class="kd">var</span> <span class="nx">byensu</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+		<span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">num</span><span class="o">--</span><span class="p">;</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&gt; num = </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">num</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">};</span>
+	<span class="p">}(</span><span class="mi">10</span><span class="p">);</span>
+	
+	<span class="nx">byensu</span><span class="p">();</span>
+	<span class="nx">byensu</span><span class="p">();</span>
+	<span class="nx">byensu</span><span class="p">();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="callbackfunction">CallbackFunction</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>CallbackFunction<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="cm">/*  
+	콜백함수란? 함수가 다른 함수의 파라메터로 전달되는 함수
+	콜백함수는 함수가 실행되는 중간에 호출되어 상태 정보를 저장하거나 결과 값을 처리할 때 사용
+*/</span>
+<span class="cm">/*
+	------ 함수 선언
+	function add(){
+		return 100;
+	}
+	
+	------ 함수 호출
+	var result = add(3, 4);
+*/</span>		
+	<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">callFunc</span><span class="p">){</span>
+		<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+		<span class="nx">callFunc</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+		
+		<span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">+</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">result</span><span class="p">;</span>
+		<span class="p">};</span>
+	<span class="p">}</span>
+	
+	<span class="kd">var</span> <span class="nx">returnVar</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">res</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">});</span>
+	
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">리턴결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">returnVar</span><span class="p">());</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="closure-1">Closure</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Closure<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="c1">//----------------------------------------------------------</span>
+<span class="c1">// 4. 지역변수를 참조하는 함수 안에 함수 클로저(closure)		</span>
+<span class="c1">//			전역변수는 특정 함수 몇 개만 공유하지 못하고 전체가 공유하는 변수이다.</span>
+<span class="c1">//			클로저는 특정 함수가 암묵적으로 다른 함수의 참조를 가지고 있기 때문에</span>
+<span class="c1">//			호출되는 함수가 참조하는 함수의 메모리 공간을 참조한다.</span>
+<span class="c1">//			아무튼 클로저를 이용하여 전역변수의 사용을 줄일 수 있다.</span>
+	<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">callFunc</span><span class="p">){</span>
+		<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+		<span class="nx">callFunc</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+		
+		<span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="k">return</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">count</span><span class="o">++</span><span class="p">;</span>
+			<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">+</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">=</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">result</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> &gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">count</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">번째</span><span class="dl">'</span><span class="p">;</span>
+		<span class="p">};</span>
+	<span class="p">}</span>
+	
+	<span class="kd">var</span> <span class="nx">returnVar</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">res</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">});</span>
+	
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">리턴결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">returnVar</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">리턴결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">returnVar</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">리턴결과: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">returnVar</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

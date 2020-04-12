@@ -1,0 +1,363 @@
+I"�<h1 id="session"><a href="">session</a></h1>
+
+<h2 id="loginform">LoginForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>LoginForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>로그인 확인하기 <span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"LoginService.jsp"</span> <span class="na">method=</span><span class="s">"get"</span><span class="nt">&gt;</span>
+	사용자: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'User'</span> <span class="na">type=</span><span class="s">'text'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	비밀번호: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'Pass'</span> <span class="na">type=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'login'</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="loginservice">LoginService</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>LoginService<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 실제로는 DB에서 가져와야하는 값</span>
+	<span class="nc">String</span> <span class="n">saveUser</span> <span class="o">=</span> <span class="s">"woolin"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">savePass</span> <span class="o">=</span> <span class="s">"1234"</span><span class="o">;</span>
+	
+	<span class="c1">// 이전화면 폼에서 넘겨받는 값</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"User"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"Pass"</span><span class="o">);</span>
+			
+	<span class="c1">// user, password가 같을 때 로그인 성공, 그렇지 않으면 로그인 실패</span>
+	<span class="k">if</span><span class="o">((</span><span class="n">user</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">saveUser</span><span class="o">))</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">pass</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">savePass</span><span class="o">))){</span>
+		
+		<span class="c1">// 세션에 "id"라는 이름에 변수 user 값을 저장</span>
+		<span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="n">user</span><span class="o">);</span>
+		
+		<span class="c1">// 로그인 성공하면 바로 MainPage.jsp를 요청</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"MainPage.jsp"</span><span class="o">);</span>
+		
+	<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+		<span class="c1">// 로그인에 실패하면 바로 LoginForm.jsp을 요청</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"LoginForm.jsp"</span><span class="o">);</span>
+	<span class="o">}</span>			
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="mainpage">MainPage</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// "id"로 저장된 세션값을 얻어온다.</span>
+	<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+
+	<span class="c1">// 값이 null이라면 LoginForm.jsp로 페이지 이동</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+		<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"LoginForm.jsp"</span><span class="o">);</span>
+		<span class="k">return</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// null이 아니라면 String 형변환하여 변수에 지정</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span> 
+	
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>MainPage<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span> 이 페이지는 로그인을 하셔야만 볼 수 있는 페이지 입니다 <span class="nt">&lt;/h2&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;%=</span> <span class="n">user</span> <span class="nt">%&gt;</span>님, 로그인 중입니다.
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="getcookie">GetCookie</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>GetCookie<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>	
+<span class="nt">&lt;h1&gt;</span>Cookie 정보 알아내기<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;%</span>	
+	<span class="c1">// 1. 클라이언트로부터 Cookie를 얻어옴 </span>
+	<span class="nc">Cookie</span><span class="o">[]</span> <span class="n">all</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getCookies</span><span class="o">();</span>
+
+	<span class="c1">// 2. 얻어온 쿠키의 이름과 값을 출력</span>
+	<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">all</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">all</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">+</span> <span class="err">"</span><span class="o">--</span><span class="err">&gt;</span><span class="s">" + all[i].getName() + "</span><span class="o">:</span><span class="s">" + all[i].getValue() + "</span><span class="o">&lt;</span><span class="n">br</span><span class="err">&gt;"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="shop">Shop</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>shop<span class="nt">&lt;/title&gt;&lt;/head&gt;</span> 
+<span class="nt">&lt;body&gt;</span> 
+	<span class="nt">&lt;h2&gt;</span>쇼핑 몰<span class="nt">&lt;/h2&gt;</span> 
+	<span class="nt">&lt;h3&gt;</span>가전 제품<span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">'tv-samsung-1020.jsp'</span><span class="nt">&gt;</span>삼성 R14 텔레비젼<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">'ref-lg-2072.jsp'</span><span class="nt">&gt;</span>LG 냉장고<span class="nt">&lt;/a&gt;</span> <span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;/html&gt;</span> 
+</code></pre></div></div>
+
+<h2 id="lg냉장고">LG냉장고</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;html&gt;</span> 
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>Lg냉장고<span class="nt">&lt;/title&gt;&lt;/head&gt;</span> 
+<span class="nt">&lt;body&gt;</span> 
+	<span class="nt">&lt;table&gt;&lt;tr&gt;</span>
+	<span class="nt">&lt;td&gt;&lt;img</span> <span class="na">src=</span><span class="s">'imgs/2072.gif'</span> <span class="na">width=</span><span class="s">'180'</span><span class="nt">&gt;&lt;/td&gt;</span>
+	
+	<span class="nt">&lt;td&gt;</span> 
+	문을 자주 열어도, 음식을 많이 채워도, 
+	역시 LG 싱싱특급~ 
+	- 용량 : 500L (냉장 : 360L, 냉동 : 140L) 
+	- 신감각 가죽 무늬 
+	- 더욱 효율적인 내부 공간 
+	- 얼듯 말듯 싱싱고 
+	- 유러피안 아치 디자인 
+	- 레일 부착 분리형 생생 야채실 
+	- CFC-FREE 환경 친화 설계 
+	- 안전 강화 유리 선반 
+	- 광촉매 파워 탈취 
+	- 인체 공학적 설계 
+	- 방음 보강으로 저소음 설계 
+	- 초절전 설계 
+	- 360。 이동용 회전 바퀴 
+	- 색상 : 진미색 
+	- 에너지 소비 효율 : 1등급 
+	- 소비 전력 : 55 kwh/월 
+	- 크기 : 831 x 1,785 x 699mm
+	<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;&lt;/table&gt;</span> 
+	663,600 원 
+	
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">'Cart.jsp'</span> <span class="na">method=</span><span class="s">'post'</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'id'</span> <span class="na">value=</span><span class="s">"2072"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'name'</span> <span class="na">value=</span><span class="s">"LG 냉장고 R-B50CF"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'price'</span> <span class="na">value=</span><span class="s">"663600"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">"장바구니"</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;/form&gt;</span> 
+<span class="nt">&lt;/body&gt;</span> 
+</code></pre></div></div>
+
+<h2 id="삼성tv">삼성TV</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;html&gt;</span> 
+<span class="nt">&lt;head&gt;&lt;title&gt;</span> 우리 쇼핑몰 <span class="nt">&lt;/title&gt;&lt;/head&gt;</span> 
+<span class="nt">&lt;body&gt;</span> 
+	<span class="nt">&lt;table&gt;&lt;tr&gt;</span>
+	<span class="nt">&lt;td&gt;&lt;img</span> <span class="na">src=</span><span class="s">'imgs/1020.jpg'</span> <span class="na">width=</span><span class="s">'180'</span><span class="nt">&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;td&gt;</span> 
+	^^상품설명^^ 
+	*14" 화면 명품 플러스 
+	*절약형 절전 TV 
+	*Dual스피커 채용의 고감각 디자인 
+	(측면Ear Type)  
+	*초절전 버튼(대기 소비 전력 Zero) 
+	*A/V 입력 단자: 후1 
+	*다기능 간단 리모컨(VTR 조작기능)  
+	*크기: 380 X 325 X 381(mm) 
+	<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;&lt;/table&gt;</span> 
+	 
+	<span class="nt">&lt;pre&gt;</span> 
+	[[ 특징 ]] 
+	*절전 스위치를 내장한 초절전 TV:  
+	대기 소비전력을 0으로 낮추어서 TV 평균 사용 기간인 
+	7년이 지나면 14인치 TV 1대를 구입할 수 있는 금액을 
+	아낄 수 있습니다.  
+	(1일 6시간 시청기준, 월 500KW이상 사용 가정의 경우)  
+	(본 제품은 에너지 절약마크 획득 제품입니다 )  
+	
+	*고감각 디자인:  
+	DUAL 스피커를 채용한 미려한 디자인으로 어디서나 잘 
+	어울리는 고감각 디자인 제품입니다.  
+	
+	*다기능 간단 리모컨 채용:  
+	TV와 VTR을 겸용으로 사용할수 있는 인체공학적 간단 리모컨을 
+	채용하고 있습니다. 
+	
+	<span class="nt">&lt;/pre&gt;</span> 
+	147,000 원 
+	
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">'post'</span> <span class="na">action=</span><span class="s">'Cart.jsp'</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'id'</span> <span class="na">value=</span><span class="s">"1020"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'name'</span> <span class="na">value=</span><span class="s">"삼성 TV CT 14R1"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'price'</span> <span class="na">value=</span><span class="s">"147000"</span><span class="nt">&gt;</span> 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">"장바구니"</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;/form&gt;</span> 
+ <span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;/html&gt;</span> 
+</code></pre></div></div>
+
+<h2 id="cart">Cart</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"shop.cart.Goods"</span> <span class="nt">%&gt;</span> 
+
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+	
+	<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Goods</span><span class="err">&gt;</span> <span class="n">glist</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	
+	<span class="c1">// 1. Form의 값(hidden값) 넘겨받기 (id, name, price)</span>
+	<span class="n">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	<span class="n">price</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"price"</span><span class="o">));</span>
+	
+	<span class="c1">// 2. 세션의 cart 속성을 얻어온다.</span>
+	<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">);</span>
+	
+	<span class="c1">// 3. 만일 cart값이 null이면 ArrayList 객체를 새로 생성하고, 그렇지 않으면 ArrayList 변수(glist)에 지정</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+		<span class="n">glist</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Goods</span><span class="err">&gt;</span><span class="o">();</span>
+	<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+		<span class="n">glist</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Goods</span><span class="err">&gt;</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 4. 1번의 값들을 Goods 객체로 생성후  ArrayList에 추가</span>
+<span class="c1">// 	Goods good = new Goods(id, name, price);</span>
+<span class="c1">// 	glist.add(good);</span>
+	<span class="n">glist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Goods</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">price</span><span class="o">));</span>
+	
+	<span class="c1">// 5. 세션에 cart 라는 이름에 ArrayList를 저장</span>
+	<span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">,</span> <span class="n">glist</span><span class="o">);</span>
+<span class="nt">%&gt;</span>		 
+		 
+<span class="nt">&lt;html&gt;</span> 
+<span class="nt">&lt;body</span> <span class="na">bgcolor=</span><span class="s">white</span><span class="nt">&gt;</span>
+<span class="nt">&lt;%=</span> <span class="n">name</span> <span class="nt">%&gt;</span> 을 구입하셨습니다.
+ 
+<span class="nt">&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+<span class="nt">&lt;tr</span> <span class="na">bgcolor=</span><span class="s">"#e7a068"</span><span class="nt">&gt;&lt;th&gt;</span>상품명<span class="nt">&lt;/th&gt;</span>
+<span class="nt">&lt;th&gt;</span>가격<span class="nt">&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;%</span>
+		<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">glist</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> 
+		<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> 
+			<span class="nc">Goods</span> <span class="n">goods</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Goods</span><span class="o">)</span> <span class="n">glist</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> 
+			<span class="kt">int</span> <span class="n">gp</span> <span class="o">=</span> <span class="n">goods</span><span class="o">.</span><span class="na">getPrice</span><span class="o">();</span> 
+			<span class="n">sum</span> <span class="o">+=</span> <span class="n">gp</span><span class="o">;</span> 
+<span class="nt">%&gt;</span>
+			<span class="nt">&lt;tr&gt;&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span> <span class="nt">&lt;%=</span> <span class="n">goods</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="nt">%&gt;</span> <span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"right"</span><span class="nt">&gt;</span> <span class="nt">&lt;%=</span> <span class="n">gp</span> <span class="nt">%&gt;</span> <span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;%</span>
+		<span class="o">}</span> 		 
+<span class="nt">%&gt;</span>
+
+<span class="nt">&lt;tr</span> <span class="na">bgcolor=</span><span class="s">"#e7a068"</span><span class="nt">&gt;&lt;td</span> <span class="na">colspan=</span><span class="s">"2"</span> <span class="na">align=</span><span class="s">"right"</span><span class="nt">&gt;</span> 총액 : <span class="nt">&lt;%=</span> <span class="n">sum</span>  <span class="nt">%&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+
+[<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"wshop.jsp"</span><span class="nt">&gt;</span>쇼핑하러 가기<span class="nt">&lt;/a&gt;</span>]
+[<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"Buy.jsp"</span><span class="nt">&gt;</span>구입하기<span class="nt">&lt;/a&gt;</span>]
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="buy">Buy</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"shop.cart.Goods"</span> <span class="nt">%&gt;</span> 
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.*"</span> <span class="nt">%&gt;</span>
+
+<span class="nt">&lt;%</span>
+	<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Goods</span><span class="err">&gt;</span> <span class="n">glist</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	
+	<span class="c1">// 1. 세션에서 지정한 cart 속성값을 얻어와서 형변환해서 ArrayList 변수에 지정</span>
+	<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">);</span>
+	<span class="n">glist</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Goods</span><span class="err">&gt;</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+	
+	<span class="c1">// 2. cart가 null 이면 리턴, 그렇지 않으면 세션값 얻어오기</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+	
+	<span class="c1">// 3. 세션에서 속성을 제거한다</span>
+	<span class="n">session</span><span class="o">.</span><span class="na">removeAttribute</span><span class="o">(</span><span class="s">"cart"</span><span class="o">);</span>	
+<span class="nt">%&gt;</span>		 
+ 
+<span class="nt">&lt;html&gt;</span>		
+<span class="nt">&lt;body</span> <span class="na">bgcolor=</span><span class="s">"white"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;table&gt;</span>
+<span class="nt">&lt;tr</span> <span class="na">bgcolor=</span><span class="s">"#e7a068"</span><span class="nt">&gt;&lt;th&gt;</span>상품명<span class="nt">&lt;/th&gt;</span>
+<span class="nt">&lt;th&gt;</span>가격<span class="nt">&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;%</span>
+		<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+		<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">glist</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> 
+		 
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> 
+			<span class="nc">Goods</span> <span class="n">goods</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Goods</span><span class="o">)</span> <span class="n">glist</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> 
+			<span class="kt">int</span> <span class="n">gp</span> <span class="o">=</span> <span class="n">goods</span><span class="o">.</span><span class="na">getPrice</span><span class="o">();</span> 
+			<span class="n">sum</span> <span class="o">+=</span> <span class="n">gp</span><span class="o">;</span> 
+<span class="nt">%&gt;</span>
+			<span class="nt">&lt;tr&gt;&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span> <span class="nt">&lt;%=</span> <span class="n">goods</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"right"</span><span class="nt">&gt;&lt;%=</span> <span class="n">gp</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;%</span>
+		<span class="o">}</span> 	
+<span class="nt">%&gt;</span>
+<span class="nt">&lt;tr</span> <span class="na">bgcolor=</span><span class="s">"#e7a068"</span><span class="nt">&gt;&lt;td</span> <span class="na">colspan=</span><span class="s">"2"</span> <span class="na">align=</span><span class="s">"right"</span><span class="nt">&gt;</span> 총액 : <span class="nt">&lt;%=</span> <span class="n">sum</span> <span class="nt">%&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;br/&gt;&lt;br/&gt;&lt;a</span> <span class="na">href=</span><span class="s">"wshop.jsp"</span><span class="nt">&gt;</span>다시 쇼핑하기<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="goods">Goods</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">shop.cart</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Goods</span> <span class="o">{</span> 
+	<span class="kd">private</span> <span class="nc">String</span>  <span class="n">id</span><span class="o">;</span>	 
+	<span class="kd">private</span> <span class="nc">String</span>  <span class="n">name</span><span class="o">;</span> 
+	<span class="kd">private</span> <span class="kt">int</span>     <span class="n">price</span><span class="o">;</span> 
+	 
+	<span class="kd">public</span> <span class="nf">Goods</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">,</span> <span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span> 
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span> 
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span> 
+		<span class="k">this</span><span class="o">.</span><span class="na">price</span> <span class="o">=</span> <span class="n">price</span><span class="o">;</span> 
+	<span class="o">}</span> 
+		 
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPrice</span><span class="o">(</span><span class="kt">int</span> <span class="n">price</span><span class="o">)</span> <span class="o">{</span> 
+		<span class="k">this</span><span class="o">.</span><span class="na">price</span> <span class="o">=</span> <span class="n">price</span><span class="o">;</span> 
+	<span class="o">}</span> 
+		 
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span> 
+		<span class="k">return</span> <span class="n">id</span><span class="o">;</span> 
+	<span class="o">}</span> 
+	 
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span> 
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span> 
+	<span class="o">}</span> 
+	 
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getPrice</span><span class="o">()</span> <span class="o">{</span> 
+		<span class="k">return</span> <span class="n">price</span><span class="o">;</span> 
+	<span class="o">}</span>	 
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

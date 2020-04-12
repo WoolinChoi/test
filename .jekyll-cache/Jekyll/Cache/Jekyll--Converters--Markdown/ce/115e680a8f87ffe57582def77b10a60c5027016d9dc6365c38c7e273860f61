@@ -1,0 +1,28 @@
+I"9
+<h1 id="oracle"><a href="">oracle</a></h1>
+
+<h2 id="oracle-1">oracle</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">설치</span><span class="p">)</span> <span class="p">(</span><span class="n">bDBConn</span><span class="p">)</span> <span class="n">D</span><span class="p">:</span>\<span class="n">mywork</span>\<span class="n">python</span>\<span class="n">bDBConn</span><span class="o">&gt;</span><span class="n">pip</span> <span class="n">install</span> <span class="n">cx_Oracle</span>
+<span class="s">"""
+    [ 절차 ]
+        1. 데이타베이스 Connection 생성
+        2. 커서 생성 ( 커서 : sql 명령어를 실행시켜 주는 객체 )
+        3. sql 문장 만들기
+        4. sql 문장 실행
+        5. 커밋 ( 트랜젝션의 내용을 DB에 반영함 )
+        6. Connection 닫기
+"""</span>
+
+<span class="kn">import</span> <span class="nn">cx_Oracle</span> <span class="k">as</span> <span class="n">oci</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">oci</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"scott/tiger@192.168.0.170:1521/orcl"</span><span class="p">)</span>
+<span class="c1"># print(conn.version)    # 버전확인
+</span><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM emp"</span>
+<span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">datas</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">datas</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+:ET

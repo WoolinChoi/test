@@ -1,0 +1,162 @@
+I"}I<h1 id="oop"><a href="">oop</a></h1>
+
+<h2 id="object">Object</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Object<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="cm">/* 
+	객체리터럴 
+	- 장점 : 별도의 클래스 선언 같은 구조 없음 -&gt; 구성이 자유롭다
+	- 단점 : 구조가 미리 정의가 없으므로 구조 파악이 어렵고 재사용이 불가능
+*/</span>
+	<span class="c1">// 1-방식</span>
+	<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+	<span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">홍길자</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nx">obj</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+	<span class="nx">obj</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">님은 </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">세 입니다</span><span class="dl">'</span>
+	<span class="p">}</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">display</span><span class="p">());</span>
+	
+	<span class="c1">// 2-방식</span>
+	<span class="kd">var</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">홍길동</span><span class="dl">'</span><span class="p">,</span> <span class="na">age</span> <span class="p">:</span> <span class="mi">33</span><span class="p">};</span>
+	<span class="nx">obj2</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">님은 </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">세 입니다</span><span class="dl">'</span>
+	<span class="p">}</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">display</span><span class="p">());</span>
+	
+	<span class="c1">// 3-방식</span>
+	<span class="kd">var</span> <span class="nx">obj3</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+	<span class="nx">obj3</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">홍길순</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nx">obj3</span><span class="p">[</span><span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">44</span><span class="p">;</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj3</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+	<span class="nx">out</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">이름: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj3</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nx">out</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">나이: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj3</span><span class="p">[</span><span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">out</span><span class="p">);</span>
+	
+	<span class="c1">// with은 객체명을 안써도 된다.</span>
+	<span class="kd">var</span> <span class="nx">out</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+	<span class="kd">with</span><span class="p">(</span><span class="nx">obj3</span><span class="p">){</span>
+		<span class="nx">out</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">이름2: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">;</span>
+		<span class="nx">out</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1">나이2: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">age</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">out</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="prototype">Prototype</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Prototype<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 1. 클래스 선언 - 생성자 함수를 이용(변수명을 첫글자 대문자로 권장)</span>
+	<span class="kd">var</span> <span class="nx">Student</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">kor</span><span class="p">,</span> <span class="nx">eng</span><span class="p">,</span> <span class="nx">math</span><span class="p">){</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">kor</span> <span class="o">=</span> <span class="nx">kor</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">eng</span> <span class="o">=</span> <span class="nx">eng</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">math</span> <span class="o">=</span> <span class="nx">math</span><span class="p">;</span>
+		
+		<span class="c1">// sum을 추가한다.</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="k">return</span> <span class="nx">kor</span> <span class="o">+</span> <span class="nx">eng</span> <span class="o">+</span> <span class="nx">math</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// ####[1] display 동적메소드 추가</span>
+<span class="cm">/*
+	var s1 = new Student('홍길동', 90, 80, 70);
+	document.write(s1.name + '의 총점: ' + s1.sum() + '&lt;br/&gt;');
+	
+	s1['display'] = function(){
+		return this.name + '의 성적은 ' + this.kor + '/' + this.eng + '/' + this.math; 
+	}
+	document.write(s1.display() + '&lt;br/&gt;');
+	
+	var s2 = new Student('홍길자', 88, 77, 66);
+	document.write(s2.name + '의 총점: ' + s2.sum() + '&lt;br/&gt;');
+	document.write(s2.display() + '&lt;br/&gt;'); // s1에서 추가한 동적메소드는 호출이 되지 않는다.
+*/</span>
+	<span class="c1">// ####[2] prototype 선언</span>
+<span class="cm">/*
+	Student.prototype.display = function(){
+		return this.name + '의 성적은 ' + this.kor + '/' + this.eng + '/' + this.math; 
+	}
+	Student.prototype.sum = function(){
+		return this.kor + this.eng + this.math;
+	}
+*/</span>
+	<span class="c1">// 축약형 : var obj = {key : value, key2 : value};</span>
+	<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="na">sum</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">kor</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">eng</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">math</span><span class="p">;},</span>
+		<span class="na">display</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">의 성적은 </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">kor</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">eng</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">math</span><span class="p">;}</span>
+	<span class="p">}</span>
+	
+	<span class="kd">var</span> <span class="nx">s1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="dl">'</span><span class="s1">홍길동</span><span class="dl">'</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">70</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">의 총점: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">sum</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">display</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="dl">'</span><span class="s1">홍길자</span><span class="dl">'</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">66</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">의 총점: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">sum</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">display</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s1</span><span class="p">);</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s2</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="inherit">Inherit</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Inherit<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// ####[1] 부모클래스</span>
+	<span class="kd">var</span> <span class="nx">Animal</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
+	<span class="nx">Animal</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="na">move</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">동물은 움직인다 &lt;br/&gt;</span><span class="dl">'</span><span class="p">);},</span>
+		<span class="na">sound</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">울부짖다 &lt;br/&gt;</span><span class="dl">'</span><span class="p">);}</span>
+	<span class="p">};</span>
+	
+	<span class="c1">// ####[2] 자식클래스</span>
+	<span class="kd">var</span> <span class="nx">Dog</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span> <span class="c1">// 메소드 생성</span>
+	<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animal</span><span class="p">();</span> <span class="c1">// 상속 </span>
+	
+	<span class="c1">// 상속하면 부모가 가진 메소드를 가지고 올 수 있다.</span>
+	<span class="kd">var</span> <span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">();</span> <span class="c1">// 객체 생성</span>
+	<span class="nx">dog</span><span class="p">.</span><span class="nx">move</span><span class="p">();</span>
+	<span class="c1">// 오버라이딩 : 부모가 가진 메소드를 재정의 해준다.</span>
+	<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sound</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">멍멍짖다&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nx">dog</span><span class="p">.</span><span class="nx">sound</span><span class="p">();</span>
+	
+	<span class="c1">// 부모에게 없는 메소드를 추가할 수 있다.</span>
+	<span class="nx">Dog</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">tail</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">꼬리를 흔든다&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nx">dog</span><span class="p">.</span><span class="nx">tail</span><span class="p">();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

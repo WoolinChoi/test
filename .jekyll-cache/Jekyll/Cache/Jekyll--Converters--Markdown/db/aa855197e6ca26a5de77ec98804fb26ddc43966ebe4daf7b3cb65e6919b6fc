@@ -1,0 +1,122 @@
+I"�G<h1 id="iojson"><a href="">ioJson</a></h1>
+
+<h2 id="guitest">GuiTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.simple.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.json.simple.parser.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.objectstream.person</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">MyFrame</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 변수선언</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">,</span> <span class="n">tfJumin</span><span class="o">,</span> <span class="n">tfGender</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bSave</span><span class="o">,</span> <span class="n">bOpen</span><span class="o">;</span>
+	<span class="c1">// 객체 생성</span>
+	<span class="kd">public</span> <span class="nf">MyFrame</span><span class="o">(){</span>		
+		<span class="kd">super</span><span class="o">(</span><span class="s">"나의 첫 화면"</span><span class="o">);</span>
+		<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfJumin</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfGender</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfHome</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">bSave</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"저장하기"</span><span class="o">);</span>
+		<span class="n">bOpen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"읽어오기"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 화면구성 및 보여주기</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addLayout</span><span class="o">(){</span>
+		<span class="nc">JPanel</span> <span class="n">p_center</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"이름"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"전화"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfTel</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"주민"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfJumin</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"성별"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfGender</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"나이"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"출신지"</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHome</span><span class="o">);</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSave</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bOpen</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_center</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_south</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 연결</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="cm">/* 이벤트 핸들러 객체 생성*/</span>
+		<span class="nc">BtnHandler</span> <span class="n">bHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BtnHandler</span><span class="o">();</span>
+		<span class="cm">/* 컴포넌트와 이벤트핸들러 연결 */</span>
+		<span class="n">bSave</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bHandler</span><span class="o">);</span>
+		<span class="n">bOpen</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bHandler</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="cm">/* 이벤트 핸들러 선언 */</span>
+	<span class="kd">class</span> <span class="nc">BtnHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">btn</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			<span class="c1">// JButton btn = (JButton)ev.getSource();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">btn</span> <span class="o">==</span> <span class="n">bSave</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// JOptionPane.showMessageDialog(null, "저장합니다.");</span>
+				<span class="n">saveData</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">btn</span> <span class="o">==</span>  <span class="n">bOpen</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// JOptionPane.showMessageDialog(null, "입력합니다.");</span>
+				<span class="n">readData</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span> <span class="c1">// end of class BtnHandler</span>
+	<span class="cm">/**
+	 *		http://code.google.com/p/json-simple/
+	 *		왼쪽 메뉴 &gt; Download &gt;  json_simple-1.1.jar를 직접 다운
+	 *		Add External Jar 추가
+	 */</span>
+	<span class="kt">void</span> <span class="nf">saveData</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JSONObject</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONObject</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="n">tfName</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"tel"</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"jumin"</span><span class="o">,</span> <span class="n">tfJumin</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"gender"</span><span class="o">,</span> <span class="n">tfGender</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"age"</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"home"</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+		<span class="k">try</span> <span class="o">{</span> <span class="c1">// 파일명 : test.json</span>
+			<span class="nc">FileWriter</span> <span class="n">fw</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="s">"test.json"</span><span class="o">);</span>
+			<span class="n">fw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">());</span>
+			<span class="n">fw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>	
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">readData</span><span class="o">()</span> <span class="o">{</span>		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">FileReader</span> <span class="n">fr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="s">"test.json"</span><span class="o">);</span>
+			<span class="nc">JSONParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JSONParser</span><span class="o">();</span>
+			<span class="nc">JSONObject</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="nc">JSONObject</span><span class="o">)</span><span class="n">parser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">fr</span><span class="o">);</span>
+			<span class="n">tfName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"name"</span><span class="o">)));</span>
+			<span class="n">tfTel</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"tel"</span><span class="o">)));</span>
+			<span class="n">tfJumin</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"jumin"</span><span class="o">)));</span>
+			<span class="n">tfGender</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"gender"</span><span class="o">)));</span>
+			<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"age"</span><span class="o">)));</span>
+			<span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">obj</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"home"</span><span class="o">)));</span>
+			<span class="n">fr</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>	
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span> 
+	<span class="o">}</span>
+<span class="o">}</span> <span class="c1">// end of class MyFrame</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuiTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">MyFrame</span> <span class="n">my</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyFrame</span><span class="o">();</span>
+		<span class="n">my</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">my</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

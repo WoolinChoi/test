@@ -1,0 +1,243 @@
+I"�@<h1 id="sqoop"><a href="">sqoop</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>sqoop import, export</li>
+  <li>sqoop-hive 연결</li>
+  <li>spark 설치</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>mysql
+    <ul>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn02 ~]$ ssh dn01
+2) [hadoop@dn01 ~]$ systemctl status mariadb.service
+3) [hadoop@dn01 ~]$ mysql -u root -p
+</code></pre></div>        </div>
+      </li>
+      <li>sqoopdemo 테이블 생성
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) MariaDB [(none)]&gt; show databases;
+2) MariaDB [(none)]&gt; create database sqoopdemo;
+3) MariaDB [(none)]&gt; use sqoopdemo;
+4) 테이블 생성
+create table departments(
+department_id int(11) unsigned NOT NULL,
+department_name varchar(30) NOT NULL,
+PRIMARY KEY (department_id));
+5) 입력
+INSERT INTO departments (department_id, department_name)
+VALUES
+(1, 'finess'),
+(2, 'sportware'),
+(3, 'appare'),
+(4, 'gold'),
+(5, 'outdoor'),
+(6, 'fat shop');
+6) MariaDB [sqoopdemo]&gt; select * from departments;
+</code></pre></div>        </div>
+      </li>
+      <li>sqoop에서 mysql 연결 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ sqoop list-databases --connect jdbc:mysql://dn01 --username hive --password hive
+2) [hadoop@dn01 ~]$ sqoop list-tables --connect jdbc:mysql://dn01/sqoopdemo --username hive --password hive
+</code></pre></div>        </div>
+      </li>
+      <li>sqoop을 통해 mysql -&gt; hdfs(import) 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ sqoop import --connect jdbc:mysql://dn01/sqoopdemo --table departments --username hive --password hive --target-dir sqoopdemo
+2) [hadoop@dn01 ~]$ hdfs dfs -ls /user/hadoop/departments
+3) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hadoop/departments/part-m-*
+</code></pre></div>        </div>
+      </li>
+      <li>sqoop을 통해 hdfs -&gt; mysql(export) 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) MariaDB [sqoopdemo]&gt; create table dept like departments;
+2) MariaDB [sqoopdemo]&gt; select * from dept;
+3) [hadoop@dn01 ~]$ sqoop export --connect jdbc:mysql://dn01:3306/sqoopdemo --table dept --username hive --password hive --export-dir departments
+4) MariaDB [sqoopdemo]&gt; select * from dept;
+</code></pre></div>        </div>
+      </li>
+      <li>추가하기(import)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) MariaDB [sqoopdemo]&gt; insert into departments values(7, 'it items');
+2) MariaDB [sqoopdemo]&gt; select * from departments;
+3) sqoop export --connect jdbc:mysql://dn01:3306/sqoopdemo --table dept --username hive --password hive --export-dir departments
+4) MariaDB [sqoopdemo]&gt; insert into departments values(8, 'food');
+5) MariaDB [sqoopdemo]&gt; select * from departments;
+6) [hadoop@dn01 ~]$ sqoop import --connect jdbc:mysql://dn01/sqoopdemo --table departments --username hive --password hive --check-column department_id --incremental append --last-value 7
+7) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hadoop/departments/part-m-*
+8) MariaDB [sqoopdemo]&gt; insert into departments values(9, 'milk');
+9) [hadoop@dn01 ~]$ sqoop import --connect jdbc:mysql://dn01/sqoopdemo --table departments --username hive --password hive --check-column department_id --incremental append --last-value 7
+10) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hadoop/departments/part-m-*
+</code></pre></div>        </div>
+      </li>
+      <li>추가하기(export)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ sqoop export --connect jdbc:mysql://dn01:3306/sqoopdemo --table dept --username hive --password hive --export-dir departments;
+2) MariaDB [sqoopdemo]&gt; select * from dept;
+3) [hadoop@dn01 ~]$ sqoop export --connect jdbc:mysql://dn01:3306/sqoopdemo --table dept --username hive --password hive --export-dir departments --update-key department_id --update-mode allowinsert
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>hive
+    <ul>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hive --service metastore &amp;
+2) [hadoop@dn01 ~]$ hive --service hiveserver2 &amp;
+3) [hadoop@dn01 ~]$ hive
+4) hive (default)&gt; use kdatademo
+4) hive (kdatademo)&gt; show tables;
+</code></pre></div>        </div>
+      </li>
+      <li>hive 가져오기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hdfs dfs -rm -r /user/hadoop/departments
+2) [hadoop@dn01 ~]$ sqoop import --connect jdbc:mysql://dn01:3306/sqoopdemo --username hive --password hive --table departments --hive-import --hive-table kdatademo.departments -m 1
+3) winSCP로 hive-common-0.10.0.jar파일 /opt/sqoop/1.4.7/lib로 옮기기
+4) [hadoop@dn01 ~]$ hdfs dfs -rm -r /user/hadoop/departments
+5) [hadoop@dn01 ~]$ sqoop import --connect jdbc:mysql://dn01:3306/sqoopdemo --username hive --password hive --table departments --hive-import --hive-table kdatademo.departments -m 1
+6) hive (kdatademo)&gt; show tables;
+7) hive (kdatademo)&gt; select * from departments;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>spark
+    <ul>
+      <li>설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# cd /tmp
+2) [root@dn01 tmp]# wget http://apache.mirror.cdnetworks.com/spark/spark-2.3.3/spark-2.3.3-bin-hadoop2.7.tgz
+3) [root@dn01 tmp]# tar xzvf spark-2.3.3-bin-hadoop2.7.tgz
+4) [root@dn01 tmp]# mkdir -p /opt/spark/2.3.3
+5) [root@dn01 tmp]# mv spark-2.3.3-bin-hadoop2.7/* /opt/spark/2.3.3/
+6) [root@dn01 tmp]# ln -s /opt/spark/2.3.3 /opt/spark/current
+7) [root@dn01 tmp]# chown -R hadoop:hadoop /opt/spark/
+</code></pre></div>        </div>
+      </li>
+      <li>환경변수
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">###### spark  ######################</span>
+<span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/bin
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/sbin
+<span class="c">#### spark ######################</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+3<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$SPARK_HOME</span>/conf 
+4<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$SPARK_HOME</span>/conf 
+5<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">mv </span>slaves.template slaves
+6<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>vi slaves
+<span class="c">########## slaves ###########</span>
+nn01
+dn01
+dn02
+<span class="c">########## slaves ###########</span>
+7<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">mv </span>spark-defaults.conf.template spark-defaults.conf
+8<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>vi spark-defaults.conf
+<span class="c">########## spark-defaults.conf ##########</span>
+spark.yarn.jars /opt/spark/current/jars/<span class="k">*</span>
+<span class="c">########## spark-defaults.conf ##########</span>
+9<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">mv </span>log4j.properties.template log4j.properties
+10<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>vi log4j.properties
+<span class="c">########## log4j.properties ###########</span>
+log4j.rootCategory<span class="o">=</span>ERROR, console
+<span class="c">########## log4j.properties ###########</span>
+11<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">mv </span>spark-env.sh.template spark-env.sh
+12<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>vi spark-env.sh
+<span class="c">########### spark-env.sh ###########</span>
+<span class="nv">SPARK_MASTER_HOST</span><span class="o">=</span>dn01
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk/current
+<span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/opt/hadoop/current
+<span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark/current
+<span class="nb">export </span><span class="nv">HADOOP_CONF_DIR</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/etc/hadoop
+<span class="nb">export </span><span class="nv">YARN_CONF_DIR</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/etc/hadoop
+<span class="nb">export </span><span class="nv">SPARK_DRIVER_MEMORY</span><span class="o">=</span>10g
+<span class="nb">export </span><span class="nv">SPARK_EXECUTOR_INSTANCES</span><span class="o">=</span>2
+<span class="nb">export </span><span class="nv">SPARK_EXECUTOR_CORES</span><span class="o">=</span>3
+<span class="nb">export </span><span class="nv">SPARK_EXECUTOR_MEMORY</span><span class="o">=</span>10g
+<span class="c">#export SPARK_WORKER_DIR=/spark_data/spwork</span>
+<span class="c">#export SPARK_PID_DIR=/spark_data/sptmp</span>
+<span class="nb">export </span><span class="nv">SPARK_DIST_CLASSPATH</span><span class="o">=</span><span class="si">$(</span>/opt/hadoop/current/bin/hadoop classpath<span class="si">)</span>:/opt/spark/current/jars/<span class="k">*</span>
+<span class="c">#export PYTHONPATH=/opt/python/current/python3</span>
+<span class="c">#export PYSPARK_PYTHON=/opt/python/current/python3</span>
+<span class="c">########### spark-env.sh ###########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ] spark-shell
+2) scala&gt; sc.setLogLevel("WARN")
+3) scala&gt; val f = sc.textFile("file:///etc/hosts")
+4) scala&gt; f.count
+5) scala&gt; f.first
+6) scala&gt; f.collect
+7) scala&gt; :quit
+</code></pre></div>        </div>
+      </li>
+      <li>dn02 계정 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">sudo </span>scp <span class="nt">-r</span> /opt/spark  dn02:/opt/spark
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span>ll /opt/spark
+3<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span>su - root
+4<span class="o">)</span> <span class="o">[</span>root@dn02 ~]# <span class="nb">rm</span> <span class="nt">-rf</span> /opt/spark/current
+5<span class="o">)</span> <span class="o">[</span>root@dn02 ~]# <span class="nb">ln</span> <span class="nt">-s</span> /opt/spark/2.3.3 /opt/spark/current
+6<span class="o">)</span> <span class="o">[</span>root@dn02 ~]# ll /opt/spark/
+7<span class="o">)</span> <span class="o">[</span>root@dn02 ~]# <span class="nb">chown</span> <span class="nt">-R</span> hadoop:hadoop /opt/spark/
+8<span class="o">)</span> <span class="o">[</span>root@dn02 ~]# su - hadoop
+9<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">###### spark  ######################</span>
+<span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/bin
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/sbin
+<span class="c">#### spark ######################</span>
+10<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>nn01 계정 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">sudo </span>scp <span class="nt">-r</span> /opt/spark  nn01:/opt/spark
+2<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>ll /opt/spark
+3<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>su - root
+4<span class="o">)</span> <span class="o">[</span>root@nn01 ~]# <span class="nb">rm</span> <span class="nt">-rf</span> /opt/spark/current
+5<span class="o">)</span> <span class="o">[</span>root@nn01 ~]# <span class="nb">ln</span> <span class="nt">-s</span> /opt/spark/2.3.3 /opt/spark/current
+6<span class="o">)</span> <span class="o">[</span>root@nn01 ~]# ll /opt/spark/
+7<span class="o">)</span> <span class="o">[</span>root@nn01 ~]# <span class="nb">chown</span> <span class="nt">-R</span> hadoop:hadoop /opt/spark/
+8<span class="o">)</span> <span class="o">[</span>root@nn01 ~]# su - hadoop
+9<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">###### spark  ######################</span>
+<span class="nb">export </span><span class="nv">SPARK_HOME</span><span class="o">=</span>/opt/spark/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/bin
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/sbin
+<span class="c">#### spark ######################</span>
+10<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>확인
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$SPARK_HOME</span>/sbin
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 sbin]<span class="nv">$ </span><span class="nb">pwd
+</span>3<span class="o">)</span> <span class="o">[</span>hadoop@dn01 sbin]<span class="nv">$ </span>ll
+4<span class="o">)</span> <span class="o">[</span>hadoop@dn01 sbin]<span class="nv">$ </span>./start-all.sh
+5<span class="o">)</span> <span class="o">[</span>hadoop@dn02 sbin]<span class="nv">$ </span>jps
+<span class="c">########## jps ###########</span>
+30473 Worker
+<span class="c">########## jps ###########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>실행
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 sbin]$ spark-shell (로컬)
+2) [hadoop@dn01 sbin]$ spark-shell --master spark://dn01:7077 (spark클러스트에서 실행)
+3) http://192.168.56.102:4040/jobs
+4) http://192.168.56.102:8080
+5) scala&gt; val x = sc.parallelize(List("spark", "example", "spark", "spark"), 3)
+6) scala&gt; val y = x.map(x=&gt;(x,1))
+7) scala&gt; y.collect
+8) scala&gt; :quit
+9) [hadoop@dn01 sbin]$ pyspark
+10) &gt;&gt;&gt; x = sc.parallelize(("spark", "example", "spark", "spark"), 3)
+11) &gt;&gt;&gt; y = x.map(lambda x:(x,1))
+12) &gt;&gt;&gt; y.collect()
+13) &gt;&gt;&gt; quit()
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>export는 DDL(테이블 구조)가 미리 있어야 함</li>
+</ul>
+:ET

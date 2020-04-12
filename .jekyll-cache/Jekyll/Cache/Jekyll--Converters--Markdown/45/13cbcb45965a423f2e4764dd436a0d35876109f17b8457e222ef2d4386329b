@@ -1,0 +1,139 @@
+I"f8<h1 id="xmllist"><a href="">xmlList</a></h1>
+
+<h2 id="mainapp">MainApp</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex1_xml4_list</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.support.ClassPathXmlApplicationContext</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainApp</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span>
+				<span class="k">new</span> <span class="nf">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"ex1_xml4_list/applicationContext.xml"</span><span class="o">);</span>
+		
+		<span class="nc">ListBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"bean"</span><span class="o">,</span> <span class="nc">ListBean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">i</span> <span class="o">:</span> <span class="n">bean</span><span class="o">.</span><span class="na">getIntList</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">MemberBean</span> <span class="n">mem</span> <span class="o">:</span> <span class="n">bean</span><span class="o">.</span><span class="na">getMemberList</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">mem</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">mem</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="memberbean">MemberBean</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex1_xml4_list</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberBean</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">message</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">MemberBean</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nf">MemberBean</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// getter</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">message</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="c1">// setter</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMessage</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">"("</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">") "</span> <span class="o">+</span> <span class="n">message</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="listbean">ListBean</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex1_xml4_list</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ListBean</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">intList</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MemberBean</span><span class="o">&gt;</span> <span class="n">memberList</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">ListBean</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="c1">// getter, setter</span>
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getIntList</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">intList</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setIntList</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">intList</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">intList</span> <span class="o">=</span> <span class="n">intList</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">MemberBean</span><span class="o">&gt;</span> <span class="nf">getMemberList</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">memberList</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMemberList</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">MemberBean</span><span class="o">&gt;</span> <span class="n">memberList</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">memberList</span> <span class="o">=</span> <span class="n">memberList</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="applicationcontext_xml">ApplicationContext_xml</h2>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xmlns:p=</span><span class="s">"http://www.springframework.org/schema/p"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"bean"</span> <span class="na">class=</span><span class="s">"ex1_xml4_list.ListBean"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"intList"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;list&gt;</span>
+			<span class="nt">&lt;value&gt;</span>22<span class="nt">&lt;/value&gt;</span>
+			<span class="nt">&lt;value&gt;</span>23<span class="nt">&lt;/value&gt;</span>
+			<span class="nt">&lt;value&gt;</span>24<span class="nt">&lt;/value&gt;</span>
+		<span class="nt">&lt;/list&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"memberList"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;list&gt;</span>
+			<span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"mem1"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"mem2"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"mem3"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/list&gt;</span>
+	<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- setter --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"mem2"</span> <span class="na">class=</span><span class="s">"ex1_xml4_list.MemberBean"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;value&gt;</span>홍길자<span class="nt">&lt;/value&gt;&lt;/property&gt;</span>
+	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">value=</span><span class="s">"22"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">value=</span><span class="s">"오늘도 행복"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- constructor --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"mem1"</span> <span class="na">class=</span><span class="s">"ex1_xml4_list.MemberBean"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;constructor-arg</span> <span class="na">value=</span><span class="s">"홍길국"</span><span class="nt">&gt;&lt;/constructor-arg&gt;</span>
+	<span class="nt">&lt;constructor-arg</span> <span class="na">value=</span><span class="s">"23"</span><span class="nt">&gt;&lt;/constructor-arg&gt;</span>
+	<span class="nt">&lt;constructor-arg&gt;&lt;value&gt;</span>내일은 주말<span class="nt">&lt;/value&gt;&lt;/constructor-arg&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- p --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"mem3"</span> <span class="na">class=</span><span class="s">"ex1_xml4_list.MemberBean"</span> <span class="na">p:name=</span><span class="s">"홍길동"</span> <span class="na">p:age=</span><span class="s">"24"</span> <span class="na">p:message=</span><span class="s">"모레도 주말"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+
+</code></pre></div></div>
+:ET

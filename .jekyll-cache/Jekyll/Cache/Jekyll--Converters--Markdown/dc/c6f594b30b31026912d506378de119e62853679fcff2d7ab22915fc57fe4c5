@@ -1,0 +1,201 @@
+I"l<h1 id="collection"><a href="">collection</a></h1>
+
+<h2 id="arraylistex">ArrayListEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 1. list 구조
+ *     - 순서를 저장
+ */</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrayListEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;(</span><span class="mi">4</span><span class="o">);</span> <span class="c1">// 동적인 배열</span>
+		<span class="c1">// list 추가하기</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"rabbit"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"dog"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"cat"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"zebra"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"fox"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"lion"</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="c1">// list 변경하기</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"ant"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+		<span class="c1">// list 제거하기</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+		<span class="c1">// list 정렬하기</span>
+		<span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+<span class="c1">//		for(int i = 0; i &lt; list.size(); i++) {</span>
+<span class="c1">//			String str = (String)list.get(i);</span>
+<span class="c1">//			System.out.println(str);</span>
+<span class="c1">//		}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="arraylistex2">ArrayListEx2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrayListEx2</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Student</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">method</span><span class="o">();</span>
+		<span class="c1">// 여기서 출력</span>
+		<span class="c1">// 향상 된 for문</span>
+<span class="c1">//		for(Student str : data) { // 자료형을 맞춰준다</span>
+<span class="c1">//			System.out.println(str);</span>
+<span class="c1">//		}</span>
+		<span class="c1">// 표준화 출력</span>
+		<span class="c1">// Enumeration -&gt; Iterator</span>
+		<span class="nc">Iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span>
+		<span class="k">while</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">it</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Student</span><span class="o">&gt;</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Student</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Student</span><span class="o">&gt;();</span>
+		<span class="nc">Student</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"홍길자"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+		<span class="nc">Student</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"홍길숙"</span><span class="o">,</span> <span class="mi">30</span><span class="o">);</span>
+		<span class="nc">Student</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"홍길동"</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	<span class="nc">Student</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"님은"</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">"세입니다"</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="hashsetex">HashSetEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HashSetEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">HashSet</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span> <span class="c1">// 순서를 저장하지 않는다</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"rabbit"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"dog"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"rabbit"</span><span class="o">);</span> <span class="c1">// 중복된 값은 들어가지 않는다</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"zebra"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"zebra"</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"lion"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="hashsetlotto">HashSetLotto</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HashSetLotto</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">HashSet</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">lotto</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashSet</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+		<span class="k">while</span><span class="o">(</span><span class="n">lotto</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="o">)</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">su</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">45</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+			<span class="n">lotto</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">su</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">lotto</span><span class="o">);</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;(</span><span class="n">lotto</span><span class="o">);</span>
+		<span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="treesetex">TreeSetEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.TreeSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TreeSetEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">TreeSet</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TreeSet</span><span class="o">();</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"lion"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"ant"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"snake"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"dog"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"cat"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"elephant"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"zebra"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"bee"</span><span class="o">);</span>
+		<span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"tiger"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">set</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">set</span><span class="o">.</span><span class="na">subSet</span><span class="o">(</span><span class="s">"d"</span><span class="o">,</span> <span class="s">"s"</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">set</span><span class="o">.</span><span class="na">headSet</span><span class="o">(</span><span class="s">"d"</span><span class="o">));</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">set</span><span class="o">.</span><span class="na">tailSet</span><span class="o">(</span><span class="s">"d"</span><span class="o">));</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="hashmapex">HashMapEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HashMapEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;();</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"kimjava"</span><span class="o">,</span> <span class="s">"1111"</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"parkjava"</span><span class="o">,</span> <span class="s">"1234"</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"leejava"</span><span class="o">,</span> <span class="s">"1234"</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"kimjava"</span><span class="o">,</span> <span class="s">"9999"</span><span class="o">);</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="kt">boolean</span> <span class="n">stop</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+		<span class="k">while</span><span class="o">(!</span><span class="n">stop</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"아이디와 패스워드 입력"</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"아이디 입력-&gt;"</span><span class="o">);</span>
+			<span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"패스워드 입력-&gt;"</span><span class="o">);</span>
+			<span class="nc">String</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+			<span class="c1">// 아이디가 map에 key에 해당되는가?</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">id</span><span class="o">))</span> <span class="o">{</span>
+				<span class="c1">// 그 아이디와 같은 key의 값과 입력받은 패스워드가 같다면</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">id</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="n">pw</span><span class="o">))</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"로그인성공"</span><span class="o">);</span>
+					<span class="n">stop</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+				<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"비밀번호가 일치하지 않습니다"</span><span class="o">);</span>
+					<span class="k">continue</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"존재하지 않는 아이디입니다"</span><span class="o">);</span>
+				<span class="k">continue</span><span class="o">;</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="stackqueueex">StackQueueEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.LinkedList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Queue</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Stack</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StackQueueEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Stack - LIFO(Last In First Out)</span>
+		<span class="nc">Stack</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Stack</span><span class="o">();</span>
+		<span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">"A"</span><span class="o">);</span>
+		<span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">"B"</span><span class="o">);</span>
+		<span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="s">"C"</span><span class="o">);</span>
+		<span class="k">while</span><span class="o">(!</span><span class="n">stack</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">());</span>
+		<span class="o">}</span>
+<span class="c1">//		System.out.println(stack.pop()); // 데이타가 없어 예외 발생</span>
+		<span class="c1">// Queue - FIFO(First In First Out)</span>
+		<span class="nc">Queue</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LinkedList</span><span class="o">();</span>
+		<span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="s">"가"</span><span class="o">);</span>
+		<span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="s">"나"</span><span class="o">);</span>
+		<span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="s">"다"</span><span class="o">);</span>
+		<span class="k">while</span><span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

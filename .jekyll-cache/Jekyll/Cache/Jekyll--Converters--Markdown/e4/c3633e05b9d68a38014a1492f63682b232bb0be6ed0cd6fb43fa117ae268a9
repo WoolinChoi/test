@@ -1,0 +1,165 @@
+I"}P<h1 id="emporacle2"><a href="">empOracle2</a></h1>
+
+<h2 id="inserttest">InsertTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InsertTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.114:1521:orcl"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"scott"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"tiger"</span><span class="o">;</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 드라이버를 메모리 로딩</span>
+			<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+			
+			<span class="c1">// 연결객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 화면에서 입력값 얻어오기</span>
+			<span class="kt">int</span> <span class="n">empno</span> <span class="o">=</span> <span class="mi">6789</span><span class="o">;</span>
+			<span class="nc">String</span> <span class="n">ename</span> <span class="o">=</span> <span class="s">"갓DB"</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">sal</span> <span class="o">=</span> <span class="mi">9000</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+			<span class="nc">String</span> <span class="n">job</span> <span class="o">=</span> <span class="s">"IT부서"</span><span class="o">;</span>
+			
+			<span class="c1">// SQL 문장만들기(***)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO emp(empno, ename, sal, deptno, job) "</span>
+					<span class="o">+</span> <span class="s">"VALUES(?, ?, ?, ?, ?)"</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			
+			<span class="c1">// SQL 전송객체 만들기</span>
+			<span class="c1">// Statement st = con.createStatement(); // 완성 sql일 때</span>
+			<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span> <span class="c1">// ?(미완성 sql)일 때는 preparedStatement해준다.</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">empno</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">ename</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">sal</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">deptno</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">job</span><span class="o">);</span>
+			
+			<span class="c1">// 전송하기</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span> <span class="c1">// sql 전송하면 안됨</span>
+			
+			<span class="c1">// 닫기</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"SQL 전송 성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"전송실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="selecttest">SelectTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SelectTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.114:1521:orcl"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"scott"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"tiger"</span><span class="o">;</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 드라이버를 메모리 로딩</span>
+			<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+			
+			<span class="c1">// 연결객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// SQL 문장만들기</span>
+<span class="c1">//			int empno = 7788;</span>
+<span class="c1">//			String sql = "SELECT * FROM emp WHERE empno = ?";</span>
+<span class="c1">//			</span>
+<span class="c1">//			// SQL 전송객체 만들기</span>
+<span class="c1">//			PreparedStatement st = con.prepareStatement(sql);</span>
+<span class="c1">//			st.setInt(1, empno);</span>
+<span class="c1">//			</span>
+<span class="c1">//			// 전송하기</span>
+<span class="c1">//			ResultSet rs= st.executeQuery(); // sql 지정하면 안됨</span>
+<span class="c1">//			if(rs.next()) {</span>
+<span class="c1">//				System.out.println(rs.getInt("EMPNO") + "/" + rs.getString("ENAME") + "/" + rs.getInt("SAL"));</span>
+<span class="c1">//			} // 가동성을 위해 while문보다 if문을 써주고 하나라도 next를 사용한다.</span>
+			
+			<span class="c1">// 1. 사원 테이블의 총 사원수와 월급의 평균을 출력하시오.</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT count(*) count, round(avg(sal)) avg FROM emp"</span><span class="o">;</span>
+		
+			<span class="nc">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+			<span class="nc">ResultSet</span> <span class="n">rs</span><span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"COUNT"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"AVG"</span><span class="o">));</span>
+			<span class="o">}</span>
+			
+			<span class="c1">// 닫기</span>
+			<span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"SQL 전송 성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"전송실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="updatetest">UpdateTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UpdateTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.114:1521:orcl"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"scott"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"tiger"</span><span class="o">;</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 드라이버를 메모리 로딩</span>
+			<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+			
+			<span class="c1">// 연결객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 화면에서 입력값 얻어오기</span>
+			<span class="kt">int</span> <span class="n">empno</span> <span class="o">=</span> <span class="mi">6789</span><span class="o">;</span>
+			<span class="nc">String</span> <span class="n">ename</span> <span class="o">=</span> <span class="s">"홍숙자"</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">sal</span> <span class="o">=</span> <span class="mi">12000</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+			<span class="nc">String</span> <span class="n">job</span> <span class="o">=</span> <span class="s">"개발"</span><span class="o">;</span>
+			
+			<span class="c1">// (*) sql 문장 변경</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE emp SET ename = ?, sal = ?, deptno = ?, job = ? WHERE empno = ?"</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			
+			<span class="c1">// SQL 전송객체 만들기</span>
+			<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span> 
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">ename</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">sal</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">deptno</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">job</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">empno</span><span class="o">);</span>
+			
+			<span class="c1">// 전송하기</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			
+			<span class="c1">// 닫기</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"SQL 전송 성공"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"전송실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

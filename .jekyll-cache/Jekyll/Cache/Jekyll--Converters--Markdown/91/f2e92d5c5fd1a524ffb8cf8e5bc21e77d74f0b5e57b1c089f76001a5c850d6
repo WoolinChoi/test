@@ -1,0 +1,1339 @@
+I"��<h1 id="mvcboard"><a href="">mvcBoard</a></h1>
+
+<h2 id="main">Main</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span> <span class="nc">String</span> <span class="n">projectName</span> <span class="o">=</span> <span class="s">"/Test"</span><span class="o">;</span> <span class="nt">%&gt;</span>    
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Main<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">projectName</span> <span class="nt">%&gt;</span><span class="s">/board?cmd=main-page"</span><span class="nt">&gt;</span> 메인 <span class="nt">&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">projectName</span> <span class="nt">%&gt;</span><span class="s">/board?cmd=list-page"</span><span class="nt">&gt;</span> 게시판 <span class="nt">&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardlist">BoardList</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.List"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="kt">int</span> <span class="n">pCount</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"pCount"</span><span class="o">);</span>
+	<span class="nc">List</span> <span class="o">&lt;</span><span class="nc">BoardRec</span><span class="err">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="err">&gt;</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"mList"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>  
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardList<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h3&gt;</span> 게시판 목록 <span class="nt">&lt;/h3&gt;</span>
+	<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">bordercolor=</span><span class="s">"darkblue"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 글번호 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 제 목 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 작성자 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 작성일 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 조회수 <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">mList</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span> <span class="nt">%&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"5"</span><span class="nt">&gt;</span> 등록된 게시물이 없습니다. <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;%</span> <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span>
+		<span class="nt">&lt;%</span> 
+<span class="c1">// 			for(int i = 0; i &lt; mList.size(); i++){</span>
+<span class="c1">// 			BoardRec rec = (BoardRec)mList.get(i);</span>
+			<span class="c1">// 향상된 for문은 콜렉션, 데이터집합, 제너릭스가 완벽할때 쓴다.</span>
+			<span class="k">for</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">:</span> <span class="n">mList</span><span class="o">){</span>
+		<span class="nt">%&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>
+			<span class="nt">&lt;%</span> <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rec</span><span class="o">.</span><span class="na">getLevel</span><span class="o">();</span> <span class="n">i</span><span class="o">++){</span> <span class="nt">%&gt;</span> 
+			<span class="ni">&amp;nbsp;</span> 
+			<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// for-end</span><span class="nt">%&gt;</span>
+			<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">rec</span><span class="o">.</span><span class="na">getLevel</span><span class="o">()</span> <span class="err">&gt;</span> <span class="mi">0</span><span class="o">){</span> <span class="nt">%&gt;</span>
+				<span class="nt">&lt;img</span> <span class="na">alt=</span><span class="s">""</span> <span class="na">src=</span><span class="s">"./imgs/board_re.gif"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// if-end </span><span class="nt">%&gt;</span>
+				<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=view-page&amp;article_id=</span><span class="nt">&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getTitle</span><span class="o">()</span> <span class="nt">%&gt;&lt;/a&gt;</span>
+			<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getWriterName</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>		
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getPostingDate</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getReadCount</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// for-end </span><span class="nt">%&gt;</span>
+	<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// else-end </span><span class="nt">%&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"5"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=input-page"</span><span class="nt">&gt;</span>글쓰기<span class="nt">&lt;/a&gt;&lt;br/&gt;</span>
+				<span class="c">&lt;!-- 페이지 번호 출력 --&gt;</span>
+				<span class="nt">&lt;%</span> <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">pCount</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span> <span class="nt">%&gt;</span>
+					<span class="c">&lt;!-- 숫자에 현재 페이지로 링크를 걸어서 page 파라메타로 전송하기 --&gt;</span>
+					<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=list-page&amp;page=</span><span class="nt">&lt;%=</span> <span class="n">i</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>[<span class="nt">&lt;%=</span> <span class="n">i</span> <span class="nt">%&gt;</span>]<span class="nt">&lt;/a&gt;</span>
+				<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// for-end </span><span class="nt">%&gt;</span>	
+			<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardinputform">BoardInputForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardInputForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h4&gt;</span> 게시판 글 쓰기 <span class="nt">&lt;/h4&gt;&lt;br/&gt;</span>
+	나중에 이쁘게 만드시오 <span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'frm'</span> <span class="na">method=</span><span class="s">'post'</span> <span class="na">action=</span><span class="s">"board?cmd=input-do"</span><span class="nt">&gt;</span>
+		작성자 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'writerName'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		제  목 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'title'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		내  용 : <span class="nt">&lt;textarea</span> <span class="na">rows=</span><span class="s">'10'</span> <span class="na">cols=</span><span class="s">'40'</span> <span class="na">name=</span><span class="s">'content'</span><span class="nt">&gt;&lt;/textarea&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		패스워드(수정/삭제시 필요) : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'password'</span> <span class="na">name=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'작성'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'reset'</span> <span class="na">value=</span><span class="s">'취소'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardsave">BoardSave</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardSave<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;font</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">color=</span><span class="s">"#bb44cc"</span><span class="nt">&gt;</span>
+		게시물을 남겼습니다. 
+	<span class="nt">&lt;/font&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=list-page"</span><span class="nt">&gt;</span> [ 목록보기 ] <span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardview">BoardView</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BoardRec</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>   
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardView<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h4&gt;</span> 게시판 글 보기 <span class="nt">&lt;/h4&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span> <span class="na">bordercolor=</span><span class="s">"red"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;</span> 제  목 : <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getTitle</span><span class="o">()</span> <span class="nt">%&gt;&lt;/a&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;</span> 작성자 : <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getWriterName</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;</span> 작성일자 : <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getPostingDate</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;</span> 내  용 : <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getContent</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;</span> 조회수 : <span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getReadCount</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=list-page"</span><span class="nt">&gt;</span>목록보기<span class="nt">&lt;/a&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=reply-page&amp;parent_id=</span><span class="nt">&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>답변하기<span class="nt">&lt;/a&gt;</span>
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=modify-page&amp;modify_id=</span><span class="nt">&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>수정하기<span class="nt">&lt;/a&gt;</span>		
+			<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=delete-page&amp;article_id=</span><span class="nt">&lt;%=</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>삭제하기<span class="nt">&lt;/a&gt;</span> 	
+		<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boarddeleteform">BoardDeleteForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">article_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"article_id"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>      
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardDeleteForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"board?cmd=delete-do"</span><span class="nt">&gt;</span>
+		삭제할 글암호를 입력하세요 <span class="nt">&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">&gt;</span>
+		
+		<span class="c">&lt;!-- 게시글번호를 다음 페이지로 넘기기 위해 hidden 태그로 지정 --&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"article_id"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">article_id</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"삭제하기"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boarddelete">BoardDelete</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardDelete<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">){</span> <span class="nt">%&gt;</span>
+			글을 삭제하였습니다.
+	<span class="nt">&lt;%</span> <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span>
+			삭제가 실패되었습니다.
+	<span class="nt">&lt;%</span> <span class="o">}</span> <span class="nt">%&gt;</span>
+	<span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=list-page"</span><span class="nt">&gt;</span> 목록보기 <span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardmodifyform">BoardModifyForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">modify_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"modify_id"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>      
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardModifyForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h4&gt;</span> 게시판 글 수정하기 <span class="nt">&lt;/h4&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'frm'</span> <span class="na">method=</span><span class="s">'post'</span> <span class="na">action=</span><span class="s">'board?cmd=modify-do'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'articleId'</span> <span class="na">value=</span><span class="s">'</span><span class="nt">&lt;%=</span> <span class="n">modify_id</span> <span class="nt">%&gt;</span><span class="s">'</span><span class="nt">&gt;</span>
+		제  목 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'title'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		패스워드(수정/삭제시 필요) : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'password'</span> <span class="na">name=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		내  용 : <span class="nt">&lt;textarea</span> <span class="na">rows=</span><span class="s">'10'</span> <span class="na">cols=</span><span class="s">'40'</span> <span class="na">name=</span><span class="s">'content'</span><span class="nt">&gt;&lt;/textarea&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'수정하기'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'목록보기'</span> <span class="na">onclick=</span><span class="s">"window.location='board?cmd=list-page'"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardmodify">BoardModify</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">);</span>
+	<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BoardRec</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardModify<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">){</span>  <span class="c1">// 게시글 수정이 성공적으로 되었다면 그 해당 게시글을 보여주는 페이지로 이동하고 </span>
+			<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"board?cmd=view-page&amp;article_id="</span> <span class="o">+</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">());</span> 
+	 <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="c1">// 그렇지 않다면, "암호가 잘못 입력되었습니다"를 출력  </span><span class="nt">%&gt;</span> 
+			암호가 잘못 입력되었습니다.
+	 <span class="nt">&lt;%</span> <span class="o">}</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardreplyform">BoardReplyForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">parent_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"parent_id"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardReplyForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h4&gt;</span> 답변 글 쓰기 <span class="nt">&lt;/h4&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'frm'</span> <span class="na">method=</span><span class="s">'post'</span> <span class="na">action=</span><span class="s">'board?cmd=reply-do'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'hidden'</span> <span class="na">name=</span><span class="s">'parentId'</span> <span class="na">value=</span><span class="s">'</span><span class="nt">&lt;%=</span> <span class="n">parent_id</span> <span class="nt">%&gt;</span><span class="s">'</span><span class="nt">&gt;</span>
+		작성자 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'writerName'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		제  목 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'title'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		내  용 : <span class="nt">&lt;textarea</span> <span class="na">rows=</span><span class="s">'10'</span> <span class="na">cols=</span><span class="s">'40'</span> <span class="na">name=</span><span class="s">'content'</span><span class="nt">&gt;&lt;/textarea&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		패스워드(수정/삭제시 필요) : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'password'</span> <span class="na">name=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'작성'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'reset'</span> <span class="na">value=</span><span class="s">'취소'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardreply">BoardReply</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mvc.board.model.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">BoardRec</span> <span class="n">reRec</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BoardRec</span><span class="o">)</span><span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>BoardReply<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	답변글을 등록하였습니다. <span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=list-page"</span><span class="nt">&gt;</span> 목록보기 <span class="nt">&lt;/a&gt;</span> <span class="ni">&amp;nbsp;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"board?cmd=view-page&amp;id=</span><span class="nt">&lt;%=</span> <span class="n">reRec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span> 게시글 읽기 <span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="boardrec">BoardRec</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ackage</span> <span class="n">mvc</span><span class="o">.</span><span class="na">board</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoardRec</span> <span class="o">{</span>
+	<span class="c1">// member field</span>
+	<span class="kd">private</span>	<span class="kt">int</span>		<span class="n">articleId</span><span class="o">;</span>		<span class="c1">// 게시글번호</span>
+	<span class="kd">private</span>	<span class="kt">int</span>		<span class="n">groupId</span><span class="o">;</span>		<span class="c1">// 그룹번호</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">sequenceNo</span><span class="o">;</span>		<span class="c1">// 순서번호</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">postingDate</span><span class="o">;</span>	<span class="c1">// 게시글등록일시</span>
+	<span class="kd">private</span>	<span class="kt">int</span>		<span class="n">readCount</span><span class="o">;</span>		<span class="c1">// 조회수</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">writerName</span><span class="o">;</span>		<span class="c1">// 사용자이름</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">password</span><span class="o">;</span>		<span class="c1">// 비밀번호</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">title</span><span class="o">;</span>			<span class="c1">// 제목</span>
+	<span class="kd">private</span>	<span class="nc">String</span>	<span class="n">content</span><span class="o">;</span>		<span class="c1">// 내용</span>
+	
+	
+	<span class="c1">// constructor method </span>
+	<span class="kd">public</span> <span class="nf">BoardRec</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nf">BoardRec</span><span class="o">(</span><span class="kt">int</span> <span class="n">articleId</span><span class="o">,</span>  <span class="kt">int</span> <span class="n">groupId</span><span class="o">,</span> <span class="nc">String</span> <span class="n">sequenceNo</span><span class="o">,</span> <span class="nc">String</span> <span class="n">postingDate</span><span class="o">,</span> <span class="kt">int</span> <span class="n">readCount</span><span class="o">,</span> <span class="nc">String</span> <span class="n">writerName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">password</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span>  <span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">articleId</span>		<span class="o">=</span> <span class="n">articleId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">groupId</span>		<span class="o">=</span> <span class="n">groupId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">sequenceNo</span>		<span class="o">=</span> <span class="n">sequenceNo</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">postingDate</span>	<span class="o">=</span> <span class="n">postingDate</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">readCount</span> 		<span class="o">=</span> <span class="n">readCount</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">writerName</span>		<span class="o">=</span> <span class="n">writerName</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">password</span>		<span class="o">=</span> <span class="n">password</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">title</span>			<span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">content</span>		<span class="o">=</span> <span class="n">content</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// setter</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArticleId</span><span class="o">(</span><span class="kt">int</span> <span class="n">articleId</span><span class="o">)</span> <span class="o">{</span>	
+		<span class="k">this</span><span class="o">.</span><span class="na">articleId</span> <span class="o">=</span> <span class="n">articleId</span><span class="o">;</span>		
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setGroupId</span><span class="o">(</span><span class="kt">int</span> <span class="n">groupId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">groupId</span> <span class="o">=</span> <span class="n">groupId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSequenceNo</span><span class="o">(</span><span class="nc">String</span> <span class="n">sequenceNo</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">sequenceNo</span> <span class="o">=</span> <span class="n">sequenceNo</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPostingDate</span><span class="o">(</span><span class="nc">String</span> <span class="n">postingDate</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">postingDate</span> <span class="o">=</span> <span class="n">postingDate</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setReadCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">readCount</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">readCount</span> <span class="o">=</span> <span class="n">readCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setWriterName</span><span class="o">(</span><span class="nc">String</span> <span class="n">writerName</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">writerName</span> <span class="o">=</span> <span class="n">writerName</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPassword</span><span class="o">(</span><span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTitle</span><span class="o">(</span><span class="nc">String</span> <span class="n">title</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setContent</span><span class="o">(</span><span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">;</span>
+	<span class="o">}</span>	
+	
+	<span class="c1">// getter</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getArticleId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">articleId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGroupId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">groupId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getSequenceNo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">sequenceNo</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getPostingDate</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">postingDate</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getReadCount</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">readCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getWriterName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">writerName</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getPassword</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">password</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getTitle</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">title</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getContent</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+	<span class="o">}</span>	
+
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getLevel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sequenceNo</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sequenceNo</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">!=</span> <span class="mi">16</span><span class="o">)</span> <span class="o">{</span><span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sequenceNo</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">"999999"</span><span class="o">))</span> <span class="o">{</span><span class="k">return</span> <span class="mi">0</span><span class="o">;}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sequenceNo</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">"9999"</span><span class="o">))</span> <span class="o">{</span><span class="k">return</span> <span class="mi">1</span><span class="o">;}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sequenceNo</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">"99"</span><span class="o">))</span> <span class="o">{</span><span class="k">return</span> <span class="mi">2</span><span class="o">;}</span>
+		<span class="k">return</span> <span class="mi">3</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/*
+	[ 참고 ]
+	@ postingDate 가 실제 DB에서는 Date 형이지만, 날짜 값을 출력만 하기에 
+	 Date 형이 아닌 String  형으로 받아도 된다.
+	 나중에 날짜값을 사용할 일이 있으면 Date 형으로 변경 
+ 
+*/</span>
+</code></pre></div></div>
+
+<h2 id="boardexception">BoardException</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.model</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoardException</span> <span class="kd">extends</span> <span class="nc">Exception</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nf">BoardException</span><span class="o">()</span> <span class="o">{</span>
+  		<span class="kd">super</span><span class="o">();</span>
+  	<span class="o">}</span>
+  	
+  <span class="kd">public</span> <span class="nf">BoardException</span><span class="o">(</span><span class="nc">String</span> <span class="n">error</span><span class="o">)</span> <span class="o">{</span>
+  		<span class="kd">super</span><span class="o">(</span><span class="n">error</span><span class="o">);</span>
+  	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="boarddao">BoardDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.model</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoardDao</span> <span class="o">{</span>
+	<span class="c1">// Single Pattern </span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">BoardDao</span> <span class="n">instance</span><span class="o">;</span>
+	
+	<span class="c1">// DB 연결시  관한 변수 </span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> 	<span class="n">dbDriver</span>	<span class="o">=</span>	<span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUrl</span>		<span class="o">=</span>	<span class="s">"jdbc:oracle:thin:@192.168.0.117:1521:orcl"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUser</span>		<span class="o">=</span>	<span class="s">"jink"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbPass</span>		<span class="o">=</span>	<span class="s">"1234"</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="nc">Connection</span>	 		<span class="n">con</span><span class="o">;</span>	
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 객체 생성하는 메소드 </span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">BoardDao</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardDao</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">private</span> <span class="nf">BoardDao</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="cm">/********************************************
+				1. 오라클 드라이버를 로딩
+					( DBCP 연결하면 삭제할 부분 )
+			*/</span>
+			<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span> <span class="n">dbDriver</span> <span class="o">);</span>	
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"DB 연결시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시글 입력전에 그 글의 그룹번호를 얻어온다</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGroupId</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">groupId</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+						
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT SEQ_GROUP_ID_ARTICLE.nextval GROUP_ID FROM dual"</span><span class="o">;</span>
+						
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="c1">// ####[4] 결과받기</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">groupId</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"GROUP_ID"</span><span class="o">);</span>
+			<span class="o">}</span>
+			
+			<span class="k">return</span> <span class="n">groupId</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) 게시글 입력 전에 그룹번호 얻어올 때  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시판에 글을 입력시 DB에 저장하는 메소드 </span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">rec</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">Statement</span> <span class="n">stmt</span>	<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+						
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO ARTICLE(ARTICLE_ID, GROUP_ID, SEQUENCE_NO, POSTING_DATE, READ_COUNT, WRITER_NAME, PASSWORD, TITLE, CONTENT) "</span> <span class="o">+</span> 
+					<span class="s">" VALUES (SEQ_ARTICLE_ID_ARTICLE.nextval, ?, ?, sysdate, 0, ?, ?, ?, ?)"</span><span class="o">;</span>
+						
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getGroupId</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getSequenceNo</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getWriterName</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getPassword</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getContent</span><span class="o">());</span>
+			
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">stmt</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+				<span class="n">rs</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="s">"SELECT SEQ_ARTICLE_ID_ARTICLE.currval FROM dual"</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+					<span class="k">return</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span> <span class="c1">// 첫번째 컬럼</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+			
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) DB에 입력시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">stmt</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">stmt</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span><span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>
+		
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 전체 레코드를 검색하는 함수</span>
+	<span class="c1">// 리스트에 보여줄거나 필요한 컬럼 : 게시글번호, 그룹번호, 순서번호, 게시글등록일시, 조회수, 작성자이름,  제목</span>
+	<span class="c1">//							( 내용, 비밀번호  제외 )</span>
+	<span class="c1">// 순서번호(sequence_no)로 역순정렬</span>
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="nf">selectList</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">List</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;();</span>
+		<span class="kt">boolean</span> <span class="n">isEmpty</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+												
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT ARTICLE_ID, GROUP_ID, SEQUENCE_NO, POSTING_DATE, READ_COUNT, WRITER_NAME, TITLE "</span> <span class="o">+</span>
+					<span class="s">" FROM ARTICLE ORDER BY SEQUENCE_NO DESC"</span><span class="o">;</span>
+												
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+									
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="c1">// ####[4] 결과보기</span>
+			<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"ARTICLE_ID"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setGroupId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"GROUP_ID"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setSequenceNo</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"SEQUENCE_NO"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setPostingDate</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"POSTING_DATE"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setReadCount</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"READ_COUNT"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setWriterName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"WRITER_NAME"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"TITLE"</span><span class="o">));</span>
+				
+				<span class="n">mList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rec</span><span class="o">);</span>
+				<span class="n">isEmpty</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+			<span class="o">}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">isEmpty</span><span class="o">)</span> <span class="k">return</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+			
+			<span class="k">return</span> <span class="n">mList</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) DB에 목록 검색시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 현재 페이지에 보여울 게시판 목록  얻어올 때 </span>
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="nf">selectList</span><span class="o">(</span><span class="kt">int</span> <span class="n">startRow</span><span class="o">,</span> <span class="kt">int</span> <span class="n">endRow</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">List</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;();</span>
+		<span class="kt">boolean</span> <span class="n">isEmpty</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+									
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT A.ARTICLE_ID, A.TITLE, A.WRITER_NAME, A.POSTING_DATE, A.READ_COUNT "</span> <span class="o">+</span> 
+					<span class="s">"FROM (SELECT ROW_NUMBER() OVER(ORDER BY ARTICLE_ID DESC) RNUM, ARTICLE_ID, TITLE, WRITER_NAME, POSTING_DATE, READ_COUNT FROM ARTICLE) A "</span> <span class="o">+</span> 
+					<span class="s">"WHERE A.RNUM BETWEEN ? AND ?"</span><span class="o">;</span>
+						
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">startRow</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">endRow</span><span class="o">);</span>
+									
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="c1">// 각 컬럼들의 값을 가져와서 Message의 property로 지정, 그  Message 객체를 ArrayList에 추가</span>
+				<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"ARTICLE_ID"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"TITLE"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setWriterName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"WRITER_NAME"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setPostingDate</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"POSTING_DATE"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setReadCount</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"READ_COUNT"</span><span class="o">));</span>
+				
+				<span class="n">mList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rec</span><span class="o">);</span>
+				<span class="n">isEmpty</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+			<span class="o">}</span>
+			
+			<span class="k">if</span><span class="o">(</span><span class="n">isEmpty</span><span class="o">)</span> <span class="k">return</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+			
+			<span class="k">return</span> <span class="n">mList</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"방명록 ) DB에 목록 검색시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시물 전체 레코드 수를 검색</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getTotalCount</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+									
+			<span class="c1">// ####[1] sql 문장 만들기</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT count(*) cnt FROM ARTICLE"</span><span class="o">;</span>
+									
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+									
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="c1">// ####[4] 결과받기</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">count</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"CNT"</span><span class="o">);</span>
+			<span class="o">}</span>
+			
+			<span class="k">return</span>  <span class="n">count</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"방명록 ) DB에 목록 검색시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>			
+	<span class="o">}</span>
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시글번호에 의한 레코드 검색하는 함수</span>
+	<span class="kd">public</span> <span class="nc">BoardRec</span> <span class="nf">selectById</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+									
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM ARTICLE WHERE ARTICLE_ID = ?"</span><span class="o">;</span>
+									
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+						
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="c1">// ####[4] 결과보기</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"ARTICLE_ID"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setGroupId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"GROUP_ID"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setSequenceNo</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"SEQUENCE_NO"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setPostingDate</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"POSTING_DATE"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setReadCount</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"READ_COUNT"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setWriterName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"WRITER_NAME"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"TITLE"</span><span class="o">));</span>
+				<span class="n">rec</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"CONTENT"</span><span class="o">));</span>
+			<span class="o">}</span>
+
+			<span class="k">return</span> <span class="n">rec</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) DB에 글번호에 의한 레코드 검색시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시글 보여줄 때 조회수 1 증가</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">increaseReadCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">article_id</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+												
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE ARTICLE SET READ_COUNT = READ_COUNT + 1 WHERE ARTICLE_ID = ?"</span><span class="o">;</span>
+												
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">article_id</span><span class="o">);</span>
+									
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) 게시글 볼 때 조회수 증가시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>	
+	<span class="o">}</span>
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시글 수정할 때</span>
+	<span class="c1">//		 (게시글번호와 패스워드에 의해 수정)</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">update</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">rec</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+															
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE ARTICLE SET TITLE=?, CONTENT=? WHERE ARTICLE_ID = ? AND PASSWORD = ?"</span><span class="o">;</span>
+															
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getContent</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getArticleId</span><span class="o">());</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getPassword</span><span class="o">());</span>
+												
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">result</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) 게시글 수정시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">//--------------------------------------------</span>
+	<span class="c1">// ##### 게시글 삭제할 때</span>
+	<span class="c1">//		 (게시글번호와 패스워드에 의해 삭제)</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="kt">int</span> <span class="n">article_id</span><span class="o">,</span> <span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+												
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"DELETE FROM ARTICLE WHERE ARTICLE_ID = ? AND PASSWORD = ?"</span><span class="o">;</span>
+												
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">article_id</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+												
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="n">result</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>	
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) 게시글 수정시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>
+		
+	<span class="o">}</span>
+	
+	<span class="c1">//----------------------------------------------------</span>
+	<span class="c1">// ##### 부모레코드의 자식레코드 중 마지막 레코드의 순서번호를 검색</span>
+	<span class="c1">//       (제일 작은 번호값이 마지막값임)</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">selectLastSequenceNumber</span><span class="o">(</span><span class="nc">String</span> <span class="n">maxSeqNum</span><span class="o">,</span> <span class="nc">String</span> <span class="n">minSeqNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">con</span>	<span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span> <span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span> <span class="o">);</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT min(SEQUENCE_NO) as minseq FROM ARTICLE WHERE SEQUENCE_NO &lt; ? AND SEQUENCE_NO &gt;= ?"</span><span class="o">;</span>  
+			<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">maxSeqNum</span><span class="o">);</span>
+			<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">minSeqNum</span><span class="o">);</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(!</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>				
+				<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="o">}</span>
+			
+			<span class="k">return</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"minseq"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"게시판 ) 부모와 연관된 자식 레코드 중 마지막 순서번호 얻어오기  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span> <span class="k">finally</span><span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+		<span class="o">}</span>			
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="boardcontrol">BoardControl</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.control</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.command.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BoardControl</span> <span class="kd">extends</span> <span class="nc">HttpServlet</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">HashMap</span> <span class="n">commandMap</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span>	<span class="n">testDir</span> <span class="o">=</span> <span class="s">"/05_mvc_class/2_mvcBoard/"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span>  <span class="n">error</span> <span class="o">=</span> <span class="s">"error.jsp"</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">BoardControl</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">();</span>       
+		<span class="n">initCommand</span><span class="o">();</span>
+	<span class="o">}</span>
+
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">initCommand</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">commandMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">();</span>
+		
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"main-page"</span><span class="o">,</span>	<span class="k">new</span> <span class="nc">CommandNull</span><span class="o">(</span><span class="s">"Main.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"list-page"</span><span class="o">,</span>	<span class="k">new</span> <span class="nc">CommandList</span><span class="o">(</span><span class="s">"BoardList.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"view-page"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandView</span><span class="o">(</span><span class="s">"BoardView.jsp"</span><span class="o">));</span>
+		
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"input-page"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandNull</span><span class="o">(</span><span class="s">"BoardInputForm.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"input-do"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandInput</span><span class="o">(</span><span class="s">"BoardSave.jsp"</span><span class="o">));</span>
+		
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"delete-page"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandNull</span><span class="o">(</span><span class="s">"BoardDeleteForm.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"delete-do"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandDelete</span><span class="o">(</span><span class="s">"BoardDelete.jsp"</span><span class="o">));</span>
+		
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"modify-page"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandNull</span><span class="o">(</span><span class="s">"BoardModifyForm.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"modify-do"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandModify</span><span class="o">(</span><span class="s">"BoardModify.jsp"</span><span class="o">));</span>
+		
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"reply-page"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandNull</span><span class="o">(</span><span class="s">"BoardReplyForm.jsp"</span><span class="o">));</span>
+		<span class="n">commandMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"reply-do"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">CommandReply</span><span class="o">(</span><span class="s">"BoardReply.jsp"</span><span class="o">));</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doGet</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">ServletException</span><span class="o">,</span> <span class="nc">IOException</span> <span class="o">{</span>
+		<span class="n">processRequest</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">ServletException</span><span class="o">,</span> <span class="nc">IOException</span> <span class="o">{</span>
+		<span class="n">processRequest</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+	<span class="o">}</span>
+		
+
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">processRequest</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">ServletException</span><span class="o">,</span> <span class="nc">IOException</span> <span class="o">{</span>
+		<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+
+		<span class="nc">String</span> <span class="n">nextPage</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">cmdKey</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cmd"</span><span class="o">);</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">cmdKey</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">cmdKey</span> <span class="o">=</span> <span class="s">"main-page"</span><span class="o">;</span>
+		<span class="o">}</span>
+
+		<span class="nc">Command</span> <span class="n">cmd</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">commandMap</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">cmdKey</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">cmd</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Command</span><span class="o">)</span><span class="n">commandMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">cmdKey</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"지정할 명령어가 존재하지 않음"</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="n">nextPage</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">CommandException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"javax.servlet.jsp.jspException"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+			<span class="n">nextPage</span> <span class="o">=</span> <span class="n">error</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"오류 : "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+			
+		<span class="c1">// forwarding</span>
+		<span class="nc">RequestDispatcher</span> <span class="n">reqDp</span> <span class="o">=</span> <span class="n">getServletContext</span><span class="o">().</span><span class="na">getRequestDispatcher</span><span class="o">(</span><span class="n">testDir</span> <span class="o">+</span> <span class="n">nextPage</span><span class="o">);</span>
+		<span class="n">reqDp</span><span class="o">.</span><span class="na">forward</span><span class="o">(</span><span class="n">request</span><span class="o">,</span> <span class="n">response</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="command">Command</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandexception">CommandException</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandException</span> <span class="kd">extends</span> <span class="nc">Exception</span> <span class="o">{</span>
+	  <span class="kd">public</span> <span class="nf">CommandException</span><span class="o">()</span> <span class="o">{</span>
+	  		<span class="kd">super</span><span class="o">();</span>
+	  	<span class="o">}</span>
+	  	
+	  <span class="kd">public</span> <span class="nf">CommandException</span><span class="o">(</span><span class="nc">String</span> <span class="n">error</span><span class="o">)</span> <span class="o">{</span>
+	  		<span class="kd">super</span><span class="o">(</span><span class="n">error</span><span class="o">);</span>
+	  	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandnull">CommandNull</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandNull</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandNull</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandlist">CommandList</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandList</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">totalRecCount</span><span class="o">;</span>		<span class="c1">// 전체 레코드 수	</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">pageTotalCount</span><span class="o">;</span>		<span class="c1">// 전체 페이지 수</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">countPerPage</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>	<span class="c1">// 한페이지당 레코드 수</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">pageNo</span><span class="o">;</span>				<span class="c1">// 페이지 번호</span>
+	
+	<span class="kd">public</span> <span class="nf">CommandList</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">String</span> <span class="n">pNum</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"page"</span><span class="o">);</span>
+			<span class="nc">List</span> <span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="n">getArticleList</span><span class="o">(</span><span class="n">pNum</span><span class="o">);</span>
+			
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"mList"</span><span class="o">,</span> <span class="n">mList</span><span class="o">);</span>
+			
+			<span class="kt">int</span> <span class="n">pCount</span> <span class="o">=</span> <span class="n">getTotalPage</span><span class="o">();</span>
+			
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"pCount"</span><span class="o">,</span> <span class="n">pCount</span><span class="o">);</span>
+		   
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandList.java &lt; 목록 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// pNum을 받아준다</span>
+		<span class="kd">public</span> <span class="nc">List</span> <span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="nf">getArticleList</span><span class="o">(</span><span class="nc">String</span> <span class="n">pNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+			<span class="c1">// 페이지 번호에 따른 시작 레코드 번호(startRow)와 보여줄 마지막 레코드 번호(endRow) 추출</span>
+		<span class="cm">/*
+		 		전체 레코드 수가 9
+		 		1 페이지 : 1 ~ 3
+		 		2 페이지 : 4 ~ 6
+		 		3 페이지 : 7 ~ 9
+		 */</span>
+			<span class="c1">// 첫페이지는 1로 만들어준다.</span>
+			<span class="n">pageNo</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+			<span class="c1">// pNum에 null값이 아닐때만 pNum을 형변환해준다.</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">pNum</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">pageNo</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">pNum</span><span class="o">);</span>
+			
+			<span class="kt">int</span> <span class="n">endRow</span> <span class="o">=</span> <span class="n">pageNo</span> <span class="o">*</span> <span class="n">countPerPage</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">startRow</span> <span class="o">=</span> <span class="n">endRow</span> <span class="o">-</span> <span class="o">(</span><span class="n">countPerPage</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+			
+			<span class="c1">// 현재 페이지에 보여울 메세지 목록을 얻어옴</span>
+			<span class="nc">List</span> <span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">selectList</span><span class="o">(</span><span class="n">startRow</span><span class="o">,</span> <span class="n">endRow</span><span class="o">);</span>			
+				<span class="k">return</span> <span class="n">mList</span><span class="o">;</span>
+		<span class="o">}</span>
+			
+		<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getTotalPage</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+			<span class="c1">// 전체 레코드 수를 얻어옴</span>
+			<span class="n">totalRecCount</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">getTotalCount</span><span class="o">();</span>
+			
+			<span class="c1">// 전체 페이지 수를 구함</span>
+	<span class="cm">/*
+				     레코드수	     페이지수
+		 			9		3
+					10		4
+		 			11		4
+		 			12		4
+		 			13		5
+	*/</span>
+			<span class="n">pageTotalCount</span> <span class="o">=</span> <span class="n">totalRecCount</span> <span class="o">/</span> <span class="n">countPerPage</span><span class="o">;</span>  
+			<span class="k">if</span><span class="o">(</span><span class="n">totalRecCount</span> <span class="o">%</span> <span class="n">countPerPage</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">pageTotalCount</span><span class="o">++;</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">pageTotalCount</span><span class="o">;</span>
+		<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandinput">CommandInput</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.text.DecimalFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandInput</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandInput</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+			<span class="nc">BoardDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+			
+			<span class="n">rec</span><span class="o">.</span><span class="na">setWriterName</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"writerName"</span><span class="o">));</span>	<span class="c1">// 작성자</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"title"</span><span class="o">));</span>			<span class="c1">// 제목</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"content"</span><span class="o">));</span>		<span class="c1">// 내용</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">));</span>		<span class="c1">// 비밀번호</span>
+			<span class="kt">int</span> <span class="n">groupId</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">getGroupId</span><span class="o">();</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setGroupId</span><span class="o">(</span><span class="n">groupId</span><span class="o">);</span>								<span class="c1">// 그룹번호</span>
+			
+<span class="cm">/*
+			groupId = 1 이라면		00000000001999999
+			groupId = 1234 이라면 	00000001234999999
+*/</span>
+			<span class="c1">// 순서번호(sequence_no) 지정</span>
+			<span class="nc">DecimalFormat</span> <span class="n">dformat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DecimalFormat</span><span class="o">(</span><span class="s">"0000000000"</span><span class="o">);</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setSequenceNo</span><span class="o">(</span><span class="n">dformat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">groupId</span><span class="o">)</span> <span class="o">+</span> <span class="s">"999999"</span><span class="o">);</span>
+			
+			<span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">dao</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">rec</span><span class="o">));</span>
+			
+			<span class="c1">//-------------------------------------------------------------</span>
+		    <span class="nc">List</span> <span class="o">&lt;</span><span class="nc">BoardRec</span><span class="o">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectList</span><span class="o">();</span>	
+		    <span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"param"</span><span class="o">,</span> <span class="n">mList</span><span class="o">);</span>
+		    
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandInput.java &lt; 입력시 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandview">CommandView</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandView</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandView</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">article_id</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"article_id"</span><span class="o">));</span>
+			<span class="nc">BoardDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+			<span class="n">dao</span><span class="o">.</span><span class="na">increaseReadCount</span><span class="o">(</span><span class="n">article_id</span><span class="o">);</span>
+			<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectById</span><span class="o">(</span><span class="n">article_id</span><span class="o">);</span>
+
+		    <span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">,</span> <span class="n">rec</span><span class="o">);</span>
+
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandList.java &lt; 게시물 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commanddelete">CommandDelete</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandDelete</span> <span class="kd">implements</span> <span class="nc">Command</span><span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandDelete</span><span class="o">(</span> <span class="nc">String</span> <span class="n">_next</span> <span class="o">){</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span><span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span> <span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>	
+			<span class="kt">int</span> <span class="n">articleId</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"article_id"</span><span class="o">));</span>	<span class="c1">// 게시글번호</span>
+			<span class="nc">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>						<span class="c1">// 비밀번호</span>
+			
+			<span class="kt">int</span> <span class="n">resultCnt</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">delete</span><span class="o">(</span><span class="n">articleId</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+			
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">,</span> <span class="n">resultCnt</span><span class="o">);</span>
+			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandDelete.java &lt; 삭제 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>			
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandmodify">CommandModify</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandModify</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandModify</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+	        <span class="kt">int</span> <span class="n">article_id</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"articleId"</span><span class="o">));</span> <span class="c1">// BoardModifyForm에서 parameter를 받아온다.</span>
+	        <span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">article_id</span><span class="o">);</span>
+	        <span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"title"</span><span class="o">));</span>
+	        <span class="n">rec</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">));</span>
+	        <span class="n">rec</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"content"</span><span class="o">));</span>
+	        
+	        <span class="nc">BoardDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>							<span class="c1">// dao에 식들이 있으므로 객체생성</span>
+	        <span class="k">if</span><span class="o">(</span><span class="n">dao</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">rec</span><span class="o">)</span> <span class="o">!=</span><span class="mi">0</span><span class="o">)</span> <span class="o">{</span>										<span class="c1">// update가 잘 되었을 때만 조건을 수행한다.</span>
+	        	<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">,</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectById</span><span class="o">(</span><span class="n">article_id</span><span class="o">));</span>	<span class="c1">// article_id에 맞게 수정된 값(조건에서 이미 수정이된상태)을 rec에 넣어준다</span>
+	        <span class="o">}</span>
+	         
+			<span class="kt">int</span> <span class="n">resultCnt</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">update</span><span class="o">(</span><span class="n">rec</span><span class="o">);</span>
+			
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"result"</span><span class="o">,</span> <span class="n">resultCnt</span><span class="o">);</span>
+
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandList.java &lt; 수정 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commandreply">CommandReply</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mvc.board.command</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.text.DecimalFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletRequest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.servlet.http.HttpServletResponse</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mvc.board.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommandReply</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">next</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">CommandReply</span><span class="o">(</span><span class="nc">String</span> <span class="n">_next</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">next</span> <span class="o">=</span> <span class="n">_next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">,</span> <span class="nc">HttpServletResponse</span> <span class="n">response</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">CommandException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">parentId</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="nc">BoardRec</span> <span class="n">rec</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BoardRec</span><span class="o">();</span>
+			
+			<span class="nc">String</span> <span class="n">pId</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"parentId"</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">pId</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">parentId</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">pId</span><span class="o">);</span>
+			
+			<span class="nc">BoardDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">BoardDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+			<span class="c1">// 부모게시글의 레코드를 얻어옴</span>
+			<span class="nc">BoardRec</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectById</span><span class="o">(</span><span class="n">parentId</span><span class="o">);</span>
+			
+			<span class="c1">// 부모게시글을 체크</span>
+			<span class="n">checkParent</span><span class="o">(</span><span class="n">parent</span><span class="o">,</span> <span class="n">parentId</span><span class="o">);</span>
+			
+			<span class="c1">// 답변글에 순서번호 구하기</span>
+			<span class="nc">String</span> <span class="n">maxSeqNum</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">getSequenceNo</span><span class="o">();</span>
+			<span class="nc">String</span> <span class="n">minSeqNum</span> <span class="o">=</span> <span class="n">getSearchMinSeqNum</span><span class="o">(</span><span class="n">parent</span><span class="o">);</span>
+			
+			<span class="nc">String</span> <span class="n">lastChildSeq</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectLastSequenceNumber</span><span class="o">(</span><span class="n">maxSeqNum</span><span class="o">,</span> <span class="n">minSeqNum</span><span class="o">);</span>
+			
+			<span class="nc">String</span> <span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">getSequenceNumber</span><span class="o">(</span><span class="n">parent</span><span class="o">,</span><span class="n">lastChildSeq</span><span class="o">);</span>
+			
+			<span class="n">rec</span><span class="o">.</span><span class="na">setGroupId</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">getGroupId</span><span class="o">());</span>					<span class="c1">// 부모의 그룹번호와 동일하게 지정</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setSequenceNo</span><span class="o">(</span><span class="n">sequenceNumber</span><span class="o">);</span>						<span class="c1">// 위에서 구한 답변글의 순서번호 지정</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setPostingDate</span><span class="o">((</span><span class="k">new</span> <span class="nc">Date</span><span class="o">()).</span><span class="na">toString</span><span class="o">());</span>			<span class="c1">// 등록일</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setWriterName</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"writerName"</span><span class="o">));</span>	<span class="c1">// 작성자</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"title"</span><span class="o">));</span>			<span class="c1">// 제목</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"content"</span><span class="o">));</span>		<span class="c1">// 내용</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">));</span>		<span class="c1">// 비밀번호</span>
+			
+			<span class="kt">int</span> <span class="n">articleId</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">rec</span><span class="o">);</span>
+			<span class="n">rec</span><span class="o">.</span><span class="na">setArticleId</span><span class="o">(</span><span class="n">articleId</span><span class="o">);</span>							<span class="c1">// 게시글번호</span>
+			
+			<span class="n">request</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"rec"</span><span class="o">,</span> <span class="n">rec</span><span class="o">);</span>
+
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">BoardException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">CommandException</span><span class="o">(</span><span class="s">"CommandList.java &lt; 답글 &gt; "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">next</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/*
+	 * 부모글이 존재하는지 부모글이 마지막 3단계인지 확인하는 함수
+	 */</span>
+	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">checkParent</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">pId</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">parent</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">BoardException</span><span class="o">(</span><span class="s">"부모글이 존재하지 않음 : "</span> <span class="o">+</span> <span class="n">pId</span><span class="o">);</span>
+		
+		<span class="kt">int</span> <span class="n">parentLevel</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">getLevel</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">3</span><span class="o">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">BoardException</span><span class="o">(</span><span class="s">"3단계 마지막 레벨 글에는 답변을 달 수 없습니다."</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">private</span> <span class="nc">String</span> <span class="nf">getSearchMinSeqNum</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">parentSeqNum</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">getSequenceNo</span><span class="o">();</span>
+		<span class="nc">DecimalFormat</span> <span class="n">dFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DecimalFormat</span><span class="o">(</span><span class="s">"0000000000000000"</span><span class="o">);</span>
+		<span class="kt">long</span> <span class="n">parentSeqLongValue</span> <span class="o">=</span> <span class="nc">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">parentSeqNum</span><span class="o">);</span>
+		<span class="kt">long</span> <span class="n">searchMinLongValue</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		
+		<span class="k">switch</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">getLevel</span><span class="o">())</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">searchMinLongValue</span> <span class="o">=</span> <span class="n">parentSeqLongValue</span> <span class="o">/</span> <span class="mi">1000000L</span> <span class="o">*</span> <span class="mi">1000000L</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">1</span> <span class="o">:</span> <span class="n">searchMinLongValue</span> <span class="o">=</span> <span class="n">parentSeqLongValue</span> <span class="o">/</span> <span class="mi">10000L</span> <span class="o">*</span> <span class="mi">10000L</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">2</span> <span class="o">:</span> <span class="n">searchMinLongValue</span> <span class="o">=</span> <span class="n">parentSeqLongValue</span> <span class="o">/</span> <span class="mi">100L</span> <span class="o">*</span> <span class="mi">100L</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">dFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">searchMinLongValue</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">private</span> <span class="nc">String</span> <span class="nf">getSequenceNumber</span><span class="o">(</span><span class="nc">BoardRec</span> <span class="n">parent</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastChildSeq</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">BoardException</span> <span class="o">{</span>
+		<span class="kt">long</span> <span class="n">parentSeqLong</span>	<span class="o">=</span> <span class="nc">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">getSequenceNo</span><span class="o">());</span>
+		<span class="kt">int</span>  <span class="n">parentLevel</span>	<span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">getLevel</span><span class="o">();</span>
+		
+		<span class="kt">long</span> <span class="n">decUnit</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">if</span>		<span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span><span class="n">decUnit</span> <span class="o">=</span> <span class="mi">10000L</span><span class="o">;}</span>
+		<span class="k">else</span> <span class="nf">if</span>	<span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span><span class="n">decUnit</span> <span class="o">=</span> <span class="mi">100L</span><span class="o">;}</span>
+		<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span><span class="n">decUnit</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;}</span>
+		
+		<span class="nc">String</span> <span class="n">sequenceNumber</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="nc">DecimalFormat</span> <span class="n">dFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DecimalFormat</span><span class="o">(</span><span class="s">"0000000000000000"</span><span class="o">);</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">lastChildSeq</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// 답변글이 없다면</span>
+			<span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">dFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">parentSeqLong</span><span class="o">-</span><span class="n">decUnit</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span> <span class="c1">// 답변글이 있다면, 마지막 답변글인지 확인</span>
+			<span class="nc">String</span> <span class="n">orderOfLastChildSeq</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			
+			<span class="k">if</span><span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">orderOfLastChildSeq</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span><span class="mi">12</span><span class="o">);</span>
+				<span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">12</span><span class="o">)</span> <span class="o">+</span> <span class="s">"9999"</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">orderOfLastChildSeq</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">12</span><span class="o">,</span><span class="mi">14</span><span class="o">);</span>
+				<span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">14</span><span class="o">)</span> <span class="o">+</span> <span class="s">"99"</span><span class="o">;</span>				
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">parentLevel</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">orderOfLastChildSeq</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">14</span><span class="o">,</span><span class="mi">16</span><span class="o">);</span>
+				<span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">lastChildSeq</span><span class="o">;</span>			
+			<span class="o">}</span>
+			
+			<span class="k">if</span><span class="o">(</span><span class="n">orderOfLastChildSeq</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"00"</span><span class="o">))</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">BoardException</span><span class="o">(</span><span class="s">"마지막 자식 글이 이미 존재합니다."</span><span class="o">);</span>
+			<span class="o">}</span>
+			
+			<span class="kt">long</span> <span class="n">seq</span> <span class="o">=</span> <span class="nc">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">sequenceNumber</span><span class="o">)</span> <span class="o">-</span> <span class="n">decUnit</span><span class="o">;</span>
+			<span class="n">sequenceNumber</span> <span class="o">=</span> <span class="n">dFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">seq</span><span class="o">);</span>
+			
+			<span class="k">return</span> <span class="n">sequenceNumber</span><span class="o">;</span> 
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">sequenceNumber</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

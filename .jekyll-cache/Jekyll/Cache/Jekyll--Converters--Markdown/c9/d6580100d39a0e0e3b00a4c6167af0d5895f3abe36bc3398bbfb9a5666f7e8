@@ -1,0 +1,272 @@
+I"��<h1 id="join"><a href="">join</a></h1>
+
+<h2 id="join-1">Join</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 1. 업무별, 부서별 급여 합계와 인원수를 출력하되, 10번 부서를 제외하고 업무가 ‘SALESMAN’과 ‘MANAGER’만 출력한다.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span>
+<span class="k">HAVING</span> <span class="n">deptno</span> <span class="o">&lt;&gt;</span> <span class="mi">10</span> <span class="k">AND</span> <span class="p">(</span><span class="n">job</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'SALESMAN'</span><span class="p">,</span> <span class="s1">'MANAGER'</span><span class="p">));</span>
+
+<span class="c1">-- 2. 업무별로 평균급여와 최대급여를 출력하되, 평균급여가 2000이상인 것만 출력하고 평균급여가 높은 순으로 정렬</span>
+<span class="k">SELECT</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span><span class="p">,</span> <span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span>
+<span class="k">HAVING</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">2000</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">avg</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 3. 5개씩 급여합계와 인원수를 출력 (rownum이용)</span>
+<span class="k">SELECT</span> <span class="n">ceil</span><span class="p">(</span><span class="n">ROWNUM</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="n">grp</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ceil</span><span class="p">(</span><span class="n">ROWNUM</span><span class="o">/</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="c1">-- 4. 같은 입사년도 별로 인원수를 출력</span>
+<span class="k">SELECT</span> <span class="n">to_char</span><span class="p">(</span><span class="n">HIREDATE</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="n">hd</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">to_char</span><span class="p">(</span><span class="n">HIREDATE</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">);</span>
+
+<span class="c1">-- 5. 다음과 같이 출력</span>
+<span class="cm">/*
+   CLERK     SALESMAN MANAGER       (업무명)
+-----------------------------------------------------------------------
+     4           4       3           (인원수)
+ */</span>
+<span class="c1">-- GROUP BY에 안들어가므로 count보다 sum을 이용한다.</span>
+<span class="k">SELECT</span> <span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="s1">'CLERK'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="n">clerk</span><span class="p">,</span> 
+<span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="s1">'SALESMAN'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="n">salesman</span><span class="p">,</span> 
+<span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="s1">'MANAGER'</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="n">manager</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="c1">-- case문 활용</span>
+<span class="k">SELECT</span> <span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">job</span> <span class="k">WHEN</span> <span class="s1">'CLERK'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="n">clerk</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">job</span> <span class="k">WHEN</span> <span class="s1">'SALESMAN'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="n">salesman</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">job</span> <span class="k">WHEN</span> <span class="s1">'MANAGER'</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">END</span><span class="p">)</span> <span class="n">manager</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+    
+<span class="c1">-- 6. 다음과 같이 출력</span>
+<span class="cm">/*
+업무명  10번부서 20번부서 30번부서 급여합계
+------------------------------------------
+CLERK  1300  1900     950  4150
+SALESMAN 0     0    5600   5600
+PRESIDENT 5000     0       0  5000
+MANAGER    2450  2975    2850  8275
+ANALYST     0  6000       0  6000
+ */</span>
+<span class="k">SELECT</span> <span class="n">job</span> <span class="nv">"업무명"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">deptno</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="nv">"10번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">deptno</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="nv">"20번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="n">deptno</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="nv">"30번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="nv">"급여 합계"</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+<span class="c1">-- case문 활용</span>
+<span class="k">SELECT</span> <span class="n">job</span> <span class="nv">"업무명"</span><span class="p">,</span> 
+<span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">deptno</span> <span class="k">WHEN</span> <span class="mi">10</span> <span class="k">THEN</span> <span class="n">sal</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="nv">"10번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">deptno</span> <span class="k">WHEN</span> <span class="mi">20</span> <span class="k">THEN</span> <span class="n">sal</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="nv">"20번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="k">case</span> <span class="n">deptno</span> <span class="k">WHEN</span> <span class="mi">30</span> <span class="k">THEN</span> <span class="n">sal</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">END</span><span class="p">)</span> <span class="nv">"30번 부서"</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="nv">"급여 합계"</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+
+<span class="c1">-- 사원테이블(emp)에 사원명과 부서테이블(dept)에 그 사원의 부서명을 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">dname</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">,</span> <span class="n">dept</span><span class="p">;</span> <span class="c1">-- Cartesian Product</span>
+
+<span class="c1">-- 1. 조인(JOIN) : 두테이블에 .으로 연결고리를 맺어 연결한다.</span>
+<span class="k">SELECT</span> <span class="n">emp</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">dept</span><span class="p">.</span><span class="n">dname</span><span class="p">,</span> <span class="n">emp</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">,</span> <span class="n">dept</span>
+<span class="k">WHERE</span> <span class="n">emp</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">dept</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 2. 내부 조인 </span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 2-1. (ANSI조인 : 표준화)INNER JOIN</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">enmae</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 3. 외부 조인 : 없는 데이터를 포함하여 조인</span>
+<span class="c1">-- (+) : 해당 데이터가 존재하지 않더라도 이를 무시하고 조인에 참여</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">(</span><span class="o">+</span><span class="p">);</span>
+
+<span class="c1">-- 부서테이블이 없는 부서가 출력된다. </span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span><span class="p">(</span><span class="o">+</span><span class="p">)</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span> 
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="c1">-- WHERE e.deptno(+) = d.deptno(+); -- 에러 </span>
+
+<span class="c1">-- 3-1. (ANSI조인 : 표준화)LEFT OUTER JOIN, RIGHT OUTER JOIN</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">RIGHT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 양쪽이 없는 테이블 가능</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">FULL</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 1. 각 사원의 매니저를 검색(self join)</span>
+<span class="c1">-- 내부조인</span>
+<span class="k">SELECT</span> <span class="n">e1</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="n">mgr</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="n">boss</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e1</span><span class="p">,</span> <span class="n">emp</span> <span class="n">e2</span>
+<span class="k">WHERE</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">empno</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e1</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="n">mgr</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="n">boss</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e1</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">emp</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">empno</span><span class="p">;</span>
+
+<span class="c1">-- 외부조인</span>
+<span class="k">SELECT</span> <span class="n">e1</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="n">mgr</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="n">boss</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e1</span><span class="p">,</span> <span class="n">emp</span> <span class="n">e2</span>
+<span class="k">WHERE</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">empno</span><span class="p">(</span><span class="o">+</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">e1</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="n">mgr</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="n">boss</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e1</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">emp</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e1</span><span class="p">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">empno</span><span class="p">;</span>
+
+<span class="c1">-- [연습문제]</span>
+<span class="c1">-- 1. EMP 테이블에서 사원번호, 이름, 업무, 부서번호와 DEPT 테이블에서 부서명, 근무지를 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dept</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span> <span class="n">job</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span> <span class="n">job</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 2. SALESMAN 사원만 사원번호, 이름, 급여, 부서명, 근무지를 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span> <span class="n">sal</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="k">AND</span> <span class="n">job</span> <span class="o">=</span> <span class="s1">'SALESMAN'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span> <span class="n">sal</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="o">=</span> <span class="s1">'SALESMAN'</span><span class="p">;</span>
+
+<span class="c1">-- 3. 보너스(comm)를 받는 사원에 대해 이름, 부서명, 위치를 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="k">AND</span> <span class="n">nvl</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">comm</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">loc</span> <span class="n">loc</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">WHERE</span> <span class="n">nvl</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">comm</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- 4. 부서별 부서명과 급여 합계를 출력</span>
+<span class="k">SELECT</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span><span class="p">;</span>
+
+<span class="cm">/* 집합(SET)
+    - UNION     합집합
+    - UNION ALL 합집합 : 중복 허용
+    - INTERSECT 교집합
+    - MINUS     차집합
+ */</span>
+ <span class="c1">-- 업무가 CLERK인 사원의 사번, 사원명, 업무, 부서번호 출력</span>
+ <span class="c1">-- 10번 부서의 사번, 사원명, 업무, 부서번호 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">job</span> <span class="o">=</span> <span class="s1">'CLERK'</span>
+<span class="n">MINUS</span> <span class="c1">-- 집합과 관련 된 내용</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="c1">-- 전체 사원들 중 평균급여보다 낮은 급여를 받는 사원의 명단을 조회</span>
+<span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">sal</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">);</span>
+
+<span class="c1">-- 월급을 가장 많이 받는 사람의 정보를 조회하기</span>
+<span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">sal</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">);</span>
+
+<span class="c1">-- 평균급여보다 높고 최대 급여보다 낮은 월급을 받는 사원 명단 조회</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">sal</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">)</span> <span class="k">AND</span> <span class="n">sal</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e1</span><span class="p">,</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">avg</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">WHERE</span> <span class="n">e1</span><span class="p">.</span><span class="n">sal</span> <span class="o">&gt;</span> <span class="n">e2</span><span class="p">.</span><span class="k">avg</span> <span class="k">AND</span> <span class="n">e1</span><span class="p">.</span><span class="n">sal</span> <span class="o">&lt;</span> <span class="n">e2</span><span class="p">.</span><span class="k">max</span><span class="p">;</span>
+
+<span class="c1">-- 월급순으로 상위 10명의 명단을 출력(rownum 이용)</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">nvl</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="c1">-- 정렬을 한 후 10명을 뽑아낸 것</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">nvl</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">DESC</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="n">ROWNUM</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="c1">-- 바로 10명을 뽑고 정렬을 한 것(틀린거)</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span> 
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="n">ROWNUM</span> <span class="o">&lt;=</span> <span class="mi">10</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">nvl</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">departments</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">jobs</span><span class="p">;</span>
+<span class="c1">-- 1. 사원번호, 사원명, 부서명 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="n">id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span>  <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span><span class="p">;</span>
+
+<span class="c1">-- 2. 사원번호, 사원명, 업무명, 부서명 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="n">id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">j</span><span class="p">.</span><span class="n">job_title</span> <span class="n">job</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span> 
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">jobs</span> <span class="n">j</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">job_id</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">job_id</span><span class="p">;</span>
+
+<span class="c1">-- 3. 사원번호, 사원명, 부서명, 위치 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="n">id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">city</span> <span class="n">city</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">locations</span> <span class="n">l</span>
+<span class="k">ON</span> <span class="n">d</span><span class="p">.</span><span class="n">location_id</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">location_id</span><span class="p">;</span>
+
+<span class="c1">-- 4. 사원번호, 사원명, 업무명, 부서명, 위치출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="n">id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">j</span><span class="p">.</span><span class="n">job_title</span> <span class="n">job</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">city</span> <span class="n">city</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">jobs</span> <span class="n">j</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">job_id</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">job_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">locations</span> <span class="n">l</span>
+<span class="k">ON</span> <span class="n">d</span><span class="p">.</span><span class="n">location_id</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">location_id</span><span class="p">;</span>
+
+<span class="c1">-- 5. 입사년도별 최고 월급을 받는 사원의 이름과 부서명을 출력</span>
+<span class="c1">-- 년도별 최고 월급 받는 순서</span>
+<span class="k">SELECT</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="nb">year</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">maxsal</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">year</span><span class="p">;</span>
+
+<span class="k">SELECT</span>  <span class="n">e1</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e1</span><span class="p">.</span><span class="n">last_name</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">hire_date</span> <span class="n">h_date</span><span class="p">,</span> <span class="n">e1</span><span class="p">.</span><span class="n">salary</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span>
+<span class="k">FROM</span>    <span class="n">employees</span> <span class="n">e1</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="nb">year</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">maxsal</span> 
+                                <span class="k">FROM</span> <span class="n">employees</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">year</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">to_char</span><span class="p">(</span><span class="n">e1</span><span class="p">.</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="nb">year</span> <span class="k">AND</span> <span class="n">e1</span><span class="p">.</span><span class="n">salary</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">maxsal</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e1</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">hire_date</span><span class="p">;</span>
+</code></pre></div></div>
+:ET

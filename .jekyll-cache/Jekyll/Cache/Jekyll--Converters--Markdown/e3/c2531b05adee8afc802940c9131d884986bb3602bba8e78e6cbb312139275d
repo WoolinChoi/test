@@ -1,0 +1,174 @@
+I"]<h1 id="chapter46"><a href="">chapter4~6</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>vi 에디터 익히기(chapter4 - section2)</li>
+  <li>사용권한(chapter5 - section1~4)</li>
+  <li>사용자와 그룹관리(chapter6)</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>복습
+    <ol>
+      <li>korea/island/dokdo 디렉토리 생성
+  <br /> mkdir -p korea/island/dokdo</li>
+      <li>생성한 디렉토리로 이동
+  <br /> cd korea/island/dokdo</li>
+      <li>korea.txt 파일 생성
+  <br /> touch korea.txt</li>
+      <li>생성된 파일에 “행복한 하루” 입력하고 저장
+  <br /> vi korea.txt</li>
+      <li>화일 내용 보기
+  <br /> cat korea.txt</li>
+      <li>파일을 korea디렉토리로 복사
+  <br /> 1) cp korea.txt /home/centos/korea
+  <br /> 1-1) cp korea.txt ../../</li>
+      <li>파일을 홈디렉토리로 이동
+  <br /> 1) mv korea.text /home/centos
+  <br /> 1-1) mv korea.txt ~</li>
+      <li>korea/island/dokdo 디렉토리 삭제
+  <br /> rm -r korea</li>
+    </ol>
+  </li>
+  <li>vi 에디터
+    <ol>
+      <li>happy를 joy로 바꾸기
+  <br /> :%s/happy/joy/g</li>
+      <li>글자 A를 happy로 바꾸기
+  <br /> :%s/A/happy/g</li>
+      <li>table 구조를 복사해서 하나 더 생성
+  <br /> 1) :12,19 y복사 후 p붙혀넣기
+  <br /> 1-1) :12,19 co 19
+  <br /> 2-1) v로 table 구조를 블록 한 다음 y복사 후 p붙혀넣기</li>
+      <li>8라인과 9라인 switch
+  <br /> :8 dd 잘라내기 후 p 붙혀넣기</li>
+      <li>B글자 뒤에 Z추가
+  <br /> /B에 커서 이동 후 a 누른 후 Z추가</li>
+    </ol>
+  </li>
+  <li>사용권한
+    <ol>
+      <li>chmod g+w test.html
+  <br /> 파일 그룹에게 쓰기 권한부여</li>
+      <li>chmod o+w test.html
+  <br /> 파일 기타 사용자에게 쓰기 권한부여</li>
+      <li>chmod go-w test.html
+  <br /> 그룹과 기타 사용자에게 쓰기 권한제거</li>
+      <li>chmod a+x test.html
+  <br /> 모든 사용자에게 쓰기 권한부여</li>
+      <li>chmod u+x test.html
+  <br /> 파일 소유자에게 실행 권한부여</li>
+      <li>chmod u+w,g-w test.html
+  <br /> 파일 소유자에게 쓰기 권한부여와 그룹에게 쓰기 권한부여</li>
+      <li>chomod 444 test.html
+  <br /> r– r– r–</li>
+      <li>chomod 575 test.html
+  <br /> r-x rwx r-x</li>
+      <li>chomod 555 test.html
+  <br /> r-w r-w r-w</li>
+      <li>chomod 700 test.html
+  <br /> rwx — —</li>
+    </ol>
+  </li>
+  <li>실습 5-3(p252)
+    <ol>
+      <li>새로운 빈파일 yesterday.txt 생성하기
+  <br /> touch yesterday.txt</li>
+      <li>yesterday.txt 파일에 설정되어 있는 접근권한 출력하기
+  <br /> ls -l yesterday.txt</li>
+      <li>yesterday.txt 파일에 대한 접근권한을 숫자모드를 이용하여 rwx rwx r–로 변경하기
+  <br /> chmod 775 yesterday.txt</li>
+      <li>접근권한이 변경된 yesterday.txt 파일의 접근권한 출력하기
+  <br /> ls -l yesterday.txt</li>
+      <li>yesterday.txt 파일삭제 여부를 물어가며 삭제하기
+  <br /> rm -i yesterday.txt</li>
+      <li>삭제된 yesterday.txt 파일이 존재하는지 확인하기
+  <br /> ls</li>
+    </ol>
+  </li>
+  <li>실습 5-1(p246)
+    <ol>
+      <li>주어진 문장을 vi 창에서 입력하기
+  <br /> vi</li>
+      <li>입력한 문장을 story.txt 파일명으로 저장하기
+  <br /> :w story.txt</li>
+      <li>story.txt 파일의 접근권한을 심볼릭 모드로 파일 소유자에게 실행권한과 그룹 및 사용자에게 쓰기 권한 부여하기
+  <br /> chmod u+x,go+w story.txt</li>
+      <li>story.txt 파일에 변경된 접근권한 출력하기
+  <br /> ls -l story.txt</li>
+      <li>story.txt 파일의 접근권한을 심볼릭 모드로 파일 소유자에게 실행권한과 그룹 및 사용자에게 쓰기 권한 제거하기
+  <br /> chmod u-x,go-w story.txt</li>
+      <li>story.txt 파일에 변경된 접근권한 출력하기
+  <br /> ls -l story.txt</li>
+    </ol>
+  </li>
+  <li>실습 6-5(p310)
+    <ol>
+      <li>사용자 계정 pro_001과 pro_002 계정을 새로 생성하기
+  <br /> 1) useradd pro_001
+  <br /> 2) useradd pro_002</li>
+      <li>새로 생성한 2개의 사용자 계정이 홈 디렉터리에 존재하는지 확인하기
+  <br /> ls /home</li>
+      <li>professor 그룹에 사용자 계정 pro_001계정을 추가 지정하기
+  <br /> 1) groupadd professor
+  <br /> 2) gpasswd -a pro_001 professor</li>
+      <li>professor 그룹에 사용자 계정 pro_002계정을 추가 지정하기
+  <br /> gpasswd -a pro_002 professor</li>
+      <li>사용자 계정 pro_001과 pro_002 계정에 지정된 그룹정보 확인하기
+  <br /> tail /etc/group</li>
+    </ol>
+  </li>
+  <li>실습 6-7(p317)
+    <ol>
+      <li>터미널 창에서 professor 그룹에 존재하는 pro_002 계정으로 접속하기
+  <br /> su - pro_002</li>
+      <li>pro_002 계정의 그룹정보 출력하기
+  <br /> id</li>
+      <li>pro_002 계정의 소속 그룹을 professor 그룹으로 변경하기
+  <br /> newgrp professor</li>
+      <li>pro_002 계정의 변경된 그룹 정보 출력하기
+  <br /> id</li>
+      <li>root 계정으로 프롬프트 변경하기
+  <br /> su - root</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>mkdir와 mkdir -p 차이
+    <ul>
+      <li>mkdir은 디렉터리를 만들때 쓰이고 mkdir -p은 계층적(/ / / 서브디렉터리) 디렉터리를 생성할 때 쓰입니다.</li>
+    </ul>
+  </li>
+  <li>rmdir과 rm -r 차이
+    <ul>
+      <li>rmdir은 비어있는 디렉터리를 삭제할때 쓰이고 rm -r은 비어있지 않은 디렉터리를 삭제할 때 쓰입니다.</li>
+    </ul>
+  </li>
+  <li>chmod : 디렉터리 또는 파일의 접근권한 변경(주의! 콤마(,)뒤에 공백있으면 에러)</li>
+  <li>사용자 관리
+    <ul>
+      <li>새 계정 생성 : useradd</li>
+      <li>암호 수정 : passwd</li>
+      <li>계정 확인 : tail /etc/passwd</li>
+      <li>암호 확인 : tail /etc/shadow</li>
+      <li>계정 삭제 : userdel -r</li>
+    </ul>
+  </li>
+  <li>그룹 관리
+    <ul>
+      <li>새 그룹 생성 : groupadd</li>
+      <li>그룹 확인 : tail /etc/group</li>
+      <li>그룹에 추가하면서 새 계정 생성 : useradd -g [그룹명] [계정]</li>
+    </ul>
+  </li>
+  <li>yum으로 패키지 설치 : yum -y install system-config-users</li>
+  <li>소유권 변경
+    <ul>
+      <li>chown : 계정이름:그룹이름 파일명</li>
+    </ul>
+  </li>
+</ul>
+:ET

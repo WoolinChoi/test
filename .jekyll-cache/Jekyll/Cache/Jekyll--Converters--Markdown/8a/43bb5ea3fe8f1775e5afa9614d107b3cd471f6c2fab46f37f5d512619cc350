@@ -1,0 +1,32 @@
+I"�<h1 id="document"><a href="">document</a></h1>
+
+<h2 id="documentopen">DocumentOpen</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>DocumentOpen<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/Javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">function</span> <span class="nx">show_document</span><span class="p">()</span>
+	<span class="p">{</span>
+<span class="c1">// 		var irum = document.frm.userName.value;</span>
+<span class="c1">// 		var irum = document.forms[0].userName.value;</span>
+		<span class="kd">var</span> <span class="nx">irum</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<span class="c1">// 		alert(irum);</span>
+		<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">result</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">result</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">irum</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">님 반갑습니다!!!</span><span class="dl">'</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'frm'</span><span class="nt">&gt;</span>
+		당신의 이름은? <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">id=</span><span class="s">'userName'</span> <span class="na">name=</span><span class="s">'userName'</span> <span class="na">size=</span><span class="s">'20'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'눌러봐'</span> <span class="na">onclick=</span><span class="s">'JavaScript:show_document()'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'result'</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

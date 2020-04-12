@@ -1,0 +1,377 @@
+I"[<h1 id="subquery"><a href="">subQuery</a></h1>
+
+<h2 id="subquery-1">SubQuery</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 1. 연도별로 입사자들의 최소급여, 최대 급여, 급여의 총합 그리고 평균 급여를 구하시오</span>
+<span class="k">SELECT</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="nb">year</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">minsal</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">maxsal</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">sumsal</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">))</span> <span class="n">avgsal</span> 
+<span class="k">FROM</span> <span class="n">employees</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> 
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">year</span><span class="p">;</span>
+
+<span class="c1">-- 2. 부서별 평균 급여가 $10,000 이상인 부서만 구하시오. ( 평균급여가 높은 순으로 )</span>
+<span class="k">SELECT</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">))</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span>
+<span class="k">HAVING</span> <span class="k">avg</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">10000</span> 
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">avg</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 3. 부서별 최대 급여를 구하시오.  해당되는 부서번호는 10번과 20번임</span>
+<span class="k">SELECT</span> <span class="n">department_id</span> <span class="n">depart</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="n">maxsal</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">10</span> <span class="k">OR</span> <span class="n">department_id</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">department_id</span><span class="p">;</span>
+
+<span class="c1">-- 4. 이름의 성이 'King' 사원의 사번과 부서명을 출력 ( employees, departments )</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="nv">"사번"</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="nv">"부서명"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span><span class="p">;</span>
+
+<span class="c1">-- 5. 이름의 성이 'King' 사원의 사번과 부서명 그리고 업무명을 출력 ( employees, departments, jobs )</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">jobs</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="nv">"사번"</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="nv">"부서명"</span><span class="p">,</span> <span class="n">j</span><span class="p">.</span><span class="n">job_title</span> <span class="nv">"업무명"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">jobs</span> <span class="n">j</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">job_id</span> <span class="o">=</span> <span class="n">j</span><span class="p">.</span><span class="n">job_id</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span><span class="p">;</span>
+
+<span class="c1">-- 6. 2007년 상반기에 입사한 사원들의 사번과 이름, 입사일 그리고 부서명을 출력 (*) Grant는 아직 부서가 배정받지 못한 상태이지만 Grant도 출력되려면</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="nv">"사번"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"이름"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">hire_date</span> <span class="nv">"입사일"</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="nv">"부서명"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span><span class="p">)</span> <span class="k">AND</span> 
+<span class="p">(</span><span class="n">to_char</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY-MM-DD'</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="s1">'2007-01-01'</span> <span class="k">AND</span> <span class="n">to_char</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">hire_date</span><span class="p">,</span> <span class="s1">'YYYY-MM-DD'</span><span class="p">)</span> <span class="o">&lt;</span> <span class="s1">'2007-07-01'</span><span class="p">);</span>
+
+<span class="c1">-- 7. 'Executive' 부서에서 사원과 해당 사원의 관리자 이름을 출력 (*) 관리자가 없는 사원인 'King'이 출력되려면</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="n">id</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="n">depart</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"사원"</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e2</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"관리자"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">employees</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">manager_id</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">employee_id</span><span class="p">)</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="o">=</span> <span class="s1">'Executive'</span><span class="p">;</span>
+
+<span class="c1">-- 1. 업무 별로 최소 급여를 받는 사원의 정보를 사원번호, 이름, 담당업무, 급여를 출력</span>
+<span class="c1">-- 업무별로 최소 급여</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> 
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">);</span>
+
+<span class="c1">-- 2. 10번 부서사원들의 업무와 동일한 직원들 검색</span>
+<span class="k">SELECT</span> <span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">10</span><span class="p">);</span>
+<span class="c1">-- ANY는 조건중에 하나라도 만족하면 된다.</span>
+<span class="c1">-- WHERE job = ANY (SELECT job FROM emp WHERE deptno = 10);</span>
+<span class="c1">-- ALL은 조건 모두 만족해야한다.</span>
+<span class="c1">-- WHERE job = ALL (SELECT job FROM emp WHERE deptno = 10);</span>
+
+<span class="c1">-- 3. 적어도 한명의 사원으로부터 보고를 받을 수 있는 사원의 정보를 사원번호, 이름, 업무를 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">mgr</span><span class="p">);</span>
+
+<span class="c1">-- 부하직원이 없는 사원들을 검색</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">mgr</span><span class="p">);</span>
+
+<span class="c1">-- 부서별 급여 통계 테이블 생성</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">stat_salary</span><span class="p">(</span>
+             <span class="n">stat_date</span>  <span class="nb">date</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>      <span class="c1">-- 날짜</span>
+             <span class="n">dept_no</span>    <span class="n">number</span><span class="p">,</span>             <span class="c1">-- 부서</span>
+             <span class="n">emp_count</span>  <span class="n">number</span><span class="p">,</span>             <span class="c1">-- 사원수</span>
+             <span class="n">tot_salary</span> <span class="n">number</span><span class="p">,</span>             <span class="c1">-- 급여총액</span>
+             <span class="n">avg_salary</span> <span class="n">number</span><span class="p">);</span>            <span class="c1">-- 급여평균</span>
+
+<span class="c1">-- (2) 날짜와 부서번호 입력</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">stat_salary</span><span class="p">(</span><span class="n">stat_date</span><span class="p">,</span> <span class="n">dept_no</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">sysdate</span><span class="p">,</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">dept</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">stat_salary</span><span class="p">;</span>
+
+<span class="c1">-- (3) 사원수, 급여총액, 평균급여 입력</span>
+<span class="k">UPDATE</span> <span class="n">stat_salary</span> <span class="n">s</span> 
+<span class="k">SET</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">emp_count</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">tot_salary</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">avg_salary</span><span class="p">)</span>
+<span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">),</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">dept_no</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">emp_copy</span> <span class="k">AS</span> <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp_copy</span><span class="p">;</span>
+
+<span class="c1">-- 1. SCOTT의 업무와 급여로 JONES의 업무와 급여를 수정</span>
+<span class="k">UPDATE</span> <span class="n">emp_copy</span> <span class="n">e</span>
+<span class="k">SET</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">job</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">e2</span><span class="p">.</span><span class="n">job</span><span class="p">,</span> <span class="n">e2</span><span class="p">.</span><span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="o">=</span> <span class="s1">'SCOTT'</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="o">=</span> <span class="s1">'JONES'</span><span class="p">;</span>
+
+<span class="c1">-- 2. 부서명이 sales인 사원의 정보를 삭제</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dept</span><span class="p">;</span>
+
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">emp_copy</span>
+<span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">dept</span> <span class="k">WHERE</span> <span class="n">dname</span> <span class="o">=</span> <span class="s1">'SALES'</span><span class="p">);</span>
+
+<span class="c1">-- 3. King에게 보고하는 모든 사원의 이름과 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">mgr</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">e2</span><span class="p">.</span><span class="n">empno</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">e2</span><span class="p">.</span><span class="n">ename</span> <span class="o">=</span> <span class="s1">'KING'</span><span class="p">);</span>
+
+<span class="c1">-- 4. 월급이 30번 부서의 최저 월급보다 많은 사원들을 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">emp_copy</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp_copy</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">30</span><span class="p">);</span>
+
+<span class="c1">-- 5. 10번 부서의 직원들 중 30번 부서의 사원과 같은 업무를 맡고 있는 사원의 이름과 업무를 출력</span>
+<span class="k">SELECT</span> <span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERe</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp_copy</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="mi">10</span> <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">e2</span><span class="p">.</span><span class="n">job</span> <span class="k">FROM</span> <span class="n">emp_copy</span> <span class="n">e2</span> <span class="k">WHERE</span> <span class="n">e2</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="mi">30</span><span class="p">);</span>
+
+<span class="c1">-- [연습]</span>
+<span class="c1">-- 1. 업무가 jones와 같거나 월급이 ford의 월급 이상인 사원의 정보를 이름, 업무, 부서번호, 급여를 출력(단, 업무별, 월급이 많은 순으로)</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> 
+<span class="k">WHERE</span> <span class="n">job</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="o">=</span> <span class="s1">'JONES'</span><span class="p">)</span> <span class="k">OR</span> <span class="n">sal</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="o">=</span> <span class="s1">'FORD'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">job</span> <span class="k">ASC</span><span class="p">,</span> <span class="n">sal</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 2. scott 또는 ward와 월급이 같은 사원의 정보를 이름, 업무, 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">sal</span> <span class="o">=</span> <span class="k">ANY</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'SCOTT'</span><span class="p">,</span> <span class="s1">'WARD'</span><span class="p">));</span>
+
+<span class="c1">-- 3. chicago에서 근무하는 사원과 같은 업무를 하는 사원의 이름, 업무를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="k">WHERE</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">'CHICAGO'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+
+<span class="c1">-- 4. 부서별로 월급이 평균 월급보다 높은 사원을 부서번호, 이름, 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span> <span class="o">&gt;</span> <span class="n">e2</span><span class="p">.</span><span class="k">avg</span><span class="p">;</span>
+
+<span class="c1">-- 5. 말단 사원의 사번, 이름, 업무, 부서번호를 출력</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">hiredate</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">hiredate</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="연습">연습</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [연습]</span>
+<span class="c1">-- 1. 업무가 jones와 같거나 월급이 ford의 월급 이상인 사원의 정보를 이름, 업무, 부서번호, 급여를 출력(단, 업무별, 월급이 많은 순으로)</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> 
+<span class="k">WHERE</span> <span class="n">job</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="o">=</span> <span class="s1">'JONES'</span><span class="p">)</span> <span class="k">OR</span> <span class="n">sal</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="o">=</span> <span class="s1">'FORD'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">job</span> <span class="k">ASC</span><span class="p">,</span> <span class="n">sal</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 2. scott 또는 ward와 월급이 같은 사원의 정보를 이름, 업무, 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">sal</span> <span class="o">=</span> <span class="k">ANY</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">sal</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ename</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'SCOTT'</span><span class="p">,</span> <span class="s1">'WARD'</span><span class="p">));</span>
+
+<span class="c1">-- 3. chicago에서 근무하는 사원과 같은 업무를 하는 사원의 이름, 업무를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">e</span><span class="p">.</span><span class="n">job</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span> <span class="k">WHERE</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">'CHICAGO'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+
+<span class="c1">-- 4. 부서별로 월급이 평균 월급보다 높은 사원을 부서번호, 이름, 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">deptno</span>
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">sal</span> <span class="o">&gt;</span> <span class="n">e2</span><span class="p">.</span><span class="k">avg</span><span class="p">;</span>
+
+<span class="c1">-- 5. 말단 사원의 사번, 이름, 업무, 부서번호를 출력</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">hiredate</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">max</span><span class="p">(</span><span class="n">hiredate</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="연습2">연습2</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [연습]</span>
+<span class="c1">-- 1. Zlotkey와 동일한 부서에 속한 모든 사원의 이름과 입사일을 표시하는 질의를 작성하십시오.(Zlotkey는 제외하십시오.)</span>
+<span class="k">SELECT</span> <span class="n">last_name</span> <span class="nv">"사원"</span><span class="p">,</span> <span class="n">hire_date</span> <span class="nv">"입사일"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">department_id</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">'Zlotkey'</span><span class="p">))</span> <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="o">!=</span> <span class="s1">'Zlotkey'</span><span class="p">;</span>
+
+<span class="c1">-- 2. 급여가 평균 급여보다 많은 모든 사원의 사원 번호와 이름을 표시하는 질의를 작성하고 결과를 급여에 대해 오름차순으로 정렬하십시오.</span>
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="nv">"사원번호"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"이름"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="nv">"급여"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">)</span> <span class="k">avg</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="o">&gt;</span> <span class="n">e2</span><span class="p">.</span><span class="k">avg</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">employee_id</span> <span class="nv">"사원번호"</span><span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"이름"</span><span class="p">,</span> <span class="n">salary</span> <span class="nv">"급여"</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">salary</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">))</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">salary</span><span class="p">;</span>
+
+<span class="c1">-- 3. King들에게 보고하는 모든 사원의 이름과 급여를 표시하십시오.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+<span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span> <span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">manager_id</span>
+<span class="k">SELECT</span> <span class="n">employee_id</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"사원"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="nv">"급여"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">employee_id</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span><span class="p">)</span> <span class="n">e2</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">manager_id</span> <span class="o">=</span> <span class="n">e2</span><span class="p">.</span><span class="n">employee_id</span><span class="p">;</span>
+
+
+<span class="c1">-- 4. Executive 부서의 모든 사원에 대한 부서 번호, 이름 및 업무 ID를 표시하십시오.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">departments</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">jobs</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="nv">"부서 번호"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"이름"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">job_id</span> <span class="nv">"업무 ID"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">departments</span> <span class="n">d</span>
+<span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">WHERE</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span> <span class="o">=</span> <span class="s1">'Executive'</span><span class="p">;</span>
+
+<span class="c1">-- 5. 평균 급여보다 많은 급여를 받고 이름에 u가 포함된 사원과 같은 부서에서 근무하는 모든 사원의 사원 번호, 이름 및 급여를 표시하는 질의를 작성하십시오.</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">))</span> <span class="k">avg</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">job_id</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="k">LIKE</span> <span class="s1">'%u%'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span> <span class="nv">"사원번호"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="nv">"이름"</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="nv">"급여"</span>
+<span class="k">FROM</span> <span class="n">employees</span> <span class="n">e</span> 
+<span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">salary</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">salary</span><span class="p">))</span> <span class="k">avg</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">)</span> 
+<span class="k">AND</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">department_id</span> <span class="k">FROM</span> <span class="n">employees</span> <span class="k">WHERE</span> <span class="n">last_name</span> <span class="k">LIKE</span> <span class="s1">'%u%'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="시퀀스sequence">시퀀스(sequence)</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 회원 테이블</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">ex_member</span><span class="p">(</span>
+<span class="n">id</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1">-- 아이디</span>
+<span class="n">pass</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1">-- 패스워드</span>
+<span class="n">name</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="c1">-- 이름</span>
+<span class="n">tel</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="c1">-- 전화번호</span>
+<span class="n">addr</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="c1">-- 주소</span>
+<span class="p">);</span>
+
+<span class="c1">-- 상품 테이블</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">ex_good</span><span class="p">(</span>
+<span class="n">gno</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1">-- 상품번호</span>
+<span class="n">gname</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="c1">-- 상품명</span>
+<span class="n">gdetail</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">300</span><span class="p">),</span> <span class="c1">-- 상세설명</span>
+<span class="n">price</span> <span class="n">number</span><span class="p">);</span>  <span class="c1">-- 가격</span>
+
+<span class="c1">-- 주문 테이블</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">ex_order</span> <span class="p">(</span>
+<span class="n">ono</span> <span class="n">number</span><span class="p">,</span>  <span class="c1">-- 번호</span>
+<span class="n">orderno</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="c1">-- 주문번호</span>
+<span class="n">gno</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1">-- 상품번호</span>
+<span class="n">id</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="c1">-- 회원 아이디</span>
+<span class="k">count</span> <span class="n">number</span><span class="p">,</span>  <span class="c1">-- 갯수</span>
+<span class="n">status</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">-- 배송상태</span>
+<span class="p">);</span>
+
+<span class="k">create</span> <span class="n">sequence</span> <span class="n">seq_order_ono</span><span class="p">;</span>
+
+<span class="c1">-- ######################################################</span>
+<span class="c1">-- 1. 주문테이블과 회원테이블, 상품테이블의 관계를 맺는다면?</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ex_member</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">pk_ex_member_id</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ex_order</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">pk_ex_order_ono</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">ono</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ex_good</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">pk_ex_good_gno</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">gno</span><span class="p">);</span>
+
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ex_order</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">fk_ex_order_id</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="k">REFERENCES</span>  <span class="n">ex_member</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">ex_order</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">fk_ex_good_gno</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">gno</span><span class="p">)</span> <span class="k">REFERENCES</span>  <span class="n">ex_good</span><span class="p">(</span><span class="n">gno</span><span class="p">);</span>
+
+
+<span class="c1">-- 회원 테이블 데이타 입력</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_member</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">pass</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tel</span><span class="p">,</span> <span class="n">addr</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'kim'</span><span class="p">,</span> <span class="s1">'1111'</span><span class="p">,</span> <span class="s1">'김길동'</span><span class="p">,</span> <span class="s1">'02-222-2222'</span><span class="p">,</span><span class="s1">'서울 멋지구 이쁜동'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_member</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">pass</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tel</span><span class="p">,</span> <span class="n">addr</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'park'</span><span class="p">,</span> <span class="s1">'1111'</span><span class="p">,</span> <span class="s1">'박길동'</span><span class="p">,</span> <span class="s1">'03-333-3333'</span><span class="p">,</span><span class="s1">'인천 멋지구 이쁜동'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_member</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">pass</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">tel</span><span class="p">,</span> <span class="n">addr</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'meng'</span><span class="p">,</span> <span class="s1">'1111'</span><span class="p">,</span> <span class="s1">'맹길동'</span><span class="p">,</span> <span class="s1">'04-444-4444'</span><span class="p">,</span><span class="s1">'경기 멋지구 이쁜동'</span><span class="p">);</span>
+
+<span class="k">commit</span><span class="p">;</span>
+
+<span class="c1">-- 상품 테이블 데이타 입력</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_good</span><span class="p">(</span> <span class="n">gno</span><span class="p">,</span> <span class="n">gname</span><span class="p">,</span> <span class="n">gdetail</span><span class="p">,</span> <span class="n">price</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'머리끈'</span><span class="p">,</span> <span class="s1">'아주 비싼 머리끈'</span><span class="p">,</span> <span class="mi">200</span> <span class="p">);</span>
+
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_good</span><span class="p">(</span> <span class="n">gno</span><span class="p">,</span> <span class="n">gname</span><span class="p">,</span> <span class="n">gdetail</span><span class="p">,</span> <span class="n">price</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'2002'</span><span class="p">,</span> <span class="s1">'자전거-A'</span><span class="p">,</span> <span class="s1">'비싸지만 빠르게 달리는 자전거'</span><span class="p">,</span> <span class="mi">10000</span> <span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_good</span><span class="p">(</span> <span class="n">gno</span><span class="p">,</span> <span class="n">gname</span><span class="p">,</span> <span class="n">gdetail</span><span class="p">,</span> <span class="n">price</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'2010'</span><span class="p">,</span> <span class="s1">'자전거-B'</span><span class="p">,</span> <span class="s1">'아주 비싸지만 느리고 안전하게 달린다는 자전거'</span><span class="p">,</span> <span class="mi">20000</span> <span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_good</span><span class="p">(</span> <span class="n">gno</span><span class="p">,</span> <span class="n">gname</span><span class="p">,</span> <span class="n">gdetail</span><span class="p">,</span> <span class="n">price</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span><span class="s1">'3333'</span><span class="p">,</span> <span class="s1">'핸드폰케이스'</span><span class="p">,</span> <span class="s1">'싸고 유행하는 핸드폰 케이스'</span><span class="p">,</span> <span class="mi">1500</span> <span class="p">);</span>
+
+<span class="k">commit</span><span class="p">;</span>
+
+
+<span class="c1">-- 주문 테이블 데이타 입력</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20161212'</span><span class="p">,</span> <span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'park'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'배송완료'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20161212'</span><span class="p">,</span> <span class="s1">'2010'</span><span class="p">,</span> <span class="s1">'park'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'배송중'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20161111'</span><span class="p">,</span> <span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'kim'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'주문'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20161111'</span><span class="p">,</span> <span class="s1">'3333'</span><span class="p">,</span> <span class="s1">'kim'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'주문'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20163333'</span><span class="p">,</span> <span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'park'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'주문'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20163333'</span><span class="p">,</span> <span class="s1">'2010'</span><span class="p">,</span> <span class="s1">'park'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'배송중'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20163333'</span><span class="p">,</span> <span class="s1">'2002'</span><span class="p">,</span> <span class="s1">'park'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'주문'</span><span class="p">);</span>
+
+<span class="k">insert</span> <span class="k">into</span> <span class="n">ex_order</span><span class="p">(</span> <span class="n">ono</span><span class="p">,</span> <span class="n">orderno</span><span class="p">,</span> <span class="n">gno</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">count</span><span class="p">,</span> <span class="n">status</span> <span class="p">)</span>
+<span class="k">values</span><span class="p">(</span> <span class="n">seq_order_ono</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'20165050'</span><span class="p">,</span> <span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'meng'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'배송중'</span><span class="p">);</span>
+
+<span class="k">commit</span><span class="p">;</span>
+
+<span class="c1">-- ###############################################################</span>
+<span class="c1">--[문제]</span>
+<span class="c1">--1. 배송중인 주문 내역과 상품 정보 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ex_order</span> <span class="k">WHERE</span> <span class="n">status</span> <span class="o">=</span> <span class="s1">'배송중'</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ex_good</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">ex_order</span> <span class="n">o</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ex_good</span> <span class="k">g</span>
+<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">gno</span> <span class="o">=</span> <span class="k">g</span><span class="p">.</span><span class="n">gno</span>
+<span class="k">WHERE</span> <span class="n">status</span> <span class="o">=</span> <span class="s1">'배송중'</span><span class="p">;</span>
+
+<span class="c1">--2. 주문 들어온 상품 내역과 고객 정보 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">ex_order</span> <span class="n">o</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ex_member</span> <span class="n">m</span>
+<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'주문'</span><span class="p">;</span>
+
+<span class="c1">--3. 주문별로 고객 정보(ID만 출력)와 주문한 상품의 총금액을 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ex_member</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ex_order</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ex_good</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">o</span><span class="p">.</span><span class="n">orderno</span> <span class="nv">"주문번호"</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span> <span class="nv">"고객ID"</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="k">g</span><span class="p">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">o</span><span class="p">.</span><span class="k">count</span><span class="p">)</span> <span class="nv">"총금액"</span>
+<span class="k">FROM</span> <span class="n">ex_order</span> <span class="n">o</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ex_good</span> <span class="k">g</span>
+<span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">gno</span> <span class="o">=</span> <span class="k">g</span><span class="p">.</span><span class="n">gno</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">o</span><span class="p">.</span><span class="n">orderno</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+
+<span class="c1">--4. 3번에 주문 내역을 한 개의 상품명 외 몇 개로 출력 [예] 20161212   머리끈 외 1개</span>
+<span class="k">SELECT</span> <span class="n">o</span><span class="p">.</span><span class="n">orderno</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="k">g</span><span class="p">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">o</span><span class="p">.</span><span class="k">count</span><span class="p">)</span> <span class="n">total</span><span class="p">,</span> 
+<span class="k">MAX</span><span class="p">(</span><span class="k">g</span><span class="p">.</span><span class="n">gname</span><span class="p">)</span> <span class="o">||</span> <span class="n">DECODE</span><span class="p">(</span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">' 1개'</span><span class="p">,</span> <span class="s1">' 외 '</span> <span class="o">||</span> <span class="p">(</span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="s1">' 개'</span><span class="p">)</span> <span class="nv">"상품 수량"</span>
+<span class="k">FROM</span> <span class="n">ex_order</span> <span class="n">o</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ex_good</span> <span class="k">g</span>
+<span class="k">USING</span> <span class="p">(</span><span class="n">gno</span><span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">o</span><span class="p">.</span><span class="n">orderno</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div></div>
+:ET

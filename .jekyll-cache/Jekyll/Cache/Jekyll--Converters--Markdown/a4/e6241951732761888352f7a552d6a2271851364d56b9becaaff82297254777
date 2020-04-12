@@ -1,0 +1,400 @@
+I"B�<h1 id="jsbasic"><a href="">jsBasic</a></h1>
+
+<h2 id="normalweb">NormalWeb</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// ***  한글이 깨지는 문제가 있지만 전반적인 흐름만 이해합니다.</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">cate</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">cate</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">name</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">name</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>NormalWeb<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span> <span class="na">action=</span><span class="s">"00_server.jsp"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"server.jsp파일을 불러 데이터 받아옴"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;br/&gt;</span>
+	서버로부터 넘겨받은 데이터<span class="nt">&lt;br/&gt;</span>
+	첫번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"cate"</span> <span class="na">id=</span><span class="s">"cate"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">cate</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	두번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">id=</span><span class="s">"name"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">name</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="normalweb_sever">NormalWeb_sever</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// ***  한글이 깨지는 문제가 있지만 전반적인 흐름만 이해합니다.</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+
+	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="n">cate</span> <span class="o">=</span> <span class="s">"changed_"</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"_by_server"</span><span class="o">;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"from_"</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"_serve"</span><span class="o">;</span>
+
+	<span class="c1">// 3. 다시 00_normal_web.jsp 요청</span>
+	<span class="n">response</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"00_normal_web.jsp?cate="</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"&amp;name="</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxgetcsv">AjaxGetCsv</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="no">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s">"Content-Type"</span> <span class="n">content</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">AjaxGetCsv</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+		<span class="kt">var</span> <span class="n">xmlHttp</span><span class="o">;</span>
+		<span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="c1">// 1. 브라우저에 따른 XMLHttpRequest생성하기.</span>
+			<span class="n">xmlHttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">();</span>
+				
+			<span class="c1">// 2. 요청에 대한 응답처리 이벤트 리스너 등록.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">onreadystatechange</span> <span class="o">=</span> <span class="n">on_ReadyStateChange</span><span class="o">;</span>
+			
+			<span class="c1">// 3. 서버로 보낼 데이터 생성.</span>
+			<span class="kt">var</span> <span class="n">data</span> <span class="o">=</span> <span class="s">"cate=book&amp;name=hong"</span><span class="o">;</span> 
+			
+			<span class="c1">// 4. GET 방식으로 데이터 보내기, 응답은 비동기로 클라이언트&lt;-&gt;서버간의 연결 요청준비.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"GET"</span><span class="o">,</span> <span class="s">"01_server.jsp?"</span> <span class="o">+</span> <span class="n">data</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 실제 데이터 전송.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+					
+			<span class="c1">// T. 동기/비동기 실행 테스트를 위한 부분.</span>
+	<span class="c1">// 		alert("전송 시작!");</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 6. 응답처리.</span>
+		<span class="n">function</span> <span class="nf">on_ReadyStateChange</span><span class="o">(){</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">readyState</span> <span class="o">==</span> <span class="mi">4</span><span class="o">){</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">status</span> <span class="o">==</span> <span class="mi">200</span><span class="o">){</span>
+					<span class="c1">// 정상적으로 응답 받은 상태</span>
+	<span class="c1">// 				alert("서버에서 보낸 데이타:" + xmlHttp.responseText);</span>
+					<span class="n">parseData</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">responseText</span><span class="o">);</span>
+				<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+					<span class="c1">// 500 등 각종 에러</span>
+					<span class="n">alert</span><span class="o">(</span><span class="s">"처리 중 에러가 발생했습니다."</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 7. CSV포맷  데이터 처리.</span>
+		<span class="n">function</span> <span class="nf">parseData</span><span class="o">(</span><span class="n">strText</span><span class="o">){</span>
+			<span class="kt">var</span> <span class="n">ary</span> <span class="o">=</span> <span class="n">strText</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"|"</span><span class="o">);</span> 
+			<span class="c1">// ary[0] : "cate=서버에서 book변경"</span>
+			<span class="c1">// ary[1] : "name=변경된 hong"</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ary</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+				<span class="kt">var</span> <span class="n">param</span> <span class="o">=</span> <span class="n">ary</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">split</span><span class="o">(</span><span class="s">"="</span><span class="o">);</span>
+				<span class="c1">// i가 0인 상태 param[0] : "cate"</span>
+				<span class="c1">//			param[1] : "서버에서 book변경"</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">param</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">trim</span><span class="o">()</span> <span class="o">==</span> <span class="s">"cate"</span><span class="o">){</span>
+					<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"cate"</span><span class="o">).</span><span class="na">value</span><span class="o">=</span><span class="n">param</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">param</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">trim</span><span class="o">()</span> <span class="o">==</span> <span class="s">"name"</span><span class="o">){</span>
+					<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">value</span><span class="o">=</span><span class="n">param</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+	<span class="n">서버로부터</span> <span class="n">넘겨받은</span> <span class="n">데이터</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">첫번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"cate"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">두번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"name"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxgetcsv_server">AjaxGetCsv_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="n">cate</span> <span class="o">=</span> <span class="s">"서버에서"</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"변경"</span><span class="o">;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"변경된"</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"cate="</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"|name="</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostcsv">AjaxPostCsv</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="no">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s">"Content-Type"</span> <span class="n">content</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">AjaxPostCsv</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+		<span class="kt">var</span> <span class="n">xmlHttp</span><span class="o">;</span>
+		<span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="c1">// 1. 브라우저에 따른 XMLHttpRequest생성하기.</span>
+			<span class="n">xmlHttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">();</span>
+				
+			<span class="c1">// 2. 요청에 대한 응답처리 이벤트 리스너 등록.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">onreadystatechange</span> <span class="o">=</span> <span class="n">on_ReadyStateChange</span><span class="o">;</span>
+			
+			<span class="c1">// 3. 서버로 보낼 데이터 생성.</span>
+			<span class="kt">var</span> <span class="n">data</span> <span class="o">=</span> <span class="s">"cate=book&amp;name=hong"</span><span class="o">;</span> 
+			
+			<span class="c1">// 4. POST 방식으로 데이터 보내기, 응답은 비동기로 클라이언트&lt;-&gt;서버간의 연결 요청준비.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"POST"</span><span class="o">,</span> <span class="s">"02_server.jsp"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">setRequestHeader</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span> <span class="s">"application/x-www-form-urlencoded"</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 실제 데이터 전송.(단, POST방식은 보낼데이터를 같이 보내준다.)</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+					
+			<span class="c1">// T. 동기/비동기 실행 테스트를 위한 부분.</span>
+	 		<span class="n">alert</span><span class="o">(</span><span class="s">"전송 시작!"</span><span class="o">);</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 6. 응답처리.</span>
+		<span class="n">function</span> <span class="nf">on_ReadyStateChange</span><span class="o">(){</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">readyState</span> <span class="o">==</span> <span class="mi">4</span><span class="o">){</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">status</span> <span class="o">==</span> <span class="mi">200</span><span class="o">){</span>
+					<span class="c1">// 정상적으로 응답 받은 상태</span>
+	<span class="c1">// 				alert("서버에서 보낸 데이타:" + xmlHttp.responseText);</span>
+					<span class="n">parseData</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">responseText</span><span class="o">);</span>
+				<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+					<span class="c1">// 500 등 각종 에러</span>
+					<span class="n">alert</span><span class="o">(</span><span class="s">"처리 중 에러가 발생했습니다."</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 7. CSV포맷  데이터 처리.</span>
+		<span class="n">function</span> <span class="nf">parseData</span><span class="o">(</span><span class="n">strText</span><span class="o">){</span>
+			<span class="kt">var</span> <span class="n">ary</span> <span class="o">=</span> <span class="n">strText</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">"|"</span><span class="o">);</span> 
+			<span class="c1">// ary[0] : "cate=서버에서 book변경"</span>
+			<span class="c1">// ary[1] : "name=변경된 hong"</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ary</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+				<span class="kt">var</span> <span class="n">param</span> <span class="o">=</span> <span class="n">ary</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">split</span><span class="o">(</span><span class="s">"="</span><span class="o">);</span>
+				<span class="c1">// i가 0인 상태 param[0] : "cate"</span>
+				<span class="c1">//			param[1] : "서버에서 book변경"</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">param</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">trim</span><span class="o">()</span> <span class="o">==</span> <span class="s">"cate"</span><span class="o">){</span>
+					<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"cate"</span><span class="o">).</span><span class="na">value</span><span class="o">=</span><span class="n">param</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">param</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">trim</span><span class="o">()</span> <span class="o">==</span> <span class="s">"name"</span><span class="o">){</span>
+					<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"name"</span><span class="o">).</span><span class="na">value</span><span class="o">=</span><span class="n">param</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+	<span class="n">서버로부터</span> <span class="n">넘겨받은</span> <span class="n">데이터</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">첫번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"cate"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">두번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"name"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostcsv_server">AjaxPostCsv_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="n">cate</span> <span class="o">=</span> <span class="s">"서버에서"</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"변경"</span><span class="o">;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"from_"</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"_server"</span><span class="o">;</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"cate="</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"|name="</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostxml">AjaxPostXml</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="no">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s">"Content-Type"</span> <span class="n">content</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">AjaxPostXml</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+		<span class="kt">var</span> <span class="n">xmlHttp</span><span class="o">;</span>
+		<span class="n">window</span><span class="o">.</span><span class="na">onload</span><span class="o">=</span><span class="n">function</span><span class="o">(){</span>
+			<span class="c1">// 1. 브라우저에 따른 XMLHttpRequest생성하기.</span>
+			<span class="n">xmlHttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">();</span>
+			
+			<span class="c1">// 2. 요청에 대한 응답처리 이벤트 리스너 등록.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">onreadystatechange</span><span class="o">=</span><span class="n">on_ReadyStateChange</span><span class="o">;</span>
+			
+			<span class="c1">// 3. 서버로 보낼 데이터 생성.</span>
+			<span class="kt">var</span> <span class="n">data</span> <span class="o">=</span> <span class="s">"cate=book&amp;name=hong"</span><span class="o">;</span>
+			
+			<span class="c1">// 4. POST 방식으로 데이터 보내기, 응답은 비동기로 클라이언트&lt;-&gt;서버간의 연결 요청준비.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"POST"</span><span class="o">,</span> <span class="s">"03_server.jsp"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>	
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">setRequestHeader</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span><span class="s">"application/x-www-form-urlencoded"</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 실제 데이터 전송.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+
+			<span class="c1">// T. 동기/비동기 실행 테스트를 위한 부분.</span>
+<span class="c1">// 			alert("전송 시작!");</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 6. 응답처리.</span>
+		<span class="n">function</span> <span class="nf">on_ReadyStateChange</span><span class="o">(){</span>
+			<span class="c1">// 4 = 데이터 전송 완료.(0 = 초기화전, 1 = 로딩중, 2 = 로딩됨, 3 = 대화상태)</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">readyState</span><span class="o">==</span><span class="mi">4</span><span class="o">){</span>
+				<span class="c1">// 200은 에러 없음.(404 = 페이지가 존재하지 않음)</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">status</span><span class="o">==</span><span class="mi">200</span><span class="o">){</span>
+					<span class="c1">// 서버에서 받은 값.</span>
+<span class="c1">// 					alert("서버에서 받은 원본 데이터 : "+xmlHttp.responseText);</span>
+					
+					<span class="c1">// 7. 데이터 파싱처리. xml형식으로 응답을 보내야함.</span>
+					<span class="n">parseData</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">responseXML</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="k">else</span><span class="o">{</span>
+					<span class="n">alert</span><span class="o">(</span><span class="s">"처리 중 에러가 발생했습니다."</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">//7. XML 포맷  데이터 처리.</span>
+		<span class="n">function</span> <span class="nf">parseData</span><span class="o">(</span><span class="n">xmlInfo</span><span class="o">){</span>
+			<span class="kt">var</span> <span class="n">data1</span> <span class="o">=</span> <span class="n">xmlInfo</span><span class="o">.</span><span class="na">getElementsByTagName</span><span class="o">(</span><span class="s">"first"</span><span class="o">)[</span><span class="mi">0</span><span class="o">].</span><span class="na">firstChild</span><span class="o">.</span><span class="na">nodeValue</span><span class="o">;</span>
+			<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"cate"</span><span class="o">).</span><span class="na">value</span> <span class="o">=</span> <span class="n">data1</span><span class="o">;</span>	
+	
+		<span class="o">}</span>
+	<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+	<span class="n">서버로부터</span> <span class="n">넘겨받은</span> <span class="n">데이터</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">첫번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"cate"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">두번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"name"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostxml_server">AjaxPostXml_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/xml; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="c">&lt;!-- contentType="text/xml"이다. --&gt;</span>  
+<span class="nt">&lt;%</span>	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span><span class="s">""</span><span class="o">;</span>
+	
+	<span class="n">result</span> <span class="o">+=</span> <span class="err">"</span><span class="o">&lt;</span><span class="n">data</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;</span><span class="n">first</span><span class="err">&gt;</span><span class="s">" + cate + "</span><span class="n">변경</span><span class="s">" + "</span><span class="o">&lt;/</span><span class="n">first</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;</span><span class="n">second</span><span class="err">&gt;</span><span class="s">" + "</span><span class="n">변경된</span><span class="s">" + name +"</span><span class="o">&lt;/</span><span class="n">second</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;/</span><span class="n">data</span><span class="err">&gt;"</span><span class="o">;</span>
+	
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostjson">AjaxPostJson</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">"java"</span> <span class="n">contentType</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="o">%&gt;</span>
+<span class="o">&lt;!</span><span class="no">DOCTYPE</span> <span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">meta</span> <span class="n">http</span><span class="o">-</span><span class="n">equiv</span><span class="o">=</span><span class="s">"Content-Type"</span> <span class="n">content</span><span class="o">=</span><span class="s">"text/html; charset=UTF-8"</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="nc">AjaxPostJson</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+	<span class="o">&lt;</span><span class="n">script</span><span class="o">&gt;</span>
+		<span class="kt">var</span> <span class="n">xmlHttp</span><span class="o">;</span>
+		<span class="n">window</span><span class="o">.</span><span class="na">onload</span><span class="o">=</span><span class="n">function</span><span class="o">(){</span>
+			<span class="c1">// 1. 브라우저에 따른 XMLHttpRequest생성하기.</span>
+			<span class="n">xmlHttp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">();</span>
+			
+			<span class="c1">// 2. 요청에 대한 응답처리 이벤트 리스너 등록.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">onreadystatechange</span><span class="o">=</span><span class="n">on_ReadyStateChange</span><span class="o">;</span>
+			
+			<span class="c1">// 3. 서버로 보낼 데이터 생성.</span>
+			<span class="kt">var</span> <span class="n">data</span> <span class="o">=</span> <span class="s">"cate=book&amp;name=hong"</span><span class="o">;</span>
+			
+			<span class="c1">// 4. POST 방식으로 데이터 보내기, 응답은 비동기로 클라이언트&lt;-&gt;서버간의 연결 요청준비.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="s">"POST"</span><span class="o">,</span> <span class="s">"04_server.jsp"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>	
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">setRequestHeader</span><span class="o">(</span><span class="s">"Content-Type"</span><span class="o">,</span><span class="s">"application/x-www-form-urlencoded"</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 실제 데이터 전송.</span>
+			<span class="n">xmlHttp</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+			
+			<span class="c1">// T. 동기/비동기 실행 테스트를 위한 부분.</span>
+			<span class="n">alert</span><span class="o">(</span><span class="s">"전송 시작!"</span><span class="o">);</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 6. 응답처리.</span>
+		<span class="n">function</span> <span class="nf">on_ReadyStateChange</span><span class="o">(){</span>
+			<span class="c1">// 4 = 데이터 전송 완료.(0 = 초기화전, 1 = 로딩중, 2 = 로딩됨, 3 = 대화상태)</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">readyState</span><span class="o">==</span><span class="mi">4</span><span class="o">){</span>
+				<span class="c1">// 200은 에러 없음.(404 = 페이지가 존재하지 않음)</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">status</span><span class="o">==</span><span class="mi">200</span><span class="o">){</span>
+					<span class="c1">// 서버에서 받은 값.</span>
+					<span class="n">alert</span><span class="o">(</span><span class="s">"서버에서 받은 원본 데이터 : "</span><span class="o">+</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">responseText</span><span class="o">);</span>
+					
+					<span class="c1">// 7. 데이터 파싱처리.</span>
+					<span class="n">parseData</span><span class="o">(</span><span class="n">xmlHttp</span><span class="o">.</span><span class="na">responseText</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="k">else</span><span class="o">{</span>
+					<span class="n">alert</span><span class="o">(</span><span class="s">"처리 중 에러가 발생했습니다."</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 8. JSON 포맷  데이터 처리.</span>
+		<span class="n">function</span> <span class="nf">parseData</span><span class="o">(</span><span class="n">strText</span><span class="o">){</span>
+			<span class="kt">var</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">{};</span>
+			<span class="c1">// 문자열을 태그로 만들어주고, 문자열을 객체로 만들어준다.</span>
+			<span class="n">obj</span> <span class="o">=</span> <span class="n">eval</span><span class="o">(</span><span class="s">"("</span> <span class="o">+</span> <span class="n">strText</span> <span class="o">+</span> <span class="s">")"</span><span class="o">);</span>
+			<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="s">"cate"</span><span class="o">).</span><span class="na">value</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="na">first</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+	<span class="n">서버로부터</span> <span class="n">넘겨받은</span> <span class="n">데이터</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">첫번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"cate"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+	<span class="n">두번째</span> <span class="n">데이터</span> <span class="o">:</span> <span class="o">&lt;</span><span class="n">input</span> <span class="n">type</span><span class="o">=</span><span class="s">"text"</span> <span class="n">name</span><span class="o">=</span><span class="s">""</span> <span class="n">id</span><span class="o">=</span><span class="s">"name"</span><span class="o">/&gt;&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostjson_server">AjaxPostJson_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="c1">// javascript는 { name : "홍길동", cate : "책" }이지만 통신은 명확하게  { "name" : "홍길동", "cate" : "책" }해준다.</span>
+	<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span><span class="s">""</span><span class="o">;</span>
+
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"{"</span><span class="o">;</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"'first' : '서버에서"</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"',"</span><span class="o">;</span> <span class="c1">// '서버에서book',</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"'second' : '"</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"변경'"</span><span class="o">;</span> <span class="c1">// 'hong변경'</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"}"</span><span class="o">;</span>
+	
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+</code></pre></div></div>
+:ET

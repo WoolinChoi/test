@@ -1,0 +1,614 @@
+I"C<h1 id="beans"><a href="">beans</a></h1>
+
+<h2 id="body">Body</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>header와 footer 삽입하기<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- 페이지 삽입  --&gt;</span>
+	<span class="nt">&lt;jsp:include </span><span class="na">page=</span><span class="s">"01_header.jsp"</span><span class="nt">/&gt;</span>
+
+	<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+	<span class="c">&lt;!-- 메인 내용 시작  --&gt;</span>
+	
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"location"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/tit_0103.gif"</span> <span class="na">alt=</span><span class="s">"한 &amp;#183 일간 울릉도쟁계와 우리의 독도 영유권 확인"</span> <span class="nt">/&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;p&gt;</span> <span class="nt">&lt;strong&gt;</span> 일본의 독도 인식<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"content_view"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"cont_box"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"inner"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h4&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/txt_0301.gif"</span> <span class="na">alt=</span><span class="s">"가. 17세기 한 &amp;#183 일 양국 정부간 교섭(울릉도쟁계) 과정을 통해 울릉도와 그 부속섬 독도가 우리나라 영토임이 확인되었습니다."</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+					<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;li&gt;</span>17세기 일본 돗토리번(鳥取藩)의 오야(大谷) 및 무라카와(村川) 양가는 조선 영토인 울릉도에서 불법 어로행위를 하다가 1693년 울릉도에서 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020105')"</span><span class="nt">&gt;&lt;strong&gt;</span>안용복<span class="nt">&lt;/strong&gt;&lt;/a&gt;</span>을 비롯한 조선인들과 만나게 되었습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>양가는 일본 정부(에도 막부)에 조선인들의 울릉도 도해(渡海)를 금지해달라고 청원하였고, 막부가 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>쓰시마번(對馬藩)에<span class="nt">&lt;/span&gt;</span> 조선 정부와의 교섭을 지시함에 따라 양국간 교섭이 개시되는데, 이를 ‘울릉도쟁계’라 합니다.<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>에도 막부는 1695년 12월 25일 돗토리번에 대한 조회를 통해 “울릉도(죽도)와 독도(송도) 모두 돗토리번에 속하지 않는다”는 사실을 확인한 후(<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020104')"</span><span class="nt">&gt;&lt;strong&gt;</span>「돗토리번 답변서」<span class="nt">&lt;/strong&gt;&lt;/a&gt;</span>), 1696년 1월 28일 일본인들의 울릉도 방면 도해를 금지하도록 지시하였습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>이로써 한<span class="ni">&amp;#183;</span>일 양국간 분쟁은 마무리되었고, 울릉도쟁계 과정에서 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>울릉도와 독도가 우리나라 영토임이 확인되었습니다.<span class="nt">&lt;/span&gt;&lt;/li&gt;</span>
+					<span class="nt">&lt;/ul&gt;</span>
+					<span class="nt">&lt;h4&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/txt_0302.gif"</span> <span class="na">alt=</span><span class="s">"나. 1905년 시마네현 고시에 의한 독도 편입 시도 이전까지 일본 정부는 독도가 자국 영토가 아니라는 인식을 유지하고 있었으며, 이는 1877년『태정관지령』을 비롯한 일본 정부의 공식 문서를 통해 확인됩니다."</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+					<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;li&gt;</span>한 <span class="ni">&amp;#183;</span> 일간 ‘울릉도쟁계’를 통해 독도가 한국 영토임이 확인된 이래, 근대 메이지 정부에 이르기까지 일본 정부는 독도가 자국 영토가 아니라는 인식을 유지하고 있었습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>이는 1905년 시마네현 고시에 의한 일본의 독도 편입 시도 이전까지 독도가 일본 영토라고 기록한 일본 정부의 문헌이 없고, 오히려 일본 정부의 공식 문서들이 독도가 일본의 영토가 아니라고 명백히 기록하고 있는 사실을 통해 잘 알 수 있습니다.<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>대표적으로, 1877년 메이지 시대 일본의 최고행정기관이었던 태정관(太政官)은 에도 막부와 조선 정부간 교섭(울릉도쟁계) 결과 울릉도와 독도가 일본 소속이 아님이 확인되었다고 판단하고, <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>“죽도(울릉도) 외 일도(一嶋: 독도)는 일<span class="nt">&lt;/span&gt;</span>본과 관계가 없다는 것을 명심할 것을 내무성에 지시하였습니다. <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020107')"</span><span class="nt">&gt;&lt;strong&gt;</span>(『태정관지령』)<span class="nt">&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>내무성이 태정관에 질의할 때 첨부하였던 지도인「기죽도약도(磯竹島略圖, 기죽도는 울릉도의 옛 일본 명칭)」에 죽도(울릉도)와 함께 송도(독도)가 그려져 있는 점 등에서 위에서 언급된 ‘죽도 외 일도(一嶋)’의 일도(一嶋)가 독도임은 명백합니다.<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;/ul&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_06.gif"</span> <span class="na">alt=</span><span class="s">"태정관지령"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_07.gif"</span> <span class="na">alt=</span><span class="s">"기죽도약도"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/div&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+	
+	<span class="c">&lt;!-- 메인 내용 끝  --&gt;</span>
+	<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+	
+	<span class="c">&lt;!-- 페이지 삽입  --&gt;</span>
+	<span class="nt">&lt;jsp:include </span><span class="na">page=</span><span class="s">"01_footer.jsp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="header">Header</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="c">&lt;!-- &lt;!DOCTYPE html&gt; --&gt;</span>
+<span class="c">&lt;!-- 윗단 시작 --&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">800</span> <span class="na">cellpadding=</span><span class="s">0</span> <span class="na">cellspacing=</span><span class="s">0</span> <span class="na">border=</span><span class="s">0</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">800</span> <span class="na">align=</span><span class="s">center</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">./imgs/headImg.jpg</span><span class="nt">&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="c">&lt;!-- 윗단 끝 --&gt;</span>
+</code></pre></div></div>
+
+<h2 id="footer">Footer</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="c">&lt;!-- &lt;!DOCTYPE html&gt; --&gt;</span>
+<span class="c">&lt;!-- 아랫단 시작 --&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">width=</span><span class="s">900</span> <span class="na">cellpadding=</span><span class="s">0</span> <span class="na">cellspacing=</span><span class="s">0</span> <span class="na">border=</span><span class="s">0</span><span class="nt">&gt;</span>
+<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">200</span> <span class="na">align=</span><span class="s">center</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">./imgs/logo.jpg</span><span class="nt">&gt;&lt;/td&gt;</span>
+<span class="nt">&lt;td</span> <span class="na">valign=</span><span class="s">top</span> <span class="na">width=</span><span class="s">700</span><span class="nt">&gt;</span>
+<span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">minih</span><span class="nt">&gt;</span>
+<span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">"e11 darkred"</span><span class="nt">&gt;&lt;b&gt;&lt;font</span> <span class="na">class=</span><span class="s">p11</span><span class="nt">&gt;</span>삼순이네<span class="nt">&lt;/font&gt;&lt;/b&gt;&lt;/font&gt;</span>
+ | 한국 울릉도 울릉읍 독도리   | 사업자등록번호 : <span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>132-22-55236<span class="nt">&lt;/font&gt;</span> <span class="nt">&lt;br&gt;</span>
+ | 고객문의 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">/customer</span><span class="nt">&gt;&lt;b&gt;</span>[전화전확인]<span class="nt">&lt;/b&gt;&lt;/a&gt;</span> <span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>033-333-3333<span class="nt">&lt;/font&gt;</span>
+ | 문의메일 <span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>help@dokdo.co.kr<span class="nt">&lt;/font&gt;</span> <span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">"p11 darkred"</span><span class="nt">&gt;</span>본 싸이트의 모든 저작물의 저작권은 <span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>dokdo.co.kr<span class="nt">&lt;/font&gt;&lt;/b&gt;</span>에 있으며, <span class="nt">&lt;br&gt;</span>
+무단복제나 도용은 저작권법(제<span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>97<span class="nt">&lt;/font&gt;</span>조 <span class="nt">&lt;font</span> <span class="na">class=</span><span class="s">e11</span><span class="nt">&gt;</span>5<span class="nt">&lt;/font&gt;</span>항)에 의해 금지하고 있습니다.<span class="nt">&lt;br&gt;&lt;/font&gt;</span>
+<span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;/td&gt;&lt;/table&gt;</span>
+<span class="c">&lt;!-- 아랫단 끝 --&gt;</span>
+</code></pre></div></div>
+
+<h2 id="forwardfirst">ForwardFirst</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>ForwardFirst<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+	<span class="c">&lt;!-- 메인 내용 시작  --&gt;</span>
+		
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"location"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;h3&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/tit_0103.gif"</span> <span class="na">alt=</span><span class="s">"한 &amp;#183 일간 울릉도쟁계와 우리의 독도 영유권 확인"</span> <span class="nt">/&gt;&lt;/h3&gt;</span>
+			<span class="nt">&lt;p&gt;</span> <span class="nt">&lt;strong&gt;</span> 일본의 독도 인식<span class="nt">&lt;/strong&gt;&lt;/p&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"content_view"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"cont_box"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"inner"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;h4&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/txt_0301.gif"</span> <span class="na">alt=</span><span class="s">"가. 17세기 한 &amp;#183 일 양국 정부간 교섭(울릉도쟁계) 과정을 통해 울릉도와 그 부속섬 독도가 우리나라 영토임이 확인되었습니다."</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+					<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;li&gt;</span>17세기 일본 돗토리번(鳥取藩)의 오야(大谷) 및 무라카와(村川) 양가는 조선 영토인 울릉도에서 불법 어로행위를 하다가 1693년 울릉도에서 <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020105')"</span><span class="nt">&gt;&lt;strong&gt;</span>안용복<span class="nt">&lt;/strong&gt;&lt;/a&gt;</span>을 비롯한 조선인들과 만나게 되었습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>양가는 일본 정부(에도 막부)에 조선인들의 울릉도 도해(渡海)를 금지해달라고 청원하였고, 막부가 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>쓰시마번(對馬藩)에<span class="nt">&lt;/span&gt;</span> 조선 정부와의 교섭을 지시함에 따라 양국간 교섭이 개시되는데, 이를 ‘울릉도쟁계’라 합니다.<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>에도 막부는 1695년 12월 25일 돗토리번에 대한 조회를 통해 “울릉도(죽도)와 독도(송도) 모두 돗토리번에 속하지 않는다”는 사실을 확인한 후(<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020104')"</span><span class="nt">&gt;&lt;strong&gt;</span>「돗토리번 답변서」<span class="nt">&lt;/strong&gt;&lt;/a&gt;</span>), 1696년 1월 28일 일본인들의 울릉도 방면 도해를 금지하도록 지시하였습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>이로써 한<span class="ni">&amp;#183;</span>일 양국간 분쟁은 마무리되었고, 울릉도쟁계 과정에서 <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>울릉도와 독도가 우리나라 영토임이 확인되었습니다.<span class="nt">&lt;/span&gt;&lt;/li&gt;</span>
+					<span class="nt">&lt;/ul&gt;</span>
+					<span class="nt">&lt;h4&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/txt_0302.gif"</span> <span class="na">alt=</span><span class="s">"나. 1905년 시마네현 고시에 의한 독도 편입 시도 이전까지 일본 정부는 독도가 자국 영토가 아니라는 인식을 유지하고 있었으며, 이는 1877년『태정관지령』을 비롯한 일본 정부의 공식 문서를 통해 확인됩니다."</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+					<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;li&gt;</span>한 <span class="ni">&amp;#183;</span> 일간 ‘울릉도쟁계’를 통해 독도가 한국 영토임이 확인된 이래, 근대 메이지 정부에 이르기까지 일본 정부는 독도가 자국 영토가 아니라는 인식을 유지하고 있었습니다. <span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>이는 1905년 시마네현 고시에 의한 일본의 독도 편입 시도 이전까지 독도가 일본 영토라고 기록한 일본 정부의 문헌이 없고, 오히려 일본 정부의 공식 문서들이 독도가 일본의 영토가 아니라고 명백히 기록하고 있는 사실을 통해 잘 알 수 있습니다.<span class="nt">&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>대표적으로, 1877년 메이지 시대 일본의 최고행정기관이었던 태정관(太政官)은 에도 막부와 조선 정부간 교섭(울릉도쟁계) 결과 울릉도와 독도가 일본 소속이 아님이 확인되었다고 판단하고, <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"let02"</span><span class="nt">&gt;</span>“죽도(울릉도) 외 일도(一嶋: 독도)는 일<span class="nt">&lt;/span&gt;</span>본과 관계가 없다는 것을 명심할 것을 내무성에 지시하였습니다. <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span> <span class="na">onclick=</span><span class="s">"goto_page('0020107')"</span><span class="nt">&gt;&lt;strong&gt;</span>(『태정관지령』)<span class="nt">&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;</span>
+						<span class="nt">&lt;li&gt;</span>내무성이 태정관에 질의할 때 첨부하였던 지도인「기죽도약도(磯竹島略圖, 기죽도는 울릉도의 옛 일본 명칭)」에 죽도(울릉도)와 함께 송도(독도)가 그려져 있는 점 등에서 위에서 언급된 ‘죽도 외 일도(一嶋)’의 일도(一嶋)가 독도임은 명백합니다.<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;/ul&gt;</span>
+					<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_06.gif"</span> <span class="na">alt=</span><span class="s">"태정관지령"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+						<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_07.gif"</span> <span class="na">alt=</span><span class="s">"기죽도약도"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+					<span class="nt">&lt;/div&gt;</span>
+				<span class="nt">&lt;/div&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+		
+	<span class="c">&lt;!-- 메인 내용 끝  --&gt;</span>
+	<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+	
+	<span class="c">&lt;!--  페이지 이동  --&gt;</span>
+	<span class="c">&lt;!-- redirect와 달리 세컨드의 결과만 보내준다. --&gt;</span>
+	<span class="nt">&lt;jsp:forward </span><span class="na">page=</span><span class="s">"02_forwardSecond.jsp"</span><span class="nt">/&gt;</span>	
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="forwardsecond">ForwardSecond</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>ForwardSecond<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"content_view"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"cont_box"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"inner"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;h4&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/txt_0101.gif"</span> <span class="na">alt=</span><span class="s">"독도에 대한 정부의 기본입장"</span> <span class="nt">/&gt;&lt;/h4&gt;</span>
+				<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"list"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;li&gt;</span>독도는 역사적, 지리적, 국제법적으로 명백한 우리 고유의 영토입니다. 독도에 대한 영유권 분쟁은 존재하지 않으며, 독도는 외교 교섭이나 사법적 해결의 대상이 될 수 없습니다.<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>우리 정부는 독도에 대한 확고한 영토주권을 행사하고 있습니다. 우리 정부는 독도에 대한 어떠한 도발에도 단호하고 엄중하게 대응하고 있으며, 앞으로도 지속적으로 독도에 대한 우리의 주권을 수호해 나가겠습니다.<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;/ul&gt;</span>
+				<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_01.gif"</span> <span class="na">alt=</span><span class="s">"동해에서 바라보는 독도 전경"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+					<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/img_02.gif"</span> <span class="na">alt=</span><span class="s">"독도의 불 전경"</span> <span class="nt">/&gt;&lt;/a&gt;</span>
+				<span class="nt">&lt;/div&gt;</span>
+			<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="parambody">ParamBody</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>ParamBody<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;hr&gt;</span>
+<span class="nt">&lt;jsp:include </span><span class="na">page=</span><span class="s">"03_paramImage.jsp"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:param </span><span class="na">name=</span><span class="s">"lang"</span><span class="na"> value=</span><span class="s">"sp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:include&gt;</span>
+
+<span class="nt">&lt;hr&gt;</span>
+<span class="nt">&lt;table&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">'50%'</span><span class="nt">&gt;</span>안용복은 조선의 어부로 숙종실록의 기록에 의하면 숙종 19년(1693)
+박어둔 이하 십여 명과 함께 울릉도에서 어로 및 농사 활동을 하던 중
+일본의 오오야(大谷) 집안의 어부들과 충돌하여 일본 오키섬까지 납치
+당하게 된다. 오키도주는 안용복 일행을 돗토리성(鳥取城)의
+호키슈(伯耆州) 태수에게 이송하게 되며, 안용복은 호키슈 태수 앞에서 
+울릉도가 조선의 영토임을 강조하며 일본인들의 출어를 금지하여 줄 것을 요구하였다. 이에 호키슈 태수는 이를 에도막부에 보고하고 "울릉도는 일본의 영토가 아니다(鬱陵島非日本界)"라는 서계를 써주어 안용복 일행을 나가사키ㆍ대마도를 거쳐 조선으로 돌려보냈던 것이다.  그러나 안용복이 대마도에 이르자 대마도주는 에도막부의 관백(집정관)이 안용복에게 써준 서계를 빼앗고, 조선의 동래부에 인계하였다.	안용복 캐릭터
+ 		<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/안용복_1.gif"</span><span class="nt">&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td&gt;&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/안용복_2.gif"</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;td&gt;</span>	
+이후 안용복이 숙종 22년(1696) 봄에 해산물 채취를 나갔다가 또다시
+일본어선들이 울릉도에서 어로 활동을 하고 있는 것을 보고 즉시 그들을 
+쫓아 내고, 울릉도가 조선의 영토임을 항의하기 위하여 재차 돗토리번으로 건너갔다. 다시 돗토리번주 앞에 선 안용복은 울릉도와 독도가 조선땅임을 명확히 하고, 일본인들의 계속되는 침범을 근절하여 줄 것을 요구하였던
+것이다. 이에 돗토리번주는 "두 섬이 이미 당신네 나라에 속한
+이상(兩島旣屬國), 만일 다시 국경을 넘어 침범하는 자가 있으면 국서를 작성하고 역관을 정하여 무겁게 처벌할 것이다." 라고 하여, 에도막부의
+결정사항을 전했다.
+
+이와 같은 안용복의 활동을 계기로 일본의 에도 막부는 울릉도 도해 금지
+명령을 내렸는데, 이는 울릉도와 독도가 조선의 영토임을 확인시킨
+결과이다. 또한 이 사실(史實)을 근거로 일본의 메이지 정부도 1877년
+울릉도와 독도가 일본과는 관계가 없는 조선의 영토라는 것을 재확인했다.
+		<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="paramimage">ParamImage</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// &lt;jsp:param</span><span class="err">&gt;</span><span class="n">의</span> <span class="n">값</span> <span class="n">넘겨받기</span>
+	<span class="nc">String</span> <span class="n">lang</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"lang"</span><span class="o">);</span>
+	<span class="k">if</span><span class="o">(</span> <span class="n">lang</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">lang</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">""</span><span class="o">))</span> <span class="n">lang</span><span class="o">=</span><span class="s">"ko"</span><span class="o">;</span>
+<span class="nt">%&gt;</span>    
+선택한 언어 약자 : <span class="nt">&lt;%=</span> <span class="n">lang</span> <span class="nt">%&gt;</span> <span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./imgs/dokdo_</span><span class="nt">&lt;%=</span><span class="n">lang</span><span class="nt">%&gt;</span><span class="s">.jpg"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="infoinput">InfoInput</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+	pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;title&gt;</span>InfoInput<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span>당신의 정보를 입력하세요<span class="nt">&lt;/h2&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"InfoSave.jsp"</span> <span class="na">name=</span><span class="s">"input"</span><span class="nt">&gt;</span>
+	이       름 :  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">text</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;br/&gt;</span>
+	주 민 번 호 :  <span class="nt">&lt;input</span>  <span class="na">type=</span><span class="s">password</span> <span class="na">name=</span><span class="s">"id"</span><span class="nt">&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">submit</span> <span class="na">value=</span><span class="s">"저장"</span> <span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">reset</span> <span class="na">value=</span><span class="s">"취소"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="infosave">InfoSave</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+	pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;jsp:useBean </span><span class="na">id=</span><span class="s">"bean"</span><span class="na"> class=</span><span class="s">"info.beans.InfoBean"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">property=</span><span class="s">"*"</span><span class="na"> name=</span><span class="s">"bean"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:useBean&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span>당신의 신상명세서 확인<span class="nt">&lt;/h2&gt;</span>
+<span class="c">&lt;%-- 	이   름  : &lt;jsp:getProperty property="name" name="bean"/&gt;&lt;br/&gt; --%&gt;</span>
+	이   름  : <span class="nt">&lt;%=</span> <span class="n">bean</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	주민번호 : <span class="nt">&lt;%=</span> <span class="n">bean</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	성  별   : <span class="nt">&lt;%=</span> <span class="n">bean</span><span class="o">.</span><span class="na">getGender</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>  
+	맞습니까????
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="infobean">InfoBean</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">info.beans</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoBean</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">InfoBean</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nf">InfoBean</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">,</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getGender</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">char</span> <span class="n">sexNum</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">7</span><span class="o">);</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">sexNum</span> <span class="o">==</span> <span class="sc">'1'</span><span class="o">)</span> <span class="k">return</span> <span class="s">"남자"</span><span class="o">;</span>
+		<span class="k">else</span> <span class="k">return</span> <span class="s">"여자"</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="memberform">MemberForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>MemberForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">function</span> <span class="nx">openWin</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="nx">winobj</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">"</span><span class="s2">CheckId.jsp?userId=</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">id</span><span class="p">,</span> <span class="dl">""</span><span class="p">,</span> <span class="dl">"</span><span class="s2">width=400, height=300</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>회원가입서 작성하기<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"InsertMember.jsp"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;table&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>아이디<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"id"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"중복확인"</span> <span class="na">onclick=</span><span class="s">"openWin()"</span><span class="nt">&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>비밀번호<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>비밀번호학인<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"repassword"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>이름<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>전화번호<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="na">name=</span><span class="s">"tel"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>주소<span class="nt">&lt;/font&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"50"</span> <span class="na">name=</span><span class="s">"addr"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="c">&lt;!--로그인 버튼--&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"회원가입"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">name=</span><span class="s">"cancel"</span> <span class="na">value=</span><span class="s">"취소"</span><span class="nt">&gt;&lt;br/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="insertmember">InsertMember</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"member.beans.*"</span> <span class="nt">%&gt;</span>    
+    
+<span class="c">&lt;!-- 하나씩 천천히 도전합시다 --&gt;</span>
+<span class="c">&lt;!-- ####[1] 폼의 입력값을 빈즈의 멤버변수 지정 --&gt;</span>
+<span class="nt">&lt;%</span> <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;jsp:useBean </span><span class="na">id=</span><span class="s">"m"</span><span class="na"> class=</span><span class="s">"member.beans.Member"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">name=</span><span class="s">"m"</span><span class="na"> property=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:useBean&gt;</span>
+
+<span class="c">&lt;!-- ####[2] JDBC 연동 --&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">MemberDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">MemberDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="n">dao</span><span class="o">.</span><span class="na">insertMember</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>InsertMember<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	아이디 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	패스워드 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getPassword</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	이름 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	전화 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getTel</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	주소 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getAddr</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="checkid">CheckId</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"member.beans.*"</span> <span class="nt">%&gt;</span>
+<span class="c">&lt;!-- ####[1] 폼의 입력값을 빈즈의 멤버변수 지정 --&gt;</span>
+<span class="nt">&lt;%</span> <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span> <span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"userId"</span><span class="o">);</span> <span class="nt">%&gt;</span>
+
+<span class="c">&lt;!-- ####[2] JDBC 연동 --&gt;</span>
+<span class="nt">&lt;%</span>
+<span class="c1">// 	MemberDao dao = MemberDao.getInstance();</span>
+	<span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">MemberDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">isDuplicatedId</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>CheckId<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-3.4.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/Javascript"</span><span class="nt">&gt;</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">input[type='button']</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">opener</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">userId</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+			<span class="nb">window</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">){</span> <span class="nt">%&gt;</span>
+			사용중인 아이디가 있습니다. 다시 입력하여 주십시오.
+	<span class="nt">&lt;%</span>  <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span>
+			사용할 수 있는 아이디입니다.
+	<span class="nt">&lt;%</span>  <span class="o">}</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;hr/&gt;</span>
+
+<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">""</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"userId"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">id</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"중복확인"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"아이디사용"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="member">Member</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">member.beans</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Member</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">addr</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getPassword</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">password</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setPassword</span><span class="o">(</span><span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">password</span> <span class="o">=</span> <span class="n">password</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getTel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTel</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">tel</span> <span class="o">=</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getAddr</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">addr</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAddr</span><span class="o">(</span><span class="nc">String</span> <span class="n">addr</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">addr</span> <span class="o">=</span> <span class="n">addr</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="memberdao">MemberDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">member.beans</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberDao</span> <span class="o">{</span>
+	<span class="c1">// DB 연결시  관한 변수 </span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> 	<span class="n">dbDriver</span>	<span class="o">=</span>	<span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUrl</span>		<span class="o">=</span>	<span class="s">"jdbc:oracle:thin:@192.168.0.116:1521:orcl"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUser</span>		<span class="o">=</span>	<span class="s">"team5"</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbPass</span>		<span class="o">=</span>	<span class="s">"1004"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">MemberDao</span> <span class="n">memberDao</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">MemberDao</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MemberException</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">memberDao</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">memberDao</span> <span class="o">=</span>  <span class="k">new</span> <span class="nc">MemberDao</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">memberDao</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">private</span> <span class="nf">MemberDao</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MemberException</span> <span class="o">{</span>	
+		<span class="k">try</span><span class="o">{</span>
+			<span class="c1">// 드라이버를 로딩			</span>
+			<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">dbDriver</span><span class="o">);</span>
+			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">MemberException</span><span class="o">(</span><span class="s">"DB 연결시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/*******************************************
+	 * * 회원관리테이블 MEMBERTEST 에  회원정보를 입력하는 함수
+	 * @param rec
+	 * @throws MemberException
+	 */</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertMember</span><span class="o">(</span><span class="nc">Member</span> <span class="n">rec</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MemberException</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+			
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO MEMBERTEST(ID, PASSWORD, NAME, TEL, ADDR) "</span>
+					<span class="o">+</span> <span class="s">"VALUES(?, ?, ?, ?, ?)"</span><span class="o">;</span>
+			
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getPassword</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getTel</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">rec</span><span class="o">.</span><span class="na">getAddr</span><span class="o">());</span>
+			
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			
+			<span class="c1">// ####[4] 객체 닫기</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">MemberException</span><span class="o">(</span><span class="s">"멤버 입력시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>			
+		<span class="o">}</span>			
+	<span class="o">}</span>
+	
+	<span class="cm">/**********************************************************
+	 * * 회원관리테이블 MEMBERTEST에서 기존의 id값과 중복되는지 확인하는 함수
+	 */</span>
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isDuplicatedId</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MemberException</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// ####[0] 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+						
+			<span class="c1">// ####[1] sql 문장 만들기 (insert문)</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT ID FROM MEMBERTEST WHERE ID = ?"</span><span class="o">;</span>
+						
+			<span class="c1">// ####[2] sql 전송 객체 만들기</span>
+			<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span> 
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+			
+			<span class="c1">// ####[3] sql 전송</span>
+			<span class="nc">ResultSet</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="c1">// ####[4] 객체 닫기</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">throw</span> <span class="k">new</span> <span class="nf">MemberException</span><span class="o">(</span><span class="s">"중복아이디 검사시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>			
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">flag</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,156 @@
+I"5N<h1 id="method2"><a href="">method2</a></h1>
+
+<h2 id="overloading">Overloading</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * overloading
+ * 		: 동일한 이름의 메소드들
+ * 		- 인자의 자료형과 갯수 달라야 함
+ * 
+ * [주의할점] add(1, 2)
+ * 		int    add(int a, int b){ }
+ * 		double add(int x, int y){ }  // double은 return된 다음의 자료형이다.
+ * 리턴형만 다르면 컴파일 오류 발생
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex05_overloading</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 변수는 동일명을 못하지만 method에 한해서 동일명 가능하다.</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+		<span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">3.6</span><span class="o">;</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="n">d</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">c</span><span class="o">,</span> <span class="kt">double</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">c</span> <span class="o">+</span> <span class="n">d</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="wrongoverloading">WrongOverloading</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ublic</span> <span class="kd">class</span> <span class="nc">Ex06_WrongOverloading</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 어쩔 수 없이 메소드 이름을 바꿔줘야한다.</span>
+		<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"안녕"</span><span class="o">;</span>
+		<span class="n">output1</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">output2</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">output1</span><span class="o">(</span><span class="nc">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="nc">String</span> <span class="nf">output2</span><span class="o">(</span><span class="nc">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">"맛점"</span> <span class="o">+</span> <span class="n">msg</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="callbyvalue">CallByValue</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex07_CallByValue</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"2. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// a = 10, b = 20</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">a</span> <span class="o">+=</span> <span class="n">b</span><span class="o">;</span> 
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"1. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// a = 30, b = 20</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="callbyreference">CallByReference</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex08_CallByReference</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">StringBuffer</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuffer</span><span class="o">(</span><span class="s">"행복하자"</span><span class="o">);</span>
+		<span class="nc">StringBuffer</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuffer</span><span class="o">(</span><span class="s">"짝꿍님"</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"2. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// 행복하자 짝꿍님, 짝꿍님</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="nc">StringBuffer</span> <span class="n">a</span><span class="o">,</span> <span class="nc">StringBuffer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">a</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"1. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span> <span class="c1">// 행복하자 짝꿍님, 짝꿍님 </span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="callbystring">CallbyString</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex09_CallbyString</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="s">"행복하자"</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="s">"짝꿍님"</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"2. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="nc">String</span> <span class="n">a</span><span class="o">,</span> <span class="nc">String</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">a</span> <span class="o">+=</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"1. A: "</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">" B: "</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="main">Main</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex10_Main</span> <span class="o">{</span>
+	<span class="cm">/* 메소드명 : main
+	 * 인자 : String[] args
+	 * 리턴형 : void
+	 *
+	 * Test.java -&gt; Test.class
+	 * 		(1) 컴파일 : javac Test.java
+	 * 		(2) 실행 : java Test 192.168.0.1 scott tiger 
+	 */</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>		
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="연습">연습</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex11_연습</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">char</span><span class="o">[][]</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">input</span><span class="o">();</span>
+		<span class="n">output</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="cm">/*
+	 * 함수명 : input
+	 * 인자 : none
+	 * 리턴형 : char[][]
+	 */</span>
+	<span class="kd">static</span> <span class="kt">char</span><span class="o">[][]</span> <span class="nf">input</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 두 정수와 알파벳 문자 하나를 입력받기</span>
+		<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
+		<span class="kt">char</span> <span class="n">alpha</span> <span class="o">=</span> <span class="sc">'F'</span><span class="o">;</span>
+		<span class="k">return</span> <span class="nf">makeSquare</span><span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">m</span><span class="o">,</span> <span class="n">alpha</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">char</span><span class="o">[][]</span> <span class="nf">makeSquare</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">m</span><span class="o">,</span> <span class="kt">char</span> <span class="n">alpha</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// (*) 입력받은 값을 이용해서 n*m 문자 배열을 만들기</span>
+<span class="c1">//		F G H I</span>
+<span class="c1">//		J K L M</span>
+<span class="c1">//		N O P Q</span>
+		<span class="kt">char</span><span class="o">[][]</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="n">n</span><span class="o">][</span><span class="n">m</span><span class="o">];</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">;</span>
+				<span class="n">alpha</span><span class="o">++;</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">arr</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">(</span><span class="kt">char</span><span class="o">[][]</span> <span class="n">arr</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// (*) 문자열 배열을 출력</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]+</span><span class="s">" "</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

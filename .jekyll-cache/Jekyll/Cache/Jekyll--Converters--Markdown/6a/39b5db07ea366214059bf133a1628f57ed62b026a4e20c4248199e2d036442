@@ -1,0 +1,213 @@
+I"�/<h1 id="chapter13"><a href="">chapter13</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>JDK 설치</li>
+  <li>Tomcat 설치</li>
+  <li>Oracle XE 설치</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>실습 11-2(p581)
+    <ol>
+      <li>셀 스크립트 프로그램 test_1102.sh 작성하기
+  <br /> vi test_1102.sh
+  <br /> sh ./test_1102.sh A</li>
+      <li>명령 수행 파라미터 $1 사용하기</li>
+      <li>혈액형을 알파벳 대/소문자 구별 없이 A, B, O, AB조건으로 정하기</li>
+      <li>혈액형 이외의 알파벳에 대해서는 다시 입력하기</li>
+      <li>혈액형에 대해서는 출력 메시지는 “무슨 형을 선택하였습니다.”로 출력하기</li>
+      <li>마지막에는 “프로그램을 종료합니다.”를 출력하기
+  <br />
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="k">case</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="k">in
+  </span>a <span class="p">|</span> A <span class="p">|</span> b <span class="p">|</span> B <span class="p">|</span> o <span class="p">|</span> O <span class="p">|</span> ab <span class="p">|</span> AB <span class="p">)</span>
+  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2"> 형을 선택하였습니다."</span><span class="p">;;</span>
+  <span class="k">*</span> <span class="p">)</span> 
+  <span class="nb">echo</span> <span class="s2">"다시 입력하세요."</span>
+  <span class="k">esac
+  </span><span class="nb">echo</span> <span class="s2">"프로그램을 종료합니다."</span>
+  <span class="nb">exit </span>0 &lt;br&gt;
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+  <li>실습 11-4(p599)
+    <ol>
+      <li>셀 스크립트 프로그램 test_1104.sh 작성하기
+  <br /> vi test_1104.sh
+  <br /> sh test_1104.sh 1</li>
+      <li>사용자 정의 함수 2개(hap, cha) 정의하기</li>
+      <li>hap() 함수는 덧셈을 cha() 함수는 뺄셈을 연산하기</li>
+      <li>함수 사용 선택은 숫자1과 2로 구분하여 호출하기(1:hap 함수, 2:cha함수)</li>
+      <li>키보드로 두수를 입력 받아 변수 num1과 num2에 저장하기</li>
+      <li>함수를 선택하는 숫자 1,2이외의 숫자가 입력되었을 경우에는 종료하기</li>
+      <li>각각의 함수에는 return문은 생략하기
+  <br />
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  hap<span class="o">()</span>   <span class="c"># 덧셈</span>
+  <span class="o">{</span>
+  <span class="nv">hap</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$num1</span> + <span class="nv">$num2</span> <span class="sb">`</span>
+  <span class="nb">echo</span> <span class="s2">"덧셈 :"</span> <span class="nv">$hap</span>
+  <span class="o">}</span>
+  cha<span class="o">()</span>   <span class="c"># 뺄셈</span>
+  <span class="o">{</span>
+  <span class="nv">cha</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$num1</span> - <span class="nv">$num2</span> <span class="sb">`</span>
+  <span class="nb">echo</span> <span class="s2">"뺄셈 :"</span> <span class="nv">$cha</span>
+  <span class="o">}</span>
+  <span class="nb">echo</span> <span class="s2">"키보드로 두 수를 차레대로 입력하세요."</span>
+  <span class="nb">echo</span> <span class="s2">"첫 번째 수 입력"</span>
+  <span class="nb">read </span>num1
+  <span class="nb">echo</span> <span class="s2">"두 번째 수 입력"</span>
+  <span class="nb">read </span>num2
+  <span class="nb">echo</span> <span class="s2">"덧셈:1 뺄셈:2를 선택해주세요."</span>
+  <span class="nb">read </span>op
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$op</span> <span class="o">=</span> 1 <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span>hap <span class="nv">$num1</span> <span class="nv">$num2</span>
+  <span class="k">elif</span> <span class="o">[</span> <span class="nv">$op</span> <span class="o">=</span> 2 <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span>cha <span class="nv">$num1</span> <span class="nv">$num2</span>
+  <span class="k">else
+  </span><span class="nb">echo</span> <span class="s2">"프로그램을 종료합니다."</span>
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+  <li>실습 11-5(p605)
+    <ol>
+      <li>셀 스크립트 프로그램 test_1105.sh 작성하기
+  <br /> vi test_1105.sh
+  <br /> sh test_1105.sh</li>
+      <li>set와 $(명령어)를 사용하여 오늘의 날짜와 요일 시각 형식 지정하기</li>
+      <li>출력 메시지는 다음과 같이 출력하기
+  <br /> a. 연도출력:
+  <br /> b. 월일출력:
+  <br /> c. 요일출력:
+  <br /> d. 시각출력:</li>
+      <li>출력형식은 아래 실행결과 그림 참조
+  <br />
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">set</span> <span class="si">$(</span><span class="nb">date</span><span class="si">)</span>
+  <span class="nb">echo</span> <span class="s2">"오늘의 날짜 출력 : </span><span class="si">$(</span><span class="nb">date</span><span class="si">)</span><span class="s2">"</span>
+  <span class="nb">echo</span> <span class="s2">"a. 연도출력 : </span><span class="nv">$1</span><span class="s2">년도"</span>
+  <span class="nb">echo</span> <span class="s2">"b. 월일출력 : </span><span class="nv">$2</span><span class="s2">월 </span><span class="nv">$3</span><span class="s2">일"</span>
+  <span class="nb">echo</span> <span class="s2">"c. 요일출력 : </span><span class="nv">$4</span><span class="s2">요일"</span>
+  <span class="nb">echo</span> <span class="s2">"d. 시각출력 : </span><span class="nv">$5</span><span class="s2">초"</span>
+  <span class="nb">exit </span>0 &lt;br&gt;
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+  <li>설치
+    <ol>
+      <li>
+        <p>기존 자바 삭제
+  <br /> 1) java -version
+  <br /> 2) man rpm                 # rpm 도움말
+  <br /> 3) rpm -qa | grep jdk
+  <br /> 4) yum remove java*</p>
+      </li>
+      <li>자바 jdk
+  <br /> 1) tar zxvf jdk-8u221-linux-x64.tar.gz
+  <br /> 2) mv jdk1.8.0_221 jdk1.8
+  <br /> 3) vi /etc/profile
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/home/centos/jdk1.8
+  <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin
+  <span class="nb">export </span><span class="nv">JAVA_OPTS</span><span class="o">=</span><span class="s2">"-Dfile.encoing=UTF-8"</span>
+  <span class="nb">export </span><span class="nv">CLASSPATH</span><span class="o">=</span><span class="s2">"."</span>
+</code></pre></div>        </div>
+        <p><br /> 4) source /etc/profile</p>
+      </li>
+      <li>자바 확인
+  <br /> 1) vi Hello.java
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+ <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+     <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello World!!!"</span><span class="o">);</span>
+ <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div>        </div>
+        <p><br /> 2) javac Hello.java
+  <br /> 3) java Hello</p>
+      </li>
+      <li>
+        <p>탐캣
+  <br /> 1) yum install wget   # yum 업데이트있으면 해준다.
+  <br /> 2) wget http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.17/bin/apache-tomcat-9.0.17.tar.gz
+  <br /> 3) tar zxvf apache-tomcat-9.0.17.tar.gz
+  <br /> 4) mv apache-tomcat-9.0.17 tomcat9
+  <br /> 5) cd tomcat9
+  <br /> 6) cd bin
+  <br /> 7) pwd
+  <br /> 8) ./startup.sh
+  <br /> 9) hostname -I
+  <br /> 10) firewall-cmd –permanent –add-port=8080/tcp
+  <br /> 11) firewall-cmd –reload</p>
+      </li>
+      <li>오라클
+  <br /> 1) ls /usr/local
+  <br /> 2) mkdir /usr/local/oracle
+  <br /> 3) WinSCP로 window에서 설치한 oracle 업로드
+  <br /> 4) cd /usr/local/oracle/Disk1
+  <br /> 5) rpm -ivh oracle-xe-11.2.0-1.0.x86_64.rpm
+  <br /> 6) /etc/init.d/oracle-xe configure
+  <br /> 7) 8000, 1521, admin1234
+  <br /> 8) firewall-cmd –add-port=1521/tcp –permanent
+  <br /> 9) firewall-cmd –reload
+  <br /> 10) /etc/init.d/oracle-xe start
+  <br /> 11) vi /etc/profile
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">export </span><span class="nv">ORACLE_HOME</span><span class="o">=</span>/u01/app/oracle/product/11.2.0/xe
+  <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$ORACLE_HOME</span>/bin
+  <span class="nb">export </span><span class="nv">ORACLE_SID</span><span class="o">=</span>XE
+</code></pre></div>        </div>
+        <p><br /> 11) source /etc/profile
+  <br /> 12) cd ~
+  <br /> 13) sqlplus
+  <br /> 14) system, admin1234</p>
+      </li>
+      <li>SQL문
+  <br />
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">CREATE</span> <span class="n">TABLESPACE</span> <span class="n">web</span>
+  <span class="n">DATAFILE</span> <span class="s1">'/home/centos/web.dbf'</span> <span class="k">SIZE</span> <span class="mi">50</span><span class="n">M</span>
+  <span class="n">AUTOEXTEND</span> <span class="k">ON</span>
+  <span class="k">NEXT</span> <span class="mi">10</span><span class="n">M</span>
+  <span class="n">MAXSIZE</span> <span class="n">UNLIMITED</span><span class="p">;</span>
+  <span class="k">CREATE</span> <span class="k">USER</span> <span class="n">scott</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="n">tiger</span>
+  <span class="k">DEFAULT</span> <span class="n">TABLESPACE</span> <span class="n">web</span><span class="p">;</span>
+  <span class="k">GRANT</span> <span class="k">CONNECT</span><span class="p">,</span> <span class="n">RESOURCE</span><span class="p">,</span> <span class="n">dba</span> <span class="k">to</span> <span class="n">scott</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>tar : 확장자 tar로 묶음파일을 만들거나 묶음을 풀어줌
+    <ul>
+      <li>z : tar + gzip</li>
+      <li>x : 묶인 파일을 풀어줌</li>
+      <li>v : 파일이 묶이거나 풀어지는 과정을 출력</li>
+      <li>f : 묶음 파일의 이름을 지정</li>
+    </ul>
+  </li>
+  <li>rpm : RPM 패키지 관리
+    <ul>
+      <li>i : 설치된 패키지의 상세 정보 출력</li>
+      <li>v : 설치과정 확인</li>
+      <li>h : 설치 진행과정을 #기호로 화면에 출력</li>
+    </ul>
+  </li>
+  <li>자동 실행 스크립트 파일
+    <ul>
+      <li>/etc/profile      (root계정 : 모든 사용자에게 적용)</li>
+      <li>/etc/bashrc       (root계정 : 모든 사용자에게 적용)</li>
+      <li>~/.bashrc         (사용자계정)</li>
+      <li>~/.bash_profile   (사용자계정)</li>
+      <li>스크립트 파일 수정시 적용 : source</li>
+    </ul>
+  </li>
+  <li>winscp.net : 윈도우 리눅스 자료 주고받기</li>
+</ul>
+:ET

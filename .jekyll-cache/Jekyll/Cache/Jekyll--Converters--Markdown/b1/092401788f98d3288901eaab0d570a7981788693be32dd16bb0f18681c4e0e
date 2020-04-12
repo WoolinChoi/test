@@ -1,0 +1,215 @@
+I"�h<h1 id="jquerybasic"><a href="">jqueryBasic</a></h1>
+
+<h2 id="ajaxgetcsv">AjaxGetCsv</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>AjaxGetCsv<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="na">cate</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">book</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">hong</span><span class="dl">"</span><span class="p">};</span>
+			<span class="nx">$</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">01_server.jsp</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">parseData</span><span class="p">);</span>
+		<span class="p">});</span>
+		
+		<span class="kd">function</span> <span class="nx">parseData</span><span class="p">(</span><span class="nx">strText</span><span class="p">){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">strText</span><span class="p">);</span>
+		<span class="p">};</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	서버로부터 넘겨받은 데이터<span class="nt">&lt;br/&gt;</span>
+	첫번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"cate"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	두번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxgetcsv_server">AjaxGetCsv_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="n">cate</span> <span class="o">=</span> <span class="s">"서버로부터"</span> <span class="o">+</span> <span class="n">cate</span><span class="o">;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"from_server_"</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"cate="</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"|name="</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostcsv">AjaxPostCsv</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>AjaxPostCsv<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span>  <span class="na">src=</span><span class="s">"libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="na">cate</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">book</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">hong</span><span class="dl">"</span><span class="p">};</span>
+			<span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="dl">"</span><span class="s2">02_server.jsp</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">parseData</span><span class="p">);</span>
+		<span class="p">});</span>
+		
+		<span class="kd">function</span> <span class="nx">parseData</span><span class="p">(</span><span class="nx">strText</span><span class="p">){</span>
+<span class="c1">// 			alert(strText);</span>
+			<span class="kd">var</span> <span class="nx">ary</span> <span class="o">=</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">"</span><span class="s2">|</span><span class="dl">"</span><span class="p">);</span> 
+			<span class="c1">// ary[0] : "cate=서버에서 book변경"</span>
+			<span class="c1">// ary[1] : "name=변경된 hong"</span>
+			<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">ary</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+				<span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="nx">ary</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="dl">"</span><span class="s2">=</span><span class="dl">"</span><span class="p">);</span>
+				<span class="c1">// i가 0인 상태 param[0] : "cate"</span>
+				<span class="c1">//			param[1] : "서버에서 book변경"</span>
+				<span class="k">if</span><span class="p">(</span><span class="nx">param</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">trim</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">cate</span><span class="dl">"</span><span class="p">){</span>
+					<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#cate</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+				<span class="p">}</span>
+				<span class="k">if</span><span class="p">(</span><span class="nx">param</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">trim</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">){</span>
+					<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#name</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+				<span class="p">}</span>
+			<span class="p">}</span>
+		<span class="p">};</span>
+	<span class="nt">&lt;/script&gt;</span>	
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	서버로부터 넘겨받은 데이터<span class="nt">&lt;br/&gt;</span>
+	첫번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"cate"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	두번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostcsv_server">AjaxPostCsv_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="n">cate</span> <span class="o">=</span> <span class="s">"서버로부터"</span> <span class="o">+</span> <span class="n">cate</span><span class="o">;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="s">"from_server_"</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"cate="</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"|name="</span> <span class="o">+</span> <span class="n">name</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostxml">AjaxPostXml</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>AjaxPostXml<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span><span class="na">cate</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">book</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">hong</span><span class="dl">"</span><span class="p">};</span>
+			<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+				<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+				<span class="na">data</span> <span class="p">:</span> <span class="nx">param</span><span class="p">,</span>			<span class="c1">// 보낼데이타 객체</span>
+				<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">03_server.jsp</span><span class="dl">"</span><span class="p">,</span>
+				<span class="na">dataType</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">xml</span><span class="dl">"</span><span class="p">,</span>		<span class="c1">// 받는 데이타 형식</span>
+				<span class="na">success</span> <span class="p">:</span> <span class="nx">parseData</span>
+			<span class="p">});</span>
+			
+			<span class="kd">function</span> <span class="nx">parseData</span><span class="p">(</span><span class="nx">xmlInfo</span><span class="p">){</span>
+				<span class="c1">// jquery로 찾기</span>
+				<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#cate</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">xmlInfo</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">"</span><span class="s2">first</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+			<span class="p">};</span>
+		<span class="p">});</span> 
+
+<span class="c1">// 		$.post("03_server.jsp", param, parseData, "xml"); // 축약형</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	서버로부터 넘겨받은 데이터<span class="nt">&lt;br/&gt;</span>
+	첫번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"cate"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	두번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostxml_server">AjaxPostXml_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/xml; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="c">&lt;!-- contentType="text/xml"이다. --&gt;</span>  
+<span class="nt">&lt;%</span>	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	
+	<span class="n">result</span> <span class="o">+=</span> <span class="err">"</span><span class="o">&lt;</span><span class="n">data</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;</span><span class="n">first</span><span class="err">&gt;</span><span class="s">" + "</span><span class="n">서버에서</span><span class="s">" + cate + "</span><span class="n">변경</span><span class="s">" + "</span><span class="o">&lt;/</span><span class="n">first</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;</span><span class="n">second</span><span class="err">&gt;</span><span class="s">" + "</span><span class="n">from_</span><span class="s">" + name + "</span><span class="n">_server</span><span class="s">" + "</span><span class="o">&lt;/</span><span class="n">second</span><span class="err">&gt;</span><span class="s">";
+	result += "</span><span class="o">&lt;/</span><span class="n">data</span><span class="err">&gt;"</span><span class="o">;</span>
+	
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>	
+<span class="nt">%&gt;</span>    
+</code></pre></div></div>
+
+<h2 id="ajaxpostjson">AjaxPostJson</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>AjaxPostJson<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span>  <span class="na">src=</span><span class="s">"libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span><span class="na">cate</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">book</span><span class="dl">"</span><span class="p">,</span> <span class="na">name</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">hong</span><span class="dl">"</span><span class="p">};</span>
+			<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+				<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+				<span class="na">data</span> <span class="p">:</span> <span class="nx">param</span><span class="p">,</span>
+				<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">04_server.jsp</span><span class="dl">"</span><span class="p">,</span>
+				<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">resText</span><span class="p">){</span>
+					    	  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+					    	  <span class="nx">obj</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="dl">"</span><span class="s2">(</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">resText</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">)</span><span class="dl">"</span><span class="p">);</span>
+					    	  <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#cate</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">first</span><span class="p">);</span>
+					      <span class="p">}</span> 
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	서버로부터 넘겨받은 데이터<span class="nt">&lt;br/&gt;</span>
+	첫번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"cate"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+	두번째 데이터 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ajaxpostjson_server">AjaxPostJson_server</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>	<span class="c1">// 1. 이전 화면에서 넘겨받은 데이타</span>
+	<span class="nc">String</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cate"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	
+	<span class="c1">// 2. 다시 화면으로 보낼 데이터 구성</span>
+	<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"{"</span><span class="o">;</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"'first' : "</span> <span class="o">+</span> <span class="s">"'changed_"</span> <span class="o">+</span> <span class="n">cate</span> <span class="o">+</span> <span class="s">"_by_server"</span> <span class="o">+</span> <span class="s">"',"</span><span class="o">;</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"'second' : "</span> <span class="o">+</span> <span class="s">"'from_"</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"_server'"</span><span class="o">;</span>
+	<span class="n">result</span> <span class="o">+=</span> <span class="s">"}"</span><span class="o">;</span>
+	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>	
+<span class="nt">%&gt;</span> 
+</code></pre></div></div>
+:ET

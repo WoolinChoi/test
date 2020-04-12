@@ -1,0 +1,301 @@
+I"�<h1 id="jdbctransection"><a href="">jdbcTransection</a></h1>
+
+<h2 id="acclogic">AccLogic</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.JOptionPane</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccLogic</span> <span class="o">{</span>
+	<span class="c1">// 연결 객체 생성시 필요한 변수 선언</span>
+	<span class="nc">String</span> <span class="n">url</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span><span class="o">;</span>
+
+	<span class="c1">//===============================================</span>
+	<span class="c1">// 드라이버를 드라이버매니저에 등록</span>
+	<span class="kd">public</span> <span class="nf">AccLogic</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">/////////////////////////////////////////////////////////</span>
+		<span class="c1">// 1. 드라이버를 드라이버 매니저에 등록</span>
+		<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">);</span>
+		<span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.114:1521:orcl"</span><span class="o">;</span>
+		<span class="n">user</span> <span class="o">=</span> <span class="s">"scott"</span><span class="o">;</span>
+		<span class="n">pass</span> <span class="o">=</span> <span class="s">"tiger"</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="c1">//====================================================</span>
+	<span class="c1">// 보내는 계좌번호와 받는 계좌번호와 계좌금액을 넘겨받아 </span>
+	<span class="c1">// 보내는계좌에서 계좌금액을 빼고 받는계좌에서 계좌금액을 더한다</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">moveAccount</span><span class="o">(</span><span class="nc">String</span> <span class="n">sendAcc</span><span class="o">,</span> <span class="nc">String</span> <span class="n">recvAcc</span><span class="o">,</span> <span class="kt">int</span> <span class="n">amount</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st1</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st2</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">///////////////////////////////////////////////////////////</span>
+			<span class="c1">//	 1. Connection 객체 생성</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+			
+			<span class="c1">//@@ 2. Auto-commit을 해제</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+			
+			<span class="c1">//	 3. 출금계좌에서 이체금액을 뺀다</span>
+			<span class="nc">String</span> <span class="n">sql1</span> <span class="o">=</span> <span class="s">"UPDATE account SET amount = (amount - ?) WHERE account_num = ?"</span><span class="o">;</span>
+			
+			<span class="n">st1</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql1</span><span class="o">);</span>
+			<span class="n">st1</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">amount</span><span class="o">);</span>
+			<span class="n">st1</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">sendAcc</span><span class="o">);</span>
+			
+			<span class="kt">int</span> <span class="n">re1</span> <span class="o">=</span> <span class="n">st1</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">re1</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+				<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+			<span class="o">}</span>
+			
+			<span class="c1">//	 4. 입금계좌에 이체금액을 더한다</span>
+			<span class="nc">String</span> <span class="n">sql2</span> <span class="o">=</span> <span class="s">"UPDATE account SET amount = (amount + ?) WHERE account_num = ?"</span><span class="o">;</span>
+			
+			<span class="n">st2</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql2</span><span class="o">);</span>
+			<span class="n">st2</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">amount</span><span class="o">);</span>
+			<span class="n">st2</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">recvAcc</span><span class="o">);</span>
+			
+			<span class="kt">int</span> <span class="n">re2</span> <span class="o">=</span> <span class="n">st2</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">re2</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+				<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+			<span class="o">}</span>
+			
+			<span class="c1">//@@ 5. commit을 전송한다</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+			
+			<span class="c1">// 6. 객체 닫기</span>
+			<span class="n">st1</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">st2</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		
+		<span class="c1">// - 만일 정상적인 경우는 0을 리턴하고 도중에 잘못되었으면 트랜잭션을 롤백시키고 -1을 리턴 </span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="nc">Ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span><span class="o">{</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+			<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+	<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="accui-implements-actionlistener">AccUI implements ActionListener</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">jdbc.transection</span><span class="o">;</span>
+
+<span class="cm">/******************************************************
+*  @ 트랙잭션 예제
+*/</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.border.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccUI</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+	<span class="c1">//===================================================</span>
+	<span class="c1">// 전역변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">frame</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">b_moveMoney</span><span class="o">,</span> <span class="n">b_cancel</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf_sendAccNum</span><span class="o">,</span> <span class="n">tf_recvAccNum</span><span class="o">,</span> <span class="n">tf_moveMoney</span><span class="o">;</span>
+
+	<span class="c1">// 확인다이알로그에 필요한 변수 선언</span>
+	<span class="nc">JDialog</span> <span class="n">confirmDia</span><span class="o">;</span>
+	<span class="nc">JLabel</span> <span class="n">l_sendCust</span><span class="o">,</span> <span class="n">l_recvCust</span><span class="o">,</span> <span class="n">l_moveMoney</span><span class="o">,</span> <span class="n">l_gainMoney</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">b_diaConfirm</span><span class="o">;</span>
+
+	<span class="c1">//===================================================</span>
+	<span class="c1">// 전역 변수의 객체 생성</span>
+	<span class="kd">public</span> <span class="nf">AccUI</span><span class="o">(){</span>
+		<span class="n">frame</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"예금 이체 프로그램"</span><span class="o">);</span>
+		<span class="n">b_moveMoney</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"예금이체실행"</span><span class="o">);</span>
+		<span class="n">b_cancel</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"이체취소"</span><span class="o">);</span>
+		
+		<span class="n">tf_sendAccNum</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tf_recvAccNum</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tf_moveMoney</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+
+		<span class="c1">// 확인다이알로그에 필요한 변수 선언</span>
+		<span class="n">confirmDia</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JDialog</span><span class="o">(</span><span class="n">frame</span><span class="o">,</span> <span class="s">"이체결과확인"</span><span class="o">);</span>
+		<span class="n">l_sendCust</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">();</span>
+		<span class="n">l_recvCust</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">();</span>
+		<span class="n">l_moveMoney</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">();</span>
+		<span class="n">l_gainMoney</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">();</span>
+		<span class="n">b_diaConfirm</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">" 정상처리되었습니다!!! "</span><span class="o">);</span>
+
+	<span class="o">}</span>
+
+	<span class="c1">//===================================================</span>
+	<span class="c1">// 컴포넌트 붙이고 프레임 출력</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 가운데 영역 (라벨과 텍스트필드 붙인 영역 )</span>
+		<span class="nc">JPanel</span> <span class="n">p_center1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center1</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">(</span><span class="nc">FlowLayout</span><span class="o">.</span><span class="na">RIGHT</span><span class="o">));</span>
+		<span class="n">p_center1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"보내는분 계좌번호"</span><span class="o">));</span>
+		<span class="n">p_center1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tf_sendAccNum</span><span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_center2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center2</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">(</span><span class="nc">FlowLayout</span><span class="o">.</span><span class="na">RIGHT</span><span class="o">));</span>
+		<span class="n">p_center2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"받는분 계좌번호"</span><span class="o">));</span>
+		<span class="n">p_center2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tf_recvAccNum</span><span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_center3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center3</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">(</span><span class="nc">FlowLayout</span><span class="o">.</span><span class="na">RIGHT</span><span class="o">));</span>
+		<span class="n">p_center3</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"이체 금액"</span><span class="o">));</span>
+		<span class="n">p_center3</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tf_moveMoney</span><span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_center</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_center1</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_center2</span><span class="o">);</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_center3</span><span class="o">);</span>
+
+		<span class="c1">// South 영역 (버튼 붙인 영역)</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b_moveMoney</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b_cancel</span><span class="o">);</span>
+
+		<span class="c1">// 프레임에 붙이기</span>
+		<span class="n">frame</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">(</span><span class="mi">20</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+		<span class="n">frame</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">p_center</span><span class="o">);</span>
+		<span class="n">frame</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">p_south</span><span class="o">);</span>
+
+		<span class="n">frame</span><span class="o">.</span><span class="na">pack</span><span class="o">();</span>
+		<span class="n">frame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+		<span class="n">frame</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+
+		<span class="c1">//---------------------------------------------------</span>
+		<span class="c1">// 다이알로그 붙이기</span>
+		<span class="c1">//---------------------------------------------------</span>
+		<span class="n">l_sendCust</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">BevelBorder</span><span class="o">(</span><span class="nc">BevelBorder</span><span class="o">.</span><span class="na">RAISED</span><span class="o">));</span>
+		<span class="n">l_recvCust</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">BevelBorder</span><span class="o">(</span><span class="nc">BevelBorder</span><span class="o">.</span><span class="na">RAISED</span><span class="o">));</span>
+		<span class="n">l_moveMoney</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">BevelBorder</span><span class="o">(</span><span class="nc">BevelBorder</span><span class="o">.</span><span class="na">RAISED</span><span class="o">));</span>
+		<span class="n">l_gainMoney</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">BevelBorder</span><span class="o">(</span><span class="nc">BevelBorder</span><span class="o">.</span><span class="na">RAISED</span><span class="o">));</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_diaCenter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">20</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 보내는 고객 "</span><span class="o">));</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">l_sendCust</span><span class="o">);</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 받 는 고 객"</span><span class="o">));</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">l_recvCust</span> <span class="o">);</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 이 체 금 액 "</span><span class="o">));</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">l_moveMoney</span> <span class="o">);</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 계좌남은금액 "</span><span class="o">));</span>
+		<span class="n">p_diaCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">l_gainMoney</span> <span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_diaSouth</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_diaSouth</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b_diaConfirm</span><span class="o">);</span>
+
+		<span class="n">confirmDia</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">(</span><span class="mi">20</span><span class="o">,</span> <span class="mi">20</span><span class="o">));</span>
+		<span class="n">confirmDia</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">p_diaCenter</span><span class="o">);</span>
+		<span class="n">confirmDia</span><span class="o">.</span><span class="na">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">p_diaSouth</span><span class="o">);</span>
+
+
+	<span class="o">}</span>
+
+	<span class="c1">// 이벤트처리 할 컴포넌트을 등록</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b_moveMoney</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">b_cancel</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+
+		<span class="c1">// "이체실행" 버튼이 눌렸을 때</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">b_moveMoney</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">////////////////////////////////////////////////////////</span>
+			<span class="c1">// 1. 화면에서 입력값 얻어오기</span>
+			<span class="c1">// 2. Business Logic 객체 생성 (ex.AccLogic)</span>
+			<span class="c1">// 3. BL객체에서 계좌 이체하는 함수 호출 (ex.moveAccount())</span>
+			<span class="c1">//		- 1번의 입력값을 인자로 넘김</span>
+			<span class="c1">//		- 호출 후 넘겨받는 리턴값으로는 0이면 정상처리이고 </span>
+			<span class="c1">//		- 1이면 잘못된 경우이므로 메세지박스 출력 </span>
+				<span class="nc">String</span> <span class="n">sendNum</span> <span class="o">=</span> <span class="n">tf_sendAccNum</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+				<span class="nc">String</span> <span class="n">recvNum</span> <span class="o">=</span> <span class="n">tf_recvAccNum</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">money</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">tf_moveMoney</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+				
+				<span class="nc">AccLogic</span> <span class="n">logic</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccLogic</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">logic</span><span class="o">.</span><span class="na">moveAccount</span><span class="o">(</span><span class="n">sendNum</span><span class="o">,</span> <span class="n">recvNum</span><span class="o">,</span> <span class="n">money</span><span class="o">);</span>
+				
+				<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"이체성공"</span><span class="o">);</span>
+				<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"이체실패"</span><span class="o">);</span>
+					<span class="k">return</span><span class="o">;</span>
+				<span class="o">}</span>
+
+
+			<span class="cm">/******************************************************
+			* 계좌 이체를 확인한 후에 결과를 다이알로그에 출력
+			1. BL객체에서 레코드 검색하는 함수호출 ( ex. confirmAccount() )
+			2. 1번의 결과로 받은 객체의 각각의 값을 다이알로그의 라벨에 출력
+			3. 다이알로그 화면 출력
+			*/</span>
+
+
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이체처리시 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+				<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="n">frame</span><span class="o">,</span> <span class="s">"이체하는 도중 에러가 발생하였습니다!! 이를 워쩌"</span><span class="o">);</span>
+				<span class="k">return</span><span class="o">;</span>
+			<span class="o">}</span>
+
+		<span class="o">}</span>
+
+		<span class="c1">// "이체취소" 버튼이 눌렸을 때</span>
+		<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">b_cancel</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">frame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+			<span class="n">frame</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+		<span class="o">}</span>
+
+	<span class="o">}</span>
+
+	<span class="c1">//===================================================</span>
+	<span class="c1">// 프로그램 시작</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		
+		<span class="nc">AccUI</span> <span class="n">acc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccUI</span><span class="o">();</span>
+		<span class="n">acc</span><span class="o">.</span><span class="na">setup</span><span class="o">();</span>
+		<span class="n">acc</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="confirmdata">ConfirmData</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span>  <span class="nc">ConfirmData</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">sendCust</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">recvCust</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">gainMoney</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">ConfirmData</span><span class="o">()</span> <span class="o">{</span>
+
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSendCust</span><span class="o">(</span> <span class="nc">String</span> <span class="n">sendCust</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">sendCust</span> <span class="o">=</span> <span class="n">sendCust</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getSendCust</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">sendCust</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRecvCust</span><span class="o">(</span> <span class="nc">String</span> <span class="n">recvCust</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">recvCust</span> <span class="o">=</span> <span class="n">recvCust</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRecvCust</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">recvCust</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setGainMoney</span><span class="o">(</span> <span class="kt">int</span> <span class="n">gainMoney</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">gainMoney</span> <span class="o">=</span> <span class="n">gainMoney</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGainMoney</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">gainMoney</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

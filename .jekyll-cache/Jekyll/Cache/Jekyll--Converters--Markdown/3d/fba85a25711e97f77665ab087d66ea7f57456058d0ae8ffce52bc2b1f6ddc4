@@ -1,0 +1,165 @@
+I"�V<h1 id="network2"><a href="">network2</a></h1>
+
+<h2 id="server-extends-thread">Server extends Thread</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Server</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">PORT</span> <span class="o">=</span> <span class="mi">3333</span><span class="o">;</span>
+	<span class="kd">protected</span> <span class="nc">ServerSocket</span> <span class="n">listen</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">Server</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">listen</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerSocket</span><span class="o">(</span><span class="no">PORT</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Creating the ServerSocket.."</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>	
+		<span class="o">}</span>	
+		<span class="k">this</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>		
+	<span class="o">}</span>	
+	<span class="c1">// 요청이 들어올 때마다 연결 상태를 새로이 생성</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span><span class="o">{</span>
+			<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">Socket</span> <span class="n">client</span> <span class="o">=</span> <span class="n">listen</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+					<span class="nc">JuryThread</span> <span class="n">cc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JuryThread</span><span class="o">(</span><span class="n">client</span><span class="o">);</span>	
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"클라이언트 입장 : "</span> <span class="o">+</span> <span class="n">client</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Creating the Socket.."</span> <span class="o">+</span>  <span class="n">ex</span><span class="o">);</span>	
+		<span class="o">}</span>	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="k">new</span> <span class="nf">Server</span><span class="o">();</span>	
+	<span class="o">}</span>	
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">JuryThread</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">Socket</span> <span class="n">client</span><span class="o">;</span>
+	<span class="nc">DataInputStream</span> <span class="n">in</span><span class="o">;</span>
+	<span class="nc">DataOutputStream</span> <span class="n">out</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">JuryThread</span><span class="o">(</span><span class="nc">Socket</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">client</span>	<span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataInputStream</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+			<span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataOutputStream</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span><span class="o">{</span>
+					<span class="n">client</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>	
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">IOException</span> <span class="n">exc</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error getting socket stream : "</span> <span class="o">+</span> <span class="n">exc</span><span class="o">);</span>
+			<span class="o">}</span>	
+			<span class="k">return</span><span class="o">;</span>
+		<span class="o">}</span>	
+		<span class="k">this</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>		
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="cm">/*******************************************
+		* 클라이언트로부터 데이타를 읽어옴
+		*/</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+				<span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+				<span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>			 	
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>	
+		<span class="o">}</span>	
+		<span class="cm">/*******************************************
+		* 읽어 온 데이타를 계산
+		*/</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+			<span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">*</span> <span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+		<span class="cm">/*******************************************
+		* 계산 결과를 다시 클라이언트로 보냄
+		*/</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+				<span class="n">out</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>	
+		<span class="o">}</span>
+		<span class="cm">/*******************************************
+		* 닫기
+		*/</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">client</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+		<span class="o">}</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="client">Client</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span><span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">PORT</span> <span class="o">=</span> <span class="mi">3333</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">HOST</span> <span class="o">=</span> <span class="s">"192.168.0.144"</span><span class="o">;</span>
+	<span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">10</span><span class="o">};</span>
+	<span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">b</span> <span class="o">=</span> <span class="o">{</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span> <span class="o">};</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="nc">Socket</span> <span class="n">cl</span>  <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataInputStream</span> <span class="n">br</span> 	<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataOutputStream</span> <span class="n">dos</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+		<span class="cm">/***********************************************
+		* 소켓 객체, 입력스트림과 출력 스트림 객체 생성
+		*/</span>	
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">//1. 소켓 객체 생성</span>
+			<span class="n">cl</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Socket</span><span class="o">(</span><span class="no">HOST</span><span class="o">,</span> <span class="no">PORT</span><span class="o">);</span>			
+			<span class="c1">//2. 입출력 스트림 생성</span>
+			<span class="n">br</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataInputStream</span><span class="o">(</span><span class="n">cl</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+			<span class="n">dos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataOutputStream</span><span class="o">(</span><span class="n">cl</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>		
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error is "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>	
+		<span class="o">}</span>
+		<span class="cm">/***********************************************
+		* 숫자 배열을 서버에 전송
+		*/</span>					
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++</span> <span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// 1. a 배열을 서버에 전송</span>
+				<span class="n">dos</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+			<span class="o">}</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++</span> <span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// 2. b 배열을 서버에 전송</span>
+				<span class="n">dos</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">b</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+			<span class="o">}</span>
+    	<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+		    	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"error writing to server.."</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="cm">/***********************************************
+		* 서버로부터 결과를 읽어 옴
+		*/</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+				<span class="c1">// 1. 서버에서 읽어와서 result 배열에 저장</span>
+				 <span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="cm">/***********************************************
+		* 결과를 화면에 출력
+		*/</span>		
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"The sum of the two arrays : "</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++</span> <span class="o">)</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
+		<span class="cm">/***********************************************
+		* 출력 스트림, 입력 스트림, 소켓 객체 닫기
+		*/</span>
+		<span class="k">try</span> <span class="o">{</span>		
+		<span class="c1">// 1. 입출력 스트림 닫기</span>
+			<span class="n">br</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">dos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">cl</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error close.... "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>		
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

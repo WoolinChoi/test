@@ -1,0 +1,369 @@
+I"�<h1 id="infoeventtest"><a href="">infoEventTest</a></h1>
+
+<h2 id="infoevttest">InfoEvtTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 기본창에 이벤트 넣기
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoEvtTest</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bAdd</span><span class="o">,</span> <span class="n">bShow</span><span class="o">,</span> <span class="n">bSearch</span><span class="o">,</span> <span class="n">bDelete</span><span class="o">,</span> <span class="n">bCancel</span><span class="o">,</span> <span class="n">bExit</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfId</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">,</span> <span class="n">tfGender</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">;</span>
+	<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;();</span>
+	<span class="c1">// 2. 멤버 객체 생성</span>
+	<span class="nc">InfoEvtTest</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"DBTest"</span><span class="o">);</span>
+		<span class="n">bAdd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Add"</span><span class="o">);</span>
+		<span class="n">bShow</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Show"</span><span class="o">);</span>
+		<span class="n">bSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Search"</span><span class="o">);</span>
+		<span class="n">bDelete</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Delete"</span><span class="o">);</span>
+		<span class="n">bCancel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Cancel"</span><span class="o">);</span>
+		<span class="n">bExit</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Exit"</span><span class="o">);</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>
+		<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfId</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfGender</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfHome</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// South 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bAdd</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bShow</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSearch</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bDelete</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCancel</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bExit</span><span class="o">);</span>
+		<span class="c1">// West 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Name"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"ID"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfId</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Tel"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfTel</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Gender"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfGender</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Age"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Home"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHome</span><span class="o">);</span>
+		<span class="c1">// 프레임영역에 붙이기</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_south</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ta</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">900</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 등록</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">BtnHdlr</span> <span class="n">bh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BtnHdlr</span><span class="o">();</span>
+		<span class="c1">// 버튼과 이벤트핸들러 연결</span>
+		<span class="n">bAdd</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="n">bShow</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="n">bSearch</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="n">bDelete</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="n">bCancel</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="n">bExit</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bh</span><span class="o">);</span>
+		<span class="c1">// 전화번호 텍스트필드 엔터 이벤트</span>
+		<span class="n">tfTel</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">TfHdlr</span><span class="o">());</span>
+		<span class="c1">// 주민번호 텍스트필드 포커스 이벤트</span>
+		<span class="n">tfId</span><span class="o">.</span><span class="na">addFocusListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">IdFocus</span><span class="o">());</span>
+	<span class="o">}</span>
+<span class="c1">//	class IdFocus implements FocusListener {</span>
+	<span class="kd">class</span> <span class="nc">IdFocus</span> <span class="kd">extends</span> <span class="nc">FocusAdapter</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">focusGained</span><span class="o">(</span><span class="nc">FocusEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">focusLost</span><span class="o">(</span><span class="nc">FocusEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"포커스잃음"</span><span class="o">);</span>
+			<span class="c1">// "12345678-1234567"</span>
+			<span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">tfId</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+			<span class="kt">char</span> <span class="n">sung</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">7</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">sung</span> <span class="o">==</span> <span class="sc">'1'</span> <span class="o">||</span> <span class="n">sung</span> <span class="o">==</span> <span class="sc">'3'</span><span class="o">)</span> <span class="n">tfGender</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"남자"</span><span class="o">);</span>
+			<span class="k">else</span> <span class="n">tfGender</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"여자"</span><span class="o">);</span>
+			<span class="c1">// 출신지 입력</span>
+			<span class="kt">char</span> <span class="n">h</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">8</span><span class="o">);</span> 
+			<span class="k">switch</span><span class="o">(</span><span class="n">h</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">case</span> <span class="sc">'0'</span> <span class="o">:</span> <span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"서울"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="k">case</span> <span class="sc">'1'</span> <span class="o">:</span> <span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"인천"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="k">case</span> <span class="sc">'2'</span> <span class="o">:</span> <span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"경기"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="k">default</span> <span class="o">:</span> <span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"외국인"</span><span class="o">);</span>  
+			<span class="o">}</span>
+			<span class="c1">// 나이 출력</span>
+			<span class="nc">String</span> <span class="n">nai1</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+			<span class="kt">int</span> <span class="n">nai2</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">nai1</span><span class="o">);</span>
+			<span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+			<span class="nc">Calendar</span> <span class="n">cal</span> <span class="o">=</span> <span class="nc">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+			<span class="kt">int</span> <span class="n">year</span> <span class="o">=</span> <span class="n">cal</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Calendar</span><span class="o">.</span><span class="na">YEAR</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">sung</span> <span class="o">==</span> <span class="sc">'1'</span> <span class="o">||</span> <span class="n">sung</span> <span class="o">==</span> <span class="sc">'2'</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">age</span> <span class="o">=</span> <span class="n">year</span> <span class="o">-</span> <span class="o">(</span><span class="mi">1900</span> <span class="o">+</span> <span class="n">nai2</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+				<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">age</span><span class="o">));</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">sung</span> <span class="o">==</span> <span class="sc">'3'</span> <span class="o">||</span> <span class="n">sung</span> <span class="o">==</span> <span class="sc">'4'</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">age</span> <span class="o">=</span> <span class="n">year</span> <span class="o">-</span> <span class="o">(</span><span class="mi">2000</span> <span class="o">+</span> <span class="n">nai2</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+				<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">age</span><span class="o">));</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">BtnHdlr</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"버튼이벤트"</span><span class="o">);</span>
+			<span class="nc">Object</span> <span class="n">evt</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bAdd</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">insert</span><span class="o">();</span>
+				<span class="n">clearTextField</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bShow</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">showInfo</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bSearch</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">searchTel</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bDelete</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">delete</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bCancel</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">clearTextField</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bExit</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">exit</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">TfHdlr</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">searchTel</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="c1">// 검색</span>
+	<span class="kt">void</span> <span class="nf">searchTel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"전화번호이벤트"</span><span class="o">);</span>
+		<span class="c1">// (1) 사용자가 입력한 전화번호 얻어오기</span>
+		<span class="c1">// (2) ArrayList의 각 Person의 tel과 비교해서 같은지</span>
+		<span class="c1">// (3) 해당 Person의 멤버값들을 각각 텍스트필드에 출력</span>
+		<span class="nc">String</span> <span class="n">tel</span> <span class="o">=</span> <span class="n">tfTel</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">Person</span> <span class="n">p</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getTel</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">tel</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">tfName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+				<span class="n">tfId</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+				<span class="n">tfTel</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getTel</span><span class="o">());</span>
+				<span class="n">tfGender</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getGender</span><span class="o">());</span>
+				<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getAge</span><span class="o">()));</span>
+				<span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getHome</span><span class="o">());</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="c1">// 삭제</span>
+	<span class="kt">void</span> <span class="nf">delete</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"삭제이벤트"</span><span class="o">);</span>
+			<span class="c1">// (1) 사용자가 입력한 전화번호 얻어오기</span>
+			<span class="c1">// (2) ArrayList의 각 Person의 tel과 비교해서 같은지</span>
+			<span class="c1">// (3) 해당 Person의 멤버값들을 삭제</span>
+			<span class="nc">String</span> <span class="n">tel</span> <span class="o">=</span> <span class="n">tfTel</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+			<span class="k">for</span><span class="o">(</span><span class="nc">Person</span> <span class="n">p</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getTel</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">tel</span><span class="o">))</span> <span class="o">{</span>
+					<span class="n">list</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+			<span class="n">clearTextField</span><span class="o">();</span>
+			<span class="n">showInfo</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="c1">// 취소</span>
+	<span class="kt">void</span> <span class="nf">clearTextField</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">tfName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfId</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfTel</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfGender</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfHome</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 전체보기</span>
+	<span class="kt">void</span> <span class="nf">showInfo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">ta</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"--------------전체보기--------------\n\n"</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">Person</span> <span class="n">p</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">exit</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showConfirmDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span><span class="s">"정말로 나가겠습니까"</span><span class="o">);</span>
+		<span class="c1">// 종료버튼이 눌렸을 때 강제프로그램 종료(System.exit(0);)</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">OK_OPTION</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="c1">// 입력 </span>
+	<span class="kt">void</span> <span class="nf">insert</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// (1) 각 텍스트필드의 입력값을 얻어오기</span>
+		<span class="c1">// (2) (1)에서 얻어온 값들을 Person 멤버지정(생성자/setter)</span>
+		<span class="c1">// (3) ArrayList에 (2)객체를 추가</span>
+		<span class="nc">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">tfName</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">tfId</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setTel</span><span class="o">(</span><span class="n">tfTel</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setGender</span><span class="o">(</span><span class="n">tfGender</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setAge</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">tfAge</span><span class="o">.</span><span class="na">getText</span><span class="o">()));</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setHome</span><span class="o">(</span><span class="n">tfHome</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">InfoEvtTest</span> <span class="n">it</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InfoEvtTest</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="person">Person</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="nc">Object</span> <span class="o">{</span>
+	<span class="c1">// 변수</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">gender</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">home</span><span class="o">;</span>
+	<span class="c1">// 생성자 함수</span>
+	<span class="kd">public</span> <span class="nf">Person</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">String</span> <span class="n">id</span><span class="o">,</span> <span class="nc">String</span> <span class="n">tel</span><span class="o">,</span> <span class="nc">String</span> <span class="n">gender</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">,</span> <span class="nc">String</span> <span class="n">home</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">tel</span> <span class="o">=</span> <span class="n">tel</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">gender</span> <span class="o">=</span> <span class="n">gender</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">home</span> <span class="o">=</span> <span class="n">home</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">// 값만 빼주기 위해 toString</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"\t"</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">"\t"</span> <span class="o">+</span> <span class="n">tel</span> <span class="o">+</span> <span class="s">"\t"</span> <span class="o">+</span> <span class="n">gender</span> <span class="o">+</span> <span class="s">"\t"</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">"\t"</span> <span class="o">+</span> <span class="n">home</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">;</span> 
+	<span class="o">}</span>
+	<span class="c1">// setter/getter</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getTel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTel</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">tel</span> <span class="o">=</span> <span class="n">tel</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getGender</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">gender</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setGender</span><span class="o">(</span><span class="nc">String</span> <span class="n">gender</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">gender</span> <span class="o">=</span> <span class="n">gender</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getHome</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">home</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHome</span><span class="o">(</span><span class="nc">String</span> <span class="n">home</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">home</span> <span class="o">=</span> <span class="n">home</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="infoevttest2">InfoEvtTest2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InfoEvtTest2</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bAdd</span><span class="o">,</span> <span class="n">bShow</span><span class="o">,</span> <span class="n">bSearch</span><span class="o">,</span> <span class="n">bDelete</span><span class="o">,</span> <span class="n">bCancel</span><span class="o">,</span> <span class="n">bExit</span><span class="o">;</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfId</span><span class="o">,</span> <span class="n">tfTel</span><span class="o">,</span> <span class="n">tfSex</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHome</span><span class="o">;</span>
+	<span class="c1">// 2. 멤버 객체 생성</span>
+	<span class="nc">InfoEvtTest3</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"DBTest"</span><span class="o">);</span>
+		<span class="n">bAdd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Add"</span><span class="o">);</span>
+		<span class="n">bShow</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Show"</span><span class="o">);</span>
+		<span class="n">bSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Search"</span><span class="o">);</span>
+		<span class="n">bDelete</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Delete"</span><span class="o">);</span>
+		<span class="n">bCancel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Cancel"</span><span class="o">);</span>
+		<span class="n">bExit</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Exit"</span><span class="o">);</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>
+		<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfId</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfSex</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfHome</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// South 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bAdd</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bShow</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSearch</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bDelete</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCancel</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bExit</span><span class="o">);</span>
+		<span class="c1">// West 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Name"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"ID"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfId</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Tel"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfTel</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Sex"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfSex</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Age"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Home"</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHome</span><span class="o">);</span>
+		<span class="c1">// 프레임영역에 붙이기</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_south</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">ta</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">700</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 만든 이벤트 핸들러를 메모리에 올리기</span>
+		<span class="nc">MyHdlr</span> <span class="n">mh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyHdlr</span><span class="o">();</span>
+		<span class="c1">// 이벤트핸들러랑 버튼 연결하기</span>
+		<span class="n">bExit</span><span class="o">.</span><span class="na">addMouseListener</span><span class="o">(</span><span class="n">mh</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 핸들러 만들기</span>
+<span class="c1">//	class MyHdlr implements MouseListener {</span>
+	<span class="kd">class</span> <span class="nc">MyHdlr</span> <span class="kd">extends</span> <span class="nc">MouseAdapter</span> <span class="o">{</span> <span class="c1">// 메소드가 2개이상일 때 Adapter를 쓰면 편하다</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">mouseClicked</span><span class="o">(</span><span class="nc">MouseEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span> <span class="c1">// 눌려진애</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="n">bExit</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">InfoEvtTest3</span> <span class="n">it</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InfoEvtTest3</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">it</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

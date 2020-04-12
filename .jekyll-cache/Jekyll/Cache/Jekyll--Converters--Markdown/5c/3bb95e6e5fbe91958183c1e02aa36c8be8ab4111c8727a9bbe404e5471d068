@@ -1,0 +1,632 @@
+I"�P<h1 id="mapreduce"><a href="">mapreduce</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>MapReduce 개념</li>
+  <li>WordCount2.java 수정 - 자료형 변경</li>
+  <li>jar 파일 생성하여 nn01의 ~/source로 전송</li>
+  <li>yarn으로 실행(입력: 10K.ID.CONTENTS)</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>WordCount2
+    <ul>
+      <li>sample.WordCount2.java 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">sample</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.StringTokenizer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WordCount2</span> 
+<span class="o">{</span>	
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyMapper</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span> 
+<span class="cm">/*
+  입력&lt;key, value&gt; : &lt;Text, Text&gt;
+  입력키 : 글 번호
+  입력값 : 한줄 내용        
+  출력&lt;key, value&gt; : &lt;Text, Int&gt;
+  출력키 : 한 단어
+  출력값  : 1
+*/</span>
+  <span class="o">{</span>
+  <span class="c1">// 출력 Key, value</span>
+  <span class="kd">private</span> <span class="nc">Text</span> <span class="n">word</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="o">();</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">IntWritable</span> <span class="n">one</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">Text</span> <span class="nc">Key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+      <span class="c1">// 문자열로 자라준다.</span>
+      <span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+      <span class="c1">// 모든 이유로 잘라준다.</span>
+      <span class="nc">StringTokenizer</span> <span class="n">itr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">line</span><span class="o">,</span> <span class="s">"\t\r\n\f |:;,.()&lt;&gt;'\"-!?"</span><span class="o">);</span>
+      <span class="k">while</span><span class="o">(</span><span class="n">itr</span><span class="o">.</span><span class="na">hasMoreTokens</span><span class="o">())</span> 
+      <span class="o">{</span>
+          <span class="n">word</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">itr</span><span class="o">.</span><span class="na">nextToken</span><span class="o">());</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">word</span><span class="o">,</span> <span class="n">one</span><span class="o">);</span>
+      <span class="o">}</span> <span class="c1">// while-end</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+  <span class="o">}</span> <span class="c1">// end of MyMapper        </span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyReducer</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span> 
+  <span class="c1">// 입력&lt;key, value&gt; : &lt;Int, Text&gt;</span>
+  <span class="c1">// 출력&lt;key, value&gt; : &lt;Text, Int&gt;</span>
+  <span class="o">{</span>            
+  <span class="kd">private</span> <span class="nc">IntWritable</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">();</span>           
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">IntWritable</span><span class="o">&gt;</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="k">for</span><span class="o">(</span><span class="nc">IntWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">value</span><span class="o">)</span> 
+      <span class="o">{</span>
+          <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+      <span class="o">}</span> <span class="c1">// end of for                </span>
+      <span class="n">result</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span> <span class="c1">// java int형 -&gt; hadoop LongWritable형으로 지정</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of reduce</span>
+  <span class="o">}</span> <span class="c1">// end of MyReducer</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span>
+  <span class="o">{</span>
+  <span class="nc">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span> 
+  <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"사용: WordCount2 &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of if    </span>
+   <span class="nc">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"WordCount2"</span><span class="o">);</span>    
+  <span class="c1">// 각 클래스 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">WordCount2</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">MyMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">MyReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>    
+  <span class="c1">// 출력 key와 value 타입 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>           
+  <span class="c1">// 입력포맷과 출력포맷 지정(*****)</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">KeyValueTextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>           
+  <span class="c1">// 파일입력포맷과 파일출력포맷 지정</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>    
+  <span class="c1">// job을 실행</span>
+  <span class="c1">// job이 다 실행하고 끝날때까지 기다리기</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of WordCount2</span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab1.jar sample.WordCount2 /input/data/wiki/10K.ID.CONTENTS /output/wordcount2
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/wordcount2
+4) [hadoop@nn01 ~]$ hdfs dfs -cat /output/wordcount2/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>TopNMain
+    <ul>
+      <li>sample2class.TopNMain 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">sample2class</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.PriorityQueue</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TopNMain</span> 
+<span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">WordFreqComparator</span> <span class="kd">implements</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;</span>
+  <span class="o">{</span>		
+  <span class="c1">// 2개의 WordFreq를 비교하여 결과값 리턴 </span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="nc">WordFreq</span> <span class="n">a</span><span class="o">,</span> <span class="nc">WordFreq</span> <span class="n">b</span><span class="o">)</span>
+  <span class="o">{</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()){</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="o">}</span>			
+      <span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()){</span> <span class="k">return</span> <span class="mi">1</span><span class="o">;</span> <span class="o">}</span>			
+      <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>			
+  <span class="o">}</span> <span class="c1">// end of compare</span>
+  <span class="o">}</span> <span class="c1">// end of WordFreqComparator       </span>
+  <span class="c1">// Mapper class</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Map</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">&gt;</span>
+  <span class="o">{</span>
+  <span class="c1">// (1) Map 만들기 *********************************************</span>
+  <span class="kt">int</span> <span class="n">topN</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="nc">Comparator</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WordFreqComparator</span><span class="o">();</span>
+  <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;(</span><span class="n">topN</span><span class="o">,</span> <span class="n">comparator</span><span class="o">);</span>            
+  <span class="c1">// 처음에 단 한번 불려짐</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="n">topN</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">getInt</span><span class="o">(</span><span class="s">"topN"</span><span class="o">,</span> <span class="n">topN</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of setup            </span>
+  <span class="c1">// 매번 잘라질때마다 불려짐</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="nc">Long</span> <span class="n">lValue</span> <span class="o">=</span> <span class="nc">Long</span><span class="o">.</span><span class="na">parseLong</span><span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span> <span class="c1">// 빈도수</span>
+      <span class="n">insert</span><span class="o">(</span><span class="n">queue</span><span class="o">,</span> <span class="n">key</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">lValue</span><span class="o">,</span> <span class="n">topN</span><span class="o">);</span> <span class="c1">// queue랑 key랑 빈도수랑 최대를 입력한다</span>
+  <span class="o">}</span> <span class="c1">// end of map            </span>
+  <span class="c1">// map() 메소드가 모두 호출된 후에 호출되는 메소드</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">cleanup</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">)</span> 
+      <span class="o">{</span>
+          <span class="nc">WordFreq</span> <span class="n">wordF</span> <span class="o">=</span> <span class="o">(</span><span class="nc">WordFreq</span><span class="o">)</span><span class="n">queue</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+          <span class="c1">// wordF의 word와 freq를 형변환 해준다.</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="k">new</span> <span class="nc">Text</span><span class="o">(</span><span class="n">wordF</span><span class="o">.</span><span class="na">getWord</span><span class="o">()),</span> <span class="k">new</span> <span class="nc">LongWritable</span><span class="o">(</span><span class="n">wordF</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()));</span>
+      <span class="o">}</span> <span class="c1">// end of while</span>
+  <span class="o">}</span> <span class="c1">// end of cleanup</span>
+  <span class="o">}</span> <span class="c1">// end of Map        </span>
+<span class="cm">/*
+  Reducer class
+  리듀스의 입력형식  :  Text, LongWritable (** 맵의 출력형식과 일치 )
+  리듀스의 출력형식 :   Text, LongWritable 
+*/</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Reduce</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">&gt;</span>
+  <span class="o">{</span>
+  <span class="c1">// (2) Reduce 만들기 *******************************************</span>
+  <span class="kt">int</span> <span class="n">topN</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="nc">Comparator</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WordFreqComparator</span><span class="o">();</span>
+  <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="nc">WordFreq</span><span class="o">&gt;(</span><span class="n">topN</span><span class="o">,</span> <span class="n">comparator</span><span class="o">);</span>            
+  <span class="c1">// 처음에 단 한번 불려짐</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="n">topN</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">getInt</span><span class="o">(</span><span class="s">"topN"</span><span class="o">,</span> <span class="n">topN</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of setup            </span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">LongWritable</span><span class="o">&gt;</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="k">for</span><span class="o">(</span><span class="nc">LongWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">value</span><span class="o">)</span>
+      <span class="o">{</span>
+          <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+      <span class="o">}</span> <span class="c1">// end of for               </span>
+      <span class="n">insert</span><span class="o">(</span><span class="n">queue</span><span class="o">,</span> <span class="n">key</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">sum</span><span class="o">,</span> <span class="n">topN</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of reduce            </span>
+  <span class="c1">// reduce() 메소드가 모두 호출된 후에 호출되는 메소드</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">cleanup</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">)</span> 
+      <span class="o">{</span>
+          <span class="nc">WordFreq</span> <span class="n">wordF</span> <span class="o">=</span> <span class="o">(</span><span class="nc">WordFreq</span><span class="o">)</span><span class="n">queue</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+          <span class="c1">// wordF의 word와 freq를 형변환 해준다.</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="k">new</span> <span class="nc">Text</span><span class="o">(</span><span class="n">wordF</span><span class="o">.</span><span class="na">getWord</span><span class="o">()),</span> <span class="k">new</span> <span class="nc">LongWritable</span><span class="o">(</span><span class="n">wordF</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()));</span>
+      <span class="o">}</span> <span class="c1">// end of while</span>
+  <span class="o">}</span> <span class="c1">// end of cleanup</span>
+  <span class="o">}</span> <span class="c1">// end of Reduce</span>
+<span class="cm">/*
+  인자 : 우선순위큐, 단어, 빈도수, 상위N개 
+  N값 - 큐의 갯수 
+*/</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">PriorityQueue</span> <span class="n">queue</span><span class="o">,</span> <span class="nc">String</span> <span class="n">word</span><span class="o">,</span> <span class="nc">Long</span> <span class="n">lValue</span><span class="o">,</span> <span class="kt">int</span> <span class="n">topN</span><span class="o">)</span>
+  <span class="o">{</span>	
+  <span class="nc">WordFreq</span> <span class="n">miniWF</span> <span class="o">=</span> <span class="o">(</span><span class="nc">WordFreq</span><span class="o">)</span><span class="n">queue</span><span class="o">.</span><span class="na">peek</span><span class="o">();</span>
+  <span class="c1">// 우선순위큐는 지정한 준에 (빈도수)따라 순서대로 저장하고 있기에 </span>
+  <span class="c1">// peek() 호출시 빈도수가 작은 (즉, 우선순위가 낮은) 원소가 출력된다.             </span>
+  <span class="c1">// 큐의 갯수가  N개보다 작으면 큐에 추가</span>
+  <span class="c1">// 큐의 갯수보다 큰 경우에서는 큐에서 우선순위가 낮은 원소의 빈도수보다 크면 큐에 추가 </span>
+  <span class="k">if</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">topN</span> <span class="o">||</span> <span class="n">miniWF</span><span class="o">.</span><span class="na">getFreq</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">lValue</span> <span class="o">)</span>
+  <span class="o">{</span>
+      <span class="nc">WordFreq</span> <span class="n">wordFreq</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WordFreq</span><span class="o">(</span><span class="n">word</span><span class="o">,</span> <span class="n">lValue</span><span class="o">);</span>
+      <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">wordFreq</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of if		</span>
+  <span class="c1">// 조건에 맞아서 큐에 넣은 경우  큐의 크기가 10개를 넘으면 </span>
+  <span class="c1">// 우선순위 낮은 원소 삭제하여 큐의 갯수를 10개 유지한다.</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">topN</span><span class="o">)</span>
+  <span class="o">{</span>
+      <span class="n">queue</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+  <span class="o">}</span> <span class="c1">// end of if</span>
+  <span class="o">}</span> <span class="c1">// end of insert       </span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> 
+  <span class="o">{</span>
+  <span class="nc">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>
+  <span class="nc">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"TopNMain"</span><span class="o">);</span>            
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">TopNMain</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">Reduce</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setNumReduceTasks</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span> <span class="c1">// 리듀스태스크 1개로 지정 		</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">LongWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>			           
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">KeyValueTextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>           
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">setInt</span><span class="o">(</span><span class="s">"topN"</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">2</span><span class="o">]));</span>
+  <span class="c1">// 잡의 설정값 추가하여 Map과 Reduce 클래스에서 사용가능             </span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of TopNMain</span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab2.jar sample2class.TopNMain /output/wordcount2/part-r-00000 /output/topn1 10
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/topn1
+4) [hadoop@nn01 ~]$ hdfs dfs -cat /output/topn1/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>CountTrigram
+    <ul>
+      <li>sample2class.CountTrigram 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">sample2class</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.StringTokenizer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CountTrigram</span> 
+<span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Map</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+  <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">IntWritable</span> <span class="n">one</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+  <span class="kd">private</span> <span class="nc">Text</span> <span class="n">trigram</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="o">();</span>
+<span class="cm">/*		
+  A B C D E --&gt; (A B C), (B C D), (C D E) 추출후에 다시 
+  B C D E F 에서  3개씩  묶는다
+*/</span> 
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+      <span class="nc">StringTokenizer</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">line</span><span class="o">,</span><span class="s">"\t\r\n\f |,!#\"$.'%&amp;=+-_^@`~:?&lt;&gt;(){}[];*/"</span><span class="o">);</span>
+      <span class="c1">// (1) 단어 3개씩 묶기</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="na">countTokens</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="mi">3</span> <span class="o">)</span>
+      <span class="o">{</span>
+          <span class="nc">String</span> <span class="n">firstToken</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">toLowerCase</span><span class="o">();</span>
+          <span class="nc">String</span> <span class="n">secondToken</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">toLowerCase</span><span class="o">();</span>
+          <span class="c1">// 안녕하세요 여러분 우리는 좋은 사람들입니다</span>
+          <span class="k">while</span><span class="o">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="na">hasMoreTokens</span><span class="o">())</span>
+          <span class="o">{</span>
+              <span class="nc">String</span> <span class="n">thirdToken</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="na">nextToken</span><span class="o">().</span><span class="na">toLowerCase</span><span class="o">();</span>
+              <span class="n">trigram</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">firstToken</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">secondToken</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">thirdToken</span><span class="o">);</span>
+              <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">trigram</span><span class="o">,</span> <span class="n">one</span><span class="o">);</span>                        
+              <span class="n">firstToken</span> <span class="o">=</span> <span class="n">secondToken</span><span class="o">;</span>
+              <span class="n">secondToken</span> <span class="o">=</span> <span class="n">thirdToken</span><span class="o">;</span>
+          <span class="o">}</span> <span class="c1">// end of while</span>
+      <span class="o">}</span> <span class="c1">// end of if</span>
+  <span class="o">}</span> <span class="c1">// end of map</span>
+  <span class="o">}</span> <span class="c1">// end of Map        </span>
+  <span class="c1">// 리듀서 클래스 </span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Reduce</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+  <span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">IntWritable</span><span class="o">&gt;</span> <span class="n">values</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="k">for</span> <span class="o">(</span><span class="nc">IntWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">values</span><span class="o">)</span>
+      <span class="o">{</span>
+          <span class="n">sum</span> <span class="o">+=</span><span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+      <span class="o">}</span> <span class="c1">// end of for</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">(</span><span class="n">sum</span><span class="o">));</span>
+  <span class="o">}</span> <span class="c1">// end of reduce</span>
+  <span class="o">}</span> <span class="c1">// end of Reduce        </span>
+  <span class="c1">// 잡을 2개를 생성 - CountTrigram / TopNMain</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> 
+  <span class="o">{</span>
+  <span class="nc">Configuration</span> <span class="n">conf1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>
+  <span class="nc">Job</span> <span class="n">job1</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf1</span><span class="o">,</span> <span class="s">"Count Trigram"</span><span class="o">);</span>            
+  <span class="n">job1</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">CountTrigram</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">//job1.setCombinerClass(Reduce.class);</span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">Reduce</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">//***           </span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">KeyValueTextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job1</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>           
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job1</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job1</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+  <span class="k">if</span><span class="o">(!</span><span class="n">job1</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">))</span> <span class="k">return</span><span class="o">;</span>      
+  <span class="c1">//--------------------------------------------------</span>
+  <span class="nc">Configuration</span> <span class="n">conf2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>
+  <span class="nc">Job</span> <span class="n">job2</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf2</span><span class="o">,</span> <span class="s">"TopNMain"</span><span class="o">);</span>          
+  <span class="n">job2</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">TopNMain</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">TopNMain</span><span class="o">.</span><span class="na">Map</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> 	 <span class="c1">// # 클래스 </span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">TopNMain</span><span class="o">.</span><span class="na">Reduce</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">// # 클래스 </span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setNumReduceTasks</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">LongWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>         
+  <span class="n">job2</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">KeyValueTextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>      
+  <span class="c1">// 위의 잡에서 출력된 내용을 입력으로 받아야 함 </span>
+  <span class="c1">// 출력경로 :  입력경로 / topN 하위폴더 </span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job2</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job2</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]+</span><span class="s">"//topN"</span><span class="o">));</span>
+  <span class="n">job2</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">setInt</span><span class="o">(</span><span class="s">"topN"</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>      
+  <span class="k">if</span><span class="o">(!</span><span class="n">job2</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">))</span> <span class="k">return</span><span class="o">;</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of CountTrigram </span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab3.jar sample2class.CountTrigram /input/data/wiki/10K.ID.CONTENS /output/trigram1/part-r-00000
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/trigram1
+4) [hadoop@nn01 ~]$ hdfs dfs -ls -R /output/trigram1
+5) [hadoop@nn01 ~]$ hdfs dfs -cat /output/trigram1/part-r-00000 | head - 20
+6) [hadoop@nn01 ~]$ hdfs dfs -cat /output/trigram1/topN/part-r-00000 | head - 20
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>DepartureDelayCount
+    <ul>
+      <li>airline1.depdelayclass.DepartureDelayCount 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline1.depdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.TextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DepartureDelayCount</span> 
+<span class="o">{</span>	
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> 	<span class="kd">throws</span> <span class="nc">Exception</span> 
+  <span class="o">{</span>	
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span>
+  <span class="o">{</span> 
+      <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Usage: DepartureDelayCount &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span> 
+  <span class="o">}</span> <span class="c1">// end of if </span>
+  <span class="nc">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>		
+  <span class="nc">Job</span> <span class="n">job</span><span class="o">=</span><span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"DepartureDelayCount"</span><span class="o">);</span> 
+  <span class="c1">// 입력 파일 경로</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="c1">// 출력 디렉토리 경로</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>     
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">DepartureDelayCount</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">DepartureDelayCountMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span><span class="c1">//지연시간</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">DelayCountReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>    
+  <span class="c1">// 입력포맷과 출력포맷 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">TextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>  
+  <span class="c1">// 입출력 자료형 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> 
+  <span class="c1">// mapreduce job 실행(끝날때까지 대기)</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of DepartureDelayCount</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline1.depdelayclass.DepartureDelayCountMapper 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline1.depdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.TextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DepartureDelayCount</span> 
+<span class="o">{</span>	
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> 	<span class="kd">throws</span> <span class="nc">Exception</span> 
+  <span class="o">{</span>	
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span>
+  <span class="o">{</span> 
+      <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Usage: DepartureDelayCount &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span> 
+  <span class="o">}</span> <span class="c1">// end of if   </span>
+  <span class="nc">Configuration</span> <span class="n">conf</span><span class="o">=</span><span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>		
+  <span class="nc">Job</span> <span class="n">job</span><span class="o">=</span><span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"DepartureDelayCount"</span><span class="o">);</span>  
+  <span class="c1">// 입력 파일 경로</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="c1">// 출력 디렉토리 경로</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span> 
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">DepartureDelayCount</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">DepartureDelayCountMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span><span class="c1">//지연시간</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">DelayCountReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>    
+  <span class="c1">// 입력포맷과 출력포맷 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">TextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>    
+  <span class="c1">// 입출력 자료형 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>   
+  <span class="c1">// mapreduce job 실행(끝날때까지 대기)</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of DepartureDelayCount</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline1.depdelayclass.DelayCountReducer 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline1.depdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="cm">/*
+  Reducer&lt;입력Key, 입력Value, 출력Key, 출력Value)
+  입력 : &lt;1998, 5&gt; 1
+  출력 : &lt;1998, 5&gt; 10 (합산값)
+*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelayCountReducer</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+<span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">IntWritable</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">();</span>    
+  <span class="c1">// key, list(value)</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">IntWritable</span><span class="o">&gt;</span> <span class="n">values</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+  <span class="c1">// 계산 결과를 합치는 코드</span>
+  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span><span class="nc">IntWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">values</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+  <span class="o">}</span> <span class="c1">// end of for        </span>
+  <span class="n">result</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span> <span class="c1">// java int형 -&gt; hadoop LongWritable형으로 지정</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of reduce</span>
+<span class="o">}</span> <span class="c1">// end of DelayCountReducer</span>
+</code></pre></div>        </div>
+      </li>
+      <li>자료준비(/home/hadoop/data에 생성)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 data]$ wget http://stat-computing.org/dataexpo/2009/1987.csv.bz2
+2) [hadoop@nn01 data]$ bzip2 -d 1987.csv.bz2
+3) [hadoop@nn01 data]$ sed -e '1d' 1987.csv &gt; 1987_temp.csv
+4) [hadoop@nn01 data]$ mv 1987_temp.csv 1987.csv
+5) [hadoop@nn01 data]$ hdfs dfs -mkdir /input/airline
+6) [hadoop@nn01 data]$ hdfs dfs -put /home/data/1987.csv /input/airline
+7) [hadoop@nn01 data]$ hdfs dfs -ls /input/airline
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab4.jar airline1.depdelayclass.DepartureDelayCount /input/airline/1987.csv /output/depdelay
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/depdelay
+4) [hadoop@nn01 ~]$ hdfs dfs -cat /output/depdelay/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>ArrdelayCount
+    <ul>
+      <li>airline2.arrdelayclass.ArrdelayCount 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline2.arrdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.TextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrdelayCount</span> 
+<span class="o">{</span>	
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> 	<span class="kd">throws</span> <span class="nc">Exception</span> 
+  <span class="o">{</span>	
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span>
+  <span class="o">{</span> 
+      <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Usage: ArrdelayCount &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span> 
+  <span class="o">}</span> <span class="c1">// end of if </span>
+  <span class="nc">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>		
+  <span class="nc">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"ArrdelayCount"</span><span class="o">);</span> 
+  <span class="c1">// 입력 파일 경로</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="c1">// 출력 디렉토리 경로</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>  
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">ArrdelayCount</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">ArrdelayCountMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span><span class="c1">//지연시간</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">ArrdelayCountReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> 
+  <span class="c1">// 입력포맷과 출력포맷 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">TextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 입출력 자료형 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// mapreduce job 실행(끝날때까지 대기)</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main</span>
+<span class="o">}</span> <span class="c1">// end of ArrdelayCount</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline2.arrdelayclass.ArrdelayCountMapper 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline2.arrdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">airline.common.AirlinePerformanceParser</span><span class="o">;</span>
+<span class="c1">// Mapper&lt;입력Key, 입력Value, 출력Key, 출력Value&gt;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrdelayCountMapper</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">LongWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+<span class="o">{</span>
+<span class="cm">/*
+  입력키 : 줄 번호
+  입력값 : airline 한 줄 
+*/</span>
+  <span class="kd">private</span> <span class="nc">Text</span> <span class="n">outputKey</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="o">();</span> <span class="c1">// map 출력키</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">IntWritable</span> <span class="n">outputValue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span> <span class="c1">// map 출력값  </span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">LongWritable</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+  <span class="nc">AirlinePerformanceParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AirlinePerformanceParser</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+  <span class="n">outputKey</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">parser</span><span class="o">.</span><span class="na">getYear</span><span class="o">()</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">parser</span><span class="o">.</span><span class="na">getMonth</span><span class="o">());</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">parser</span><span class="o">.</span><span class="na">getArriveDelayTime</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">)</span>
+  <span class="o">{</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">outputKey</span><span class="o">,</span> <span class="n">outputValue</span><span class="o">);</span>
+<span class="cm">/*
+      출력키 : 1997, 10
+      출력값 : 1
+      몇년도 몇월에 총 몇 번 지연되었다.
+*/</span>
+  <span class="o">}</span> <span class="c1">// end of if</span>
+  <span class="o">}</span> <span class="c1">// end of map</span>
+<span class="o">}</span> <span class="c1">// end of ArrdelayCountMapper</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline2.arrdelayclass.ArrdelayCountReducer 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline2.arrdelayclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="cm">/*
+  Reducer&lt;입력Key, 입력Value, 출력Key, 출력Value)
+  입력 : &lt;1998,5&gt; 1
+  출력 : &lt;1998,5&gt; 10 (합산값)
+*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ArrdelayCountReducer</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+<span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">IntWritable</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">();</span>
+  <span class="c1">// key, list(value)</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">IntWritable</span><span class="o">&gt;</span> <span class="n">values</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+  <span class="c1">// 계산 결과를 합치는 코드</span>
+  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span><span class="nc">IntWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">values</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+  <span class="o">}</span> <span class="c1">// end of for  </span>
+  <span class="n">result</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span> <span class="c1">// java int형 -&gt; hadoop LongWritable형으로 지정</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of reduce</span>
+<span class="o">}</span> <span class="c1">// end of ArrdelayCountReducer</span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab5.jar airline2.arrdelayclass.ArrdelayCount /input/airline/1987.csv /output/arrdelay
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/arrdelay
+4) [hadoop@nn01 ~]$ hdfs dfs -cat /output/arrdelay/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>MapReduce
+    <ul>
+      <li>구글에서 대용량 데이터 처리를 분산 병렬 컴퓨팅에서 처리하기 위한 목적으로 제작하여 2004년 발표한 소프트웨어 프레임워크</li>
+    </ul>
+  </li>
+  <li>HDFS
+    <ul>
+      <li>수십 테라바이트 또는 페타바이트 이상의 대용량 파일을 분산된 서버에 저장하고, 그 저장된 데이터를 빠르게 처리할 수 있게 하는 파일시스템</li>
+    </ul>
+  </li>
+</ul>
+:ET

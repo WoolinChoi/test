@@ -1,0 +1,126 @@
+I"a <h1 id="eventhandler"><a href="">eventHandler</a></h1>
+
+<h2 id="called">Called</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Called<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="cm">/* 	
+	function btn_click(){
+		alert('이벤트방식');
+	} 
+*/</span>
+	<span class="c1">// 자바스크립트에서는 함수도 자료형이다 - 변수선언가능</span>
+	<span class="kd">var</span> <span class="nx">btn_click</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">이벤트방식</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'눌러'</span> <span class="na">onclick=</span><span class="s">'btn_click()'</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="handler">Handler</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Handler<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="cm">/*  	
+	window.onload = init;
+	function init(){
+		var btn = document.getElementById('btn');
+		btn.onclick = btn_click;
+		function btn_click(){
+			alert('이벤트방식2');
+		}
+	}  
+*/</span>
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">이벤트방식2</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+<span class="cm">/* 
+ 	// 이벤트 정보를 확인 해준다
+ 	window.onload = init;
+	function init(){
+		var btn = document.getElementById('btn');
+		btn.onclick = btn_click;
+		function btn_click(e){
+			alert('이벤트방식2' + e);
+		}
+	}  
+*/</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'눌러'</span>  <span class="na">id=</span><span class="s">'btn'</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="listener">Listener</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Listener<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="cm">/* 	
+	window.onload = function(){
+		var btn = document.getElementById('btn');
+		btn.addEventListener('click', btn_click);
+		function btn_click(){
+			alert('이벤트방식3')
+		}
+	} 
+*/</span>	
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">이벤트방식3</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'눌러'</span>  <span class="na">id=</span><span class="s">'btn'</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 
+	1. 페이지 이벤트
+		onload 		: 페이지를 불러오기 할 때
+		onunload 	: 다른 페이지로 이동할 때 ( 브라우저를 끝때가 아님 )
+		
+	2. 마우스 이벤트
+		onmouseover	: 마우스 커서를 대면
+		onmouseout	: 마우스 커서가 떠나면
+		onclick		: 마우스 클릭시
+		onmousedown	: 마우스 버튼을 눌였을 때
+		onmouseup	: 마우스 버튼을 떼었을 때
+ --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Test<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">onload=</span><span class="s">"alert('무척이나 반갑습니다')"</span> <span class="na">onunload=</span><span class="s">"alert('가긴어딜가..가지맛!! 돌아와줘!')"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"눌려~~~~"</span> <span class="na">onclick=</span><span class="s">"alert('누르라고 누르긴')"</span><span class="nt">&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span>
+	<span class="nt">&lt;b</span> <span class="na">onmouseover=</span><span class="s">"alert('마우스 치워랏')"</span><span class="nt">&gt;</span>이 글씨에 마우스를 대면.....<span class="nt">&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span>
+	<span class="nt">&lt;b</span> <span class="na">onmouseover=</span><span class="s">"this.style.background='red'"</span> <span class="na">onmouseout=</span><span class="s">"this.style.background='white'"</span><span class="nt">&gt;</span>
+	다시 한번만 더 마우스를 대주세요
+	<span class="nt">&lt;/b&gt;&lt;br&gt;</span>	
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

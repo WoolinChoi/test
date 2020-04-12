@@ -1,0 +1,405 @@
+I"�T<h1 id="hive"><a href="">hive</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>MariaDB 설치</li>
+  <li>hive 설치 및 이해</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>Mariadb
+    <ul>
+      <li>설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# yum install mariadb-server mariadb
+2) [root@dn01 ~]# cd /tmp
+3) [root@dn01 tmp]# systemctl enable mariadb.service
+4) [root@dn01 tmp]# systemctl start mariadb.service
+5) [root@dn01 tmp]# mysql_secure_installation
+6) Enter current password for root (enter for none): enter
+7) Set root password? [Y/n] n
+8) New password: 1234
+9) Re-enter new password: 1234
+8) Remove anonymous users? [Y/n] n
+9) Disallow root login remotely? [Y/n] n
+10) Remove test database and access to it? [Y/n] n
+11) Reload privilege tables now? [Y/n]
+</code></pre></div>        </div>
+      </li>
+      <li>설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>root@dn01 tmp]# vi /etc/my.cnf
+<span class="c">########## my.cnf ##########</span>
+bind-address<span class="o">=</span>192.168.58.102
+<span class="c">########## my.cnf ##########</span>
+2<span class="o">)</span> <span class="o">[</span>root@dn01 tmp]# systemctl restart mariadb.service
+</code></pre></div>        </div>
+      </li>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 tmp]# mysql -u root -p
+2) Enter password: 1234
+3) MariaDB [(none)]&gt; show databases;
+</code></pre></div>        </div>
+      </li>
+      <li>권한 부여
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) MariaDB [(none)]&gt; grant all privileges on *.* to hive@'%' identified by "hive" with grant option;
+2) MariaDB [(none)]&gt; flush privileges;
+3) MariaDB [(none)]&gt; grant all privileges on *.* to hive@'dn01' identified by "hive" with grant option;
+4) MariaDB [(none)]&gt; flush privileges;
+</code></pre></div>        </div>
+      </li>
+      <li>권한 부여 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) MariaDB [(none)]&gt; use mysql;
+2) MariaDB [mysql]&gt; select user, host from user;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Hive
+    <ul>
+      <li>설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# cd /tmp
+2) [root@dn01 tmp]# wget http://apache.mirror.cdnetworks.com/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
+3) [root@dn01 tmp]# tar xzvf apache-hive-2.3.5-bin.tar.gz
+4) [root@dn01 tmp]# mkdir -p /opt/hive/2.3.5
+5) [root@dn01 tmp]# mv apache-hive-2.3.5-bin/* /opt/hive/2.3.5/
+6) [root@dn01 tmp]# ln -s /opt/hive/2.3.5 /opt/hive/current
+</code></pre></div>        </div>
+      </li>
+      <li>환경 변수 추가
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">#### HIVE 2.3.5 #######################</span>
+<span class="nb">export </span><span class="nv">HIVE_HOME</span><span class="o">=</span>/opt/hive/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HIVE_HOME</span>/bin
+<span class="nb">export </span><span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="k">${</span><span class="nv">JAVA_HOME</span><span class="k">}</span>/lib:<span class="k">${</span><span class="nv">JREHOME</span><span class="k">}</span>/lib:/opt/hive/current/lib
+<span class="c">#### HIVE 2.3.5 #######################</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">source</span> .bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>설정 파일 복사
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ cp /opt/hive/current/conf/hive-env.sh.template /opt/hive/current/conf/hive-env.sh
+2) [hadoop@dn01 ~]$ cp /opt/hive/current/conf/hive-default.xml.template /opt/hive/current/conf/hive-site.xml
+</code></pre></div>        </div>
+      </li>
+      <li>설정 파일 수정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> vi /opt/hive/current/conf/hive-env.sh
+<span class="c">######### hive-env.sh ##########</span>
+<span class="nv">HADOOP_HOME</span><span class="o">=</span>/opt/hadoop/current
+<span class="c">######### hive-env.sh ##########</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi /opt/hive/current/conf/hive-site.xml <span class="o">(</span>value만 바꾸기<span class="o">)</span>
+<span class="c">########## hive-site.xml ##########</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;jdbc:mysql://192.168.56.102:3306/hive?createDatabaseIfNotExist=true&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;JDBC connect string for a JDBC metastore&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;hive&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;username to use against metastore database&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;hive&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;password to use against metastore database&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt; </span>
+<span class="c"># &lt;name&gt;hive.exec.local.scratchdir&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;/home/hadoop/iotmp&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;Local scratch space for Hive jobs&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;hive.downloaded.resources.dir&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;/home/hadoop/iotmp&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;Temporary local directory for added resources in the remote file system.&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;hive.cli.print.current.db&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;true&lt;/value&gt;</span>
+<span class="c"># &lt;description&gt;Whether to include the current database in the Hive prompt.&lt;/description&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c">########## hive-site.xml ##########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>관련 디렉토리 생성 및 권한 변경
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ mkdir -p /home/hadoop/iotmp
+2) [hadoop@dn01 ~]$ chmod -R 775 /home/hadoop/iotmp
+</code></pre></div>        </div>
+      </li>
+      <li>MYSQL Connector 다운로드 및 hive lib로 복사
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# cd /tmp
+2) [root@dn01 tmp]# wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz
+3) [root@dn01 tmp]# tar xzvf mysql-connector-java-5.1.38.tar.gz
+4) [root@dn01 tmp]# cd mysql-connector-java-5.1.38
+5) [root@dn01 mysql-connector-java-5.1.38]# mv mysql-connector-java-5.1.38-bin.jar /opt/hive/current/lib/
+</code></pre></div>        </div>
+      </li>
+      <li>기본 디렉터리 생성 및 권한 추가
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hdfs dfs -mkdir /tmp
+2) [hadoop@dn01 ~]$ hdfs dfs -mkdir -p /user/hive/warehouse
+3) [hadoop@dn01 ~]$ hdfs dfs -chmod -R 777 /tmp
+4) [hadoop@dn01 ~]$ hdfs dfs -chmod -R 777 /user/hive/warehouse
+</code></pre></div>        </div>
+      </li>
+      <li>mysql 기본 스키마 생성
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ schematool -initSchema -dbType mysql
+error) 기존에 같은 이름의 데이타베이스가 있으니깐 show databases에서 drop database hive; 제거
+</code></pre></div>        </div>
+      </li>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hive
+check) http://192.168.56.101:50070에서 메뉴&gt;Utitlies&gt;Browser Directory&gt;/user/hive/warehouse에서 앞으로 확인
+</code></pre></div>        </div>
+      </li>
+      <li>beeline 접속하기 위한 추가 작업
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ cd $HADOOP_HOME/etc/hadoop
+2) [hadoop@nn01 hadoop]$ vi core-site.xml
+3) [hadoop@nn01 hadoop]$ scp core-site.xml hadoop@dn01:/opt/hadoop/current/etc/hadoop
+4) [hadoop@nn01 hadoop]$ scp core-site.xml hadoop@dn02:/opt/hadoop/current/etc/hadoop
+5) [hadoop@dn01 ~]$ hdfs dfs -chmod -R 777 /tmp
+6) [hadoop@dn01 ~]$ hdfs dfs -chmod -R 777 /user/hive/warehouse
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Hive 실행
+    <ul>
+      <li>상태확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ systemctl status mariadb.service
+</code></pre></div>        </div>
+      </li>
+      <li>시작
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ systemctl start mariadb.service
+</code></pre></div>        </div>
+      </li>
+      <li>메타스토어 실행 및 확인(백그라운드 실행)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hive --service metastore &amp;
+2) [hadoop@dn01 ~]$ ps -ef | grep metastore
+</code></pre></div>        </div>
+      </li>
+      <li>하이브서버 구동(백그라운드 실행)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hive --service hiveserver2 &amp;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>CLI : hive
+    <ul>
+      <li>접속 및 sample 데이터베이스 생성
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hive
+2) hive (default)&gt; show databases;
+3) hive (default)&gt; create database sample1;
+4) hive (default)&gt; show databases;
+5) hive (default)&gt; use sample1;
+6) hive (sample1)&gt; create table employees( name String );
+7) hive (sample1)&gt; insert into employees(name) values('KIM');
+</code></pre></div>        </div>
+      </li>
+      <li>확인(테이블은 디렉터리, 값은 파일로 저장해준다.)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn02 ~]$ ssh dn01
+2) [hadoop@dn01 ~]$ hdfs dfs -ls /user/hive/warehouse
+3) [hadoop@dn01 ~]$ hdfs dfs -ls /user/hive/warehouse/sample1.db
+4) [hadoop@dn01 ~]$ hdfs dfs -ls /user/hive/warehouse/sample1.db/employees
+5) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hive/warehouse/sample1.db/employees/000000_0
+6) hive (sample1)&gt; !hdfs dfs -cat /user/hive/warehouse/sample1.db/employees/000000_0;
+7) hive (sample1)&gt; !hdfs dfs -ls /user/hive/warehouse/sample1.db/employees;
+8) hive (sample1)&gt; exit; (종료)
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>CLI : beeline
+    <ul>
+      <li>접속
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ beeline
+2) beeline&gt; !connect jdbc:hive2://
+3) Enter username for jdbc:hive2://: hive
+4) Enter password for jdbc:hive2://: hive
+</code></pre></div>        </div>
+      </li>
+      <li>sample데이터베이스 추가 및 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; show databases;
+2) 0: jdbc:hive2://&gt; use sample1;
+3) 0: jdbc:hive2://&gt; show tables;
+4) 0: jdbc:hive2://&gt; insert into employees(name) values('PARK');
+5) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hive/warehouse/sample1.db/employees/000000_0_copy_1
+6) 0: jdbc:hive2://&gt; select * from employees;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>연습
+    <ul>
+      <li>kdatademo데이터베이스 생성
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; create database kdatademo;
+2) 0: jdbc:hive2://&gt; show databases;
+3) 0: jdbc:hive2://&gt; use kdatademo;
+4) 테이블 생성
+create table customers(id bigint, name string, address string);
+5) 0: jdbc:hive2://&gt; show tables;
+6) 0: jdbc:hive2://&gt; desc customers;
+7) 입력
+insert into customers values
+(1111, 'kim', 'WA'),
+(2222, 'park', 'WA'),
+(3333, 'lee', 'WA'),
+(4444, 'meng', 'CA'),
+(5555, 'bae', 'NJ'),
+(6666, 'jeon', 'NY');
+</code></pre></div>        </div>
+      </li>
+      <li>확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ hdfs dfs -ls /user/hive/warehouse/kdatademo.db/customers
+2) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hive/warehouse/kdatademo.db/customers/000000_0
+</code></pre></div>        </div>
+      </li>
+      <li>생성
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 테이블 생성
+create table if not exists orders(
+id bigint,
+product_id string,
+customer_id bigint,
+quantity int,
+amount double);
+2) 입력
+insert into orders values
+(111111, "phone", 1111, 3, 1200),
+(222222, "camera", 1111, 1, 5200),
+(100003, "notebook", 1111, 1, 10),
+(100004, "bag", 2222, 1, 4500),
+(100005, "t-shirt", 4444, 30, 50);
+</code></pre></div>        </div>
+      </li>
+      <li>주소가 “WA”인 고객 검색
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select * from customers where address="WA";
+</code></pre></div>        </div>
+      </li>
+      <li>주소가 “WA”이면서 id가 2222 보다 큰 고객 명단 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select * from customers where address="WA" AND id&gt;2222;
+</code></pre></div>        </div>
+      </li>
+      <li>주소로 정렬하여 고객명과 주소 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select name, address from customers order by address;
+</code></pre></div>        </div>
+      </li>
+      <li>고객 명단 수 검색
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select count(*) from customers;
+</code></pre></div>        </div>
+      </li>
+      <li>첫번째 고객명단 출력(mysql 명령어 이용)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select * from customers limit 1;
+</code></pre></div>        </div>
+      </li>
+      <li>주소별 인원수 검색
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select address, count(*) cnt from customers group by address;
+</code></pre></div>        </div>
+      </li>
+      <li>고객아이디, 고객명과 고객이 주문한 상품명 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select c.id, c.name, o.product_id from customers c left outer join orders o on (c.id=o.customer_id);
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>mobilephones
+    <ul>
+      <li>생성
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">mkdir</span> /home/hadoop/hive_data
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi /home/hadoop/hive_data/mobilephones.csv
+<span class="c">########## mobilephones.csv ##########</span>
+Samsungg7,Samsung G7,250,red#white#blue,5.5,camera:true#dualsim:false
+Iphoneplus7,Iphone plus 7,400,gold#white,4.5,autofocus:true
+<span class="c">########## mobilephones.csv ##########</span>
+3<span class="o">)</span> 테이블 생성
+create table mobilephones<span class="o">(</span>
+<span class="nb">id </span>string,
+title string,
+cost double,
+colors array&lt;string&gt;,
+screen_size array&lt;float&gt;,
+features map&lt;string, Boolean&gt;<span class="o">)</span>
+row format delimited fields terminated by <span class="s1">','</span>
+collection items terminated by <span class="s1">'#'</span>
+map keys terminated by <span class="s1">':'</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; load data local inpath '/home/hadoop/hive_data/mobilephones.csv' into table mobilephones;
+2) 0: jdbc:hive2://&gt; select * from mobilephones;
+3) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hive/warehouse/kdatademo.db/mobilephones/mobilephones.csv
+</code></pre></div>        </div>
+      </li>
+      <li>제품아이디와 첫번째 색상 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select id, colors[0] from mobilephones;
+</code></pre></div>        </div>
+      </li>
+      <li>제품명과 카메라특성 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select id, features['camera'] from mobilephones;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>mobilephones2
+    <ul>
+      <li>생성
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">cp</span> ~/hive_data/mobilephones.csv ~/hive_data/mobilephones2.csv
+<span class="c">########### mobilephones2.csv ##########</span>
+Samsungg7,Samsung G7,250,red#white#blue,5.5,camera:true#dualsim:false,24 hours#2MP
+Iphoneplus7,Iphone plus 7,400,gold#white,4.5,autofocus:true,2 hours#2MP
+<span class="c">########### mobilephones2.csv ##########</span>
+2<span class="o">)</span> 테이블 생성
+create table mobilephones2<span class="o">(</span>
+<span class="nb">id </span>string,
+title string,
+cost double,
+colors array&lt;string&gt;,
+screen_size array&lt;float&gt;,
+features map&lt;string, Boolean&gt;,
+infomation struct&lt;battery:string,camera:string&gt;<span class="o">)</span>
+row format delimited fields terminated by <span class="s1">','</span>
+collection items terminated by <span class="s1">'#'</span>
+map keys terminated by <span class="s1">':'</span><span class="p">;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; load data local inpath '/home/hadoop/hive_data/mobilephones2.csv' into table mobilephones2;
+2) 0: jdbc:hive2://&gt; select * from mobilephones2;
+3) [hadoop@dn01 ~]$ hdfs dfs -cat /user/hive/warehouse/kdatademo.db/mobilephones/mobilephones2.csv
+</code></pre></div>        </div>
+      </li>
+      <li>제품아이디, 첫번째 색상, 카메라 특성, 배터리 정보 출력
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) 0: jdbc:hive2://&gt; select id, colors[0], features['camera'], infomation.battery from mobilephones2;
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>grouplens
+    <ul>
+      <li>설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]$ yum install unzip
+2) [hadoop@dn01 ~]$ cd ~/hive_data
+3) [hadoop@dn01 hive_data]$ wget http://www.grouplens.org/system/files/ml-100k.zip
+4) [hadoop@dn01 hive_data]$ unzip ml-100k.zip
+5) [hadoop@dn01 hive_data]$ cd ml-100k
+6) [hadoop@dn01 ml-100k]$ hdfs dfs -mkdir /user/hadoop/movies
+7) [hadoop@dn01 ml-100k]$ hdfs dfs -mkdir /user/hadoop/userinfo
+8) [hadoop@dn01 ml-100k]$ hdfs dfs -put /home/hadoop/hive_data/ml-100k/u.item /user/hadoop/movies
+9) [hadoop@dn01 ml-100k]$ hdfs dfs -put /home/hadoop/hive_data/ml-100k/u.user /user/hadoop/userinfo
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>Hive
+    <ul>
+      <li>하둡에서 동작하는 데이터 웨어하우스 인프라 구조로서 데이터 요약, 질의 및 분석 기능을 제공</li>
+    </ul>
+  </li>
+</ul>
+:ET

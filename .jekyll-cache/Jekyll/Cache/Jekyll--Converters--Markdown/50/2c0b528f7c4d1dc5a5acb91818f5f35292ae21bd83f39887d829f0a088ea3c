@@ -1,0 +1,38 @@
+I"�<h1 id="pojo"><a href="">pojo</a></h1>
+
+<h2 id="mainapp">MainApp</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex0_pojo</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainApp</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//		MessageBeanEnImpl bean = new MessageBeanEnImpl();</span>
+		<span class="nc">MessageBeanKoImpl</span> <span class="n">bean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MessageBeanKoImpl</span><span class="o">();</span>
+		<span class="n">bean</span><span class="o">.</span><span class="na">sayHello</span><span class="o">(</span><span class="s">"hong"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="messagebean">MessageBean</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex0_pojo</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageBean</span> <span class="o">{</span>
+	<span class="kt">void</span> <span class="nf">sayHello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="messagebeanenimpl">MessageBeanEnImpl</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex0_pojo</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessageBeanEnImpl</span> <span class="kd">implements</span> <span class="nc">MessageBean</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">", Good morning"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="messagebeankoimpl">MessageBeanKoImpl</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">ex0_pojo</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessageBeanKoImpl</span> <span class="kd">implements</span> <span class="nc">MessageBean</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">"님 반갑습니다"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

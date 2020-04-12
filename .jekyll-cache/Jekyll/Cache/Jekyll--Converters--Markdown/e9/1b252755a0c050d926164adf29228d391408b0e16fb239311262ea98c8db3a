@@ -1,0 +1,77 @@
+I"6)<h1 id="network"><a href="">network</a></h1>
+
+<h2 id="simpleserver">SimpleServer</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleServer</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">PORT</span> <span class="o">=</span> <span class="mi">5000</span><span class="o">;</span>	<span class="c1">// PortNumer : 1024 ~</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>	
+		<span class="nc">ServerSocket</span> <span class="n">server</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">Socket</span> <span class="n">clientSocket</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 1. 서버 소켓 생성</span>
+			<span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerSocket</span><span class="o">(</span><span class="no">PORT</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"SimpleServer started.."</span><span class="o">);</span>
+			<span class="c1">// 2. 클라이언트 접속시 소켓 생성</span>
+			<span class="n">clientSocket</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+			<span class="c1">// 3. 소켓의 입출력 스트림 얻기</span>
+			<span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataInputStream</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+			<span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataOutputStream</span><span class="o">(</span><span class="n">clientSocket</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">()</span> <span class="o">);</span>
+			<span class="c1">// 4. 데이터 전송</span>
+				<span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readUTF</span><span class="o">();</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"we received : "</span> <span class="o">+</span> <span class="n">line</span><span class="o">);</span>
+				<span class="c1">// compareTo 대신에 equals 써도된다.</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="s">"안녕"</span><span class="o">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">out</span><span class="o">.</span><span class="na">writeUTF</span><span class="o">(</span><span class="s">"집에가고싶습니다"</span><span class="o">);</span>	
+				<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+					<span class="n">out</span><span class="o">.</span><span class="na">writeUTF</span><span class="o">(</span><span class="s">"인사말이 아닙니다"</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="c1">// 5. 소켓닫기</span>
+			<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">clientSocket</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>	
+</code></pre></div></div>
+
+<h2 id="simpleclient">SimpleClient</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleClient</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">PORT</span> <span class="o">=</span> <span class="mi">5000</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">HOST</span> <span class="o">=</span> <span class="s">"192.168.0.238"</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="nc">Socket</span> <span class="n">client</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataInputStream</span> <span class="n">in</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">DataOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="c1">// 콘솔 입력을 받기 위해</span>
+		<span class="nc">Scanner</span> <span class="n">stdin</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="k">try</span> <span class="o">{</span> 
+			<span class="c1">// 1. 서버에 연결하기 위해 소켓 생성</span>
+			<span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Socket</span><span class="o">(</span><span class="no">HOST</span><span class="o">,</span> <span class="no">PORT</span><span class="o">);</span>
+			<span class="c1">// 2. 소켓의 입출력 스트림 얻기</span>
+			<span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataInputStream</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+			<span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataOutputStream</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+			<span class="c1">// 3. 키보드 입력 받아 서버에 전송</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"인사말 입력-&gt;"</span><span class="o">);</span>
+			<span class="nc">String</span> <span class="n">greeting</span> <span class="o">=</span> <span class="n">stdin</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">writeUTF</span><span class="o">(</span><span class="n">greeting</span><span class="o">);</span>
+			<span class="c1">// 4. 서버로부터 응답을 받음</span>
+			<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readUTF</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"짝궁의 메세지: "</span> <span class="o">+</span> <span class="n">result</span><span class="o">);</span>
+			<span class="c1">// 5. 입출력 스트림의 닫음</span>
+			<span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">client</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Error writing.."</span> <span class="o">+</span> <span class="n">ex</span><span class="o">);</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,231 @@
+I"�_<h1 id="dom"><a href="">dom</a></h1>
+
+<h2 id="dom에서-노드-검색-방법">DOM에서 노드 검색 방법</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>DOM에서 노드 검색 방법<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">result</span><span class="dl">'</span><span class="p">);</span>
+<span class="cm">/*		
+ 		// id로 얻어오기
+// 		var name = document.getElementById('name');
+ 		// jquery문은 안에 #으로 name을 찾는다.
+ 		var name = document.querySelector('#name');
+		// div에 넣고싶을 때는 innerHTML을 쓴다.
+		result.innerHTML = name.value + "님 반갑습니다"; 
+*/</span>		
+<span class="cm">/*	
+		// className으로 얻어오기
+// 		var name = document.getElementsByClassName('cname');
+		// jquery문은 안에 .으로 id를 찾는다.
+		var name = document.querySelectorAll('.cname');
+		result.innerHTML = name[0].value + "님 반갑습니다2";
+*/</span>
+<span class="cm">/* 
+		// tagname으로 얻어오기
+		var name= document.getElementsByTagName('input');
+		result.innerHTML = name[0].value + "님 반갑습니다";
+ */</span>
+		<span class="c1">// form으로 얻어오기</span>
+		<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">fm</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+		<span class="nx">result</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">님 반갑습니다</span><span class="dl">"</span><span class="p">;</span>
+
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- 1 --&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"fm"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;label</span> <span class="na">id=</span><span class="s">"label"</span><span class="nt">&gt;</span> 
+		이름 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"name"</span>	<span class="na">class=</span><span class="s">"cname"</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="nt">/&gt;</span> 
+		
+		<span class="c">&lt;!-- 2 --&gt;</span> 
+		학과 : <span class="nt">&lt;input</span>	<span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"dept"</span> <span class="na">name=</span><span class="s">"dept"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="nt">/&gt;</span> 
+		학교 : <span class="nt">&lt;input</span>	<span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"univ"</span> <span class="na">name=</span><span class="s">"univ"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;/label&gt;</span>
+		
+		<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"btn"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"버튼"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="dom에서-노트-추가">DOM에서 노트 추가</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>DOM에서 노트 추가<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	  <span class="kd">var</span> <span class="nx">bInsert</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">bInsert</span><span class="dl">'</span><span class="p">);</span>
+	  <span class="c1">// ()가 없으면 연결, ()은 호출</span>
+	  <span class="nx">bInsert</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="nx">insertCustomer</span><span class="p">;</span>
+
+  <span class="p">}</span>  
+
+	<span class="kd">function</span> <span class="nx">insertCustomer</span><span class="p">(){</span>
+		<span class="c1">// 1. 입력한 값들을 얻어온다.</span>
+		<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<span class="c1">// 		var name = document.inForm.name.value;</span>
+<span class="c1">// 		var name = document.querySelector('#name').value;</span>
+		<span class="kd">var</span> <span class="nx">age</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">tel</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">tel</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">addr</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">addr</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+		
+		<span class="c1">// 2. 테이블요소 얻어온다.</span>
+		<span class="kd">var</span> <span class="nx">tbl</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">listTable</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// 3. tr 요소와 td 요소를 생성한다.</span>
+		<span class="kd">var</span> <span class="nx">tr</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">tr</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">td1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">td</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">td2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">td</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">td3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">td</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">td4</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">td</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// 4. 텍스트노드(1번의 입력값)로 생성한다.</span>
+		<span class="kd">var</span> <span class="nx">txt1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">txt2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">age</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">txt3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">tel</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">txt4</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">addr</span><span class="p">);</span>
+		
+		<span class="c1">// 5. td 요소에 텍스트노드를 붙인다.</span>
+		<span class="nx">td1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">txt1</span><span class="p">);</span>
+		<span class="nx">td2</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">txt2</span><span class="p">);</span>
+		<span class="nx">td3</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">txt3</span><span class="p">);</span>
+		<span class="nx">td4</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">txt4</span><span class="p">);</span>
+		
+		<span class="c1">// 6. tr 요소에 생성한 td 요소를 붙인다.</span>
+		<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td1</span><span class="p">);</span>
+		<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td2</span><span class="p">);</span>
+		<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td3</span><span class="p">);</span>
+		<span class="nx">tr</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">td4</span><span class="p">);</span>
+		
+		<span class="c1">// 7. 테이블요소에 tr요소를 붙인다.</span>
+		<span class="nx">tbl</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">tr</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h2&gt;</span> 고객정보 입력 <span class="nt">&lt;/h2&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"inForm"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">border = </span><span class="s">1</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"80"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"50"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Age<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Tel<span class="nt">&lt;/td&gt;</span>	
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"250"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Addr<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"8"</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"4"</span> <span class="na">name=</span><span class="s">"age"</span> <span class="na">id=</span><span class="s">"age"</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"12"</span> <span class="na">name=</span><span class="s">"tel"</span> <span class="na">id=</span><span class="s">"tel"</span><span class="nt">&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"30"</span> <span class="na">name=</span><span class="s">"addr"</span> <span class="na">id=</span><span class="s">"addr"</span><span class="nt">&gt;&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">"4"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span> 
+			<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"입력"</span> <span class="na">id=</span><span class="s">'bInsert'</span> <span class="nt">&gt;</span>
+		<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;br/&gt;</span>
+<span class="nt">&lt;hr/&gt;</span>
+
+<span class="nt">&lt;h2&gt;</span> 고객정보 목록보기  <span class="nt">&lt;/h2&gt;</span>
+<span class="nt">&lt;table</span> <span class="na">border = </span><span class="s">1</span> <span class="na">id=</span><span class="s">"listTable"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"80"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"50"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Age<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Tel<span class="nt">&lt;/td&gt;</span>	
+		<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"250"</span> <span class="na">align=</span><span class="s">"center"</span><span class="nt">&gt;</span>Addr<span class="nt">&lt;/td&gt;</span>
+	<span class="nt">&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="크롬-디버그">크롬 디버그</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 
+	크롬에서 F12 &gt; 개발자 모드
+	
+	개발자 모드 오른쪽 상단 &gt; 점세개 모양 &gt; Dock slide
+		각자의 취향대로 개발자 모드를 위치 설정
+			
+	F9 :  next step
+	F10 : step over (함수를 호출하면 결과만 받고 현재 위치에서 다음 라인 실행 )
+	F11 : step into (함수 안에 들어가기 )
+	
+	for문을 선택하여 breakpont 설정
+	for문 안에 선택하면 for문의 조건문과 증가치를 모두 매번 단계로 확인한다
+	
+	watch 탭에서 +를 누르고 result 변수를 지정하면 매단계 result 변수를 볼 수 있다.
+	
+	# DOM Breakpoints  #
+		- 엘리먼트의 속성이 변경되는 것을 감시하시 위해
+		- 소스 탭에서는 DOM 브렉포인트를 잡을 수 없고 엘리먼트 탭에서 잡아줘야 한다.
+		- 엘리먼트 탭에서 요소를 선택 &gt; 오른마우스 &gt; Break On &gt; Attributes Modificattion &gt; DOM Breakpoints에 추가됨
+		Subtree Modifications: 해당 노드의 자식노드의 변화, 예를들면 자식노드의 추가나 삭제를 하는 자바스크립트 코드에 브렉포인트를 잡아준다.
+		Attributes Modificattion: 해당 노드의 어트리뷰트를 변경하는 자바스크립트 코드에 브렉포인트를 잡아준다.
+		Node Removal: 해당노드를 삭제하는 자바스크립트 코드에 브렉포인트를 잡아준다.
+	
+	# XHR/fetch breakpoints 
+		- ajax 통신시 url을 설정하면 
+		- any XHR이라고 추가하면 모든 ajax통신에 대해 설정
+ --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>크롬 디버그<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+
+	<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="c1">// 디버깅 모드에서 Scope &gt; Global에서는 result 변수 외에 많은 기존 변수가 다 나온다</span>
+	<span class="c1">// watch 탭에서 +를 누르고 result 변수를 지정하면 매단계 result 변수를 볼 수 있다</span>
+	
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="k">for</span><span class="p">(</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="p">;</span> <span class="nx">i</span><span class="o">-=</span><span class="mi">2</span><span class="p">){</span>
+				<span class="nx">result</span> <span class="o">+=</span> <span class="nx">i</span><span class="p">;</span>
+			<span class="p">}</span>
+				
+			<span class="nx">result</span> <span class="o">+=</span> <span class="nx">func1</span><span class="p">();</span>			<span class="c1">//re.innerHTML = result  ;	</span>
+			<span class="nx">result</span> <span class="o">+=</span> <span class="nx">func2</span><span class="p">();</span>		<span class="c1">//re.innerHTML = result  ;	</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">결과:</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">result</span> <span class="p">);</span>
+			<span class="c1">// alert()이 나중에 있어도 먼저 실행하고 나서 화면 결과에 출력된다???</span>
+			<span class="c1">// 각 줄에 alert()를 여러개 지정해도 alert()만 먼저 다 실행된다.</span>
+			
+			<span class="c1">//-----------------------------------  2 DOM Breakpoints</span>
+			<span class="kd">var</span> <span class="nx">re</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">re</span><span class="dl">'</span><span class="p">);</span>
+			<span class="nx">re</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">result</span>  <span class="p">;</span>
+
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="kd">function</span> <span class="nx">func1</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">temp1</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+		<span class="k">return</span> <span class="nx">temp1</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="kd">function</span> <span class="nx">func2</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">temp1</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+		<span class="k">return</span> <span class="nx">temp1</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'시작'</span> <span class="na">id=</span><span class="s">'btn'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">id=</span><span class="s">'re'</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

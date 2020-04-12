@@ -1,0 +1,155 @@
+I"�Q<h1 id="jqueryproxy"><a href="">jqueryProxy</a></h1>
+
+<h2 id="page">Page</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Page<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"https://www.gstatic.com/charts/loader.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// 네이버 버튼을 눌렸을 때</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#naver</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="c1">// 축약형</span>
+<span class="c1">// 				$.post("./jsp/ProxyNaver.jsp", function(data){</span>
+<span class="c1">// 				});</span>
+				
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/ProxyNaver.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="c1">// $("xxxx", data) data에서 xxxx를 찾기</span>
+						<span class="kd">var</span> <span class="nx">rank</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.PM_CL_realtimeKeyword_rolling</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">empty</span><span class="p">();</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">rank</span><span class="p">);</span>
+					<span class="p">}</span> <span class="c1">// success-end</span>
+				<span class="p">});</span> <span class="c1">// ajax-end	</span>
+			<span class="p">});</span> <span class="c1">// click-end</span>
+			
+			<span class="c1">// 멜론 버튼을 눌렀을 때</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#melon</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/ProxyMelon.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="kd">var</span> <span class="nx">chart</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.typeRealtime&gt;ul&gt;li</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+						<span class="c1">// rsult부분을 empty로 지워준다.</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">empty</span><span class="p">();</span>
+						<span class="nx">chart</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+							<span class="c1">// 태그와 태그 사이에 있는 글자는 text로 얻어오고 이미지는 html로 얻어온다. 내 위치에서 찾기위해 this를 쓴다.</span>
+							<span class="kd">var</span> <span class="nx">rank</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.rank</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">();</span>
+							<span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.song</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">();</span>
+							<span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.mlog</span><span class="dl">"</span><span class="p">,</span> <span class="k">this</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+							<span class="c1">// result부분에 append로 붙혀 준다.</span>
+							<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">img</span> <span class="o">+</span> <span class="nx">rank</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">위</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">title</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>
+						<span class="p">});</span>	<span class="c1">// each-end</span>
+					<span class="p">}</span> <span class="c1">// success-end</span>
+				<span class="p">});</span> <span class="c1">// ajax-end</span>
+			<span class="p">});</span> <span class="c1">// click-end</span>
+			
+			<span class="c1">// 다음 버튼을 눌렀을 때</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#daum</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/ProxyDaum.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">empty</span><span class="p">();</span>
+						<span class="kd">var</span> <span class="nx">rank</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">.realtime_part .rank_cont:even</span><span class="dl">"</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">rank</span><span class="p">);</span>
+					<span class="p">}</span> <span class="c1">// success-end</span>
+				<span class="p">});</span> <span class="c1">// ajax-end	</span>
+			<span class="p">});</span> <span class="c1">// click-end</span>
+			
+			<span class="c1">// 날씨 버튼을 눌렀을 때</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#kma</span><span class="dl">'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>      
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">./jsp/ProxyKma.jsp</span><span class="dl">'</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="nx">drawBasic</span> 
+				<span class="p">})</span> <span class="c1">// ajax-end</span>
+			   
+				<span class="c1">// 구글 차트</span>
+				<span class="nx">google</span><span class="p">.</span><span class="nx">charts</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="dl">'</span><span class="s1">current</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span><span class="na">packages</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">corechart</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">line</span><span class="dl">'</span><span class="p">]});</span>
+				<span class="nx">google</span><span class="p">.</span><span class="nx">charts</span><span class="p">.</span><span class="nx">setOnLoadCallback</span><span class="p">(</span><span class="nx">drawBasic</span><span class="p">);</span>
+	
+				<span class="c1">// success가 됬을 때</span>
+				<span class="kd">function</span> <span class="nx">drawBasic</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+					<span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+					<span class="c1">// alert($('category',content).text());</span>
+		            <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="nx">content</span><span class="p">)</span>
+		            <span class="c1">// alert($(data[0]).html());</span>
+		            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#result</span><span class="dl">'</span><span class="p">).</span><span class="nx">empty</span><span class="p">();</span>
+		            <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+						<span class="kd">var</span> <span class="nx">hour</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">hour</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+						<span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">temp</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+		            	<span class="kd">var</span> <span class="nx">array_sub</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="nx">hour</span><span class="p">,</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">temp</span><span class="p">));</span>   
+						<span class="nx">array</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">array_sub</span><span class="p">);</span>
+<span class="c1">//							$('#result').append(hour+"시"+temp+"도"+'</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="dl">'</span><span class="s1">);   
+					} // for-end 
+				
+					var data = new google.visualization.DataTable();
+					data.addColumn(</span><span class="dl">'</span><span class="nx">string</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="nx">hour</span><span class="dl">'</span><span class="s1">);
+					data.addColumn(</span><span class="dl">'</span><span class="nx">number</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="nx">temp</span><span class="dl">'</span><span class="s1">);
+				      
+					data.addRows(array);
+					var options = {</span><span class="dl">'</span><span class="nx">title</span><span class="dl">'</span><span class="s1">:</span><span class="dl">'</span><span class="err">서초구</span> <span class="err">시간별</span> <span class="err">온도</span><span class="dl">'</span><span class="s1">,
+						</span><span class="dl">'</span><span class="nx">width</span><span class="dl">'</span><span class="s1">:1000,
+						</span><span class="dl">'</span><span class="nx">height</span><span class="dl">'</span><span class="s1">:400,
+						</span><span class="dl">'</span><span class="nx">hAxis</span><span class="dl">'</span><span class="s1"> : {
+							</span><span class="dl">'</span><span class="nx">title</span><span class="dl">'</span><span class="s1">: </span><span class="dl">'</span><span class="nx">Hour</span><span class="dl">'</span><span class="s1">
+						},
+						</span><span class="dl">'</span><span class="nx">vAxis</span><span class="dl">'</span><span class="s1"> : {
+							</span><span class="dl">'</span><span class="nx">title</span><span class="dl">'</span><span class="s1"> : </span><span class="dl">'</span><span class="nx">Temp</span><span class="dl">'</span><span class="s1">
+						}
+					};
+					var chart = new google.visualization.LineChart(document.getElementById(</span><span class="dl">'</span><span class="nx">chart_div</span><span class="dl">'</span><span class="s1">));
+					chart.draw(data, options);
+				} // drawBasic-end
+			}); // click-end
+		}); // function-end
+	</span><span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;</span>선택<span class="nt">&lt;/h1&gt;</span>
+	<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"naver"</span><span class="nt">&gt;</span>네이버<span class="nt">&lt;/button&gt;</span>
+	<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"melon"</span><span class="nt">&gt;</span>멜론<span class="nt">&lt;/button&gt;</span>
+	<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"daum"</span><span class="nt">&gt;</span>다음<span class="nt">&lt;/button&gt;</span>
+	<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"kma"</span><span class="nt">&gt;</span>날씨<span class="nt">&lt;/button&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"chart_div"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="proxynaver">ProxyNaver</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span><span class="na"> prefix=</span><span class="s">"c"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;c:import </span><span class="na">url=</span><span class="s">"https://www.naver.com/"</span><span class="nt">&gt;&lt;/c:import&gt;</span>
+</code></pre></div></div>
+
+<h2 id="proxymelon">ProxyMelon</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span><span class="na"> prefix=</span><span class="s">"c"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;c:import </span><span class="na">url=</span><span class="s">"https://www.melon.com/"</span><span class="nt">&gt;&lt;/c:import&gt;</span>
+</code></pre></div></div>
+
+<h2 id="proxydaum">ProxyDaum</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span><span class="na"> prefix=</span><span class="s">"c"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;c:import </span><span class="na">url=</span><span class="s">"https://www.daum.net/"</span><span class="nt">&gt;&lt;/c:import&gt;</span>
+</code></pre></div></div>
+
+<h2 id="proxykma">ProxyKma</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/xml; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;&lt;%@ taglib </span><span class="na">uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span><span class="na"> 
+    prefix=</span><span class="s">"c"</span> <span class="nt">%&gt;&lt;c:import </span><span class="na">url=</span><span class="s">"http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=1165066000"</span><span class="nt">&gt;&lt;/c:import&gt;</span>
+</code></pre></div></div>
+:ET

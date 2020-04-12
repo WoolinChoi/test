@@ -1,0 +1,20 @@
+I":<h1 id="abstract"><a href="">abstract</a></h1>
+
+<h2 id="item">Item</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 부모클래스</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Item</span> <span class="o">{</span>
+	<span class="kd">protected</span> <span class="nc">String</span> <span class="n">no</span><span class="o">;</span>
+	<span class="kd">protected</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+	<span class="nc">Item</span><span class="o">(){</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Item 기본생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nf">Item</span><span class="o">(</span><span class="nc">String</span> <span class="n">no</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">){</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Item 인자생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 미완성은 abstract 추상화한다.</span>
+	<span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">();</span> <span class="c1">// {} : 함수표시는 아무일도 하지 않지만 완벽한 함수 구현</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

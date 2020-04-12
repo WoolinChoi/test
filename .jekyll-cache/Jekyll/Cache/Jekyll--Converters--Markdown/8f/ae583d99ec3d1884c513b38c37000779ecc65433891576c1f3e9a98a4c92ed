@@ -1,0 +1,270 @@
+I".}<h1 id="form"><a href="">form</a></h1>
+
+<h2 id="login">Login</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Login<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h3&gt;</span>로그인 확인하기 <span class="nt">&lt;/h3&gt;</span> 
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"01_second.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+	사용자: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'User'</span> <span class="na">type=</span><span class="s">'text'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	비밀번호: <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">'Pass'</span> <span class="na">type=</span><span class="s">'password'</span><span class="nt">&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">'login'</span><span class="nt">&gt;</span> 
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="login2">Login2</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"User"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"Pass"</span><span class="o">);</span>
+<span class="nt">%&gt;</span> 
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Login2<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span>폼의 입력값 넘겨받아 처리<span class="nt">&lt;/h2&gt;</span>
+	입력한 아이디 :  <span class="nt">&lt;%=</span> <span class="n">id</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	입력한 패스워드 : <span class="nt">&lt;%=</span> <span class="n">pw</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="form-1">Form</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>Form<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"get"</span> <span class="na">action=</span><span class="s">"02_second.jsp"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h4&gt;</span>입력 후 전송 버튼을 누릅니다 <span class="nt">&lt;/h4&gt;</span>
+		이름	: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;br/&gt;</span>
+
+		성별    : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"gender"</span> <span class="na">value=</span><span class="s">"male"</span> <span class="na">checked=</span><span class="s">"checked"</span><span class="nt">&gt;</span> 남
+ 			   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"gender"</span> <span class="na">value=</span><span class="s">"female"</span><span class="nt">&gt;</span>여<span class="nt">&lt;br/&gt;</span>
+
+		직업	: <span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"occupation"</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;option&gt;</span> programmer
+						<span class="nt">&lt;option&gt;</span> web designer
+						<span class="nt">&lt;option&gt;</span> white hand
+						<span class="nt">&lt;option&gt;</span> people
+			<span class="nt">&lt;/select&gt;&lt;br/&gt;</span>
+
+		취미  : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"hobby"</span> <span class="na">value=</span><span class="s">"쓰타크래프트"</span><span class="nt">&gt;</span> 쓰타크래프트
+					 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"hobby"</span> <span class="na">value=</span><span class="s">"한솥밥먹기"</span><span class="nt">&gt;</span> 한솥밥먹기
+					 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"hobby"</span> <span class="na">value=</span><span class="s">"멍때리기"</span><span class="nt">&gt;</span> 멍때리기
+					 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"checkbox"</span> <span class="na">name=</span><span class="s">"hobby"</span> <span class="na">value=</span><span class="s">"그냥있기"</span><span class="nt">&gt;</span> 그냥있기 <span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">'전송'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">value=</span><span class="s">'취소'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="form2">Form2</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">gender</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"gender"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">occupation</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"occupation"</span><span class="o">);</span>
+	<span class="nc">String</span><span class="o">[]</span> <span class="n">hobby</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameterValues</span><span class="o">(</span><span class="s">"hobby"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">hobbyStr</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">hobbyStr</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">String</span> <span class="n">h</span> <span class="o">:</span> <span class="n">hobby</span><span class="o">){</span>
+			<span class="n">hobbyStr</span> <span class="o">+=</span> <span class="n">h</span> <span class="o">+</span> <span class="s">"/"</span><span class="o">;</span>
+		<span class="o">}</span>	
+	<span class="o">}</span>
+<span class="nt">%&gt;</span> 
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>폼의 입력값 처리<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span>폼의 입력값 넘겨받아 처리<span class="nt">&lt;/h2&gt;</span>
+	입력한 이름 : <span class="nt">&lt;%=</span> <span class="n">name</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	입력한 성별 : <span class="nt">&lt;%=</span> <span class="n">gender</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	입력한 직업 : <span class="nt">&lt;%=</span> <span class="n">occupation</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	입력한 취미 : <span class="nt">&lt;%=</span> <span class="n">hobbyStr</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="회원가입">회원가입</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>회원가입<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"css/base.css"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">media=</span><span class="s">"screen"</span><span class="nt">/&gt;</span>  
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"css/form.css"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">media=</span><span class="s">"screen"</span><span class="nt">/&gt;</span>  
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span>  <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-3.4.1.js"</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/jquery.validate.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/scripts.js"</span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"signup"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;h2&gt;</span>회원 가입<span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"jquery_test.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"name"</span><span class="nt">&gt;</span>이름:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">id=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"email"</span><span class="nt">&gt;</span>이메일:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"email"</span> <span class="na">id=</span><span class="s">"email"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"website"</span><span class="nt">&gt;</span>웹사이트 URL:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"website"</span> <span class="na">id=</span><span class="s">"website"</span> <span class="na">type=</span><span class="s">"text"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"password"</span><span class="nt">&gt;</span>암호:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">id=</span><span class="s">"password"</span> <span class="na">type=</span><span class="s">"password"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"passconf"</span><span class="nt">&gt;</span>암호 확인:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"passconf"</span> <span class="na">id=</span><span class="s">"passconf"</span> <span class="na">type=</span><span class="s">"password"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div&gt;</span>
+           <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"보내기"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>	
+		<span class="nt">&lt;/form&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="회원정보">회원정보</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.sql.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.io.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 이전 화면의 폼에서 사용자 입력값 가져오기</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"email"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">website</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"website"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>
+	
+	<span class="c1">// 드라이버 로딩</span>
+	<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.116:1521:orcl"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"team5"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"1004"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+	<span class="c1">// 연결객체 얻어오기</span>
+	<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+	<span class="c1">// sql 문장 만들기</span>
+	<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO member(NAME, EMAIL, SITE, PW) "</span>
+				<span class="o">+</span> <span class="s">"VALUES(?, ?, ?, ?)"</span><span class="o">;</span>
+	<span class="c1">// 전송 객체 얻어오기</span>
+	<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">name</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">email</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">website</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+	<span class="c1">// 전송</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>회원정보<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span>회원정보<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"jquery_update.jsp"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"name"</span><span class="nt">&gt;</span>이름:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"name"</span> <span class="na">id=</span><span class="s">"name"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">name</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"email"</span><span class="nt">&gt;</span>이메일:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"email"</span> <span class="na">id=</span><span class="s">"email"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">email</span> <span class="nt">%&gt;</span><span class="s">"</span> <span class="na">readonly</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"website"</span><span class="nt">&gt;</span>웹사이트 URL:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"website"</span> <span class="na">id=</span><span class="s">"website"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">website</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"password"</span><span class="nt">&gt;</span>암호:<span class="nt">&lt;/label&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">id=</span><span class="s">"password"</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">password</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>
+          <span class="nt">&lt;div&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"회원정보수정"</span><span class="nt">/&gt;</span>
+          <span class="nt">&lt;/div&gt;</span>	
+		<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="회원수정">회원수정</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.sql.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.io.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 이전 화면의 폼에서 사용자 입력값 가져오기</span>
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"name"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"email"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">website</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"website"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"password"</span><span class="o">);</span>
+	
+	<span class="c1">// 드라이버 로딩</span>
+	<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@192.168.0.116:1521:orcl"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"team5"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"1004"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+	<span class="c1">// 연결객체 얻어오기</span>
+	<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+	<span class="c1">// sql 문장 만들기</span>
+	<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE member SET NAME = ?, SITE = ?, PW = ? WHERE EMAIL = ? "</span><span class="o">;</span>
+	
+	<span class="c1">// 전송 객체 얻어오기</span>
+	<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">name</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">website</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+	<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">email</span><span class="o">);</span>
+	<span class="c1">// 전송</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>회원수정<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

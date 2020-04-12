@@ -1,0 +1,421 @@
+I"Ş<h1 id="function"><a href="">function</a></h1>
+
+<h2 id="자바스크립트-함수-3가지">자바스크립트 함수 3가지</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>자바스크립트 함수 3가지<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// 1. function 명령</span>
+	<span class="kd">function</span> <span class="nx">triangle</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">height</span><span class="p">){</span>
+		<span class="k">return</span> <span class="nx">base</span> <span class="o">*</span> <span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">삼각형의 넓이: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 2. Function 생성자 이용</span>
+	<span class="kd">var</span> <span class="nx">triangle2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="dl">'</span><span class="s1">base</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">height</span><span class="dl">'</span><span class="p">,</span>
+			<span class="dl">'</span><span class="s1">return base * height / 2</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">삼각형의 넓이: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle2</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 3. 함수리터럴(*리터럴 : 변수의 값)</span>
+	<span class="kd">var</span> <span class="nx">triangle3</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">height</span><span class="p">){</span>
+		<span class="k">return</span> <span class="nx">base</span> <span class="o">*</span> <span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">삼각형의 넓이: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="자바스크립트-함수-만들기">자바스크립트 함수 만들기</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>자바스크립트 함수 만들기<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// 1. function 명령</span>
+	<span class="kd">function</span> <span class="nx">first</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">txt</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">first</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">txt</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">red</span><span class="dl">'</span><span class="p">;</span>
+		<span class="nx">txt</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">yellow</span><span class="dl">'</span><span class="p">;</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 2. Function 생성자 이용</span>
+	<span class="kd">var</span> <span class="nx">second</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="dl">'</span><span class="s1">var txt2 = document.getElementById("second"); txt2.style.backgroundColor="orange"; txt2.style.color="green"</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 3. 함수리터럴(*리터럴 : 변수의 값)</span>
+	<span class="kd">var</span> <span class="nx">third</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">txt3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">third</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">txt3</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span><span class="o">=</span><span class="dl">'</span><span class="s1">black</span><span class="dl">'</span><span class="p">;</span>
+		<span class="nx">txt3</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">color</span><span class="o">=</span><span class="dl">'</span><span class="s1">blue</span><span class="dl">'</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;p&gt;</span> <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"first"</span><span class="nt">&gt;</span> function 명령 <span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"확인"</span> <span class="na">onclick=</span><span class="s">"javascript:first()"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;p&gt;</span> <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"second"</span><span class="nt">&gt;</span> Function 생성자 <span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"확인"</span> <span class="na">onclick=</span><span class="s">"javascript:second()"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;p&gt;</span> <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"third"</span><span class="nt">&gt;</span> 함수 리터럴 <span class="nt">&lt;/span&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"확인"</span> <span class="na">onclick=</span><span class="s">"javascript:third()"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="함수문법">함수문법</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>함수문법<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// ####[1] function 명령은 정적인 구조이고 Fucntion 생성자와 함수리터럴은 실행시 판단한다.(선언을 먼저)</span>
+<span class="cm">/*
+	// 1. function 명령
+	document.write('삼각형의 넓이: ' + triangle(3, 4) + '&lt;br/&gt;');
+	function triangle(base, height){
+		return base * height / 2;
+	}
+	
+	// 2. Function 생성자 이용
+	var triangle2 = new Function('base', 'height',
+	'return base * height / 2');
+	document.write('삼각형의 넓이: ' + triangle2(3, 4) + '&lt;br/&gt;');
+	
+	// 3. 함수리터럴(*리터럴 : 변수의 값)
+	var triangle3 = function(base, height){
+		return base * height / 2;
+	}
+	document.write('삼각형의 넓이: ' + triangle3(3, 4) + '&lt;br/&gt;');
+*/</span>
+	<span class="c1">// ####[2] 함수도 데이타타입(자료형)이다.</span>
+	<span class="kd">var</span> <span class="nx">triangle3</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">height</span><span class="p">){</span>
+		<span class="k">return</span> <span class="nx">base</span> <span class="o">*</span> <span class="nx">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">삼각형의 넓이: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">변수: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle3</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 	triangle3 = '문자로 변환';</span>
+	<span class="nx">triangle3</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">변수: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">triangle3</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// ####[3] 함수도 배열에 저장</span>
+	<span class="kd">function</span> <span class="nx">doA</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">함수A &lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="kd">function</span> <span class="nx">doB</span><span class="p">(){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">함수B &lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="nx">doA</span><span class="p">,</span> <span class="nx">doB</span><span class="p">];</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">함수 배열: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// arr에서 호출???</span>
+	<span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]();</span>
+	<span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]();</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="함수의-인자">함수의 인자</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>함수의 인자<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// ####[1] 함수의 인자는 개수를 체크하지 않는다.</span>
+	<span class="kd">function</span> <span class="nx">multiple</span><span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">){</span>
+		<span class="k">return</span> <span class="nx">first</span> <span class="o">*</span> <span class="nx">second</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">곱1: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">multiple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">곱2: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">multiple</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">곱3: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">multiple</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// ####[2] 여러 개의 인자(파라미터)를 익명의 객체로 받음</span>
+	<span class="kd">function</span> <span class="nx">mul</span><span class="p">(</span><span class="nx">args</span><span class="p">){</span>
+		<span class="k">return</span> <span class="nx">args</span><span class="p">.</span><span class="nx">first</span> <span class="o">*</span> <span class="nx">args</span><span class="p">.</span><span class="nx">second</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">곱: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">mul</span><span class="p">({</span><span class="na">first</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="na">second</span><span class="p">:</span><span class="mi">4</span><span class="p">})</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// ####[3] arguments 특별한 객체</span>
+	<span class="kd">function</span> <span class="nx">func</span><span class="p">(){</span>
+		<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nx">func</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+	<span class="nx">func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="자바스크립트-변수와-범위">자바스크립트 변수와 범위</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>자바스크립트 변수와 범위<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// ####[1] 글로벌변수와 지역변수</span>
+<span class="cm">/* 	
+	var scope = '글로벌변수';
+	function getValue(){
+		var scope = '지역변수';
+		return scope;
+	}
+	document.write('1&gt; ' + getValue() + '&lt;br/&gt;');	// 지역변수 
+	document.write('2&gt; ' + scope + '&lt;br/&gt;');		// 글로벌변수 
+*/</span>	
+	<span class="c1">// ####[2] var 생략 가능 : 글로별변수가 지역변수로 덮혀진다.</span>
+<span class="cm">/* 
+	scope = '글로벌변수';
+	function getValue(){
+		scope = '지역변수';
+		return scope;
+	}
+	document.write('1&gt; ' + getValue() + '&lt;br/&gt;');	// 지역변수 
+	document.write('2&gt; ' + scope + '&lt;br/&gt;');		// 지역변수
+*/</span>
+<span class="cm">/*
+	scope = '글로벌변수';
+	function getValue(){
+		document.write('0&gt; ' + scope + '&lt;br/&gt;');	// 글로벌변수
+		scope = '지역변수';
+		return scope;
+	}
+	document.write('1&gt; ' + getValue() + '&lt;br/&gt;');	// 지역변수 
+	document.write('2&gt; ' + scope + '&lt;br/&gt;');		// 지역변수
+*/</span>
+<span class="cm">/*
+	scope = '글로벌변수';
+	function getValue(){
+		document.write('0&gt; ' + scope + '&lt;br/&gt;');	// undefined
+		var scope = '지역변수';
+		return scope;
+	}
+	document.write('1&gt; ' + getValue() + '&lt;br/&gt;');	// 지역변수 
+	document.write('2&gt; ' + scope + '&lt;br/&gt;');		// 지역변수
+*/</span>	
+	<span class="c1">// ####[3] 지역변수 범위 : 함수블럭에만 유효함, if문은 함수가 아니다.</span>
+<span class="cm">/*
+	if(true){
+		var i = 100;
+	}
+	document.write('i= ' + i + '&lt;hr/&gt;');	// 100
+	
+	function test(){
+		var j = 1000;
+	}
+	test();
+	document.write('j= ' + j + '&lt;br/&gt;');	// ReferenceError
+*/</span>
+<span class="cm">/*
+	for(var k = 0; k &lt; 3; k++){}
+	for(var k = 0; k &lt; 3; k++){}
+	var k = 10;
+	var k = 100;
+	document.write('k= ' + k + '&lt;br/&gt;');	// 100, 변수는 덮혀진다.
+*/</span>	
+	<span class="c1">// ####[4] 호이스팅(hoisting) : 변수가 자신이 속한 블록 안에 있지 않고 밖으로 끌어올려지는 현상</span>
+	<span class="kd">function</span> <span class="nx">doA</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">before: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// undefined</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">num</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">===</span> <span class="mi">0</span><span class="p">){</span>
+			<span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">after: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// true</span>
+	<span class="p">}</span>
+	<span class="nx">doA</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="c">&lt;!-- ECMA Script 6 (ES6) : var 사용 자제 -&gt; let 사용 권장 --&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>  
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="파라메터-인자">파라메터 인자</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>파라메터 인자<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="c1">// 1. 기본형 인자(call by value)</span>
+	<span class="kd">var</span> <span class="nx">pri</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+	<span class="kd">function</span> <span class="nx">priParam</span><span class="p">(</span><span class="nx">pri</span><span class="p">){</span>
+		<span class="nx">pri</span><span class="o">--</span><span class="p">;</span>
+		<span class="k">return</span> <span class="nx">pri</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">1&gt; </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">priParam</span><span class="p">(</span><span class="nx">pri</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 9</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">2&gt; </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">pri</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;hr/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 10</span>
+	
+	<span class="c1">// 2. 참조형 인자(call by reference)</span>
+	<span class="kd">var</span> <span class="nx">ref</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+	<span class="kd">function</span> <span class="nx">refParam</span><span class="p">(</span><span class="nx">ref</span><span class="p">){</span>
+		<span class="nx">ref</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span> <span class="c1">// 스택 : LILO</span>
+		<span class="k">return</span> <span class="nx">ref</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">1&gt; </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">refParam</span><span class="p">(</span><span class="nx">ref</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 1, 2, 3, 4</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">2&gt; </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">ref</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 1, 2, 3, 4</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="functionarg">FunctionArg</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>FunctionArg<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/arg_func.js"</span><span class="nt">&gt;&lt;/script&gt;</span> <span class="c">&lt;!-- &lt;script/&gt;은 버그인가 --&gt;</span>	
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 함수이름도 인자가 될 수 있다.</span>
+	<span class="kd">function</span> <span class="nx">testFunc</span><span class="p">(</span><span class="nx">arg</span><span class="p">){</span>
+		<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">num</span><span class="p">;</span> <span class="c1">// num이라는 이름이 많기떄문에 배열로 받는다.</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">arg</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">sum</span><span class="dl">'</span><span class="p">){</span>
+			<span class="nx">arrayProcess</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">sum</span><span class="p">);</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">합계: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">sumResult</span><span class="p">);</span>
+		<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">arg</span> <span class="o">==</span> <span class="dl">'</span><span class="s1">square</span><span class="dl">'</span><span class="p">){</span>
+			<span class="nx">arrayProcess</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">square</span><span class="p">);</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">제곱: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">squareResult</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- 2 --&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;label&gt;</span> 숫자를 입력하세요 
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"num"</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">value=</span><span class="s">"1"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"num"</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">value=</span><span class="s">"2"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"num"</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">value=</span><span class="s">"3"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"num"</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">value=</span><span class="s">"4"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"num"</span> <span class="na">size=</span><span class="s">"3"</span> <span class="na">value=</span><span class="s">"5"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/label&gt;</span>
+
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"총합"</span> <span class="na">onclick=</span><span class="s">"javascript:testFunc('sum')"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"제곱"</span> <span class="na">onclick=</span><span class="s">"javascript:testFunc('square')"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="functionarg2">FunctionArg2</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>FunctionArg2<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// ####[1] 함수이름이 다른 함수의 인자가 될 수 있다.</span>
+<span class="cm">/*
+	function prt(key, value){
+		document.write(key + ': ' + value + '&lt;br/&gt;');
+	}
+	
+	function arrayWalk(data, f){
+		for(var key in data){
+			f(key, data[key]);
+		}
+	}
+	
+	var ary = ['ㅁ', 'ㄴ', 'ㅇ', 'ㄹ', 'ㅎ'];
+	arrayWalk(ary, prt); // 0 : ㅁ, 1 : ㄴ, 2 : ㅇ, 3 : ㄹ, 4 : ㅎ
+*/</span>	
+	<span class="c1">// ####[2] 함수가 다른 함수의 인자가 될 수 있다.</span>
+	<span class="kd">function</span> <span class="nx">arrayWalk</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">f</span><span class="p">){</span>
+		<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">data</span><span class="p">){</span>
+			<span class="nx">f</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">data</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="kd">var</span> <span class="nx">ary</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">ㅁ</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ㄴ</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ㅇ</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ㄹ</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ㅎ</span><span class="dl">'</span><span class="p">];</span>
+	<span class="nx">arrayWalk</span><span class="p">(</span><span class="nx">ary</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">key</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">value</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="functionargjs">FunctionArgJs</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 함수의 인자로 들어오는 함수처리</span>
+<span class="n">function</span> <span class="nf">arrayProcess</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">f</span><span class="o">){</span>
+	<span class="k">for</span><span class="o">(</span><span class="n">key</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">key</span><span class="o">++){</span>
+	<span class="c1">// for(var key in data ){</span>
+		<span class="n">f</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">data</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="na">value</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 각각의 데이터를 더하는 함수</span>
+<span class="kt">var</span> <span class="n">sumResult</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="n">function</span> <span class="nf">sum</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">data</span><span class="o">){</span>	
+	<span class="n">sumResult</span> <span class="o">+=</span> <span class="n">parseInt</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// 각각의 데이터의 곱을 구하는 함수</span>
+<span class="kt">var</span> <span class="n">squareResult</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Array</span><span class="o">();</span>
+<span class="n">function</span> <span class="nf">square</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">data</span><span class="o">){</span>			
+	<span class="n">squareResult</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">data</span> <span class="o">*</span> <span class="n">data</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="progress">Progress</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Progress<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;p&gt;</span>다운로드 중<span class="nt">&lt;/p&gt;</span>
+	<span class="nt">&lt;progress</span> <span class="na">max=</span><span class="s">"100"</span> <span class="na">id=</span><span class="s">"progress"</span><span class="nt">&gt;&lt;/progress&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+	<span class="kd">var</span> <span class="nx">progress</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">progress</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	
+<span class="cm">/* 
+	1. setTimeout(func, time) : time 지난 후에 한 번 func 함수 실행
+	2. setInterval(func, time) : 매 time 마다 func 함수 실행
+*/</span>
+<span class="cm">/*	
+	var intervalId = setInterval(updateProgress, 100);
+	
+	function(){
+		progress.value = current++;		
+		if(current==100){
+			clearInterval(intervalId);
+		}
+	}
+*/</span>	
+	<span class="c1">// 축약형</span>
+	<span class="kd">var</span> <span class="nx">intervalId</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">progress</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">current</span><span class="o">++</span><span class="p">;</span>		
+		<span class="k">if</span><span class="p">(</span><span class="nx">current</span><span class="o">==</span><span class="mi">100</span><span class="p">){</span>
+			<span class="nx">clearInterval</span><span class="p">(</span><span class="nx">intervalId</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

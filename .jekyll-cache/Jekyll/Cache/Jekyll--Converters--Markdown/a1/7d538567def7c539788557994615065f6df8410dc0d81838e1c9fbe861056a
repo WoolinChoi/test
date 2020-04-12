@@ -1,0 +1,110 @@
+I"�?<h1 id="view"><a href="">view</a></h1>
+
+<h2 id="view-1">View</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [뷰(VIEW)]</span>
+<span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">VIEW</span> <span class="n">v_emp</span> <span class="k">AS</span>
+           <span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span> <span class="c1">-- 진짜 테이블</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">v_emp</span><span class="p">;</span> <span class="c1">-- 가상 테이블</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">v_emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8888</span><span class="p">,</span> <span class="s1">'맹심이'</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">v_emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8888</span><span class="p">,</span> <span class="s1">'콩심이'</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span> <span class="c1">-- 원본 PK 제약조건</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">v_emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">7777</span><span class="p">,</span> <span class="s1">'박심이'</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span> <span class="c1">-- 원본 FK 제약조건</span>
+
+<span class="c1">-- 읽기 전용 뷰 생성</span>
+<span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">VIEW</span> <span class="n">v_emp</span> <span class="k">AS</span>
+           <span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span> <span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WITH</span> <span class="k">READ</span> <span class="k">only</span><span class="p">;</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">v_emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">7777</span><span class="p">,</span> <span class="s1">'박심이'</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+
+<span class="c1">-- 사원번호, 사원명, 부서명 -&gt; v_emp_info</span>
+<span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">VIEW</span> <span class="n">v_emp_info</span> <span class="k">AS</span>
+    <span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">empno</span> <span class="n">empno</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">ename</span> <span class="n">ename</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span>
+    <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span><span class="p">,</span> <span class="n">dept</span> <span class="n">d</span>
+    <span class="k">WHERE</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span><span class="p">;</span>
+    
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">v_emp_info</span><span class="p">;</span>
+
+<span class="c1">-- v_emp_info에 입력하세요</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">v_emp_info</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8899</span><span class="p">,</span> <span class="s1">'옹심이'</span><span class="p">,</span> <span class="s1">'RESEARCH'</span><span class="p">);</span> <span class="c1">-- 입력안됨</span>
+
+<span class="c1">--  [ 연습 ] 부서별로 부서명, 최소급여, 최대급여, 부서의 평균 급여를 포함하는 DEPT_SUM 뷰를생성하여라.</span>
+<span class="k">CREATE</span> <span class="k">OR</span> <span class="k">REPLACE</span> <span class="k">VIEW</span> <span class="n">v_dept_sum</span> <span class="k">AS</span>
+    <span class="k">SELECT</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span> <span class="n">dname</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="p">)</span> <span class="n">minsal</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="p">)</span> <span class="n">maxsal</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">sal</span><span class="p">))</span> <span class="n">avgsal</span>
+    <span class="k">FROM</span> <span class="n">emp</span> <span class="n">e</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">dept</span> <span class="n">d</span>
+    <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">deptno</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">deptno</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">d</span><span class="p">.</span><span class="n">dname</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">v_dept_sum</span><span class="p">;</span>
+
+<span class="c1">-- 원본테이블을 변경하면 VIEW테이블도 변경된다.</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8890</span><span class="p">,</span> <span class="s1">'홍홍홍'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="sequence">Sequence</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [시퀸스]</span>
+<span class="k">DROP</span> <span class="n">SEQUENCE</span> <span class="n">seq_emp_empno</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="n">SEQUENCE</span> <span class="n">seq_emp_empno</span> <span class="k">start</span> <span class="k">with</span> <span class="mi">5000</span><span class="p">;</span>
+
+<span class="c1">-- empno 초기값 5000에서 1씩 자동 증가해준다.</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="n">seq_emp_empno</span><span class="p">.</span><span class="n">nextval</span><span class="p">,</span> <span class="s1">'홍5'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">seq_emp_empno</span><span class="p">.</span><span class="n">currval</span> <span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="index">Index</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [인덱스]</span>
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">phone_number</span><span class="p">,</span> <span class="k">FROM</span> <span class="n">employee</span>
+<span class="k">WHERE</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">phone_number</span><span class="p">,</span> <span class="k">FROM</span> <span class="n">employee</span>
+<span class="k">WHERE</span> <span class="n">salary</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">phone_number</span><span class="p">,</span> <span class="k">FROM</span> <span class="n">employee</span>
+<span class="k">WHERE</span> <span class="n">phone_number</span> <span class="o">=</span> <span class="s1">'515.123.4567'</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">emp_phone_ix</span> <span class="k">ON</span> <span class="n">employees</span><span class="p">(</span><span class="n">phone_number</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="n">phone_number</span><span class="p">,</span> <span class="k">FROM</span> <span class="n">employee</span>
+<span class="k">WHERE</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s1">'King'</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">index_type</span> <span class="k">FROM</span> <span class="n">user_indexes</span>
+<span class="k">WHERE</span> <span class="k">table_name</span> <span class="o">=</span> <span class="s1">'EMPLOYEES'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="partition">Partition</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">sawon_p</span><span class="p">(</span>
+    <span class="n">sabun</span>   <span class="n">number</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">saname</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">job</span>     <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">sal</span>     <span class="n">number</span>
+<span class="p">)</span>
+<span class="n">PARTITION</span> <span class="k">by</span> <span class="n">range</span><span class="p">(</span><span class="n">sabun</span><span class="p">)(</span>
+    <span class="n">PARTITION</span> <span class="n">sawon_p1</span> <span class="k">VALUES</span> <span class="k">less</span> <span class="k">than</span> <span class="p">(</span><span class="mi">2000</span><span class="p">)</span> <span class="n">tablespace</span> <span class="n">p1</span><span class="p">,</span>
+    <span class="n">PARTITION</span> <span class="n">sawon_p2</span> <span class="k">VALUES</span> <span class="k">less</span> <span class="k">than</span> <span class="p">(</span><span class="mi">4000</span><span class="p">)</span> <span class="n">tablespace</span> <span class="n">p2</span><span class="p">,</span>
+    <span class="n">PARTITION</span> <span class="n">sawon_p3</span> <span class="k">VALUES</span> <span class="k">less</span> <span class="k">than</span> <span class="p">(</span><span class="mi">8000</span><span class="p">)</span> <span class="n">tablespace</span> <span class="n">p3</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon_p</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">101</span><span class="p">,</span> <span class="s1">'삼순이'</span><span class="p">,</span> <span class="s1">'개발'</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon_p</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">3001</span><span class="p">,</span> <span class="s1">'사순이'</span><span class="p">,</span> <span class="s1">'디자인'</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon_p</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">5001</span><span class="p">,</span> <span class="s1">'오순이'</span><span class="p">,</span> <span class="s1">'디자인'</span><span class="p">,</span> <span class="mi">5000</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sawon_p</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sawon_p</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="n">sawon_p1</span><span class="p">);</span>
+
+<span class="c1">-- 1. 사순이 직업을 개발로 변경</span>
+<span class="k">UPDATE</span> <span class="n">sawon_p</span>
+<span class="k">SET</span> <span class="n">job</span> <span class="o">=</span> <span class="s1">'개발'</span>
+<span class="k">WHERE</span> <span class="n">saname</span> <span class="o">=</span> <span class="s1">'사순이'</span><span class="p">;</span>
+
+<span class="c1">-- 2. 사순이 사번을 1001로 변경</span>
+<span class="c1">-- 사순이는 p2파티션이기때문에 2000이상만 변경가능</span>
+<span class="k">UPDATE</span> <span class="n">sawon_p</span>
+<span class="k">SET</span> <span class="n">sabun</span> <span class="o">=</span> <span class="s1">'2000'</span>
+<span class="k">WHERE</span> <span class="n">saname</span> <span class="o">=</span> <span class="s1">'사순이'</span><span class="p">;</span>
+</code></pre></div></div>
+:ET

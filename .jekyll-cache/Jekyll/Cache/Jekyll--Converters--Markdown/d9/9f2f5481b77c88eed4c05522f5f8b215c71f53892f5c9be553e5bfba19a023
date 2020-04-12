@@ -1,0 +1,62 @@
+I"$%<h1 id="format"><a href="">format</a></h1>
+
+<h2 id="dateformatex">DateFormatEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.text.SimpleDateFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DateFormatEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Date</span> <span class="n">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Date</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">today</span><span class="o">);</span>
+		<span class="nc">SimpleDateFormat</span> <span class="n">sdf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleDateFormat</span><span class="o">(</span><span class="s">"yyyy년 MM월 dd일 E요일 hh시 mm분 ss초"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sdf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">today</span><span class="o">));</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="decimalformatex">DecimalFormatEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.text.DecimalFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecimalFormatEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">double</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="o">{</span><span class="mi">123456789</span><span class="o">,</span> <span class="mi">23456789</span><span class="o">,</span> <span class="mi">3456789</span><span class="o">,</span> <span class="mi">456789</span><span class="o">,</span> <span class="mf">5678.9</span><span class="o">};</span>
+		<span class="c1">// 자릿수 넉넉하게 DecimalFormat 해주기</span>
+		<span class="nc">DecimalFormat</span> <span class="n">df</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DecimalFormat</span><span class="o">(</span><span class="s">"###,###.###"</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">df</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]));</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="messageformatex">MessageFormatEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.text.MessageFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessageFormatEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"친애하는 &lt;{0}&gt; {1}님, 본문생략..... 감사합니다"</span><span class="o">;</span>
+		<span class="nc">String</span><span class="o">[][]</span> <span class="n">data</span> <span class="o">=</span> <span class="o">{</span>
+				<span class="o">{</span><span class="s">"홍길동"</span><span class="o">,</span> <span class="s">"부장"</span><span class="o">},</span>
+				<span class="o">{</span><span class="s">"홍길자"</span><span class="o">,</span> <span class="s">"과장"</span><span class="o">},</span>
+				<span class="o">{</span><span class="s">"홍길숙"</span><span class="o">,</span> <span class="s">"대리"</span><span class="o">},</span>
+				<span class="o">{</span><span class="s">"홍길순"</span><span class="o">,</span> <span class="s">"사원"</span><span class="o">},</span>
+		<span class="o">};</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">MessageFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]));</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="choiceformatex">ChoiceFormatEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.text.ChoiceFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChoiceFormatEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">scores</span> <span class="o">=</span> <span class="o">{</span><span class="mi">99</span><span class="o">,</span> <span class="mi">88</span><span class="o">,</span> <span class="mi">77</span><span class="o">,</span> <span class="mi">66</span><span class="o">,</span> <span class="mi">55</span><span class="o">,</span> <span class="mi">44</span><span class="o">,</span> <span class="mi">33</span><span class="o">};</span>
+		<span class="kt">double</span><span class="o">[]</span> <span class="n">limits</span> <span class="o">=</span> <span class="o">{</span><span class="mi">60</span><span class="o">,</span> <span class="mi">70</span><span class="o">,</span> <span class="mi">80</span><span class="o">,</span> <span class="mi">90</span><span class="o">};</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">grades</span> <span class="o">=</span> <span class="o">{</span><span class="s">"D"</span><span class="o">,</span> <span class="s">"C"</span><span class="o">,</span> <span class="s">"B"</span><span class="o">,</span> <span class="s">"A"</span><span class="o">};</span>
+		<span class="nc">ChoiceFormat</span> <span class="n">cf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ChoiceFormat</span><span class="o">(</span><span class="n">limits</span><span class="o">,</span> <span class="n">grades</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">:</span> <span class="n">scores</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">":"</span> <span class="o">+</span> <span class="n">cf</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">k</span><span class="o">));</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

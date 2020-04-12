@@ -1,0 +1,229 @@
+I"^\<h1 id="event"><a href="">event</a></h1>
+
+<h2 id="test-extends-jframe">Test extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 멤버 변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 멤버 객체 선언</span>
+	<span class="nc">Test</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"눌러봐버튼"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"입력해봐"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">tf</span><span class="o">);</span>
+		<span class="c1">// 프레임 영역</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Test</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Test</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test2-extends-jframe">Test2 extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 
+ * 1. 이벤트 핸들러 만들기(이벤트 구현 클래스)
+ *   (1) 이벤트 Listener(interface) 구현
+ *   (2) 이벤트메소드 overriding
+ * 
+ * 2. 핸들러 객체 생성
+ * 
+ * 3. 이벤트 발생 컴포넌트와 핸들러 객체 연결
+ * 
+ * ** 자주 사용하는 이벤트 - ActionEvent
+ * 1. ActionListener 구현
+ *   (1) actionPerformed() 오버라이딩
+ * 2. 객체 생성
+ * 3. 연결
+ * 
+ * ** ActionEvent
+ * 1. 버튼 클릭
+ * 2. 메뉴 클릭
+ * 3. 텍스트필드에서 엔터쳤을 때
+ * 4. 리스트에서 더블클릭 했을 때
+ * 5. 선택버튼을 선택했을 때
+ */</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test2</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 멤버 변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 멤버 객체 선언</span>
+	<span class="nc">Test2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"눌러봐버튼"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"입력해봐"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">tf</span><span class="o">);</span>
+		<span class="c1">// 프레임 영역</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 만들기 및 이벤트 출력</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 핸들러 객체 생성</span>
+		<span class="nc">MyEvent</span> <span class="n">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyEvent</span><span class="o">();</span>
+		<span class="c1">// 이벤트발생을 원한느 컴포넌트와 연결 </span>
+		<span class="n">b</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">me</span><span class="o">);</span>
+		<span class="n">tf</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">me</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 핸들러</span>
+	<span class="kd">class</span> <span class="nc">MyEvent</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+				<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">msg</span> <span class="o">+</span> <span class="s">"버튼이벤트발생"</span><span class="o">);</span>	
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="n">tf</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+				<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">msg</span> <span class="o">+</span> <span class="s">"을(를) 입력하셨습니다"</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Test2</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Test2</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test3-extends-jframe">Test3 extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test3</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+	<span class="c1">// 멤버 변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 멤버 객체 선언</span>
+	<span class="nc">Test3</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"눌러봐버튼"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"입력해봐"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 만들기 및 이벤트 출력</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 핸들러 객체 생성</span>
+		<span class="n">b</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">tf</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="c1">// 이벤트발생을 원한느 컴포넌트와 연결 </span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"이벤트발생"</span><span class="o">);</span>	
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Test3</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Test3</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test4-extends-jframe">Test4 extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test4</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 멤버 변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 멤버 객체 선언</span>
+	<span class="nc">Test4</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"눌러봐버튼"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"입력해봐"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">tf</span><span class="o">);</span>
+		<span class="c1">// 프레임 영역</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		MyEvent evt = new MyEvent();</span>
+<span class="c1">//		b.addActionListener(evt);</span>
+		<span class="n">b</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"이벤트발생"</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+		<span class="n">tf</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"이벤트발생2"</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Test4</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Test4</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test5-extends-jframe">Test5 extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test5</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JTextField</span> <span class="n">tf</span><span class="o">;</span>
+	<span class="c1">// 2. 멤버 객체 선언</span>
+	<span class="nc">Test5</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"눌러봐버튼"</span><span class="o">);</span>
+		<span class="n">tf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"입력해봐"</span><span class="o">,</span> <span class="mi">20</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면 출력</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">tf</span><span class="o">);</span>
+		<span class="c1">// 프레임 영역</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 등록</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">BtnHdlr</span> <span class="n">bh</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BtnHdlr</span><span class="o">();</span>
+		<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">bh</span><span class="o">);</span>
+		<span class="c1">// 버튼과 이벤트핸들러 연결</span>
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">BtnHdlr</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이벤트발생"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Test5</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Test5</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">t</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

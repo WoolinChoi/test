@@ -1,0 +1,445 @@
+I"�<h1 id="thread"><a href="">thread</a></h1>
+
+<h2 id="오늘의-학습">오늘의 학습</h2>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. program : 일종 software
+
+2. process : 현재 cpu가 실행중인 프로그램
+    - thread : 한 프로세스 안에서 빠르게<span class="o">(</span>동시에?<span class="o">)</span> 여러 작업
+
+3. Network 개념
+
+cf<span class="o">)</span> processor : cpu
+
+<span class="k">*</span> 자바의 쓰레드 처리 절차
+1. Thread 상속<span class="o">(</span>Runnable 구현<span class="o">)</span>
+    - run<span class="o">()</span> 오버라이딩
+
+2. start<span class="o">()</span> 호출 -&gt; run<span class="o">()</span> 호출됨
+</code></pre></div></div>
+
+<h2 id="process">Process</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex01_Process</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 다른 응용 프로그램을 프로세스 실행</span>
+		<span class="nc">Runtime</span> <span class="n">rt</span> <span class="o">=</span> <span class="nc">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">rt</span><span class="o">.</span><span class="na">exec</span><span class="o">(</span><span class="s">"C:\\Program Files (x86)\\Internet Explorer\\iexplore.exe"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="threadtest">ThreadTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MakeCar1</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">work</span><span class="o">;</span>
+	<span class="nc">MakeCar1</span><span class="o">(</span><span class="nc">String</span> <span class="n">_work</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">work</span> <span class="o">=</span> <span class="n">_work</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">work</span> <span class="o">+</span> <span class="s">"작업중"</span><span class="o">);</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">500</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex02_ThreadTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">MakeCar1</span> <span class="n">mc1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar1</span><span class="o">(</span><span class="s">"차틀만들기"</span><span class="o">);</span>
+		<span class="n">mc1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="nc">MakeCar1</span> <span class="n">mc2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar1</span><span class="o">(</span><span class="s">"도색"</span><span class="o">);</span>
+		<span class="n">mc2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"프로그램 끝"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="runnabletest">RunnableTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MakeCar2</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">work</span><span class="o">;</span>
+	<span class="nc">MakeCar2</span><span class="o">(</span><span class="nc">String</span> <span class="n">_work</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">work</span> <span class="o">=</span> <span class="n">_work</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">work</span> <span class="o">+</span> <span class="s">"작업중"</span><span class="o">);</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">500</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex02_RunnableTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">MakeCar2</span> <span class="n">mc1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar2</span><span class="o">(</span><span class="s">"차틀만들기"</span><span class="o">);</span>
+		<span class="nc">Thread</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Thread</span><span class="o">(</span><span class="n">mc1</span><span class="o">);</span>
+		<span class="n">t1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="c1">// 축약형 </span>
+		<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nc">MakeCar2</span><span class="o">(</span><span class="s">"도색"</span><span class="o">)).</span><span class="na">start</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"프로그램 끝"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="daltest-extends-frame">DalTest extends Frame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.Color</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.Frame</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.Graphics</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex03_DalTest</span> <span class="kd">extends</span> <span class="nc">Frame</span> <span class="o">{</span>
+	<span class="nc">Dal</span> <span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">c</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">Ex03_DalTest</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dal</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dal</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+		<span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dal</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span>
+		<span class="c1">// 각 객체의 쓰레드 메소드(run) 호출한다 </span>
+		<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="n">a</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="n">b</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="n">c</span><span class="o">).</span><span class="na">start</span><span class="o">();</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">paint</span><span class="o">(</span><span class="nc">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">red</span><span class="o">);</span>
+		<span class="n">g</span><span class="o">.</span><span class="na">drawString</span><span class="o">(</span><span class="s">"__@"</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+
+		<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">blue</span><span class="o">);</span>
+		<span class="n">g</span><span class="o">.</span><span class="na">drawString</span><span class="o">(</span><span class="s">"__@"</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+
+		<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">green</span><span class="o">);</span>
+		<span class="n">g</span><span class="o">.</span><span class="na">drawString</span><span class="o">(</span><span class="s">"__@"</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[]</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="n">Ex03_DalTest</span> <span class="n">dal</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Ex03_DalTest</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/*
+ * # Thread 처리
+ * (1) Thread 클래스나 Runnable 인터페이스 상속
+ * (2) run() 오버라이딩
+ * 
+ * 	- 임의의 수를 speed 값으로 지정		
+ * 	- x 값을 위의 임의의 수를 더하기
+ * 	- 화면을 다시 그린다 (*) app.repaint() 이용
+ * 	- 임의의 수만큼 잠시 쓰레드를 블럭한다
+ * 	# 위의 작업을 반복한다
+ */</span>
+<span class="kd">class</span> <span class="nc">Dal</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>
+	<span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">speed</span><span class="o">;</span>
+	<span class="nc">Frame</span> <span class="n">app</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">Dal</span><span class="o">(</span><span class="nc">Frame</span> <span class="n">_app</span><span class="o">,</span> <span class="kt">int</span> <span class="n">_x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">_y</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">app</span> <span class="o">=</span> <span class="n">_app</span><span class="o">;</span>
+		<span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="o">;</span>
+		<span class="n">y</span> <span class="o">=</span> <span class="n">_y</span><span class="o">;</span>	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">speed</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">10</span><span class="o">);</span> <span class="c1">// 0 ~ 9 임의의 수</span>
+			<span class="n">x</span> <span class="o">+=</span> <span class="n">speed</span><span class="o">;</span>
+			<span class="n">app</span><span class="o">.</span><span class="na">repaint</span><span class="o">();</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">speed</span> <span class="o">*</span> <span class="mi">100</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="countertest-extends-jframe">CounterTest extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.logging.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex04_CounterTest</span> <span class="kd">extends</span> <span class="nc">JFrame</span><span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">JPanel</span> <span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">JButton</span> <span class="n">btn</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">JLabel</span> <span class="n">lb</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">inputChk</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Ex04_CounterTest</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">setTitle</span><span class="o">(</span><span class="s">"단일 스레드 테스트!"</span><span class="o">);</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+        <span class="n">p1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">btn</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"Click"</span><span class="o">));</span>
+        <span class="n">p1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"Count!"</span><span class="o">));</span> <span class="c1">// 추가 </span>
+        <span class="n">add</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span><span class="s">"North"</span><span class="o">);</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>       
+        <span class="n">p2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span> <span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">20</span><span class="o">,</span><span class="mi">50</span><span class="o">));</span>
+        <span class="n">add</span><span class="o">(</span><span class="n">p2</span><span class="o">);</span>
+        <span class="n">setBounds</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+        <span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="n">btn</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 1. 카운트 다운을 시작하는 스레드 </span>
+                <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                	<span class="c1">// 오버라이딩</span>
+                	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+                			<span class="k">if</span><span class="o">(</span><span class="n">inputChk</span><span class="o">)</span> <span class="o">{</span>
+                				<span class="n">lb</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"빙고"</span><span class="o">);</span>
+                				<span class="n">inputChk</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                				<span class="k">return</span><span class="o">;</span> <span class="c1">// for문을 벗어나려면 break 함수를 벗어나려면 return</span>
+                			<span class="o">}</span>
+                			<span class="n">lb</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+                			<span class="k">try</span> <span class="o">{</span>
+								<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+							<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+								<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+							<span class="o">}</span>
+                		<span class="o">}</span>
+                	<span class="o">}</span>
+                <span class="o">}).</span><span class="na">start</span><span class="o">();</span>
+                <span class="c1">// 2. 입력값을 받아서 JTextArea에 붙이는 작업 </span>
+                <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                		<span class="nc">String</span> <span class="n">input</span> <span class="o">=</span> <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showInputDialog</span><span class="o">(</span><span class="s">"값을 입력"</span><span class="o">);</span>
+                		<span class="n">ta</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+                		<span class="n">inputChk</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                	<span class="o">}</span>
+                <span class="o">}).</span><span class="na">start</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">new</span> <span class="nf">Ex04_CounterTest</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="zbombtest-extends-jframe">ZBombTest extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex04_ZBombTest</span> <span class="kd">extends</span> <span class="nc">JFrame</span><span class="o">{</span>
+	<span class="kd">private</span> <span class="nc">JPanel</span> <span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">JButton</span> <span class="n">btn</span><span class="o">,</span> <span class="n">btn2</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">JLabel</span> <span class="n">lb</span><span class="o">,</span> <span class="n">image</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">inputChk</span><span class="o">;</span>
+	<span class="n">Ex04_ZBombTest</span><span class="o">(){</span>
+		<span class="n">setTitle</span><span class="o">(</span><span class="s">"폭탄 테스트!"</span><span class="o">);</span>
+		<span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">btn</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"시작"</span><span class="o">));</span>
+		<span class="n">p1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"카운트다운"</span><span class="o">));</span> 
+		<span class="n">add</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="s">"North"</span><span class="o">);</span>
+		<span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">image</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"src\\thread\\basic\\ex\\bomb_1.jpg"</span><span class="o">)));</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p2</span><span class="o">,</span> <span class="s">"Center"</span><span class="o">);</span>
+		<span class="n">setBounds</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">btn</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// 1. 카운트 다운을 시작하는 스레드 </span>
+                <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+                			<span class="k">if</span><span class="o">(</span><span class="n">inputChk</span><span class="o">)</span> <span class="o">{</span>
+                				<span class="n">lb</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"빙고"</span><span class="o">);</span> 
+                				<span class="k">return</span><span class="o">;</span>
+                			<span class="o">}</span>
+                			<span class="k">if</span><span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="n">image</span><span class="o">.</span><span class="na">setIcon</span><span class="o">(</span><span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span>
+                					<span class="s">"src\\thread\\basic\\imgs\\bomb_2.jpg"</span><span class="o">));</span>
+                			<span class="n">lb</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+                			<span class="k">try</span> <span class="o">{</span>
+								<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+							<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+								<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+							<span class="o">}</span>
+                		<span class="o">}</span>
+                	<span class="o">}</span>
+                <span class="o">}).</span><span class="na">start</span><span class="o">();</span>				
+				<span class="c1">// 2. 입력값을 받아서 JTextArea에 붙이는 작업 </span>
+                <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                		<span class="nc">String</span> <span class="n">secret</span> <span class="o">=</span> <span class="s">"1234"</span><span class="o">;</span>
+                		<span class="nc">String</span> <span class="n">answer</span> <span class="o">=</span> <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showInputDialog</span><span class="o">(</span><span class="s">"암호를 대시오"</span><span class="o">);</span>
+                    	<span class="k">if</span><span class="o">(</span><span class="n">secret</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">answer</span><span class="o">))</span> <span class="o">{</span>
+                    		<span class="n">inputChk</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    		<span class="k">return</span><span class="o">;</span>
+                    	<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                    		<span class="nc">String</span> <span class="n">answer2</span> <span class="o">=</span> <span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showInputDialog</span><span class="o">(</span><span class="s">"암호를 다시 대시오"</span><span class="o">);</span>
+                    		<span class="k">if</span><span class="o">(</span><span class="n">secret</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">answer2</span><span class="o">))</span> <span class="o">{</span>
+                    			<span class="n">inputChk</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                    			<span class="k">return</span><span class="o">;</span>
+                    		<span class="o">}</span>
+                    	<span class="o">}</span>
+                	<span class="o">}</span>
+                <span class="o">}).</span><span class="na">start</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">new</span> <span class="nf">Ex04_ZBombTest</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="threadstop">ThreadStop</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MakeCar3</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">flag</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">getName</span><span class="o">()</span> <span class="o">+</span> <span class="s">"작업중"</span><span class="o">);</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">500</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex05_ThreadStop</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"메인스레드: "</span> <span class="o">+</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+		<span class="nc">MakeCar3</span> <span class="n">mc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar3</span><span class="o">();</span>
+		<span class="c1">// 스레드 start 해준다.</span>
+		<span class="n">mc</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">2000</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"쓰레드 종료"</span><span class="o">);</span>
+<span class="c1">//		mc.stop();</span>
+<span class="c1">//		mc.start(); // cpu에서 stop했으면 다시 start가 안된다.</span>
+		<span class="n">mc</span><span class="o">.</span><span class="na">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="priority">Priority</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MakeCar</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">work</span><span class="o">;</span>
+	<span class="nc">MakeCar</span><span class="o">(</span><span class="nc">String</span> <span class="n">_work</span><span class="o">,</span> <span class="kt">int</span> <span class="n">prio</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">work</span> <span class="o">=</span> <span class="n">_work</span><span class="o">;</span>
+		<span class="n">setPriority</span><span class="o">(</span><span class="n">prio</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">work</span> <span class="o">+</span> <span class="s">"작업중"</span><span class="o">);</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">500</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex06_Priority</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">MakeCar</span> <span class="n">mc1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar</span><span class="o">(</span><span class="s">"차틀"</span><span class="o">,</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">NORM_PRIORITY</span><span class="o">);</span>
+		<span class="c1">// 우선순위는 큰 영향이 없다.</span>
+		<span class="n">mc1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="nc">MakeCar</span> <span class="n">mc2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MakeCar</span><span class="o">(</span><span class="s">"도색"</span><span class="o">,</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">NORM_PRIORITY</span><span class="o">);</span>
+		<span class="n">mc2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="synch">Synch</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Count</span> <span class="o">{</span>
+	<span class="kt">int</span> <span class="n">i</span><span class="o">;</span>
+	<span class="c1">// Java에서 lock은 synchronized이다.</span>
+	<span class="kt">void</span> <span class="nf">increment</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 메소드에 들어가는거 아니면 반드시 공유하는 객체 하나(this라도)를 가지고들어간다. </span>
+		<span class="kd">synchronized</span><span class="o">(</span><span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">i</span><span class="o">++;</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">ThreadCount</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">Count</span> <span class="n">cnt</span><span class="o">;</span>
+	<span class="c1">// 생성자 함수</span>
+	<span class="kd">public</span> <span class="nf">ThreadCount</span><span class="o">(</span><span class="nc">Count</span> <span class="n">cnt</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">cnt</span> <span class="o">=</span> <span class="n">cnt</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">// 스레드는 run 메소드를 오버라이딩 해줘야한다.</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100000000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">cnt</span><span class="o">.</span><span class="na">increment</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex07_Synch</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Count</span> <span class="n">cnt</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Count</span><span class="o">();</span>
+		<span class="nc">ThreadCount</span> <span class="n">tc1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadCount</span><span class="o">(</span><span class="n">cnt</span><span class="o">);</span>
+		<span class="n">tc1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="nc">ThreadCount</span> <span class="n">tc2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadCount</span><span class="o">(</span><span class="n">cnt</span><span class="o">);</span>
+		<span class="n">tc2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">tc1</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+			<span class="n">tc2</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"i값: "</span> <span class="o">+</span> <span class="n">cnt</span><span class="o">.</span><span class="na">i</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="breadtest">BreadTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Bread</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">bread</span><span class="o">;</span>
+	<span class="kt">boolean</span> <span class="n">isCheck</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+	<span class="c1">// wait()/notigyAll()  	</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBread</span><span class="o">(</span><span class="nc">String</span> <span class="n">bread</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">bread</span> <span class="o">=</span> <span class="n">bread</span><span class="o">;</span>		
+		<span class="n">isCheck</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="kd">synchronized</span><span class="o">(</span><span class="n">bread</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">notifyAll</span><span class="o">();</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getBread</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">isCheck</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="kd">synchronized</span><span class="o">(</span><span class="n">bread</span><span class="o">)</span> <span class="o">{</span>
+						<span class="n">wait</span><span class="o">();</span>
+					<span class="o">}</span>
+				<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+				<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">bread</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Baker</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">Bread</span> <span class="n">bbang</span><span class="o">;</span>
+	<span class="nc">Baker</span><span class="o">(</span><span class="nc">Bread</span> <span class="n">bbang</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">bbang</span> <span class="o">=</span> <span class="n">bbang</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">bbang</span><span class="o">.</span><span class="na">setBread</span><span class="o">(</span><span class="s">"진열된 완성된 맛있는 빵"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Customer</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+	<span class="nc">Bread</span> <span class="n">bbang</span><span class="o">;</span>
+	<span class="nc">Customer</span><span class="o">(</span><span class="nc">Bread</span> <span class="n">bbang</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">bbang</span> <span class="o">=</span> <span class="n">bbang</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"빵을 사감 : "</span> <span class="o">+</span> <span class="n">bbang</span><span class="o">.</span><span class="na">getBread</span><span class="o">());</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Ex08_BreadTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Bread</span>  <span class="n">bread</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bread</span><span class="o">();</span>
+		<span class="nc">Baker</span>  <span class="n">baker</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Baker</span><span class="o">(</span><span class="n">bread</span><span class="o">);</span>
+		<span class="nc">Customer</span> <span class="n">customer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Customer</span><span class="o">(</span><span class="n">bread</span><span class="o">);</span>
+		<span class="n">customer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="n">baker</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">customer</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>
+			<span class="n">baker</span><span class="o">.</span><span class="na">join</span><span class="o">();</span>			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

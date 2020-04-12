@@ -1,0 +1,257 @@
+I"��<h1 id="sql"><a href="">sql</a></h1>
+
+<h2 id="sql-1">Sql</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- emp(사원테이블)에 8000사번에 이름은 본인이름으로 월급 10000 데이타 입력</span>
+<span class="c1">-- INSERT INTO table_name(columns) VALUES (values);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">,</span> <span class="mi">10000</span><span class="p">);</span> <span class="c1">-- 입력</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">7788</span><span class="p">,</span> <span class="s1">'홍길자'</span><span class="p">,</span> <span class="mi">9000</span><span class="p">);</span> <span class="c1">-- 에러 : 무결성제약조건</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8001</span><span class="p">,</span> <span class="s1">'홍길자'</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="c1">-- 입력</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8002</span><span class="p">,</span> <span class="s1">'홍길숙'</span><span class="p">,</span> <span class="mi">9000</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span> <span class="c1">-- 에러 : 무결성제약조건</span>
+
+<span class="k">commit</span><span class="p">;</span>
+<span class="k">rollback</span><span class="p">;</span>
+
+<span class="c1">-- 구조확인</span>
+<span class="k">DESC</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 내용확인</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="cm">/*
+    테이블명 : info
+    hakbun  char(4)
+    name    varchar2(10)
+    jumin   char(14)
+    gender  varchar2(10)
+    age     number(3)
+ */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">(</span>
+    <span class="n">hakbun</span>  <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">name</span>    <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">jumin</span>   <span class="nb">char</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+    <span class="n">gender</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">age</span>     <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="c1">-- 구조확인</span>
+<span class="k">DESC</span> <span class="n">info</span>
+
+<span class="cm">/* 데이타 입력
+    ' 1001 학번의 홍길동 입력
+    ' 1002 학번의 김길동 입력
+    ' 1002 학번의 맹길동 입력
+    ' 주민번호가 801212-1234567인 홍길동 학생
+    ' 26세 남자 입력
+ */</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">);</span> 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'김길동'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'맹길동'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">jumin</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'801212-1234567'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">);</span>
+
+<span class="c1">-- 내용확인</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+<span class="c1">-- 데이타 삭제</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- 제약조건(기본키)</span>
+<span class="cm">/*
+    ALTER  TABLE   table_name
+    ADD  CONSTRAINT  pk_name  PRIMARY  KEY ( column_name );
+ */</span>
+ <span class="c1">-- 제약조건(기본키)</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">info</span>
+<span class="c1">-- 학번을 PRIMARY KEY(첫번째 방법) 한 후 다시 </span>
+<span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">pk_info_hakbun</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">hakbun</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">);</span> 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'김길동'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'맹길동'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">jumin</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'801212-1234567'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+
+<span class="c1">-- 제약조건 확인</span>
+<span class="k">SELECT</span> <span class="k">constraint_name</span><span class="p">,</span> <span class="n">constraint_type</span> <span class="k">FROM</span> <span class="n">user_constraints</span><span class="p">;</span>
+
+<span class="c1">-- 데이타테이블 삭제</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">;</span>
+<span class="cm">/* info 테이블에 PK 부여
+    테이블 레벨 제약조건 방식
+    CREATE TABEL    table_name (
+    column_name     data_type,
+    CONSTRAINT      fk_name FOREIGN  KEY (column_name )
+    REFERENCES      ef_table_name ( ref_column_name )
+    );    
+ */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">(</span>
+    <span class="n">hakbun</span>  <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">name</span>    <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">jumin</span>   <span class="nb">char</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+    <span class="n">gender</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">age</span>     <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="c1">-- PRIMARY KEY(두번째 방법)</span>
+    <span class="k">CONSTRAINT</span> <span class="n">pk_info_hakbun</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">hakbun</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1001'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">);</span> 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'김길동'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1002'</span><span class="p">,</span> <span class="s1">'맹길동'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">jumin</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'801212-1234567'</span><span class="p">,</span> <span class="s1">'홍길동2'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1111'</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">);</span> <span class="c1">-- 에러</span>
+
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- PRIMARY KEY(세번째 방법) : NOT NULL</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">info</span> <span class="k">MODIFY</span> <span class="p">(</span><span class="n">name</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span> 
+
+<span class="k">DESC</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- [UNIQUE]</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">info</span> <span class="k">ADD</span> 
+<span class="k">CONSTRAINT</span> <span class="n">uq_info_jumin</span> <span class="k">UNIQUE</span> <span class="p">(</span><span class="n">jumin</span><span class="p">);</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- 주민번호를 UNIQUE 해줬기 때문에 주민번호가 같으면 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1003'</span><span class="p">,</span> <span class="s1">'맹길동'</span><span class="p">,</span> <span class="s1">'990101-1234567'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1004'</span><span class="p">,</span> <span class="s1">'박길동'</span><span class="p">,</span> <span class="s1">'990101-1234567'</span><span class="p">);</span> <span class="c1">-- UQ 에러</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'최길동'</span><span class="p">,</span> <span class="s1">'990101-1234567'</span><span class="p">);</span> <span class="c1">-- PK 에러</span>
+
+<span class="c1">-- PK는 NULL값이 허용되지않지만 UNIQUE는 NULL값이 허용</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1005'</span><span class="p">,</span> <span class="s1">'문길동'</span><span class="p">);</span>
+
+<span class="k">DESC</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- [CHECK]</span>
+<span class="c1">-- 남자 : 남자/남정네/남성/남/m/M/male/Male/man/Man/</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">info</span> <span class="k">ADD</span> 
+<span class="k">CONSTRAINT</span> <span class="n">ck_info_gender</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">gender</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'남성'</span><span class="p">,</span> <span class="s1">'여성'</span><span class="p">));</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1006'</span><span class="p">,</span> <span class="s1">'배길동'</span><span class="p">,</span> <span class="s1">'남성'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1007'</span><span class="p">,</span> <span class="s1">'전길동'</span><span class="p">,</span> <span class="s1">'여성'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1008'</span><span class="p">,</span> <span class="s1">'안길동'</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">);</span> <span class="c1">-- CK 에러</span>
+
+<span class="c1">-- [DEFAULT] : 제약조건은 아니지만 제약조건과 같이 많이 사용</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">info</span> <span class="k">MODIFY</span> <span class="p">(</span><span class="n">gender</span> <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">'남성'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'1009'</span><span class="p">,</span> <span class="s1">'강길동'</span><span class="p">);</span> <span class="c1">-- DEFAULT는 기본값을 지정</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- [FOREIGN KEY]</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- 부서 deptno 자료형을 보기위해</span>
+<span class="k">DESC</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">(</span>
+    <span class="n">hakbun</span>  <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">name</span>    <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">jumin</span>   <span class="nb">char</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+    <span class="n">gender</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">'남성'</span><span class="p">,</span>
+    <span class="n">age</span>     <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">deptno</span>  <span class="n">number</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">pk_info_hakbun</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">hakbun</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">uq_info_jumin</span> <span class="k">UNIQUE</span> <span class="p">(</span><span class="n">jumin</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">ck_info_gender</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">gender</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'남성'</span><span class="p">,</span> <span class="s1">'여성'</span><span class="p">)),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">fk_info_deptno</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">deptno</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">dept</span><span class="p">(</span><span class="n">deptno</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'9000'</span><span class="p">,</span> <span class="s1">'송혜교'</span><span class="p">,</span> <span class="s1">'여성'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'9001'</span><span class="p">,</span> <span class="s1">'전지현'</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> <span class="c1">-- 에러 : 부서에 50이 없음</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">deptno</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'9001'</span><span class="p">,</span> <span class="s1">'전지현'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="k">DESC</span> <span class="n">info</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- [연습문제]</span>
+<span class="cm">/* 1. sawon 테이블을 생성하세요.
+    sabun은 6자리 숫자
+    sawon_name은최대 한글 5자리
+    ubmu는최대 한글 10자리
+    weolgub는정수형 8자리와 소수점 2자리
+    buseo는숫자 3자리
+ */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">sawon</span><span class="p">(</span>
+    <span class="n">sabun</span>       <span class="n">number</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">sawon_name</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">ubmu</span>        <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">weolgub</span>     <span class="n">number</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">buseo</span>       <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">sawon</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">buseo</span><span class="p">;</span>
+<span class="k">DESC</span> <span class="n">sawon</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">sawon</span><span class="p">;</span>
+
+<span class="c1">-- 2. 위의 테이블에서 sabun을 기본키로 설정</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span>  <span class="n">pk_sawon_sabun</span>  <span class="k">PRIMARY</span>  <span class="k">KEY</span> <span class="p">(</span><span class="n">sabun</span><span class="p">);</span>
+
+<span class="c1">-- 3. 최대 한글 10자리의 jiyeok 컬럼을 추가하되 NULL 값이 입력되지 않도록 지정</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">ADD</span><span class="p">(</span><span class="n">jiyeok</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">);</span>
+
+<span class="c1">-- 4. weolgub 컬럼은 정수형7자리로 변경</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">MODIFY</span><span class="p">(</span><span class="n">weolgub</span> <span class="n">number</span><span class="p">(</span><span class="mi">7</span><span class="p">));</span>
+
+<span class="c1">-- 5. ubmu컬럼은 ‘개발’, ‘유지보수’, ‘관리’ 만데이터 값으로 입력되도록 지정</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">ck_sawon_ubmu</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">ubmu</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'개발'</span><span class="p">,</span> <span class="s1">'유지보수'</span><span class="p">,</span> <span class="s1">'관리'</span><span class="p">));</span>
+
+<span class="c1">-- 6. ubmu컬럼에 데이터가 입력이 안될 경우 디폴드값으로 ‘개발’을 설정</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">MODIFY</span> <span class="p">(</span><span class="n">ubmu</span> <span class="k">DEFAULT</span> <span class="s1">'개발'</span><span class="p">);</span>
+
+<span class="cm">/* 7. buseo 테이블을 생성하세요
+    buseo_no는숫자 3자로 이루어진 번호로 기본키
+    buseo_name은최대 한글 10자리
+ */</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">buseo</span><span class="p">(</span>
+    <span class="n">buseo_no</span>    <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">buseo_name</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span>  <span class="n">pk_buseo_buseo_no</span>  <span class="k">PRIMARY</span>  <span class="k">KEY</span> <span class="p">(</span><span class="n">buseo_no</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">DESC</span> <span class="n">buseo</span><span class="p">;</span>
+<span class="k">DESC</span> <span class="n">sawon</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">buseo</span><span class="p">;</span>
+
+<span class="c1">-- 8. sawon 테이블의 buseo컬럼을 buseo 테이블의 buseo_no를참조하는 외래키로 설정</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="n">fk_sawon_buseo</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">buseo</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">buseo</span><span class="p">(</span><span class="n">buseo_no</span><span class="p">);</span>
+
+<span class="c1">-- 9. useo 테이블에 데이터 입력</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">buseo</span><span class="p">(</span><span class="n">buseo_no</span><span class="p">,</span> <span class="n">buseo_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">101</span><span class="p">,</span> <span class="s1">'소프트웨어유지보수부'</span><span class="p">);</span> 
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">buseo</span><span class="p">(</span><span class="n">buseo_no</span><span class="p">,</span> <span class="n">buseo_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">202</span><span class="p">,</span> <span class="s1">'관리부'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">buseo</span><span class="p">(</span><span class="n">buseo_no</span><span class="p">,</span> <span class="n">buseo_name</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">303</span><span class="p">,</span> <span class="s1">'인적자원부'</span><span class="p">);</span>
+
+<span class="c1">-- 10. sawon 테이블에 데이터 입력 (입력이 안될 경우도 있음)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon</span><span class="p">(</span><span class="n">sabun</span><span class="p">,</span> <span class="n">sawon_name</span><span class="p">,</span> <span class="n">weolgub</span><span class="p">,</span> <span class="n">buseo</span><span class="p">,</span> <span class="n">jiyeok</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8001</span><span class="p">,</span> <span class="s1">'홍길동이군'</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="s1">'부산'</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon</span><span class="p">(</span><span class="n">sabun</span><span class="p">,</span> <span class="n">sawon_name</span><span class="p">,</span> <span class="n">ubmu</span><span class="p">,</span> <span class="n">weolgub</span><span class="p">,</span> <span class="n">buseo</span><span class="p">,</span> <span class="n">jiyeok</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8002</span><span class="p">,</span> <span class="s1">'홍길자'</span><span class="p">,</span> <span class="s1">'사무'</span><span class="p">,</span> <span class="mi">200000</span><span class="p">,</span> <span class="mi">202</span><span class="p">,</span> <span class="s1">'인천'</span><span class="p">);</span> <span class="c1">-- CK 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon</span><span class="p">(</span><span class="n">sabun</span><span class="p">,</span> <span class="n">sawon_name</span><span class="p">,</span> <span class="n">ubmu</span><span class="p">,</span> <span class="n">buseo</span><span class="p">,</span> <span class="n">jiyeok</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8003</span><span class="p">,</span> <span class="s1">'홍길순'</span><span class="p">,</span> <span class="s1">'개발'</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="s1">'대천'</span><span class="p">);</span> <span class="c1">-- FK 에러</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon</span><span class="p">(</span><span class="n">sabun</span><span class="p">,</span> <span class="n">sawon_name</span><span class="p">,</span> <span class="n">weolgub</span><span class="p">,</span> <span class="n">jiyeok</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8004</span><span class="p">,</span> <span class="s1">'홍길석'</span><span class="p">,</span> <span class="mi">12345678</span><span class="p">,</span> <span class="s1">'서울'</span><span class="p">);</span> <span class="c1">-- 에러 : 자리수</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">sawon</span><span class="p">(</span><span class="n">sabun</span><span class="p">,</span> <span class="n">sawon_name</span><span class="p">,</span> <span class="n">ubmu</span><span class="p">,</span> <span class="n">buseo</span><span class="p">,</span> <span class="n">jiyeok</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">8005</span><span class="p">,</span> <span class="s1">'홍길철'</span><span class="p">,</span> <span class="s1">'유지보수'</span><span class="p">,</span> <span class="mi">303</span><span class="p">,</span> <span class="s1">'판교'</span><span class="p">);</span>
+
+<span class="c1">-- 11. sawon 테이블에서 jiyeok 컬럼을 제거</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">sawon</span> <span class="k">DROP</span> <span class="p">(</span><span class="n">jiyeok</span><span class="p">);</span>
+
+<span class="c1">-- 12. buseo 테이블에서 buseo 명이 ‘인적자원부’인 행을 삭제</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">buseo</span> <span class="k">WHERE</span> <span class="n">buseo_name</span> <span class="o">=</span> <span class="s1">'인적자원부'</span><span class="p">;</span> <span class="c1">-- 에러 : 부서테이블 참조 중</span>
+
+<span class="c1">-- 13. sawon 테이블의 모든 내용을 삭제하고 저장공간을 해제</span>
+<span class="k">TRUNCATE</span> <span class="k">TABLE</span> <span class="n">sawon</span><span class="p">;</span> <span class="c1">-- 구조는 남겨두고 내용을 삭제한다.</span>
+
+<span class="c1">-- 14. 1~8 단계까지를 하나의CREATE 문으로 작성</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">buseo</span><span class="p">(</span>
+    <span class="n">buseo_no</span>    <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">buseo_name</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span>  <span class="n">pk_buseo_buseo_no</span>  <span class="k">PRIMARY</span>  <span class="k">KEY</span> <span class="p">(</span><span class="n">buseo_no</span><span class="p">)</span>
+<span class="p">);</span>  
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">sawon</span><span class="p">(</span>
+    <span class="n">sabun</span>   <span class="nb">char</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+    <span class="n">sawon_name</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">ubmu</span>    <span class="n">varchar2</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">'개발'</span><span class="p">,</span>
+    <span class="n">weolgub</span> <span class="n">number</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span>
+    <span class="n">buseo</span>   <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">jiyeok</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="k">CONSTRAINT</span> <span class="n">pk_sawon_sabun</span>  <span class="k">PRIMARY</span>  <span class="k">KEY</span> <span class="p">(</span><span class="n">sabun</span><span class="p">),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">ck_sawon_ubmu</span> <span class="k">CHECK</span> <span class="p">(</span><span class="n">ubmu</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'개발'</span><span class="p">,</span> <span class="s1">'유지보수'</span><span class="p">,</span> <span class="s1">'관리'</span><span class="p">)),</span>
+    <span class="k">CONSTRAINT</span> <span class="n">fk_sawon_buseo</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">buseo</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">buseo</span><span class="p">(</span><span class="n">buseo_no</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,329 @@
+I"yu<h1 id="mapreduce2"><a href="">mapreduce2</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>MapReduce 이해</li>
+  <li>Flume 설치</li>
+  <li>pig 설치</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>DelayCount
+    <ul>
+      <li>airline3.genericclass.DelayCount 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline3.genericclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configured</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.TextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.util.GenericOptionsParser</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.util.Tool</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.util.ToolRunner</span><span class="o">;</span>
+<span class="c1">//* extends Configured implements Tool</span>
+<span class="c1">// Configured : 환경설정파일을 제어하기 위해</span>
+<span class="c1">// Tool : 콘솔 설정 옵션을 지원하기 위해</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelayCount</span> <span class="kd">extends</span> <span class="nc">Configured</span> <span class="kd">implements</span> <span class="nc">Tool</span> 
+<span class="o">{</span>	
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="kd">throws</span> <span class="nc">Exception</span>
+  <span class="o">{</span>
+  <span class="c1">// ToolRunner : Tool 인터페이스의 실행을 도와주는 헬퍼 클래스 </span>
+  <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="nc">ToolRunner</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="k">new</span> <span class="nc">Configuration</span><span class="o">(),</span><span class="k">new</span> <span class="nc">DelayCount</span><span class="o">(),</span> <span class="n">args</span><span class="o">);</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Job Result : "</span> <span class="o">+</span> <span class="n">res</span><span class="o">);</span>		
+  <span class="o">}</span> <span class="c1">// end of main</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">run</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span>
+  <span class="o">{</span>
+  <span class="nc">String</span><span class="o">[]</span> <span class="n">otherArgs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GenericOptionsParser</span><span class="o">(</span><span class="n">getConf</span><span class="o">(),</span> <span class="n">args</span><span class="o">).</span><span class="na">getRemainingArgs</span><span class="o">();</span>        
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span>
+  <span class="o">{</span> 
+      <span class="nc">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Usage: DelayCount -D workType=departure &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span> 
+  <span class="o">}</span> <span class="c1">// end of if</span>
+  <span class="c1">// Configuration conf = new Configuration();</span>
+  <span class="c1">// 기존에 있는 Conf를 가져온다.</span>
+  <span class="nc">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">getConf</span><span class="o">(),</span> <span class="s">"DelayCount"</span><span class="o">);</span>
+  <span class="c1">// 입력 파일 경로</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">otherArgs</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="c1">// 출력 디렉토리 경로</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">otherArgs</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">DelayCount</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">DelayCountMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span> <span class="c1">// 지연시간</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">DelayCountReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 입력포맷과 출력포맷 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">TextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 입출력 자료형 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">IntWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// mapreduce job 실행(끝날때까지 대기)</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="o">}</span> <span class="c1">// end of run</span>
+<span class="o">}</span> <span class="c1">// end of DelayCount</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline3.genericclass.DelayCountMapper 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline3.genericclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">airline.common.AirlinePerformanceParser</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelayCountMapper</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">LongWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+<span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">Text</span> <span class="n">outputKey</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="o">();</span> 
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">IntWritable</span> <span class="n">outputValue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IntWritable</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>       
+  <span class="c1">//* (1) 출발지연인지 도착지연인지 구별하는 변수</span>
+  <span class="kd">private</span> <span class="nc">String</span> <span class="n">workType</span><span class="o">;</span>      
+  <span class="c1">//* (2) main 함수 실행시 지정한 workType 값을 얻어온다.</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">(</span><span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span>
+  <span class="o">{</span>	
+  <span class="c1">// workType값을 받아다 변수에 넣는다.</span>
+  <span class="n">workType</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getConfiguration</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="s">"workType"</span><span class="o">);</span>
+  <span class="o">}</span>       
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">LongWritable</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+  <span class="nc">AirlinePerformanceParser</span> <span class="n">parser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AirlinePerformanceParser</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+  <span class="n">outputKey</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">parser</span><span class="o">.</span><span class="na">getYear</span><span class="o">()</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">parser</span><span class="o">.</span><span class="na">getMonth</span><span class="o">());</span>
+  <span class="c1">//* (3) 출발지연인지 도착지연인지 </span>
+  <span class="k">if</span><span class="o">(</span><span class="n">workType</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"departure"</span><span class="o">))</span>
+  <span class="o">{</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">parser</span><span class="o">.</span><span class="na">getDepartureDelayTime</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">)</span>
+      <span class="o">{</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">outputKey</span><span class="o">,</span> <span class="n">outputValue</span><span class="o">);</span>
+      <span class="o">}</span> <span class="c1">// end of if(getDepartureDelayTime)</span>
+  <span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">workType</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"arrival"</span><span class="o">))</span> 
+  <span class="o">{</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">parser</span><span class="o">.</span><span class="na">getArriveDelayTime</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">)</span>
+      <span class="o">{</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">outputKey</span><span class="o">,</span> <span class="n">outputValue</span><span class="o">);</span>
+      <span class="o">}</span> <span class="c1">// end of if(getArriveDelayTime)</span>
+  <span class="o">}</span> <span class="c1">// end of if(workType)</span>
+  <span class="o">}</span> <span class="c1">// end of map</span>
+<span class="o">}</span> <span class="c1">// end of DelayCountMapper</span>
+</code></pre></div>        </div>
+      </li>
+      <li>airline3.genericclass.DelayCountReducer 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">airline3.genericclass</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.IntWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="cm">/*
+  Reducer&lt;입력Key, 입력Value, 출력Key, 출력Value)
+  입력 : &lt;1998,5&gt; 1
+  출력 : &lt;1998,5&gt; 10 (합산값)
+*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelayCountReducer</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">IntWritable</span><span class="o">&gt;</span>
+<span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">IntWritable</span> <span class="n">result</span><span class="o">=</span><span class="k">new</span> <span class="nc">IntWritable</span><span class="o">();</span>        
+  <span class="c1">// key, list(value)</span>
+  <span class="nd">@Override</span>
+  <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">IntWritable</span><span class="o">&gt;</span> <span class="n">values</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+  <span class="c1">// 계산 결과를 합치는 코드</span>
+  <span class="kt">int</span> <span class="n">sum</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+  <span class="k">for</span><span class="o">(</span><span class="nc">IntWritable</span> <span class="n">value</span> <span class="o">:</span> <span class="n">values</span> <span class="o">)</span>
+  <span class="o">{</span>
+      <span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+  <span class="o">}</span> <span class="c1">// end of for</span>
+  <span class="n">result</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+  <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span>  
+  <span class="o">}</span> <span class="c1">// end of reduce</span>
+<span class="o">}</span> <span class="c1">// end of DelayCountReducer</span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ls /home/hadoop/source
+2) [hadoop@nn01 ~]$ yarn jar /home/hadoop/source/lab6.jar airline3.genericclass.DelayCount -D workType=departure /input/airline/1987.csv /output/delaycount_departure
+3) [hadoop@nn01 ~]$ hdfs dfs -ls /output/delaycount_departure
+4) [hadoop@nn01 ~]$ hdfs dfs -cat /output/delaycount_departure/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>플럼 설치
+    <ul>
+      <li>dn01 노드의 root 계정에서 설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# cd /tmp
+2) [root@dn01 tmp]# wget http://apache.mirror.cdnetwors.com/flume/stable/apache-flume-1.9.0-bin.tar.gz
+3) [root@dn01 tmp]# tar xzvf apache-flume-1.9.0-bin.tar.gz
+4) [root@dn01 tmp]# mkdir -p /opt/flume/1.9.0
+5) [root@dn01 tmp]# ls -l /opt/flume/1.9.0
+6) [root@dn01 tmp]# mv apache-flume-1.9.0-bin/* /opt/flume/1.9.0
+7) [root@dn01 tmp]# ln -s /opt/flume/1.9.0 /opt/flume/current
+8) [root@dn01 tmp]# ls -l /opt/flume
+9) [root@dn01 tmp]# chown -R hadoop:hadoop /opt/flume
+10) [root@dn01 tmp]# ls -l /opt/flume
+</code></pre></div>        </div>
+      </li>
+      <li>dn01 노드의 hadoop 계정에서 환경변수 설정
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]# su - hadoop
+2) [hadoop@dn01 ~]$ vi ~/.bash_profile
+#### FLUME 1.9.0 ####
+export FLUME_HOME=/opt/flume/current
+export PATH=$PATH:$FLUME_HOME/bin
+#### FLUME 1.9.0 ####
+3) [hadoop@dn01 ~]$ source ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>dn01 노드의 hadoop 계정에서 Flume 설정
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ cd $FLUME_HOME/conf
+2) [hadoop@dn01 ~]$ cp flume-conf.properties.template flume-conf.properties
+</code></pre></div>        </div>
+      </li>
+      <li>sodo 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ sudo tail -F /var/log/secure
+2) [hadoop@dn01 ~]$ ls -l /var/log/secure
+3) [hadoop@dn01 ~]$ su - root
+4) [root@dn01 ~]$ chmod 666 /var/log/secure
+5) [hadoop@dn02 ~]$ ssh dn01
+</code></pre></div>        </div>
+      </li>
+      <li>Flume 확인
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$FLUME_HOME</span>/conf
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>vi flume-syslog.properties
+<span class="c">########## flume-syslog.properties ##########</span>
+agent.sources <span class="o">=</span> s1
+agent.channels <span class="o">=</span> c1
+agent.sinks <span class="o">=</span> k1
+<span class="c"># For each one of the sources, the type is defined</span>
+agent.sources.s1.type <span class="o">=</span> <span class="nb">exec
+</span>agent.sources.s1.command <span class="o">=</span> <span class="nb">tail</span> <span class="nt">-F</span> /var/log/secure
+<span class="c"># The channel can be defined as follows.</span>
+agent.sources.s1.channels <span class="o">=</span> c1
+<span class="c"># Each sink's type must be defined</span>
+agent.sinks.k1.type <span class="o">=</span> logger
+<span class="c">#Specify the channel the sink should use</span>
+agent.sinks.k1.channel <span class="o">=</span> c1
+<span class="c"># Each channel's type is defined.</span>
+agent.channels.c1.type <span class="o">=</span> memory
+<span class="c">########## flume-syslog.properties ##########</span>
+3<span class="o">)</span> <span class="o">[</span>hadoop@dn01 conf]<span class="nv">$ </span>flume-ng agent <span class="nt">--conf-file</span> <span class="nv">$FLUME_HOME</span>/conf/flume-syslog.properties <span class="nt">--name</span> agent <span class="nt">-Dflume</span>.root.logger<span class="o">=</span>INFO,console
+4<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span><span class="k">for</span><span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span>i&lt;10<span class="p">;</span>i++<span class="o">))</span><span class="p">;</span> <span class="k">do </span>ssh dn01<span class="p">;</span> <span class="k">done
+</span>5<span class="o">)</span> <span class="o">[</span>hadoop@dn02 ~]<span class="nv">$ </span><span class="k">for</span><span class="o">((</span><span class="nv">i</span><span class="o">=</span>0<span class="p">;</span>i&lt;10<span class="p">;</span>i++<span class="o">))</span><span class="p">;</span> <span class="k">do </span><span class="nb">logout</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Bitcoin
+    <ul>
+      <li>준비
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /home/hadoop/source_data/bitthumbitCoin 
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$mkdir</span> <span class="nt">-p</span> /home/hadoop/source_data/coinonebitCoin
+3<span class="o">)</span> <span class="nb">mkdir</span> <span class="nt">-p</span> /home/hadoop/source_data/upbitbitCoin
+4<span class="o">)</span> <span class="nb">mkdir</span> <span class="nt">-p</span> /home/hadoop/crawler
+5<span class="o">)</span> vi /home/hadoop/crawler/bitThumb_fileCount.txt
+<span class="c">########## bitThumb_fileCount.txt ##########</span>
+0
+<span class="c">########## bitThumb_fileCount.txt ##########</span>
+6<span class="o">)</span> vi /home/hadoop/crawler/coinOne_fileCount.txt
+<span class="c">########## coinOne_fileCount.txt ##########</span>
+0
+<span class="c">########## coinOne_fileCount.txt ##########</span>
+7<span class="o">)</span> vi /home/hadoop/crawler/upBit_fileCount.txt
+<span class="c">########## upBit_fileCount.txt ##########</span>
+0
+<span class="c">########## upBit_fileCount.txt ##########</span>
+8<span class="o">)</span> hdfs dfs <span class="nt">-mkdir</span> <span class="nt">-p</span> /user/hadoop/testInput/bitThumb
+9<span class="o">)</span> vi flume-bitcoin.properties
+<span class="c">########## flume-bitcoin.properties ##########</span>
+agent.sources <span class="o">=</span> s1
+agent.channels <span class="o">=</span> m1
+agent.sinks <span class="o">=</span> h1
+<span class="c"># For each one of the sources, the type is defined</span>
+agent.sources.s1.type <span class="o">=</span> taildir
+<span class="c"># The channel can be defined as follows.</span>
+agent.sources.s1.channels <span class="o">=</span> m1
+agent.sources.s1.filegroups <span class="o">=</span> f1
+agent.sources.s1.filegroups.f1 <span class="o">=</span> /home/hadoop/source_data/bitthumbitCoin/bitthumbitCoin[0-9]<span class="o">{</span>1,<span class="o">}</span>.csv
+<span class="c"># Each sink's type must be defined</span>
+agent.sinks.h1.type <span class="o">=</span> hdfs
+<span class="c">#Specify the channel the sink should use</span>
+agent.sinks.h1.channel <span class="o">=</span> m1
+agent.sinks.h1.hdfs.path <span class="o">=</span> hdfs://nn01:9000/user/hadoop/testInput/bitThumb
+agent.sinks.h1.hdfs.writeFormat <span class="o">=</span> Text
+agent.sinks.h1.hdfs.rollSize <span class="o">=</span> 64000000
+agent.sinks.h1.hdfs.rollInterval <span class="o">=</span> 0
+agent.sinks.h1.hdfs.rollCount <span class="o">=</span> 0
+agent.sinks.h1.hdfs.batchSize <span class="o">=</span> 9900
+agent.sinks.h1.hdfs.fileType <span class="o">=</span> DataStream
+<span class="c"># Each channel's type is defined.</span>
+agent.channels.m1.type <span class="o">=</span> memory
+<span class="c"># Other config values specific to each type of channel(sink or source)</span>
+<span class="c"># can be defined as well</span>
+<span class="c"># In this case, it specifies the capacity of the memory channel</span>
+agent.channels.m1.capacity <span class="o">=</span> 10000
+agent.channels.m1.transactionCapacity <span class="o">=</span> 10000
+<span class="c">########## flume-bitcoin.properties ##########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>WinCSP 업로드 후
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn02 ~]$ ssh dno1
+2) [hadoop@dn01 ~]$ ls /home/hadoop/source
+3) [hadoop@dn01 ~]$ java -jar /home/hadoop/source/bitcoin.jar temp.MainApp 
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Pig 설치
+    <ul>
+      <li>노드에서 root 계정에서 설치
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@dn01 ~]$ cd /tmp 
+2) [root@dn01 tmp]$ wget http://apache.tt.co.kr/pig/pig-0.17.0/pig-0.17.0.tar.gz
+3) [root@dn01 tmp]$ tar zxvf pig-0.17.0.tar.gz
+4) [root@dn01 tmp]$ mkdir -p /opt/pig/0.17.0
+5) [root@dn01 tmp]$ ls -l /opt/pig/0.17.0
+6) [root@dn01 tmp]$ mv pig-0.17.0/* /opt/pig/0.17.0
+7) [root@dn01 tmp]$ ln -s /opt/pig/0.17.0 /opt/pig/current
+8) [root@dn01 tmp]$ ls -l /opt/pig 
+9) [root@dn01 tmp]$ chown -R hadoop:hadoop /opt/pig
+10) [root@dn01 tmp]$ ls -l /opt/pig
+</code></pre></div>        </div>
+      </li>
+      <li>dn01 노드의 hadoop 계정에서 환경변수 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">#### PIG 0.17.0 ######################</span>
+<span class="nb">export </span><span class="nv">PIG_HOME</span><span class="o">=</span>/opt/pig/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$PIG_HOME</span>/bin
+<span class="nb">export </span><span class="nv">PIG_CLASSPATH</span><span class="o">=</span><span class="nv">$HADOOP_HOME</span>/conf
+<span class="c">#### PIG 0.17.0 ######################</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@dn01 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>Pig 실행
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ mkdir pig_data
+2) [hadoop@dn01 pig_data]$ cd pig_data
+3) [hadoop@dn01 pig_data]$ pig -x local
+</code></pre></div>        </div>
+      </li>
+      <li>pig_data
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 pig_data]$ hdfs dfs -mkdir -p /input/pig_data
+2) [hadoop@dn01 pig_data]$ hdfs dfs -ls /input/pig_data
+3) [hadoop@dn01 pig_data]$ hdfs dfs -put ./* /input/pig_data
+4) [hadoop@dn01 pig_data]$ hdfs dfs -ls /input/pig_data
+5) [hadoop@dn01 pig_data]$ pig -x local
+6) grunt&gt; groceries = load 'file:///home/hadoop/pig_data/data/groceries.csv' using PigStorage(',');
+7) grunt&gt; dump groceries
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>행렬곱
+    <ul>
+      <li>곱셈 결과 나오는 행렬의 크기는 (앞 행렬의 행의 수)×(뒤 행렬의 열의 수)가 됩니다. 즉, 앞 행렬이 m * n 크기이고 뒤 행렬이 n * r 크기인 경우 곱은 m * r 크기의 행렬이 된다.</li>
+    </ul>
+  </li>
+</ul>
+:ET

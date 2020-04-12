@@ -1,0 +1,96 @@
+I"3,<h1 id="constructor"><a href="">constructor</a></h1>
+
+<h2 id="main">Main</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Student</span> <span class="n">s2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">(</span><span class="s">"홍길자"</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">80</span><span class="o">,</span> <span class="mi">70</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이름: "</span> <span class="o">+</span> <span class="n">s2</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"총합: "</span> <span class="o">+</span> <span class="n">s2</span><span class="o">.</span><span class="na">calTotal</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균: "</span> <span class="o">+</span> <span class="n">s2</span><span class="o">.</span><span class="na">calAverage</span><span class="o">());</span>
+		<span class="nc">Student</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">();</span>
+<span class="c1">//		s.setName("홍길동");</span>
+<span class="c1">//		s.setKor(100);</span>
+<span class="c1">//		s.setEng(88);</span>
+<span class="c1">//		s.setMath(77);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이름: "</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"총합: "</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="na">calTotal</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균: "</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="na">calAverage</span><span class="o">());</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="student">Student</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+	<span class="c1">// 멤버변수(member field)</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>	
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">kor</span><span class="o">,</span> <span class="n">eng</span><span class="o">,</span> <span class="n">math</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">total</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">double</span> <span class="n">avg</span><span class="o">;</span>
+	<span class="c1">// 생성자 함수가 하나도 없는 경우</span>
+	<span class="c1">// Java Compiler가 자동으로 생성</span>
+	<span class="c1">// -&gt; 기본생성자는 만든다.</span>
+	<span class="kd">public</span> <span class="nf">Student</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// this : 멤버를 지칭하기 위한 레퍼런스</span>
+<span class="c1">//		this.name = "익명";</span>
+<span class="c1">//		this.kor = 50;</span>
+<span class="c1">//		this.eng = 50;</span>
+<span class="c1">//		this.math = 50;</span>
+		<span class="c1">// this() : 다른 생성자 함수 호출</span>
+		<span class="c1">//			반드시 첫줄에 기술</span>
+		<span class="k">this</span><span class="o">(</span><span class="s">"익명"</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"기본 생성자 호출"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 생성자 - 멤버변수 초기화</span>
+	<span class="c1">// - 클래스명과 동일한 이름의 함수</span>
+	<span class="c1">// - 리턴형 없음(void 안됨)</span>
+	<span class="c1">// - overloading 이름은 같은데 인자의 자료형과 갯수는 다르게</span>
+	<span class="kd">public</span> <span class="nf">Student</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">kor</span><span class="o">,</span> <span class="kt">int</span> <span class="n">eng</span><span class="o">,</span> <span class="kt">int</span> <span class="n">math</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">kor</span> <span class="o">=</span> <span class="n">kor</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">eng</span> <span class="o">=</span> <span class="n">eng</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">math</span> <span class="o">=</span> <span class="n">math</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"인자있는 생성자 호출"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 멤버메소드(member method)</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">calTotal</span><span class="o">()</span> <span class="o">{</span>		
+		<span class="n">total</span> <span class="o">=</span> <span class="n">kor</span><span class="o">+</span><span class="n">eng</span><span class="o">+</span><span class="n">math</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">double</span> <span class="nf">calAverage</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">avg</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span><span class="n">total</span><span class="o">/</span><span class="mi">3</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">avg</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">// setter/getter</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setKor</span><span class="o">(</span><span class="kt">int</span> <span class="n">kor</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">kor</span> <span class="o">=</span> <span class="n">kor</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setEng</span><span class="o">(</span><span class="kt">int</span> <span class="n">eng</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">eng</span> <span class="o">=</span> <span class="n">eng</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMath</span><span class="o">(</span><span class="kt">int</span> <span class="n">math</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">math</span> <span class="o">=</span> <span class="n">math</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getKor</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">kor</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getEng</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">eng</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMath</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">math</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getTotal</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">double</span> <span class="nf">getAvg</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">avg</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,138 @@
+I"�)<h1 id="webdata"><a href="">webdata</a></h1>
+
+<h2 id="requests">requests</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    파이썬에서 웹을 요청할 수 있는 라이브러리
+        1- requests 라이브러리 (s붙음 주의) - 추가
+        2- urllib 라이브러리 - 내장모듈
+
+    차이점
+        1- requests는 요청 메소드(get/post)를 구분하지만 urllib는 보내는 데이타 여부에 따라 구분됨
+        2- 데이타 보낼 때 requests는 딕셔러니 형태로 urllib는 인코딩한 바이너리 형태로 보낸다
+        
+    requests 라이브러리 추가
+    메뉴 &gt; File &gt; Settings &gt; Project Interpreter &gt; + 버튼 &gt; 'requests' 검색 후 인스톨
+
+[ requests 모듈 ]
+(1) Rest API 지원
+    import requests
+    resp = requests.get('http://www.mywebsite.com/user')
+    resp = requests.post('http://www.mywebsite.com/user')
+    resp = requests.put('http://www.mywebsite.com/user/put')
+    resp = requests.delete('http://www.mywebsite.com/user/delete')
+
+(2) 파라미터가 딕셔너리 인수로 가능
+    data = {'firstname':'John', 'lastname':'Kim', 'job':'baksu'}
+    resp = requests.post('http://www.mywebsite.com/user', data=userdata)
+
+(3) json 디코더 내장 (따로 json 모듈 사용 안해도 됨)
+    resp.json()
+"""</span>
+
+<span class="kn">import</span> <span class="nn">requests</span> <span class="k">as</span> <span class="n">req</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://www.google.com"</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="c1"># print("text:", res.text)
+# print("content:", res.content)
+</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">headers</span>
+<span class="k">print</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+<span class="c1"># 키와 값으로 나눠서 출력
+</span><span class="k">for</span> <span class="n">keys</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"keys:"</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"values:"</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="urllib">urllib</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import urllib.request
+</span><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span> <span class="k">as</span> <span class="n">req</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"http://www.google.com"</span>
+<span class="n">site</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="c1"># print(site)
+</span><span class="n">page</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"page:"</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"status:"</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">getheaders</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"headers:"</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+<span class="c1"># 헤더정보의 이름과 값으로 출력
+</span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"name:"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"values:"</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="retretrieve">retretrieve</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 크롬에서 구글이미지 &gt; 오른마우스 &gt; 이미지 주소 복사 &gt;
+# 구글 이미지 : https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png
+# 다음 이미지 : https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png
+</span>
+<span class="s">"""
+    urllib 라이브러리(패키지):
+        - URL를 다루는 모듈을 모아 놓은 패키지
+        - Http나 Ftp를 사용하여 데이터를 다운로드 할 때 사용하는 라이브러리
+
+        [예] request 모듈 : 웹 요청을 보내고 받는 기능을 하는 모듈
+                - urlretrieve() 함수를 이용하여 이미지를 다운로드 받아 파일로 저장한다.
+"""</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"</span>
+<span class="n">imgName</span> <span class="o">=</span> <span class="s">"./data/google.png"</span>
+
+<span class="c1"># from urllib import request
+# request.urlretrieve(url, imgName)
+</span>
+<span class="c1"># (1)
+# import urllib.request
+# urllib.request.urlretrieve(url, imgName)
+</span>
+<span class="c1"># (2)
+# import urllib.request as req
+# req.urlretrieve(url, imgName)
+</span></code></pre></div></div>
+
+<h2 id="urlopen">urlopen</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># urlretrieve(): 파일로 바로 저장
+# urlopen(): 파일로 바로 저장하기 않고 메모리에 로딩을 한다.
+</span>
+<span class="s">""" [참고] 파일저장 기본방식
+    f = open('a.txt','w')
+    f.write("테스트 내용")
+    f.close()
+
+    위의 과정을 with 문으로 간략하게 close 필요없음
+    with open("a.txt","w") as f:
+        f.write("테스트 내용")
+"""</span>
+
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"</span>
+<span class="n">imgName</span> <span class="o">=</span> <span class="s">"./data/google.png"</span>
+
+<span class="c1"># 1. 웹에서 열기
+</span><span class="n">site</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># 2. 파일 저장
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">imgName</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>    <span class="c1"># 이미지는 t(텍스트)가 아닌 b(바이너리)
+</span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="urljoin">urljoin</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+ urllib.parse.urljoin() : 상대경로를 절대경로로 변화하는 함수
+"""</span>
+
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="n">baseUrl</span> <span class="o">=</span> <span class="s">"http://www.example.com/html/a.html"</span>
+
+<span class="c1"># url 부분 경로로를 바꾼다.
+</span><span class="k">print</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="s">"b.html"</span><span class="p">))</span>    <span class="c1"># http://www.example.com/html/b.html
+</span><span class="k">print</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="s">"/c.html"</span><span class="p">))</span>    <span class="c1"># http://www.example.com/c.html
+</span><span class="k">print</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="s">"../sub/b.html"</span><span class="p">))</span>    <span class="c1"># http://www.example.com/sub/b.html
+</span><span class="k">print</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="s">"/sub/e.html"</span><span class="p">))</span>    <span class="c1"># http://www.example.com/sub/e.html
+</span>
+<span class="c1"># url 전체 경로를 바꾼다
+</span><span class="k">print</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">baseUrl</span><span class="p">,</span> <span class="s">"http://www.mysite.com/mypage.jsp"</span><span class="p">))</span>    <span class="c1"># http://www.mysite.com/mypage.jsp
+</span></code></pre></div></div>
+:ET

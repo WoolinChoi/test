@@ -1,0 +1,778 @@
+I"�]<h1 id="control"><a href="">control</a></h1>
+
+<h2 id="학습">학습</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[파이썬의 자료형]
+- list [] : 인덱스/변경가능
+- tuple () : 인덱스/변경불가
+    a = ("a")   # 튜플아님
+    b = ("b",)  # 튜플
+- set {} : 인덱스x/중복불가
+- dict{키 : 값} : 키는 중복불가, 값은 중복가능, 순서는 보장안됨
+1. 제어문(파이썬 스타일 : comprehension)
+2. 함수
+</code></pre></div></div>
+
+<h2 id="condition">condition</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+ [ 제어문 ]
+    - 파이썬은 들여쓰기를 하여 블록을 표현한다
+    - 들여쓰기는 탭과 공백을 섞어 쓰지 말자
+
+    [ex]
+    if a&gt;b:
+        print(a)
+            print(b)  =&gt; 에러발생
+
+    (1) if 문
+        if 조건식A :
+            문장들
+        elif 조건식B :
+            문장들
+        else :
+            문장들
+
+        ` 조건식이나 else 뒤에는 콜론(:) 표시
+        ` 조건식을 ( ) 괄호 필요없다
+        ` 실행할 코드가 없으면 pass
+        ` 파이썬은 switch 문 없음
+"""</span>
+
+<span class="c1"># 거짓(False)의 값
+</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">i2</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">i3</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">i4</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()</span>
+<span class="n">i5</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="n">i6</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>
+<span class="n">i7</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="n">i8</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">i9</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">i10</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="c1"># (1) 간단한 if문
+</span><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="k">if</span> <span class="n">a</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"True-1"</span><span class="p">)</span> <span class="c1"># True
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"False-1"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">a</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"True-2"</span><span class="p">)</span> <span class="c1"># 출력 안됨
+</span>
+<span class="c1"># (2) 논리연산자 이용한 조건
+</span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>               <span class="c1"># -1 : True
+</span><span class="k">if</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"True-3"</span><span class="p">)</span> <span class="c1"># 출력 안됨
+</span>
+<span class="k">if</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"True-4"</span><span class="p">)</span> <span class="c1"># True
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># 0, a이고 b일때 a가 True이고 b값에 결정권을 주기때문에 b값을 출력
+</span><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">or</span> <span class="n">b</span><span class="p">)</span>   <span class="c1"># 10, a이거나 b일때 이미 a가 True이기 때문에 a값을 출력
+</span>
+<span class="c1"># (3) find() - 해당글자를 찾으면 그 글자의 인덱스 반환
+#              해당글자를 못 찾으면 -1 리턴
+</span><span class="n">word</span> <span class="o">=</span> <span class="s">"korea"</span>
+<span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">"k"</span><span class="p">):</span>  <span class="c1"># 해당글자를 찾으면 0이기 때문에
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"1&gt;"</span><span class="p">)</span>     <span class="c1"># 출력 안됨
+</span>
+<span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">"z"</span><span class="p">):</span>  <span class="c1"># 해당글자를 못찾으면 -1이기 때문에
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"2&gt;"</span><span class="p">)</span>     <span class="c1"># 출력
+</span>
+<span class="c1"># 해당하는 문자가 있는 경우만 조건문 안에서 실행(3&gt; 실행)
+</span><span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">"k"</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># 해당글자를 찾으면 0인데 &gt; -1보다 크므로
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"3&gt;"</span><span class="p">)</span>         <span class="c1"># 출력
+</span>
+<span class="c1"># (4) 변수
+</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">if</span> <span class="n">a</span><span class="p">:</span>       <span class="c1"># False
+</span>    <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">elif</span> <span class="n">b</span><span class="p">:</span>     <span class="c1"># True
+</span>    <span class="n">c</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>    <span class="c1"># 4
+</span></code></pre></div></div>
+
+<h2 id="loop">loop</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ------------------------------------------------------
+</span><span class="s">"""
+   (2) for문
+        for &lt;타켓변수&gt; in 집합객체 :
+            문장들
+        else:
+            문장들
+
+        ` 반복문 뒤에 else는 반복하는 조건에 만족하지않으면 실행
+
+   (3) while 문
+        while 조건문 :
+            문장들
+"""</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">112</span>                  <span class="c1"># 숫자형
+</span><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="s">'1'</span><span class="p">,</span><span class="s">'2'</span><span class="p">,</span><span class="s">'3'</span><span class="p">]</span>        <span class="c1"># 리스트
+</span><span class="n">c</span> <span class="o">=</span> <span class="s">'987'</span>                <span class="c1"># 문자열
+</span><span class="n">d</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>             <span class="c1"># 튜플
+</span><span class="n">e</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>       <span class="c1"># 딕셔너리
+</span>
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">e</span><span class="p">:</span> <span class="c1"># a(집합객체x)는 반복이 안되지만 b부터 e까지는 반복된다.
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="c1"># 딕셔너리의 키값을 가져오려면 items() 이용
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+<span class="c1"># 1 ~ 10까지의 합
+</span><span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+
+<span class="c1"># 1 ~ 10까지의 홀수의 합
+</span><span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+
+<span class="c1"># 2단 ~ 9단까지 구구단 출력
+# 출력형식 : (1) format() 이용 (2) % 이용
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"{0} * {1} = {2}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">j</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1">#----------------------------------------------------
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">"z"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"x"</span><span class="p">]</span>
+<span class="s">'''
+while a:
+    print(a.pop())  # a를 뒤에서부터 출력
+else:
+    print("end")    # end를 출력
+'''</span>
+
+<span class="k">while</span> <span class="n">a</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="s">"y"</span><span class="p">:</span>
+        <span class="k">break</span>       <span class="c1"># while문에 break가 있으면 else가 실행되지 않음
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>     <span class="c1"># x
+</span><span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"end"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="others">others</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">str</span> <span class="o">=</span> <span class="s">'HELLO'</span>   <span class="c1"># 문자열
+</span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span><span class="s">'b'</span><span class="p">,</span><span class="s">'c'</span><span class="p">]</span>  <span class="c1"># 리스트
+</span><span class="n">tpl</span> <span class="o">=</span> <span class="p">(</span><span class="s">'ㄱ'</span><span class="p">,</span><span class="s">'ㄴ'</span><span class="p">,</span><span class="s">'ㄷ'</span><span class="p">)</span>  <span class="c1"># 튜플
+</span><span class="n">di</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span> <span class="c1"># 딕셔너리
+</span>
+<span class="c1"># (1) unpacking
+</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">tpl</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>    <span class="c1"># ㄴ
+</span>
+<span class="n">alist</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span> <span class="ow">in</span> <span class="n">alist</span><span class="p">:</span>   <span class="c1"># list안에 ()요소별로 추출 가능
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">first</span> <span class="o">+</span> <span class="n">second</span><span class="p">)</span>   <span class="c1"># 3, 7, 11
+</span>
+<span class="c1"># (2) zip()
+</span><span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s">"월"</span><span class="p">,</span> <span class="s">"화"</span><span class="p">,</span> <span class="s">"수"</span><span class="p">]</span>
+<span class="n">doit</span> <span class="o">=</span> <span class="p">[</span><span class="s">"잠자기"</span><span class="p">,</span> <span class="s">"공부"</span><span class="p">,</span> <span class="s">"놀기"</span><span class="p">,</span> <span class="s">"먹기"</span><span class="p">]</span>
+<span class="n">time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">yoil</span><span class="p">,</span> <span class="n">halil</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">doit</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">yoil</span><span class="p">,</span> <span class="n">halil</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">doit</span><span class="p">,</span> <span class="n">time</span><span class="p">)))</span>  <span class="c1"># 짧은 리스트 기준
+</span>
+<span class="c1"># 연습
+</span><span class="n">fruit</span> <span class="o">=</span> <span class="s">'apple'</span>
+<span class="k">if</span> <span class="n">fruit</span> <span class="o">==</span> <span class="s">'Apple'</span><span class="p">:</span>
+    <span class="n">fruit</span> <span class="o">=</span> <span class="s">'Apple'</span>
+<span class="k">elif</span> <span class="n">fruit</span> <span class="o">==</span> <span class="s">'fruit'</span><span class="p">:</span>
+    <span class="n">fruit</span> <span class="o">=</span> <span class="s">'fruit'</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">fruit</span> <span class="o">=</span> <span class="n">fruit</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>    <span class="c1"># apple
+</span>
+<span class="c1"># 연습2
+</span><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="s">"1"</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="k">if</span> <span class="n">number</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">number</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">elif</span> <span class="n">number</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">number</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># [3, 4.0]
+</span>
+<span class="c1"># 연습3
+</span><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">num</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>  <span class="c1"># 5
+</span>
+<span class="c1"># 연습4
+</span><span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># -5
+</span>
+<span class="c1"># 연습5
+</span><span class="n">num</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="ow">is</span> <span class="mi">7</span> <span class="ow">or</span> <span class="n">i</span> <span class="ow">is</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">num</span>
+<span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>  <span class="c1"># 986531
+</span>
+<span class="c1"># 연습6
+</span><span class="n">coupon</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">money</span> <span class="o">=</span> <span class="mi">20000</span>
+<span class="n">coffee</span> <span class="o">=</span> <span class="mi">3500</span>
+<span class="k">while</span> <span class="n">money</span> <span class="o">&gt;</span> <span class="n">coffee</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">coupon</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">money</span> <span class="o">=</span> <span class="n">money</span> <span class="o">-</span> <span class="n">coffee</span>
+        <span class="n">coupon</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">money</span> <span class="o">+=</span> <span class="mi">2800</span>
+        <span class="n">coupon</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">print</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>    <span class="c1"># 1800
+</span>
+<span class="c1"># 연습7
+</span><span class="n">list_data_a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">list_data_b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">list_data_a</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">list_data_b</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># 6
+</span></code></pre></div></div>
+
+<h2 id="comprehension">comprehension</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    @ 컴프리핸션 (comprehension)
+    ` 하나 이상의 이터레이터로부터 파이썬 자료구조를 만드는 컴팩트한 방법
+    ` 비교적 간단한 구문으로 반복문과 조건 테스트를 결합
+
+    * 리스트 컨프리핸션
+        [ 표현식 for 항목 in 순회가능객체 ]
+        [ 표현식 for 항목 in 순회가능객체 if 조건 ]
+
+    * 딕셔러리 컨프리핸션
+        { 키_표현식: 값_표현식 for 표현식 in 순회가능객체 }
+
+    * 셋 컨프리핸션
+        { 표현식 for 표현식 in 순회가능객체 }
+"""</span>
+
+<span class="c1"># 컨프리핸션 사용하지 않은 리스트 생성
+</span><span class="s">'''
+alist = []
+alist.append(1)
+alist.append(2)
+alist.append(3)
+alist.append(4)
+alist.append(5)
+alist.append(6)
+print(alist)
+
+alist = []
+for n in range(1,6):
+    alist.append(n)
+print(alist)
+
+alist = list(range(1,6))
+print(alist)
+'''</span>
+
+<span class="c1">#------------------------------------------------
+# 리스트 컨프리핸션
+# [예] [1, 2, 3, 4, 5, 6]
+</span><span class="n">blist</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">blist</span><span class="p">)</span>
+
+<span class="n">clist</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">clist</span><span class="p">)</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>      <span class="c1"># 1, 2, 3
+</span><span class="n">cols</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c1"># 1, 3, 5
+</span><span class="n">dlist</span> <span class="o">=</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rows</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dlist</span><span class="p">)</span>
+
+<span class="c1"># dlist에서 각 요소 추출하여 출력
+</span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dlist</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">frist</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dlist</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">frist</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+
+<span class="c1">#-------------------------------------------
+# 딕셔러니 컨프리핸션
+# {키 : 값}
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># {2: 4, 3: 9, 4: 16}
+</span>
+<span class="n">word</span> <span class="o">=</span> <span class="s">"LOVE LOL"</span>
+<span class="n">wcnt</span> <span class="o">=</span> <span class="p">{</span><span class="n">letter</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">word</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">wcnt</span><span class="p">)</span> <span class="c1"># {'L': 3, 'O': 2, 'V': 1, 'E': 1, ' ': 1}, 값은 문자는 같은 키값을 가진다.
+</span>
+<span class="c1">#-------------------------------------------
+# 셋 컨프리핸션
+#   {1, 2, 3, 4, 5, 6}
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>    <span class="c1"># 리스트
+</span><span class="k">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+
+<span class="n">aset</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)}</span>     <span class="c1"># 셋
+</span><span class="k">print</span><span class="p">(</span><span class="n">aset</span><span class="p">)</span>
+
+<span class="s">"""
+@ 리스트 컨프리핸션과 셋 컨프리핸션의 차이는?
+    리스트 : 인덱스 / 중복허용 / 변경가능
+    튜플 : 인덱스 / 중복허용 / 변경불가
+    셋 : 인덱스 X / 중복 X / 변경가능
+    딕셔너리 : 키와 값 / 키는 중복 X / 인덱스 X
+"""</span>
+
+<span class="c1">#-------------------------------------------
+# [참고] 제너레이터 컨프리핸션
+# ()를 사용하면 튜플이라 생각하지만 튜플은 컨프리핸션이 없다.
+# 제너레이터 컨프리핸션은 한 번만 실행
+# 즉석에서 그 값을 생성하고 이터레이터를 통해 한 번에 값을 하나씩 처리하고 저장하지 않음
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">alist</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 제너레이터 컨프리핸션(절대로 튜플이 아님)
+</span><span class="k">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">alist</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">alist</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">alist</span><span class="p">))</span>
+
+<span class="c1"># 연습
+# BMI(Body Mass Index)는 체중(kg)을 신장(m)의 제곱(**2)으로나눈 값으로 체지방 축적을 잘 반영하기 때문에 비만도 판정에
+# 많이 사용한다. 사용자로부터 신장과 체중을입력 받아서 BMI 값에 따라서 다음과 같은 메시지를 출력하는 프로그램을 작성하여 보자.
+</span><span class="n">kg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"체중을입력하세요:"</span><span class="p">))</span>
+<span class="n">m</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"신장을입력하세요:"</span><span class="p">))</span>
+
+<span class="n">bmi</span> <span class="o">=</span> <span class="n">kg</span> <span class="o">/</span> <span class="n">m</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"당신의 BMI: </span><span class="si">%.2</span><span class="s">f"</span> <span class="o">%</span> <span class="n">bmi</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="mi">20</span> <span class="o">&lt;=</span> <span class="n">bmi</span> <span class="o">&gt;=</span> <span class="mf">24.9</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"정상입니다."</span><span class="p">)</span>
+<span class="k">elif</span> <span class="mi">25</span> <span class="o">&lt;=</span> <span class="n">bmi</span> <span class="o">&lt;=</span> <span class="mf">29.9</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"과체중입니다."</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">bmi</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"비만입니다."</span><span class="p">)</span>
+
+<span class="c1"># 연습2
+# 1부터 99까지 2자리의 정수로 이루어진 복권이 있다고 하자. 2자리가 전부 일치하면 1등상 100만원을 받는다.
+# 2자리중에서 하나만 일치하면 50만원을 받고 하나도 일치하지 않으면 상금은 없다.
+# 1에서 100 사이의 난수가 발생된다.
+</span><span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">'복권 번호(1-99)를 입력하시오 '</span><span class="p">))</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">number</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'입력번호 : '</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'당첨번호 : '</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+
+<span class="n">num_sp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_sp</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">num_sp</span> <span class="o">=</span> <span class="p">[</span><span class="s">'0'</span><span class="p">]</span> <span class="o">+</span> <span class="n">num_sp</span>
+<span class="c1"># print(num_sp)
+</span><span class="n">number_sp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">number_sp</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">number_sp</span> <span class="o">=</span> <span class="p">[</span><span class="s">'0'</span><span class="p">]</span> <span class="o">+</span> <span class="n">number_sp</span>
+
+<span class="n">aa</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">num_sp</span><span class="p">,</span> <span class="n">number_sp</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span> <span class="c1"># [('0', '6'), ('3', '8')]
+</span>
+<span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">aa</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">+=</span> <span class="mi">50</span>
+<span class="k">print</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="s">"만원"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="function">function</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [ 함수 ]
+
+     반복적인 구문을 만들어 함수로 선언하여 간단하게 호출만 하고자 한다
+
+     def 함수명(매개변수):
+        수행할 문장들
+"""</span>
+
+<span class="c1"># (0) 인자도 리턴값도 없는 함수
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"func inside"</span><span class="p">)</span>
+<span class="n">func</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">())</span>   <span class="c1"># 리턴값이 없으면 None 반환
+</span>
+<span class="c1"># (1) 인자도 리턴값도 있는 함수
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">arg1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">arg2</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="c1"># print(func(2, 3))   # 4, 13
+</span>
+<span class="c1"># 함수 호출 후 리턴값을 변수에 지정해서 출력
+</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># (2) 위치인자(positional argument)
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">gretting</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">"님"</span><span class="p">,</span> <span class="s">"!!!!"</span><span class="p">,</span> <span class="n">gretting</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="s">"안녕하세요"</span><span class="p">,</span> <span class="s">"홍길자"</span><span class="p">)</span>    <span class="c1"># 인자를 위치에 맞춰서 지정해준다.
+</span><span class="n">func</span><span class="p">(</span><span class="s">"홍길동"</span><span class="p">,</span> <span class="s">"하이"</span><span class="p">)</span>
+
+<span class="c1"># (3) 키워드인자(keyword argument)
+</span><span class="n">func</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">"길동아"</span><span class="p">,</span> <span class="n">gretting</span><span class="o">=</span><span class="s">"올라"</span><span class="p">)</span> <span class="c1"># 명확하게 키워드를 지정해준다.
+</span>
+<span class="c1"># (4) 기본 매개변수 지정
+# func("안녕")  # 에러, 인자 개수를 맞춰준다.
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">gretting</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">"홍길동"</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">"님"</span><span class="p">,</span> <span class="s">"~~~~"</span><span class="p">,</span> <span class="n">gretting</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="s">"안녕"</span><span class="p">,</span> <span class="s">"홍길숙"</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="s">"안녕"</span><span class="p">)</span>  <span class="c1"># name은 기본값이 있기때문에 gretting값으로 지정해준다.
+</span>
+<span class="k">def</span> <span class="nf">buggy</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">buggy</span><span class="p">(</span><span class="s">"ㅁ"</span><span class="p">)</span>
+<span class="n">buggy</span><span class="p">(</span><span class="s">"R"</span><span class="p">)</span>                  <span class="c1"># buggy 함수의 기본값 result=[]에 들어간다.
+</span><span class="n">buggy</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>    <span class="c1"># 인자가 있을때는 지정한 인자가 들어간다.
+</span><span class="n">buggy</span><span class="p">(</span><span class="s">"Z"</span><span class="p">)</span>                  <span class="c1"># buggy 함수의 기본값 result=[]에 들어간다.
+</span><span class="n">buggy</span><span class="p">(</span><span class="s">"B"</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># (5) 인자인자 모으기
+# 1번째와 2번째는 인자가 반드시 들어가고 3번째는 인자가 들어갈 수도 있고 없으면 0으로 초기화한다
+# 그러나 4번째 인자부터는 정확히 모른다면?
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">i</span> <span class="p">,</span><span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>   <span class="c1"># *args : 위치인자들
+</span>    <span class="nb">sum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="n">k</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>   <span class="c1"># i9에 7,8,9가 튜플로 들어간다
+</span>
+<span class="c1"># (6) 키워드인자 모으기
+</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>   <span class="c1"># **kwargs : 키워드인자가 여러개인 경우
+</span>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="function2">function2</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># [추가] 함수도 객체이다
+</span><span class="k">def</span> <span class="nf">case1</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'case-1'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">case2</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'case-2'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">case3</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'case-3'</span><span class="p">)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="p">{</span><span class="s">"case1"</span><span class="p">:</span><span class="n">case1</span><span class="p">,</span> <span class="s">"case2"</span><span class="p">:</span><span class="n">case2</span><span class="p">,</span> <span class="s">"case3"</span><span class="p">:</span><span class="n">case3</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="s">"case3"</span><span class="p">])</span>
+<span class="n">f</span><span class="p">[</span><span class="s">"case3"</span><span class="p">]()</span>
+
+<span class="c1">#---------------------------------------
+# 글로벌 변수와 지역변수
+</span><span class="n">temp</span> <span class="o">=</span> <span class="s">"글로벌"</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="s">"지역"</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"1&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>   <span class="c1"># 지역
+</span><span class="n">func</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"2&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>       <span class="c1"># 글로벌
+</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">"글로벌"</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="s">"지역"</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"1&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>   <span class="c1"># 글로벌
+</span><span class="n">func</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"2&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>       <span class="c1"># 글로벌
+</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="s">"글로벌"</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">temp</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="s">"지역"</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"1&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>   <span class="c1"># 지역
+</span><span class="n">func</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"2&gt;"</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>       <span class="c1"># 지역
+</span>
+<span class="s">"""
+#----------------------------------------------
+# 람다함수 - 한번 사용하고 버리는 함수
+# 파이션에서는 람다함수를 한 줄로 작성???
+
+    파이썬 3.x부터는 람다를 권장하지 않는다고.
+    몇몇 개발자들이 람다함수 사용시 직관적이지 않다는 이유라는데
+    
+    종종 사용됨
+"""</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="c1">#-----------------------------------------------------------
+</span><span class="s">"""  맵리듀스
+    (1) map()
+         ` 연속 데이터를 저장하는 시퀀스 자료형에서 요소마다 같은 기능을 적용할 때 사용
+         ` 형식 : map(함수명, 리스트형식의 입력값)
+         ` 파이썬 3.x에서는 list(map(calc, ex)) 반드시 list를 붙여야 리스트 형식으로 반환된다
+           파이썬 2.x에서는 list 없이도 리스트 형식으로 반환
+    (2) reduce()
+         ` 리스트 같은 시퀀스 자료형에 차례대로 함수를 적용하여 모든 값을 통합하는 함수    
+    
+    파이썬 2.x에서는 많이 사용하던 함수이지만, 최근 문법의 복잡성으로 권장하지 않는 추세란다.
+"""</span>
+
+<span class="n">ex</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">ex</span><span class="p">)))</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">reduce</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">ex</span><span class="p">))</span>
+
+<span class="c1"># lamda 적용하기
+</span><span class="n">calc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">ex</span><span class="p">)))</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="n">calc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">reduce</span><span class="p">(</span><span class="n">calc</span><span class="p">,</span> <span class="n">ex</span><span class="p">))</span>
+
+<span class="c1"># 연습
+</span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"In Function:"</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># 20
+</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Before:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># 10
+</span><span class="n">test</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"After:"</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># 10
+</span>
+<span class="c1"># 연습2
+</span><span class="k">def</span> <span class="nf">sotring_function</span><span class="p">(</span><span class="n">list_value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">list_value</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sotring_function</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>    <span class="c1"># None
+</span>
+<span class="c1"># 연습3
+</span><span class="k">def</span> <span class="nf">is_yes</span><span class="p">(</span><span class="n">your_answer</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">your_answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">"YES"</span> <span class="ow">or</span> <span class="n">you_answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">"Y"</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">your_answer</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">is_yes</span><span class="p">(</span><span class="s">"Yes"</span><span class="p">))</span>    <span class="c1"># None, return값이 없어서
+</span>
+<span class="c1"># 연습4
+</span><span class="k">def</span> <span class="nf">add_and_mul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">b</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span> <span class="o">+</span> <span class="n">b</span>
+<span class="k">print</span><span class="p">(</span><span class="n">add_and_mul</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">63</span><span class="p">)</span>   <span class="c1"># False
+</span>
+<span class="c1"># 연습5
+</span><span class="k">def</span> <span class="nf">args_test_3</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="n">two</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">three</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">one</span> <span class="o">+</span> <span class="n">two</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">args_test_3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>  <span class="c1"># TypeError
+</span>
+<span class="c1"># 연습6
+</span><span class="k">def</span> <span class="nf">rain</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">"purple"</span><span class="p">)</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">"green"</span><span class="p">,</span> <span class="s">"blue"</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">colors</span>
+<span class="n">rainbow</span> <span class="o">=</span> <span class="p">[</span><span class="s">"red"</span><span class="p">,</span> <span class="s">"orange"</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">rain</span><span class="p">(</span><span class="n">rainbow</span><span class="p">))</span>    <span class="c1"># ['green', 'blue'], 지역변수 colors값이 출력
+</span>
+<span class="c1"># 연습7
+</span><span class="k">def</span> <span class="nf">function</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">value</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span>   <span class="c1"># 8
+</span><span class="k">print</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># None
+</span>
+<span class="c1"># 연습8
+</span><span class="k">def</span> <span class="nf">get_apple</span><span class="p">(</span><span class="n">fruit</span><span class="p">):</span>
+    <span class="n">fruit</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+    <span class="n">fruit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">"e"</span><span class="p">)</span>
+    <span class="n">fruit</span> <span class="o">=</span> <span class="p">[</span><span class="s">"apple"</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">fruit</span>
+<span class="n">fruit</span> <span class="o">=</span> <span class="s">"appl"</span>
+<span class="n">get_apple</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>    <span class="c1"># apple
+</span>
+<span class="c1"># 연습9
+</span><span class="k">def</span> <span class="nf">return_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">sentence</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sentence</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">return_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">sentence</span> <span class="o">=</span> <span class="s">"I Love You"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">return_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="c1"># I Love You543210
+</span>
+<span class="c1"># 연습10
+</span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">x</span> <span class="c1"># tmp = 'y'
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">y</span>   <span class="c1"># x = 'x'
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">tmp</span> <span class="c1"># y = 'y'
+</span>    <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s">"y"</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s">"x"</span><span class="p">]</span>
+<span class="n">test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>    <span class="c1"># ['x']
+</span>
+<span class="c1"># 연습11
+</span><span class="k">def</span> <span class="nf">factorial_calculator</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial_calculator</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">factorial_calculator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 120
+</span></code></pre></div></div>
+
+<h2 id="function3">function3</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 연습
+# 리스트를 인자로 받아 짝수만 갖는 리스트 반환하는 함수
+# [출력 결과]
+# print(even_filter([1, 2, 4, 5, 8, 9, 10]))
+</span><span class="k">def</span> <span class="nf">even_filter</span><span class="p">(</span><span class="n">li</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">li</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+<span class="k">print</span><span class="p">(</span><span class="n">even_filter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]))</span>  <span class="c1"># [2, 4, 8, 10]
+</span>
+<span class="c1"># 연습2
+# 주어진 수가 소수인지 아닌지 판단하는 함수
+# [출력 결과]
+# print(is_prime_number(60))
+# print(is_prime_number(61))
+</span><span class="k">def</span> <span class="nf">is_prime_number</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">"소수가 아닙니다."</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">"소수입니다."</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"소수가 아닙니다."</span>
+<span class="k">print</span><span class="p">(</span><span class="n">is_prime_number</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>  <span class="c1"># 소수가 아닙니다.
+</span><span class="k">print</span><span class="p">(</span><span class="n">is_prime_number</span><span class="p">(</span><span class="mi">61</span><span class="p">))</span>  <span class="c1"># 소수입니다.
+</span>
+
+<span class="c1"># 연습3
+# 주어진 문자열에서 모음의 개수를 출력하는 함수
+# [출력 결과]
+# print(count_vowel("pythonian"))
+</span><span class="k">def</span> <span class="nf">count_vowel</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="s">"aeiou"</span><span class="p">:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>    <span class="c1"># 모음의 개수
+</span>    <span class="k">return</span> <span class="n">cnt</span>
+<span class="k">print</span><span class="p">(</span><span class="n">count_vowel</span><span class="p">(</span><span class="s">"pythonian"</span><span class="p">))</span> <span class="c1"># 3
+</span>
+<span class="c1"># 연습4
+</span><span class="n">list_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">quiz_2</span><span class="p">(</span><span class="n">list_data</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">list_data</span><span class="p">)</span>  <span class="c1"># [0, 3, 1, 7, 5, 8, 4]
+</span>    <span class="k">return</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>   <span class="c1"># [3, 1, 7, 5]
+</span><span class="n">quiz_2</span><span class="p">(</span><span class="n">list_1</span><span class="p">)</span>
+
+<span class="c1"># 연습5
+</span><span class="k">def</span> <span class="nf">delete_a_list_element</span><span class="p">(</span><span class="n">list_data</span><span class="p">,</span> <span class="n">element_value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">element_value</span> <span class="ow">in</span> <span class="n">list_data</span><span class="p">:</span>
+        <span class="n">list_data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">list_data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"False"</span>
+<span class="n">list_data</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'gachon'</span><span class="p">,</span> <span class="s">'2016.0'</span><span class="p">]</span>
+<span class="n">element_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">2016</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">delete_a_list_element</span><span class="p">(</span><span class="n">list_data</span><span class="p">,</span> <span class="n">element_value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># False
+</span>
+<span class="c1"># 연습6
+</span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s">"apple"</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>    <span class="c1"># 2019
+</span>
+<span class="c1"># 연습7
+</span><span class="n">tuple_1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">tuple_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">quiz_1</span><span class="p">(</span><span class="n">data_1</span><span class="p">,</span> <span class="n">data_2</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">data_1</span> <span class="o">+</span> <span class="n">data_2</span><span class="p">):</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">quiz_1</span><span class="p">(</span><span class="n">tuple_1</span><span class="p">,</span> <span class="n">tuple_2</span><span class="p">))</span> <span class="c1"># [1, 2, 3, 4, 5, 6]
+</span>
+<span class="c1"># 연습8
+</span><span class="n">dict_1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">6</span><span class="p">}</span>
+<span class="n">dict_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dict_1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">dict_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dict_1</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">dict_2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dict_keys</span><span class="p">)):</span>
+    <span class="n">dict_2</span><span class="p">[</span><span class="n">dict_values</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dict_2</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>    <span class="c1"># 4
+</span>
+<span class="c1"># 연습9
+</span><span class="n">animal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'cat'</span><span class="p">,</span> <span class="s">'snake'</span><span class="p">,</span> <span class="s">'monkey'</span><span class="p">,</span> <span class="s">'ant'</span><span class="p">,</span> <span class="s">'spider'</span><span class="p">]</span>
+<span class="n">legs</span><span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+<span class="n">animal_legs_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">animal</span><span class="p">)):</span>
+    <span class="n">animal_legs_dict</span><span class="p">[</span><span class="n">legs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">animal</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">animal_legs_dict</span><span class="p">[</span><span class="s">'ant'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="k">print</span><span class="p">(</span><span class="n">animal_legs_dict</span><span class="p">)</span> <span class="c1"># {4: 'ant', 'ant': 6, 0: 'snake', 2: 'monkey', 8: 'spider'}
+</span>
+<span class="c1"># 연습10
+</span><span class="n">Mydict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'1'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'2'</span> <span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">Copy</span> <span class="o">=</span> <span class="n">Mydict</span>
+<span class="n">Mydict</span><span class="p">[</span><span class="s">'1'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">Mydict</span><span class="p">[</span><span class="s">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">Copy</span><span class="p">[</span><span class="s">'1'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># 10
+</span>
+<span class="c1"># 연습11
+</span><span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">a</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span>
+<span class="c1"># 연습12
+</span><span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 3]
+</span><span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="c1"># [0, 1, 2, 4, 5, 6, 7, 8, 9, 3]
+</span><span class="n">a</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 3]
+</span><span class="n">a</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>    <span class="c1"># [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</span>
+<span class="c1"># 연습13
+</span><span class="n">data_1</span> <span class="o">=</span> <span class="p">{</span><span class="s">'one'</span> <span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="s">'two'</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="s">'three'</span> <span class="p">:</span> <span class="p">{</span><span class="s">'four'</span> <span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">'five'</span> <span class="p">:</span> <span class="mi">5</span><span class="p">}}</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">]:</span>   <span class="c1"># (1, ), [1], Error
+</span>    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">data_1</span><span class="p">[</span><span class="n">k</span><span class="p">][:</span><span class="mi">1</span><span class="p">])</span>    
+    <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+        
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">]:</span>   <span class="c1"># Error, a, a
+</span>    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data_1</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">"a"</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">data_1</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

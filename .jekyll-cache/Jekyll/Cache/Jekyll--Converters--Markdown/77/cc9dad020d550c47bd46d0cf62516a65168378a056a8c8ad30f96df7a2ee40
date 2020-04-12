@@ -1,0 +1,137 @@
+I"j@<h1 id="integratedclass"><a href="">integratedClass</a></h1>
+
+<h2 id="audio">Audio</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Audio<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nt">input</span><span class="p">{</span>
+		<span class="nl">width</span><span class="p">:</span><span class="m">100px</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">audio</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Audio</span><span class="p">(</span><span class="dl">'</span><span class="s1">/WebUI/media/mymusic.mp3</span><span class="dl">'</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">togglePlay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">control</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">control</span><span class="dl">'</span><span class="p">);</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">audio</span><span class="p">.</span><span class="nx">paused</span> <span class="o">||</span> <span class="nx">audio</span><span class="p">.</span><span class="nx">ended</span><span class="p">){</span>
+			<span class="nx">audio</span><span class="p">.</span><span class="nx">play</span><span class="p">();</span>
+			<span class="nx">control</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">일시정지</span><span class="dl">'</span><span class="p">;</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="nx">audio</span><span class="p">.</span><span class="nx">pause</span><span class="p">();</span>
+			<span class="nx">control</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">재생</span><span class="dl">'</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- &lt;audio controls&gt; --&gt;</span>
+	<span class="c">&lt;!-- 	&lt;source src="/WebUI/media/mymusic.mp3" type="audio/mpeg"/&gt; --&gt;</span>
+	<span class="c">&lt;!-- &lt;/audio&gt; --&gt;</span>
+	
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"player"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"../../images/sample/sensitive.jpg"</span> <span class="na">id=</span><span class="s">"img"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"control"</span> <span class="na">onclick=</span><span class="s">"togglePlay()"</span><span class="nt">&gt;</span>play<span class="nt">&lt;/button&gt;</span>
+		<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"mute"</span> <span class="na">onclick=</span><span class="s">"toggleMute()"</span><span class="nt">&gt;</span>mute<span class="nt">&lt;/button&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="video">Video</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Video<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nt">canvas</span><span class="p">{</span>
+			<span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="m">#000</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">video</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">video</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">canvas</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="nx">canvas</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="dl">'</span><span class="s1">2d</span><span class="dl">'</span><span class="p">);</span>
+			<span class="nx">ctx</span><span class="p">.</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">video</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;video</span> <span class="na">width=</span><span class="s">"320"</span> <span class="na">height=</span><span class="s">"240"</span> <span class="na">controls=</span><span class="s">"controls"</span>  <span class="na">id=</span><span class="s">"video"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;source</span> <span class="na">src=</span><span class="s">"../../media/myvedio.mp4"</span> <span class="na">type=</span><span class="s">"video/mp4"</span><span class="nt">&gt;&lt;/source&gt;</span>
+	<span class="nt">&lt;/video&gt;</span>
+	
+	<span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">"canvas"</span> <span class="na">width=</span><span class="s">"320"</span> <span class="na">height=</span><span class="s">"240"</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="googlemap">GoogleMap</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>GoogleMap<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span>
+	<span class="na">src=</span><span class="s">"http://maps.googleapis.com/maps/api/js?sensor=true"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">getLocation</span><span class="p">();</span>
+		<span class="kd">var</span> <span class="nx">opt</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="na">center</span> <span class="p">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">37.518877</span><span class="p">,</span> <span class="mf">126.732002</span><span class="p">),</span>
+			<span class="na">zoom</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+			<span class="na">mapTypeId</span> <span class="p">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">MapTypeId</span><span class="p">.</span><span class="nx">ROADMAP</span>
+		<span class="p">};</span>
+		<span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nb">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">map</span><span class="dl">"</span><span class="p">),</span> <span class="nx">opt</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">showLocation</span><span class="p">(</span><span class="nx">position</span><span class="p">){</span>
+		<span class="kd">var</span> <span class="nx">latitude</span> <span class="o">=</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">latitude</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">longitude</span> <span class="o">=</span> <span class="nx">position</span><span class="p">.</span><span class="nx">coords</span><span class="p">.</span><span class="nx">longitude</span><span class="p">;</span>
+		<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Latitude : </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">latitude</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> Longitude: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">longitude</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">hear</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="nx">latitude</span><span class="p">,</span> <span class="nx">longitude</span><span class="p">);</span>
+		<span class="nx">map</span><span class="p">.</span><span class="nx">panTo</span><span class="p">(</span><span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="nx">latitude</span><span class="p">,</span> <span class="nx">longitude</span><span class="p">));</span>
+		<span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
+		    <span class="na">position</span> <span class="p">:</span> <span class="nx">hear</span><span class="p">,</span>
+		    <span class="na">title</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">I'm hear!</span><span class="dl">"</span>
+		<span class="p">});</span>
+		<span class="nx">marker</span><span class="p">.</span><span class="nx">setMap</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="kd">function</span> <span class="nx">errorHandler</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error: Access is denied!</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">2</span><span class="p">){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Error: Position is unavailable!</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">.</span><span class="nx">code</span> <span class="o">==</span> <span class="mi">3</span><span class="p">){</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Erro : Time out</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	
+	<span class="kd">function</span> <span class="nx">getLocation</span><span class="p">(){</span>
+		<span class="k">if</span><span class="p">(</span><span class="nb">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">){</span>
+			<span class="kd">var</span> <span class="nx">Options</span> <span class="o">=</span> <span class="p">{</span>
+				<span class="na">timeout</span> <span class="p">:</span> <span class="mi">60000</span><span class="p">,</span>
+				<span class="na">enabledHighAccuracy</span> <span class="p">:</span> <span class="kc">true</span>
+			<span class="p">};</span>
+			<span class="nb">navigator</span><span class="p">.</span><span class="nx">geolocation</span><span class="p">.</span><span class="nx">getCurrentPosition</span><span class="p">(</span><span class="nx">showLocation</span><span class="p">,</span>
+					<span class="nx">errorHandler</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sorry, browser does not support geolocation!</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"map"</span> <span class="na">style=</span><span class="s">"width: 800px; height: 600px"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

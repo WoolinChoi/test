@@ -1,0 +1,382 @@
+I"��<h1 id="el"><a href="">el</a></h1>
+
+<h2 id="infoinput">InfoInput</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>InfoInput<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h2&gt;</span> 당신의 정보를 입력하세요 <span class="nt">&lt;/h2&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">"InfoSave.jsp"</span> <span class="na">name=</span><span class="s">"input"</span><span class="nt">&gt;</span>
+		이       름 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">text</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;&lt;br/&gt;</span>
+		주 민 번 호 : <span class="nt">&lt;input</span>  <span class="na">type=</span><span class="s">password</span> <span class="na">name=</span><span class="s">"id"</span><span class="nt">&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">"저장"</span> <span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'reset'</span> <span class="na">value=</span><span class="s">"취소"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="infosave">InfoSave</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span> <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;jsp:useBean </span><span class="na">id=</span><span class="s">"info"</span><span class="na"> class=</span><span class="s">"info.beans.InfoBean"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">name=</span><span class="s">"info"</span><span class="na"> property=</span><span class="s">"name"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">name=</span><span class="s">"info"</span><span class="na"> property=</span><span class="s">"id"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:useBean&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>InfoSave<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;H2&gt;</span> 당신의 신상명세서 확인 <span class="nt">&lt;/H2&gt;</span>
+	이   름  : ${info.name}<span class="nt">&lt;br/&gt;</span>
+	주민번호 : ${info.id}<span class="nt">&lt;br/&gt;</span>
+	성  별   : ${info.gender}<span class="nt">&lt;br/&gt;</span>  
+	맞습니까????
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="memberform">MemberForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>  
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+  <span class="nt">&lt;title&gt;</span>MemberForm<span class="nt">&lt;/title&gt;</span> 
+  <span class="nt">&lt;script&gt;</span>
+		<span class="kd">function</span> <span class="nx">checkFields</span><span class="p">()</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">frmObj</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">;</span>
+			
+			<span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>  
+		<span class="p">}</span> 
+		
+		<span class="kd">function</span> <span class="nx">isDuplicatedId</span><span class="p">()</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">frmObj</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">;</span>
+			<span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+			
+			<span class="k">if</span><span class="p">(</span><span class="nx">userId</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">userId</span> <span class="o">==</span> <span class="dl">""</span><span class="p">){</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">아이디를 입력하세요.</span><span class="dl">"</span><span class="p">)</span>
+		        <span class="nx">frmObj</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">focus</span><span class="p">()</span>
+		        <span class="k">return</span>
+			<span class="p">}</span>
+		
+			<span class="nx">winObj</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="dl">"</span><span class="s2">CheckId.jsp?userId=</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">userId</span><span class="p">,</span> <span class="dl">"</span><span class="s2">chkId</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">width=100, height=100</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">data-role=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>회원가입서 작성하기<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"InsertMember.jsp"</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;table&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>아이디<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"id"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"중복확인"</span> <span class="na">onclick=</span><span class="s">"isDuplicatedId()"</span><span class="nt">&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>비밀번호<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"password"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>비밀번호학인<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"password"</span> <span class="na">name=</span><span class="s">"repassword"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>이름<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"name"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>전화번호<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="na">name=</span><span class="s">"tel"</span><span class="nt">/&gt;</span>
+					<span class="nt">&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;font</span> <span class="na">color=</span><span class="s">"blue"</span><span class="nt">&gt;</span>주소<span class="nt">&lt;/font&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"50"</span> <span class="na">name=</span><span class="s">"addr"</span><span class="nt">/&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+				<span class="nt">&lt;tr&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					 <span class="c">&lt;!--로그인 버튼--&gt;</span>
+					 <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"회원가입"</span> <span class="na">onclick=</span><span class="s">"checkFields()"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+					<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+					<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"reset"</span> <span class="na">name=</span><span class="s">"cancel"</span> <span class="na">value=</span><span class="s">"취소"</span><span class="nt">&gt;&lt;br/&gt;</span>
+					<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;/table&gt;</span>
+		<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="insertmember">InsertMember</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"member.beans.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span> <span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;jsp:useBean </span><span class="na">id=</span><span class="s">"mem"</span><span class="na"> class=</span><span class="s">"member.beans.Member"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">name=</span><span class="s">"mem"</span><span class="na"> property=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:useBean&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">MemberDao</span> <span class="n">memDao</span> <span class="o">=</span> <span class="nc">MemberDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="n">memDao</span><span class="o">.</span><span class="na">insertMember</span><span class="o">(</span><span class="n">mem</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>InsertMember<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	아이디 : ${mem.id}<span class="nt">&lt;br/&gt;</span>
+	패스워드 : ${mem.password}<span class="nt">&lt;br/&gt;</span>
+	이름 : ${mem.name}<span class="nt">&lt;br/&gt;</span>
+	전화 : ${mem.tel}<span class="nt">&lt;br/&gt;</span>
+	주소 : ${mem.addr}<span class="nt">&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="checkid">CheckId</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+	pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"member.beans.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"userId"</span><span class="o">);</span>
+	<span class="nc">MemberDao</span> <span class="n">memDao</span> <span class="o">=</span> <span class="nc">MemberDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+<span class="nt">%&gt;</span>    
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>CheckId<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">memDao</span><span class="o">.</span><span class="na">isDuplicatedId</span><span class="o">(</span><span class="n">id</span><span class="o">)){</span>
+<span class="nt">%&gt;</span>
+		사용중인 아이디가 있습니다. 다시 입력하여 주십시오.
+<span class="nt">&lt;%</span>  <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span>
+		사용할 수 있는 아이디입니다.
+<span class="nt">&lt;%</span>  <span class="o">}</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="first">First</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>First<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"login"</span><span class="o">,</span> <span class="s">"당신의아이디"</span><span class="o">);</span>
+	<span class="nc">Cookie</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cookie</span><span class="o">(</span><span class="s">"isFlag"</span><span class="o">,</span><span class="s">"true"</span><span class="o">);</span>
+	<span class="n">response</span><span class="o">.</span><span class="na">addCookie</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+	데이타 보냈습니다. <span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href =</span><span class="s">"Second.jsp?data=important"</span><span class="nt">&gt;</span> 다음 페이지 <span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="second">Second</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>Second<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- request.getParameter("") --&gt;</span>
+	전 페이지의 값 : ${param.data}<span class="nt">&lt;br/&gt;</span>
+	
+	<span class="c">&lt;!-- session.getAttribute("") --&gt;</span> 
+	세션의 값 : ${sessionScope.login}<span class="nt">&lt;br/&gt;</span>
+	
+	<span class="c">&lt;!-- Cookie[] c = request.getCookies() --&gt;</span>
+	쿠키의 값 : ${cookie.isFlag.value}<span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;hr&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="basic">Basic</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"c"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span> <span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Basic<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!-- 변수선언 --&gt;</span>
+	<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"gender"</span><span class="na"> value=</span><span class="s">"male"</span> <span class="nt">/&gt;</span>
+	
+	<span class="c">&lt;!-- 조건문 --&gt;</span>
+	<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">gender</span> <span class="n">eq</span> <span class="l">'male'</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>당신은 남자입니다.<span class="nt">&lt;/c:if&gt;</span>
+	<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">gender</span> <span class="n">eq</span> <span class="l">'female'</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>당신은 여자입니다.<span class="nt">&lt;/c:if&gt;</span>
+	
+	<span class="c">&lt;!-- age 변수선언(값은 아무거나 지정) --&gt;</span>
+	<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"age"</span><span class="na"> value=</span><span class="s">"15"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;hr/&gt;</span>
+	
+	<span class="nt">&lt;c:choose&gt;</span>
+		<span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">age</span> <span class="n">le</span> <span class="mi">10</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>어린이입니다<span class="nt">&lt;/c:when&gt;</span> 
+		<span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">age</span> <span class="n">gt</span> <span class="mi">10</span> <span class="n">and</span> <span class="n">age</span> <span class="n">lt</span> <span class="mi">20</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>청소년입니다<span class="nt">&lt;/c:when&gt;</span>
+		<span class="nt">&lt;c:otherwise&gt;</span>성인입니다<span class="nt">&lt;/c:otherwise&gt;</span>
+	<span class="nt">&lt;/c:choose&gt;</span>
+	
+	<span class="c">&lt;!-- forEach 반복문 --&gt;</span>
+	<span class="nt">&lt;c:forEach </span><span class="na">var=</span><span class="s">"i"</span><span class="na"> begin=</span><span class="s">"1"</span><span class="na"> end=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"sum"</span><span class="na"> value=</span><span class="s">"</span><span class="si">${</span><span class="n">sum</span><span class="o">+</span><span class="n">i</span><span class="si">}</span><span class="s">"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/c:forEach&gt;</span>
+	<span class="nt">&lt;hr/&gt;</span>
+	1~100까지의 합 : ${sum}<span class="nt">&lt;br/&gt;</span>
+	
+	<span class="c">&lt;!-- 1~100까지의 홀수의 합과 짝수의 합 출력 --&gt;</span>
+	<span class="nt">&lt;c:forEach </span><span class="na">var=</span><span class="s">"i"</span><span class="na"> begin=</span><span class="s">"1"</span><span class="na"> end=</span><span class="s">"100"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">i</span> <span class="n">mod</span> <span class="mi">2</span> <span class="n">ne</span> <span class="mi">0</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"odd"</span><span class="na"> value=</span><span class="s">"</span><span class="si">${</span><span class="n">odd</span><span class="o">+</span><span class="n">i</span><span class="si">}</span><span class="s">"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/c:if&gt;</span>
+		<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">i</span> <span class="n">mod</span> <span class="mi">2</span> <span class="n">eq</span> <span class="mi">0</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"even"</span><span class="na"> value=</span><span class="s">"</span><span class="si">${</span><span class="n">even</span><span class="o">+</span><span class="n">i</span><span class="si">}</span><span class="s">"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;/c:if&gt;</span>
+	<span class="nt">&lt;/c:forEach&gt;</span>
+	<span class="nt">&lt;hr/&gt;</span>
+	홀수의 합 : ${odd}<span class="nt">&lt;br/&gt;</span>
+	짝수의 합 : ${even}<span class="nt">&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="check">Check</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"member.beans.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"c"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span> <span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Check<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	1. 자바객체 <span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;%</span>
+		<span class="nc">Member</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Member</span><span class="o">();</span>
+		<span class="n">m</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"홍길자"</span><span class="o">);</span>
+		<span class="n">m</span><span class="o">.</span><span class="na">setAddr</span><span class="o">(</span><span class="s">"대한민국"</span><span class="o">);</span>
+	<span class="nt">%&gt;</span>
+	이름 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="nt">%&gt;</span> / 주소 : <span class="nt">&lt;%=</span> <span class="n">m</span><span class="o">.</span><span class="na">getAddr</span><span class="o">()</span> <span class="nt">%&gt;&lt;br/&gt;</span>
+	이름 : ${m.name} / 주소 : ${m.addr}<span class="nt">&lt;br/&gt;&lt;hr/&gt;</span>
+	
+	2. c:set 변수지정<span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"m2"</span><span class="na"> value=</span><span class="s">"&lt;%= m %&gt;"</span><span class="nt">/&gt;</span>
+	이름 : ${m2.name} / 주소 : ${m2.addr}<span class="nt">&lt;br/&gt;&lt;hr/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="bundle">Bundle</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"c"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"fmt"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/fmt"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;fmt:setLocale </span><span class="na">value=</span><span class="s">"sp"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;fmt:bundle </span><span class="na">basename=</span><span class="s">"resource.message"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;fmt:message </span><span class="na">key=</span><span class="s">"TITLE"</span><span class="na"> var=</span><span class="s">"title"</span><span class="nt">/&gt;</span>
+
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span> ${title} <span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;&lt;fmt:message </span><span class="na">key=</span><span class="s">"GREETING"</span><span class="nt">/&gt;&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+<span class="nt">&lt;/fmt:bundle&gt;</span>
+</code></pre></div></div>
+
+<h2 id="quiznumberel">QuizNumberEL</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na"> 
+	pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.*"</span> <span class="nt">%&gt;</span>
+<span class="c">&lt;!-- 0. JSTL 설정 --&gt;</span>
+<span class="nt">&lt;%@ taglib </span><span class="na">prefix=</span><span class="s">"c"</span><span class="na"> uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span> <span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;&lt;title&gt;</span>QuizNumberEL<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="c">&lt;!-- 
+	1. 이전화면 값 얻어와 guess 변수에 지정
+	2. 그 값이 없다면 임의의 수를 만들어 세션에 지정
+	3. 세션의 값을 가져와 answer 변수에 지정
+	
+	4. guess의 변수에 값이 있다면
+	 (1) guess와 answer값이 같다면 맞춰다고 출력
+	 (2) 다르다면 guess값이 answer값보다 크면 크다고 출력 작으면 작다고 출력
+--&gt;</span>
+<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"guess"</span><span class="na"> value=</span><span class="s">"</span><span class="si">${</span><span class="n">param</span><span class="o">.</span><span class="na">guess</span><span class="si">}</span><span class="s">"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;c:if </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">guess</span> <span class="n">eq</span> <span class="kc">null</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;%</span>
+		<span class="kt">int</span> <span class="n">random</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)(</span><span class="nc">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+		<span class="n">session</span><span class="o">.</span><span class="na">setAttribute</span><span class="o">(</span><span class="s">"answer"</span><span class="o">,</span> <span class="n">random</span><span class="o">);</span>
+	<span class="nt">%&gt;</span>
+<span class="nt">&lt;/c:if&gt;</span>
+<span class="nt">&lt;c:set </span><span class="na">var=</span><span class="s">"answer"</span><span class="na"> value=</span><span class="s">"</span><span class="si">${</span><span class="n">sessionScope</span><span class="o">.</span><span class="na">answer</span><span class="si">}</span><span class="s">"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;c:choose&gt;</span>
+	<span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">guess</span> <span class="n">eq</span> <span class="n">answer</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>정답입니다<span class="nt">&lt;/c:when&gt;</span> 
+	<span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">guess</span> <span class="n">gt</span> <span class="n">answer</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>값이 큽니다<span class="nt">&lt;/c:when&gt;</span>
+	<span class="nt">&lt;c:when </span><span class="na">test=</span><span class="s">"</span><span class="si">${</span><span class="n">guess</span> <span class="n">lt</span> <span class="n">answer</span><span class="si">}</span><span class="s">"</span><span class="nt">&gt;</span>값이 작습니다<span class="nt">&lt;/c:when&gt;</span>
+<span class="nt">&lt;/c:choose&gt;</span>	
+
+	<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+	1부터 100까지 수 중에서 하나를 잘 찍으시오~!! <span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">'get'</span><span class="nt">&gt;</span>
+		어떤 수일까요?
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'guess'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'submit'</span> <span class="na">value=</span><span class="s">"Submit"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

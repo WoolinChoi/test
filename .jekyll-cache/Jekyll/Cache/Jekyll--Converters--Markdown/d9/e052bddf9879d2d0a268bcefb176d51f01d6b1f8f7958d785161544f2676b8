@@ -1,0 +1,190 @@
+I"Nl<h1 id="dragndrop"><a href="">dragndrop</a></h1>
+
+<h2 id="christmasview">ChristmasView</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>ChristmasView<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"./css/view.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+<span class="c">&lt;!-- 이벤트 확인 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/1_events.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/2_events.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="c">&lt;!-- 전송데이타들을 객체로 만들고 json 변환 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"./js/3_events.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div&gt;</span>
+		<span class="nt">&lt;h3&gt;</span> 트리를 예쁘게 <span class="nt">&lt;/h3&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"total"</span> <span class="na">class=</span><span class="s">'gifts'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/1.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift1'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/2.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift2'</span> <span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/3.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift3'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/4.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift4'</span> <span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/5.PNG"</span> <span class="na">class=</span><span class="s">"item"</span>  <span class="na">id=</span><span class="s">'gift5'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/6.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift6'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/7.PNG"</span> <span class="na">class=</span><span class="s">"item"</span>  <span class="na">id=</span><span class="s">'gift7'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/8.PNG"</span> <span class="na">class=</span><span class="s">"item"</span> <span class="na">id=</span><span class="s">'gift8'</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./images/9.PNG"</span> <span class="na">class=</span><span class="s">"item"</span>  <span class="na">id=</span><span class="s">'gift9'</span><span class="nt">&gt;</span> <span class="c">&lt;!--  draggable="false" --&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"myPan"</span> <span class="nt">&gt;</span>
+		<span class="nt">&lt;canvas</span> <span class="na">id=</span><span class="s">"tree"</span> <span class="na">class=</span><span class="s">"dropTarget"</span> <span class="na">width=</span><span class="s">'450'</span> <span class="na">height=</span><span class="s">'500'</span><span class="nt">&gt;&lt;/canvas&gt;</span>
+		<span class="nt">&lt;img</span> <span class="na">id=</span><span class="s">'img'</span> <span class="na">src=</span><span class="s">'./images/christmastree.png'</span> <span class="na">width=</span><span class="s">'450'</span> <span class="na">height=</span><span class="s">'500'</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="events_js">events_js</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+	<span class="c1">// 캔버스에 트리 이미지 삽입</span>
+	<span class="kt">var</span> <span class="n">tree</span> <span class="o">=</span>  <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="s">"#tree"</span><span class="o">);</span>
+	<span class="kt">var</span> <span class="n">img</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="err">'#</span><span class="n">img</span><span class="err">'</span><span class="o">);</span>
+	<span class="n">img</span><span class="o">.</span><span class="na">style</span><span class="o">.</span><span class="na">display</span> <span class="o">=</span> <span class="err">'</span><span class="n">none</span><span class="err">'</span><span class="o">;</span>
+	<span class="kt">var</span> <span class="n">ctx</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">getContext</span><span class="o">(</span><span class="s">"2d"</span><span class="o">);</span>
+	<span class="n">ctx</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+	<span class="kt">var</span> <span class="n">lis</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelectorAll</span><span class="o">(</span><span class="s">".item"</span><span class="o">);</span>
+	<span class="kt">var</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelectorAll</span><span class="o">(</span><span class="s">".dropTarget"</span><span class="o">);</span>
+
+	<span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="n">lis</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragstart"</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag start event"</span><span class="o">);</span>
+		<span class="o">});</span>
+		<span class="n">lis</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"drag"</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag  event"</span><span class="o">);</span>
+		<span class="o">});</span>
+		<span class="n">lis</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragend"</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag end  event"</span><span class="o">);</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+
+	<span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">targets</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="n">targets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragenter"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag enter event"</span><span class="o">);</span>
+		<span class="o">});</span>
+		<span class="n">targets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragleave"</span><span class="o">,</span> <span class="n">function</span><span class="o">(){</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag leave event"</span><span class="o">);</span>
+		<span class="o">});</span>
+		<span class="n">targets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragover"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drag over event"</span><span class="o">);</span>
+		<span class="o">});</span>
+		<span class="n">targets</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"drop"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+			<span class="n">console</span><span class="o">.</span><span class="na">log</span><span class="o">(</span><span class="s">"drop event"</span><span class="o">);</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="events_js2">events_js2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+	<span class="c1">// 캔버스에 트리 이미지 삽입</span>
+	<span class="kt">var</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="s">"#tree"</span><span class="o">);</span>
+	<span class="kt">var</span> <span class="n">img</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="err">'#</span><span class="n">img</span><span class="err">'</span><span class="o">);</span>
+	<span class="n">img</span><span class="o">.</span><span class="na">style</span><span class="o">.</span><span class="na">display</span> <span class="o">=</span> <span class="err">'</span><span class="n">none</span><span class="err">'</span><span class="o">;</span>
+	<span class="kt">var</span> <span class="n">ctx</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">getContext</span><span class="o">(</span><span class="s">"2d"</span><span class="o">);</span>
+	<span class="n">ctx</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+	
+	<span class="kt">var</span> <span class="n">lis</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelectorAll</span><span class="o">(</span><span class="s">".item"</span><span class="o">);</span>
+	<span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+		<span class="n">lis</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragstart"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+			<span class="c1">//---------------------------------------------------</span>
+			<span class="c1">// 전송할 데이타들을 지정한다.</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="s">"id"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">id</span><span class="o">);</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="s">"offsetX"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetX</span><span class="o">);</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="s">"offsetY"</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetY</span><span class="o">);</span>
+			
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">effectAllowed</span> <span class="o">=</span> <span class="s">"move"</span><span class="o">;</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+	
+	<span class="n">tree</span><span class="o">.</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragover"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">dropEffect</span> <span class="o">=</span> <span class="s">"move"</span><span class="o">;</span>
+	<span class="o">});</span>
+	<span class="n">tree</span><span class="o">.</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"drop"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+		<span class="c1">//---------------------------------------------------</span>
+		<span class="c1">// 전송한 데이타들을 얻어온다.</span>
+		<span class="kt">var</span> <span class="n">id</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">"id"</span><span class="o">);</span>		
+		<span class="kt">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetX</span> <span class="o">-</span> <span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">"offsetX"</span><span class="o">);</span>
+		<span class="kt">var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetY</span> <span class="o">-</span> <span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">"offsetY"</span><span class="o">);</span>
+		
+		<span class="c1">// 전송받은 데이타를 다시 그린다.</span>
+		<span class="n">ctx</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="n">id</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+		
+		<span class="c1">//---------------------------------------------------</span>
+		<span class="c1">// 해당 요소를 지운다.</span>
+		<span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="n">id</span><span class="o">).</span><span class="na">remove</span><span class="o">()</span>
+	<span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="events_js3">events_js3</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+	<span class="c1">// 캔버스에 트리 이미지 삽입</span>
+	<span class="kt">var</span> <span class="n">tree</span> <span class="o">=</span>  <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="s">"#tree"</span><span class="o">);</span>
+	<span class="kt">var</span> <span class="n">img</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="err">'#</span><span class="n">img</span><span class="err">'</span><span class="o">);</span>
+	<span class="n">img</span><span class="o">.</span><span class="na">style</span><span class="o">.</span><span class="na">display</span> <span class="o">=</span> <span class="err">'</span><span class="n">none</span><span class="err">'</span><span class="o">;</span>
+	<span class="kt">var</span> <span class="n">ctx</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="na">getContext</span><span class="o">(</span><span class="s">"2d"</span><span class="o">);</span>
+	<span class="n">ctx</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">img</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+	
+	<span class="kt">var</span> <span class="n">lis</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelectorAll</span><span class="o">(</span><span class="s">".item"</span><span class="o">);</span>
+	<span class="k">for</span> <span class="o">(</span><span class="kt">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">lis</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+		<span class="n">lis</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragstart"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">//---------------------------------------------------</span>
+			<span class="c1">// 전송할 데이타를 객체로 만들고 Json 으로 변환하여 지정</span>
+			<span class="kt">var</span> <span class="n">dragSourceObj</span> <span class="o">=</span> <span class="o">{</span>
+				<span class="s">"id"</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">target</span><span class="o">.</span><span class="na">id</span><span class="o">,</span>
+				<span class="s">"offsetX"</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetX</span><span class="o">,</span>
+				<span class="s">"offsetY"</span> <span class="o">:</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetY</span>
+			<span class="o">};</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="s">"dragSource"</span><span class="o">,</span> <span class="no">JSON</span><span class="o">.</span><span class="na">stringify</span><span class="o">(</span><span class="n">dragSourceObj</span><span class="o">));</span>
+			<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">effectAllowed</span> <span class="o">=</span> <span class="s">"move"</span><span class="o">;</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+	
+	<span class="n">tree</span><span class="o">.</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"dragover"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">dropEffect</span> <span class="o">=</span> <span class="s">"move"</span><span class="o">;</span>
+	<span class="o">});</span>
+	
+	<span class="n">tree</span><span class="o">.</span><span class="na">addEventListener</span><span class="o">(</span><span class="s">"drop"</span><span class="o">,</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+		<span class="c1">//---------------------------------------------------</span>
+		<span class="c1">// json 데이타를 다시 객체로 파싱</span>
+		<span class="kt">var</span> <span class="n">dragSrcObj</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">dataTransfer</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="s">"dragSource"</span><span class="o">));</span>
+		<span class="kt">var</span> <span class="n">id</span> <span class="o">=</span> <span class="n">dragSrcObj</span><span class="o">.</span><span class="na">id</span><span class="o">;</span>
+		<span class="kt">var</span> <span class="n">x</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetX</span> <span class="o">-</span> <span class="n">dragSrcObj</span><span class="o">.</span><span class="na">offsetX</span><span class="o">;</span>
+		<span class="kt">var</span> <span class="n">y</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">offsetY</span> <span class="o">-</span> <span class="n">dragSrcObj</span><span class="o">.</span><span class="na">offsetY</span><span class="o">;</span>
+		
+		<span class="n">ctx</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="na">getElementById</span><span class="o">(</span><span class="n">id</span><span class="o">),</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+	<span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="view_css">view_css</h2>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@charset</span> <span class="s1">"utf-8"</span><span class="p">;</span>
+
+<span class="nf">#myPan</span> <span class="p">{</span>
+<span class="c">/* 	float : right; */</span>
+<span class="p">}</span>
+
+<span class="nc">.gifts</span> <span class="p">{</span>
+	<span class="nl">float</span> <span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+	<span class="nl">width</span> <span class="p">:</span> <span class="m">400px</span><span class="p">;</span>
+	<span class="nl">height</span> <span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+	<span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">blue</span><span class="p">;</span>
+	<span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.item</span> <span class="p">{</span>
+	<span class="nl">width</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+	<span class="nl">height</span><span class="p">:</span> <span class="m">60px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

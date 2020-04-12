@@ -1,0 +1,181 @@
+I"�5<h1 id="system"><a href="">system</a></h1>
+
+<h2 id="sqlite3">sqlite3</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. sqlite3 소개
+SQLite는 별도의 DB 서버가 필요없이 DB 파일에 기초하여 데이타베이스 처리를 구현한 Embedded SQL DB 엔진이다.
+SQLite는 별도의 복잡한 서버 설치가 필요 없고, 쉽고 편리하게 사용할 수 있다는 점에서 널리 사용되고 있다.
+오늘날 대부분의 Mac OS X 나 리눅스에서는 SQLite을 기본적으로 내장하고 있지만,
+만약 시스템에 내장되어 있지 않는 경우는 http://www.sqlite.org 에서 다운받아 설치할 수 있다.
+
+SQLite는 기본적으로 SQLite DB 엔진과 "sqlite3" 라는 Command line tool 을 갖고 있다.
+
+다음은 sqlite3 커맨드 라인 툴을 사용하여 샘플 DB (test.db)를 만들고 customer 테이블을 생성하고,
+데이타를 INSERT/SELECT 해 본 예이다.
+"sqlite3 test.db" 명령문은 만약 test.db 파일이 있으면 해당 파일을 오픈하고,
+파일이 없으면 새 파일을 생성한다.
+
+    [ SQLite 특징 ]
+    - 파일 기반의 DBMS, 저메모리, 빠른 처리 속도
+    - 별도의 DB 서버가 없어도 쉽고 편리하게 사용 가능
+    - 안드로이드, 아이폰 등 스마트폰에 내장된 DB
+    - 표준 SQL 지원
+
+    [ SQLite에서 지원하지 않는 기능 확인 ]
+    - https://www.sqlite.org/omitted.html
+    - RIGHT and FULL OUTER JOIN 지원안됨 (-&gt; left outer join은 가능함 )
+    - 그외 확인
+
+2. 설치 및 실행
+    -&gt; 파이썬은 포함되어 있기에 별도 설치 필요없음
+
+    [ SQLite 클라이언트 툴 ]
+    - http://www.sqliteexpert.com &gt; download
+    - SQLite Expert Personal 5.x (freeware)
+    - SQLite Expert Personal 64bit 다운로드
+    - 기본옵션으로 설치
+</code></pre></div></div>
+
+<h2 id="sqlite-expert-personal">SQLite Expert Personal</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">person</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="sqlite">sqlite</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+
+<span class="s">"""
+    [ 실행한 후에 SQLite Expert Person 에서 확인 ] 
+    
+    - 메뉴 &gt; File &gt; Open  Database 에서  db폴더 안에 testDB.db 연결
+    - 탭팬들 확인 (Database / Data / DDL / Design / SQL )
+    - SQL탭에서 select 문장 확인
+    
+    
+    [ 절차 ]
+        1. 데이타베이스 Connection 생성
+        2. 커서 생성 ( 커서 : sql 명령어를 실행시켜 주는 객체 )
+        3. sql 문장 만들기
+        4. sql 문장 실행
+        5. 커밋 ( 트랜젝션의 내용을 DB에 반영함 )
+        6. Connection 닫기
+"""</span>
+
+<span class="k">def</span> <span class="nf">viewTable</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM {0}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">saveTest</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"""
+        INSERT INTO person(name, age) VALUES(?, ?)
+    """</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="s">"홍길동"</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>    <span class="c1"># 입력값은 튜플형식으로
+</span>    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">saveTable</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">createTable</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"""
+        CREATE TABLE if not exists person
+        (id integer primary key autoincrement,
+        name text not null,
+        age integer
+        )
+    """</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="c1"># (1) DB에 테이블 생성
+</span>    <span class="c1"># createTable('../db/testDB.db')
+</span>
+    <span class="c1"># (2) DB에 테이블 입력
+</span>    <span class="c1"># saveTest('../db/testDB.db');  # 데이타 입력 확인만
+</span>
+    <span class="c1"># (3) DB에 저장되어 있는 테이블값 출력
+</span>    <span class="n">viewTable</span><span class="p">(</span><span class="s">'../db/testDB.db'</span><span class="p">,</span> <span class="s">'person'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="sqlite2">sqlite2</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="s">"""
+    [ 절차 ]
+        1. 데이타베이스 Connection 생성
+        2. 커서 생성 ( 커서 : sql 명령어를 실행시켜 주는 객체 )
+        3. sql 문장 만들기
+        4. sql 문장 실행
+        5. 커밋 ( 트랜젝션의 내용을 DB에 반영함 )
+        6. Connection 닫기
+"""</span>
+
+<span class="k">def</span> <span class="nf">createDBtable</span><span class="p">(</span><span class="n">db</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"""
+            CREATE TABLE if not exists supply(
+            supplier_name text,
+            invoice_number integer,
+            part_number integer,
+            cost integer,
+            purchase_date date
+            )
+        """</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">saveDBtable</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO supply(supplier_name, invoice_number, part_number, cost, purchase_date) VALUES (?, ?, ?, ?, ?)"</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">viewDBdata</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM {0}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    <span class="c1"># for table in cur:
+</span>    <span class="c1">#     print(table)
+</span>    <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">db_name</span> <span class="o">=</span> <span class="s">'../db/supplyDB.db'</span>
+
+    <span class="c1"># (1) DB에 테이블 생성
+</span>    <span class="c1"># createDBtable(db_name)
+</span>
+    <span class="c1"># ------------------------------------------------------
+</span>    <span class="c1"># (2) csv파일을 읽어서 DB에 테이블 입력
+</span>    <span class="c1"># file_name = '../files/supply.csv'
+</span>    <span class="c1"># file = csv.reader(open(file_name, 'r'), delimiter=',')
+</span>    <span class="c1"># header = next(file, None)    # 한 줄을 읽어서 아무일도 하지 않는다.
+</span>    <span class="c1"># print(header)
+</span>    <span class="c1"># for row in file:
+</span>    <span class="c1">#     # print(type(row))
+</span>    <span class="c1">#     saveDBtable(db_name, row)
+</span>
+    <span class="c1"># ------------------------------------------------------
+</span>    <span class="c1"># (3) DB에 저장되어 있는 테이블값 출력
+</span>    <span class="n">viewDBdata</span><span class="p">(</span><span class="n">db_name</span><span class="p">,</span> <span class="s">'supply'</span><span class="p">)</span> <span class="c1"># 디비명, 테이블명
+</span></code></pre></div></div>
+:ET

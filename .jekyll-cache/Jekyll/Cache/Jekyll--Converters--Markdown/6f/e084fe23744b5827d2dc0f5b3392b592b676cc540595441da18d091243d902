@@ -1,0 +1,85 @@
+I"�<h1 id="iobytestream"><a href="">ioByteStream</a></h1>
+
+<h2 id="inputtestfirst">InputTestFirst</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ *	======================================================
+ *	InputStream을 구현한 FileInputStream을 이용한 예
+ *	======================================================
+ *	
+ *	@ int read()
+ *		` 한 바이트를 읽고 이를 0-255사이의 값을 리턴하지만4byte의 int 형으로 리턴
+ *		` 리턴되는 값은 0-255 부호없는 바이트이지만 형변환 과정에서 -128 ~127의 부호 있는 바이트가 된다
+ *		
+ *		
+ *		` 데이타를 읽어들이기 전까지 기다리므로 다른 부분을 실행할 수가 없다
+ *			-&gt; 쓰레드 적용 필요
+ *			
+ *		` 더이상 읽을 바이트가 없으면 -1 리턴
+ *		
+ *		
+ *		
+ *		[ 참고 ]
+ *			int i =  b &gt;= 0 ? b : 256 + b;
+ */</span>
+<span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InputTestFirst</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span>  <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">FileInputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="s">"a.txt"</span><span class="o">);</span>
+			<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+				<span class="kt">int</span> <span class="n">data</span> <span class="o">=</span> <span class="n">fos</span><span class="o">.</span><span class="na">read</span><span class="o">();</span> <span class="c1">// EOF = -1</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">data</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span><span class="n">data</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"파일전송실패 :"</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>		
+<span class="o">}</span>
+<span class="cm">/*
+ *	======================================
+ *		결과 출력
+ *	======================================
+ *
+ *	` 숫자만 나오는데, 우선 열개만 읽어서 숫자 자체로 출력하고
+ *	나머지는 읽어서 (char) 형변환 하면 문자로 출력될 것이
+ */</span>
+</code></pre></div></div>
+
+<h2 id="outputtestfirst">OutputTestFirst</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ *	===========================================================
+ *	OuputStream을 구현한 FileOutputStream을 이용한 예제
+ *	===========================================================
+ *	
+ *	@ write( int )
+ *		` 0-255 사이의 정수를 인자로 받아 해당하는 바이트를 출력스트림에 쓴다
+ *		` 인자로 정수형을 받지만, 실제로는 부호없는 바이트로 전송
+ *		  ( 자바에서 정수형은 32bit이지만 그 중 8bit만 사용 )
+ *	
+ *	
+ *	
+ */</span>
+<span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OutputTestFirst</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="s">"a.txt"</span><span class="o">);</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">ch</span> <span class="o">=</span> <span class="sc">'A'</span><span class="o">;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">'Z'</span><span class="o">;</span> <span class="n">ch</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">ch</span><span class="o">);</span>
+			<span class="o">}</span>		
+			<span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"파일전송실패 :"</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+<span class="cm">/*
+ *	a.txt 를 노트패드와 워드패드로 읽어보기
+ */</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,117 @@
+I"/H<h1 id="combobox"><a href="">comboBox</a></h1>
+
+<h2 id="calendarex">CalendarEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CalendarEx</span> <span class="o">{</span>
+	<span class="c1">// 1. 멤버 변수 선언</span>
+	<span class="nc">JFrame</span> <span class="n">f</span><span class="o">;</span>
+	<span class="nc">JComboBox</span> <span class="n">cbY</span><span class="o">,</span> <span class="n">cbM</span><span class="o">,</span> <span class="n">cbD</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">;</span>
+	<span class="nc">JLabel</span> <span class="n">la</span><span class="o">;</span>
+	<span class="kt">int</span><span class="o">[]</span> <span class="n">lastDays</span> <span class="o">=</span> <span class="o">{</span><span class="mi">31</span><span class="o">,</span> <span class="mi">28</span><span class="o">,</span> <span class="mi">31</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">31</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">31</span><span class="o">,</span> <span class="mi">31</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">31</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">31</span><span class="o">};</span>
+	<span class="c1">// 2. 멤버 변수 객체 선언</span>
+	<span class="nc">CalendarEx</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFrame</span><span class="o">(</span><span class="s">"콤보박스"</span><span class="o">);</span>
+		<span class="c1">// 년 : 2015 ~ 2025</span>
+		<span class="c1">// 월 : 1 ~ 12</span>
+		<span class="nc">Integer</span><span class="o">[]</span> <span class="n">ysu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Integer</span><span class="o">[</span><span class="mi">11</span><span class="o">];</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">year</span> <span class="o">=</span> <span class="mi">2015</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ysu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++,</span> <span class="n">year</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">ysu</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">year</span><span class="o">;</span>
+ 		<span class="o">}</span>
+		<span class="nc">Integer</span><span class="o">[]</span> <span class="n">msu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Integer</span><span class="o">[</span><span class="mi">12</span><span class="o">];</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">msu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">msu</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span>
+		
+		<span class="n">cbY</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">(</span><span class="n">ysu</span><span class="o">);</span>
+		<span class="n">cbM</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">(</span><span class="n">msu</span><span class="o">);</span>
+		<span class="n">cbD</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">();</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"▶"</span><span class="o">);</span>
+		<span class="n">la</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"요일"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 3. 화면 붙이기 및 화면보이기</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cbY</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"년"</span><span class="o">));</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cbM</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"월"</span><span class="o">));</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cbD</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"일"</span><span class="o">));</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">la</span><span class="o">);</span>
+		<span class="c1">// 프레임 영역</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">280</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">initDate</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">Calendar</span> <span class="n">c</span> <span class="o">=</span> <span class="nc">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Calendar</span><span class="o">.</span><span class="na">YEAR</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Calendar</span><span class="o">.</span><span class="na">MONTH</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Calendar</span><span class="o">.</span><span class="na">DATE</span><span class="o">);</span>
+		<span class="n">cbY</span><span class="o">.</span><span class="na">setSelectedItem</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
+		<span class="n">cbM</span><span class="o">.</span><span class="na">setSelectedItem</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+		<span class="n">setDay</span><span class="o">();</span> <span class="c1">// 일</span>
+		<span class="n">cbD</span><span class="o">.</span><span class="na">setSelectedItem</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+		<span class="n">setDate</span><span class="o">();</span> <span class="c1">// 요일</span>
+		
+	<span class="o">}</span>
+	<span class="c1">// 4. 이벤트 등록 및 처리</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">CbHdlr</span> <span class="n">cb</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CbHdlr</span><span class="o">();</span>
+		<span class="n">cbY</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">cb</span><span class="o">);</span>
+		<span class="n">cbM</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">cb</span><span class="o">);</span>
+		<span class="n">b</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">cb</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">CbHdlr</span> <span class="kd">implements</span> <span class="nc">ActionListener</span><span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span> <span class="c1">// 눌려진것의 객체값</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="n">cbY</span> <span class="o">|</span> <span class="n">obj</span> <span class="o">==</span> <span class="n">cbM</span><span class="o">)</span> <span class="n">setDay</span><span class="o">();</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">obj</span> <span class="o">==</span> <span class="n">b</span><span class="o">)</span> <span class="n">setDate</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">setDay</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		System.out.println("콤보박스이벤트");</span>
+		<span class="c1">// 윤년이라면 lastDays[1] = 29로 지정</span>
+		<span class="c1">// 평년이라면 lastDays[1] = 28일로 지정</span>
+		<span class="c1">// [확인] 2016 - 2 윤년입니다</span>
+		<span class="kt">int</span> <span class="n">year</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Integer</span><span class="o">)</span><span class="n">cbY</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">((</span><span class="n">year</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">year</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">||</span> <span class="n">year</span> <span class="o">%</span> <span class="mi">400</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">lastDays</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">29</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">else</span><span class="o">{</span>
+			<span class="n">lastDays</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">28</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="c1">// 월 마다 일 수 변경</span>
+		<span class="kt">int</span> <span class="n">month</span> <span class="o">=</span> <span class="n">cbM</span><span class="o">.</span><span class="na">getSelectedIndex</span><span class="o">();</span>
+		<span class="n">cbD</span><span class="o">.</span><span class="na">removeAllItems</span><span class="o">();</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">lastDays</span><span class="o">[</span><span class="n">month</span><span class="o">];</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">cbD</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">setDate</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		System.out.println("버튼이벤트");</span>
+		<span class="c1">// (1) 버튼을 누르면 해당 요일출력</span>
+		<span class="c1">// (2) 처음화면 뜰때 오늘 날짜로 지정</span>
+		<span class="c1">// 사용자가 선택한 년/월/일 값 얻어오기</span>
+		<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Integer</span><span class="o">)</span><span class="n">cbY</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Integer</span><span class="o">)</span><span class="n">cbM</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">();</span> <span class="c1">// 5월</span>
+		<span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Integer</span><span class="o">)</span><span class="n">cbD</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">();</span>
+		<span class="nc">Calendar</span> <span class="n">c</span> <span class="o">=</span> <span class="nc">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">y</span><span class="o">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="n">d</span><span class="o">);</span> <span class="c1">// 월은 1을 빼줘야 한다</span>
+		<span class="kt">int</span> <span class="n">date</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="nc">Calendar</span><span class="o">.</span><span class="na">DAY_OF_WEEK</span><span class="o">);</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">strDate</span> <span class="o">=</span> <span class="o">{</span><span class="s">"일"</span><span class="o">,</span> <span class="s">"월"</span><span class="o">,</span> <span class="s">"화"</span><span class="o">,</span> <span class="s">"수"</span><span class="o">,</span> <span class="s">"목"</span><span class="o">,</span> <span class="s">"금"</span><span class="o">,</span> <span class="s">"토"</span><span class="o">};</span>
+		<span class="n">la</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">strDate</span><span class="o">[</span><span class="n">date</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">CalendarEx</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CalendarEx</span><span class="o">();</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span> <span class="c1">// 화면 붙이기 및 출력</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">initDate</span><span class="o">();</span> <span class="c1">// 날짜 초기화</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span> <span class="c1">// 이벤트 처리</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

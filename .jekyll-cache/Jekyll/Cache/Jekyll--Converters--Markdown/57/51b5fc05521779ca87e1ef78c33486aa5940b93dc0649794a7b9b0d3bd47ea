@@ -1,0 +1,74 @@
+I"].<h1 id="network4"><a href="">network4</a></h1>
+
+<h2 id="inetaddressex">InetAddressEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.net.InetAddress</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InetAddressEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">host</span> <span class="o">=</span><span class="s">"www.daum.net"</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">InetAddress</span>  <span class="n">addr</span> <span class="o">=</span> <span class="nc">InetAddress</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"호스트명: "</span> 	<span class="o">+</span> <span class="n">addr</span><span class="o">.</span><span class="na">getHostName</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"호스트주소 :"</span> <span class="o">+</span> <span class="n">addr</span><span class="o">.</span><span class="na">getHostAddress</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"IP 주소 : "</span> 		<span class="o">+</span> <span class="n">addr</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+			
+			<span class="nc">InetAddress</span><span class="o">[]</span> <span class="n">allAddr</span> <span class="o">=</span> <span class="nc">InetAddress</span><span class="o">.</span><span class="na">getAllByName</span><span class="o">(</span><span class="n">host</span><span class="o">);</span>
+			<span class="k">for</span><span class="o">(</span><span class="nc">InetAddress</span> <span class="n">i</span> <span class="o">:</span> <span class="n">allAddr</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">i</span> <span class="o">);</span>
+			<span class="o">}</span>
+			
+			<span class="nc">InetAddress</span> <span class="n">local</span> <span class="o">=</span> <span class="nc">InetAddress</span><span class="o">.</span><span class="na">getLocalHost</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"로컬로스트 명 : "</span> <span class="o">+</span> <span class="n">local</span><span class="o">.</span><span class="na">getHostName</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"로컬로스트 주소 : "</span> <span class="o">+</span> <span class="n">local</span><span class="o">.</span><span class="na">getHostAddress</span><span class="o">());</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"해당 호스트에 연결할 수 없습니다. "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="urlcontentex">URLContentEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">URLContentEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			
+			<span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="s">"http://www.daum.net"</span><span class="o">);</span>
+			<span class="nc">BufferedReader</span>  <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nc">InputStreamReader</span><span class="o">(</span><span class="n">url</span><span class="o">.</span><span class="na">openStream</span><span class="o">()));</span>
+			<span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+			<span class="k">while</span><span class="o">((</span><span class="n">line</span><span class="o">=</span><span class="n">input</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">line</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="n">input</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"해당 호스트에 연결할 수 없습니다. "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="urlex">URLEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">URLEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="no">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="s">"http://en.wikipedia.org/w/index.php?title=Special%3ASearch&amp;profile=default&amp;search=korea&amp;fulltext=Search"</span><span class="o">);</span>
+			
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"호스트명과 포트 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getAuthority</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"프로토콜 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getProtocol</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"호스트명 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getHost</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"포트번호 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getPort</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"경로 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getPath</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"파일 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getFile</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"쿼리 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getQuery</span><span class="o">());</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"참조 : "</span> <span class="o">+</span> <span class="n">url</span><span class="o">.</span><span class="na">getRef</span><span class="o">());</span>
+			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"해당 호스트에 연결할 수 없습니다. "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

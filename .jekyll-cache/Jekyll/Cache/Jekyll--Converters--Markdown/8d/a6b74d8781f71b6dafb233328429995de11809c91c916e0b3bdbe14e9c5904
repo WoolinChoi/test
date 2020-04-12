@@ -1,0 +1,344 @@
+I"��<h1 id="basic"><a href="">basic</a></h1>
+
+<h2 id="datatype">Datatype</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Datatype<span class="nt">&lt;/title&gt;</span>
+<span class="c">&lt;!-- 주석 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 1. 자바 스크립트는 자료형에 관대하다</span>
+	<span class="c1">//	변수 선언시 자료형을 기술하지 않는다</span>
+	<span class="kd">var</span> <span class="nx">byensu</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">문자열</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">변수의 값: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">byensu</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="nx">byensu</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">변수의 값: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">byensu</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 2. 리터럴 - 자료형(데이타타입)에 들어가는 값</span>
+	<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">안녕</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Hola</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">곤니치와</span><span class="dl">'</span><span class="p">];</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">"</span><span class="s2">배열의 요소: </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">안녕</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Hola</span><span class="dl">'</span><span class="p">],</span> <span class="dl">'</span><span class="s1">곤니치와</span><span class="dl">'</span><span class="p">];</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">배열의 요소: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="na">x</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">안녕</span><span class="dl">'</span><span class="p">,</span> <span class="na">y</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="na">z</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">곤니치와</span><span class="dl">'</span><span class="p">};</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">객체의 속성: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">객체의 속성: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">[</span><span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+
+	<span class="kd">var</span> <span class="nx">x</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">x: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">x</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>			<span class="c1">// error?</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="dl">'</span><span class="s1">obj.a: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">a</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// error?	</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="operator">Operator</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Operator<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 1. ==와 ===의 차이점</span>
+	<span class="kd">var</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">10</span><span class="dl">'</span><span class="p">;</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">num</span> <span class="o">=</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">같다</span><span class="dl">'</span><span class="p">);</span>
+	<span class="k">else</span> <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">다르다</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 값과 자료형 두가지를 비교해준다</span>
+	<span class="k">if</span><span class="p">(</span><span class="nx">num</span> <span class="o">==</span> <span class="nx">str</span><span class="p">)</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">같다2 &lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="k">else</span> <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">다르다2 &lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 2. 실수형 계산시 주의!!!</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">==</span> <span class="mf">0.6</span><span class="p">);</span> <span class="c1">// false</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="mi">3</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">==</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 정수로 변환해줘야한다</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="for">For</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>For<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">송혜고</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">김태휘</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">전지연</span><span class="dl">'</span><span class="p">];</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arr</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">arr</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 객체는 향상된 for문을 쓰는것을 권장</span>
+	<span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="na">x</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">안녕</span><span class="dl">'</span><span class="p">,</span> <span class="na">y</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="na">z</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Hola</span><span class="dl">'</span><span class="p">};</span>
+	<span class="nx">obj</span><span class="p">.</span><span class="nx">w</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">곤니치와</span><span class="dl">'</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">: </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="for연습">For연습</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>For연습<span class="nt">&lt;/title&gt;</span>
+<span class="c">&lt;!-- 5행 5열 테이블을 만드시고 1 ~ 25까지 숫자 지정 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;table border = '1'&gt;</span><span class="dl">"</span><span class="p">);</span>
+	<span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;tr&gt;</span><span class="dl">"</span><span class="p">);</span>
+		<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">,</span> <span class="nx">k</span><span class="o">++</span> <span class="p">){</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;td&gt;</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">k</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/td&gt;</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;/tr&gt;</span><span class="dl">"</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">"</span><span class="s2">&lt;/table&gt;</span><span class="dl">"</span><span class="p">);</span>	
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="string">String</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>String<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">너의 삶 속에 나의 삶을 넣어 삶을 영위하자</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">삶</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>		<span class="c1">// 3</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">삶</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>	<span class="c1">// 17</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">삶을</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>	<span class="c1">// 11</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>			<span class="c1">// 24</span>
+	
+	<span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">자바에서 웹프로젝트까지 열심히 합시다 짝꿍!</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>		<span class="c1">// 서</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span> 	<span class="c1">// 웹프로젝트까지</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>	<span class="c1">// 웹프로젝트까지</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>		<span class="c1">// 웹프로젝트까지</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>		<span class="c1">// 자바에서,웹프로젝트까지,열심히,합시다,짝꿍!</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="dl">'</span><span class="s1">화이팅</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>	<span class="c1">// 자바에서 웹프로젝트까지 열심히 합시다 짝꿍!화이팅</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">msg</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;br/&gt;</span><span class="dl">"</span><span class="p">);</span>					<span class="c1">// 자바에서 웹프로젝트까지 열심히 합시다 짝꿍!</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="array">Array</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Array<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">지민</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">뷔</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">정국</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">랩몬</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">제이홉</span><span class="dl">'</span><span class="p">];</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 지민, 뷔, 정국, 랩몬, 제이홉</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">/</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 지민/뷔/정국/랩몬/제이홉</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>		<span class="c1">// 랩몬, 제이홉</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 뷔, 정국</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;hr/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>		<span class="c1">// 제이홉</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 지민, 뷔, 정국, 랩몬</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">방탄</span><span class="dl">'</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 5</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 지민, 뷔, 정국, 랩몬, 방탄</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>		<span class="c1">// 지민</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 뷔, 정국, 랩몬, 방탄</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;hr/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">reverse</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 방탄, 랩몬, 정국, 뷔</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 방탄, 랩몬, 정국, 뷔</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">sort</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>		<span class="c1">// 랩몬, 방탄, 뷔, 정국</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 랩몬, 방탄, 뷔, 정국</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;hr/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">슈가</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">아무개</span><span class="dl">'</span><span class="p">];</span>
+	<span class="c1">// concat은 원본이 안변한다</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">temp</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>	<span class="c1">// 랩몬, 방탄, 뷔, 정국, 슈가, 아무개</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">arr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>				<span class="c1">// 랩몬, 방탄, 뷔, 정국</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="date">Date</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Date<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// var d = new Date('2019/06/02');</span>
+	<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="mi">2019</span><span class="p">);</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toDateString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>  <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 0 : 일</span>
+	
+	<span class="c1">// 지금의 일에서 10일 전</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">-</span> <span class="mi">10</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 지금 달에서 10달 전 </span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">-</span> <span class="mi">10</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 전 달의 마지막 날</span>
+	<span class="nx">d</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">toLocaleString</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 시 분 초</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getHours</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="date연습">Date연습</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Date연습<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">btn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">btn</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">startDate</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+			<span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">endDate</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+			<span class="c1">// 1. 사용자입력값을 Date형 만들기</span>
+			<span class="c1">// 2. 두 Date 값에 차이 (- 연산자 이용)</span>
+			<span class="c1">// 3. 2번의 차이값을 alert으로 출력</span>
+			<span class="kd">var</span> <span class="nx">sdate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+			<span class="kd">var</span> <span class="nx">edate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+			<span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">edate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">-</span> <span class="nx">sdate</span><span class="p">.</span><span class="nx">getTime</span><span class="p">();</span>
+			<span class="kd">var</span> <span class="nx">diffDay</span> <span class="o">=</span> <span class="nx">diff</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span><span class="p">);</span>
+			<span class="nx">alert</span><span class="p">(</span><span class="nx">diffDay</span><span class="p">);</span>
+		<span class="p">}</span>	
+	<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	시작일 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'date'</span> <span class="na">id=</span><span class="s">'startDate'</span><span class="nt">/&gt;</span> ~
+	종료일 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'date'</span> <span class="na">id=</span><span class="s">'endDate'</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">id=</span><span class="s">'btn'</span> <span class="na">value=</span><span class="s">'여행일정'</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="regexp">Regexp</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Regexp<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="sr">/http</span><span class="se">(</span><span class="sr">s</span><span class="se">)?</span><span class="sr">:</span><span class="se">\/\/([\w</span><span class="sr">-</span><span class="se">]</span><span class="sr">+</span><span class="se">\.)</span><span class="sr">+</span><span class="se">[\w</span><span class="sr">-</span><span class="se">]</span><span class="sr">+</span><span class="se">(\/[\w</span><span class="sr">-.</span><span class="se">\/</span><span class="sr">?%&amp;=</span><span class="se">]</span><span class="sr">*</span><span class="se">)?</span><span class="sr">/gi</span><span class="p">;</span>
+	<span class="c1">//var p = new RegExp('http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&amp;=]*)?','gi');</span>
+	<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">한 번을 둘러봐야 하는 사이트 http://www.w3schools.com/ 입니다</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nx">str</span> <span class="o">+=</span> <span class="dl">'</span><span class="s1"> 또한 집중적으로 봐야하는 사이트 http://jqapi.ru/ 입니다</span><span class="dl">'</span><span class="p">;</span>
+	
+	<span class="c1">// 1. match() : 정규식 결과를 보여주는 함수</span>
+	<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">result</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">result</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 2. exec() - 결과가 이상함</span>
+	<span class="kd">var</span> <span class="nx">result2</span><span class="p">;</span>
+	<span class="k">while</span><span class="p">((</span><span class="nx">result2</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">str</span><span class="p">))</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">){</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">result2</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 3. test() : 여러 정규식에서 맞는 문장이 나오면 true이고 나머지는 false  </span>
+	<span class="kd">var</span> <span class="nx">one</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">한 번을 둘러봐야 하는 사이트 http://www.w3schools.com/ 입니다</span><span class="dl">'</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">two</span> <span class="o">=</span> <span class="dl">'</span><span class="s1"> 또한 집중적으로 봐야하는 사이트 http://jqapi.ru/ 입니다</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">one</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// true</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">two</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// false</span>
+	
+	<span class="c1">// search()</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">one</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">two</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="형변환">형변환</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>형변환<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 1. 형변환</span>
+	<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">0770</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">123abc</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// NaN = Not a Number</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	
+	<span class="c1">// 2. 연산 후 형변환</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="mi">123</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">4</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// 숫자 + 문자열 -&gt; 문자열</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="mi">123</span> <span class="o">-</span> <span class="dl">"</span><span class="s2">4</span><span class="dl">"</span><span class="p">);</span> <span class="c1">// 숫자 - 문자열 -&gt; 숫자</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="mi">123</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">4</span><span class="dl">"</span><span class="p">));</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;br/&gt;</span><span class="dl">'</span><span class="p">);</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="mi">123</span> <span class="o">-</span> <span class="dl">"</span><span class="s2">4</span><span class="dl">"</span><span class="p">));</span>
+	
+	<span class="c1">// 3. 요긴한 함수 -&gt; 악마함수</span>
+	<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">alert("안녕하세요")</span><span class="dl">'</span><span class="p">;</span>
+	<span class="nx">alert</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+	<span class="nb">eval</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

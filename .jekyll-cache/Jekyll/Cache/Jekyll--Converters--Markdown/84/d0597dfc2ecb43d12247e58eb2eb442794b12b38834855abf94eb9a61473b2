@@ -1,0 +1,113 @@
+I"\3<h1 id="xmlorder"><a href="">xmlOrder</a></h1>
+
+<h2 id="mainapp">MainApp</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">aop2_xml_order</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.support.ClassPathXmlApplicationContext</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainApp</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">ApplicationContext</span> <span class="n">ctx</span> <span class="o">=</span> 
+				<span class="k">new</span> <span class="nf">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"aop2_xml_order/applicationContext.xml"</span><span class="o">);</span>
+		
+		<span class="c1">// memberBean 객체를 얻어와서 함수 호출</span>
+		<span class="nc">MemberBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"memberBean"</span><span class="o">,</span> <span class="nc">MemberBean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+		<span class="n">bean</span><span class="o">.</span><span class="na">register</span><span class="o">();</span> <span class="c1">// 네번째</span>
+		
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"</span><span class="o">);</span>
+		
+		<span class="n">bean</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"홍길동"</span><span class="o">);</span> <span class="c1">// 네번째</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="memberbean">MemberBean</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">aop2_xml_order</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MemberBean</span> <span class="o">{</span>
+	<span class="kt">void</span> <span class="nf">register</span><span class="o">();</span>
+	<span class="kt">boolean</span> <span class="nf">update</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="memberbeanimpl">MemberBeanImpl</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">aop2_xml_order</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MemberBeanImpl</span> <span class="kd">implements</span> <span class="nc">MemberBean</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">register</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"register 함수 호출"</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">update</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">"님 update 호출"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="loggingadvice">LoggingAdvice</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">aop2_xml_order</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.JoinPoint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.ProceedingJoinPoint</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingAdvice</span> <span class="o">{</span>
+	<span class="c1">// around는 proceeding기능이 필요하다.</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">around</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">point</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">methodName</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"[사전작업] : "</span> <span class="o">+</span> <span class="n">methodName</span><span class="o">);</span>				<span class="c1">// 두번째</span>
+		<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"&lt;사후작업&gt; : "</span> <span class="o">+</span> <span class="n">methodName</span><span class="o">);</span>				<span class="c1">// 다섯번째</span>
+		<span class="k">return</span> <span class="n">obj</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">point</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">methodName</span> <span class="o">=</span> <span class="n">point</span><span class="o">.</span><span class="na">getSignature</span><span class="o">().</span><span class="na">getName</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"[*****사전작업*****] : "</span> <span class="o">+</span> <span class="n">methodName</span><span class="o">);</span>	<span class="c1">// 세번째</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="loggingadvice2">LoggingAdvice2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">aop2_xml_order</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.aspectj.lang.JoinPoint</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LoggingAdvice2</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">before</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"before------&gt;"</span> <span class="o">+</span> <span class="n">p</span><span class="o">);</span> <span class="c1">// 첫번째</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterReturning</span><span class="o">(</span><span class="nc">JoinPoint</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"afterReturn-------&gt;"</span> <span class="o">+</span> <span class="n">p</span><span class="o">);</span> <span class="c1">// 여섯번째</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="applicationcontext_xml">ApplicationContext_xml</h2>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd"</span><span class="nt">&gt;</span>
+<span class="c">&lt;!-- member 빈 객체 생성 --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"memberBean"</span> <span class="na">class=</span><span class="s">"aop2_xml_order.MemberBeanImpl"</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- advice 빈 객체 생성 : 부가기능 --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"advice"</span> <span class="na">class=</span><span class="s">"aop2_xml_order.LoggingAdvice"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"advice2"</span> <span class="na">class=</span><span class="s">"aop2_xml_order.LoggingAdvice2"</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!-- aop 설정 --&gt;</span>
+<span class="nt">&lt;aop:config&gt;</span>
+	<span class="c">&lt;!-- Advice를 적용할 타켓의 메소드를 선별하는 정규표현식 --&gt;</span>
+	<span class="nt">&lt;aop:pointcut</span> <span class="na">expression=</span><span class="s">"execution(public * *(..))"</span> <span class="na">id=</span><span class="s">"pointCut"</span><span class="nt">/&gt;</span>
+	
+	<span class="c">&lt;!-- aspect는 부가기능 : 빈 id가 들어가야한다 --&gt;</span>
+	<span class="nt">&lt;aop:aspect</span> <span class="na">id=</span><span class="s">"aspect"</span> <span class="na">ref=</span><span class="s">"advice"</span> <span class="na">order=</span><span class="s">"2"</span><span class="nt">&gt;</span>
+		<span class="c">&lt;!-- Advice:around 공통기능 --&gt;</span>
+		<span class="nt">&lt;aop:around</span> <span class="na">method=</span><span class="s">"around"</span> <span class="na">pointcut-ref=</span><span class="s">"pointCut"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"before"</span> <span class="na">pointcut-ref=</span><span class="s">"pointCut"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/aop:aspect&gt;</span>
+	
+	<span class="nt">&lt;aop:aspect</span> <span class="na">id=</span><span class="s">"aspect2"</span> <span class="na">ref=</span><span class="s">"advice2"</span> <span class="na">order=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"before"</span> <span class="na">pointcut-ref=</span><span class="s">"pointCut"</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;aop:after-returning</span> <span class="na">method=</span><span class="s">"afterReturning"</span> <span class="na">pointcut-ref=</span><span class="s">"pointCut"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/aop:aspect&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+:ET

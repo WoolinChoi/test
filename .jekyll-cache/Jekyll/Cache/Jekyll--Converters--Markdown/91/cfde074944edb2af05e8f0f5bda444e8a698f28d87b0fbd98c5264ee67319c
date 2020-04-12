@@ -1,0 +1,190 @@
+I";P<h1 id="static"><a href="">static</a></h1>
+
+<h2 id="main">Main</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//		Book b1 = new Book();</span>
+<span class="c1">//		Book b2 = new Book();</span>
+<span class="c1">//		Book b3 = new Book();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"갯수: "</span> <span class="o">+</span> <span class="nc">Book</span><span class="o">.</span><span class="na">getCount</span><span class="o">());</span> <span class="c1">// 원래 객체로 접근가능하지만 클래스명 접근가능</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="book">Book</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * static 변수 : 각 개체에서 공유하려고
+ *             메모리에 단하나임
+ *             * 클래스명 접근가능(그래서 static 변수 = 클래스 변수)
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">count</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">Book</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">count</span><span class="o">++;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"책 한권 생성"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCount</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test">Test</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">UserA</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserA</span><span class="o">();</span>
+		<span class="n">a</span><span class="o">.</span><span class="na">use</span><span class="o">();</span>
+		<span class="nc">UserB</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserB</span><span class="o">();</span>
+		<span class="n">b</span><span class="o">.</span><span class="na">use</span><span class="o">();</span>
+		<span class="nc">UserC</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserC</span><span class="o">();</span>
+		<span class="n">c</span><span class="o">.</span><span class="na">use</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="dbconnect">DBConnect</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DBConnect</span> <span class="o">{</span>
+	<span class="kd">static</span> <span class="nc">DBConnect</span> <span class="n">db</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nf">DBConnect</span><span class="o">(){</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"실제로 디비에 연결을 얻어옴"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">DBConnect</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">db</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="n">db</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DBConnect</span><span class="o">();}</span>
+		<span class="k">return</span> <span class="n">db</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="usera">UserA</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">UserA</span> <span class="o">{</span>
+	<span class="nc">DBConnect</span> <span class="n">con</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">UserA</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// con = new DBConnect();</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DBConnect</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">use</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"디비 작업중"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="userb">UserB</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">UserB</span> <span class="o">{</span>
+	<span class="nc">DBConnect</span> <span class="n">con</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">UserB</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// con = new DBConnect();</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DBConnect</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">use</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"디비 작업중"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="userc">UserC</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">UserC</span> <span class="o">{</span>
+	<span class="nc">DBConnect</span> <span class="n">con</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">UserC</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// con = new DBConnect();</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DBConnect</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">use</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"디비 작업중"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="연습">연습</h2>
+<p>[GradeExpr]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GradeExpr</span> <span class="o">{</span>
+	<span class="c1">// 멤버변수</span>
+	<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">jumsu</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">total</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">double</span> <span class="n">average</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">goodscore</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">badscore</span><span class="o">;</span>
+	<span class="c1">// 멤버메소드</span>
+	<span class="kd">public</span> <span class="nf">GradeExpr</span><span class="o">(</span><span class="kt">int</span> <span class="n">jumsu</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">jumsu</span> <span class="o">=</span> <span class="n">jumsu</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="c1">// getter/setter</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getTotal</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">jumsu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">total</span> <span class="o">+=</span> <span class="n">jumsu</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">double</span> <span class="nf">getAverage</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		for(int i = 0; i &lt; jumsu.length; i++) {</span>
+<span class="c1">//			average = total / jumsu[i];</span>
+<span class="c1">//		}</span>
+		<span class="kt">double</span> <span class="n">average</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span><span class="n">getTotal</span><span class="o">()</span> <span class="o">/</span> <span class="n">jumsu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">average</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGoodScore</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		int max = jumsu[0];</span>
+<span class="c1">//		for(int i = 0; i &lt; jumsu.length; i++) {</span>
+<span class="c1">//			if(max &lt; jumsu[i]) {</span>
+<span class="c1">//				max = jumsu[i];</span>
+<span class="c1">//			}</span>
+<span class="c1">//		}</span>
+<span class="c1">//		max = goodscore;</span>
+		<span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">jumsu</span><span class="o">);</span>
+		<span class="n">goodscore</span> <span class="o">=</span> <span class="n">jumsu</span><span class="o">[</span><span class="n">jumsu</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">];</span>
+		<span class="k">return</span> <span class="n">goodscore</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getBadScore</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		int min = jumsu[0];</span>
+<span class="c1">//		for(int i = 0; i &lt; jumsu.length; i++) {</span>
+<span class="c1">//			if(min &gt; jumsu[i]) {</span>
+<span class="c1">//				min = jumsu[i];</span>
+<span class="c1">//			}</span>
+<span class="c1">//		}</span>
+<span class="c1">//		min = badscore;</span>
+		<span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">jumsu</span><span class="o">);</span>
+		<span class="n">badscore</span> <span class="o">=</span> <span class="n">jumsu</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+		<span class="k">return</span> <span class="n">badscore</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">printScore</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"점수들: "</span><span class="o">);</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">jumsu</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">jumsu</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="s">","</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[GradeTest]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.StringTokenizer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GradeTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">score</span> <span class="o">=</span> <span class="n">inputScore</span><span class="o">();</span>
+		<span class="nc">GradeExpr</span> <span class="n">grade</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GradeExpr</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>	
+		<span class="n">grade</span><span class="o">.</span><span class="na">printScore</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"총점: %d \n"</span><span class="o">,</span> <span class="n">grade</span><span class="o">.</span><span class="na">getTotal</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"평균: %.2f \n"</span><span class="o">,</span> <span class="n">grade</span><span class="o">.</span><span class="na">getAverage</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"최고점수: %d \n"</span><span class="o">,</span> <span class="n">grade</span><span class="o">.</span><span class="na">getGoodScore</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"최저점수: %d \n"</span><span class="o">,</span> <span class="n">grade</span><span class="o">.</span><span class="na">getBadScore</span><span class="o">());</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">inputScore</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"표준 입력 수 -&gt;"</span><span class="o">);</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">nextLine</span><span class="o">());</span>
+		<span class="kt">int</span><span class="o">[]</span> <span class="n">score</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">num</span><span class="o">];</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"점수를 입력해주세요."</span><span class="o">);</span>
+		<span class="nc">StringTokenizer</span> <span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">nextLine</span><span class="o">());</span>
+		
+		<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">while</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">hasMoreTokens</span><span class="o">())</span> <span class="o">{</span>
+			<span class="n">score</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">st</span><span class="o">.</span><span class="na">nextToken</span><span class="o">());</span>
+			<span class="n">k</span><span class="o">++;</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">score</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

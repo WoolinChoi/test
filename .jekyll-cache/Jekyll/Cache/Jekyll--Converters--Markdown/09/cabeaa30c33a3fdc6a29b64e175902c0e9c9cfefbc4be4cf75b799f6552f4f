@@ -1,0 +1,254 @@
+I"Ӎ<h1 id="function"><a href="">function</a></h1>
+
+<h2 id="function-1">Function</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- [숫자형 함수]</span>
+<span class="c1">-- 사원명, 급여, 월급(급여/12)를 출력하되 월급은 십단위에서 반올림하여 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">sal</span> <span class="o">/</span> <span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="nv">"월급"</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 사원명, 급여, 세금(급여의 3.3%)를 원단위 절삭하고 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">trunc</span><span class="p">(</span><span class="n">sal</span> <span class="o">*</span> <span class="mi">0</span><span class="p">.</span><span class="mi">033</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="nv">"세금"</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 공백 제거</span>
+<span class="k">SELECT</span>  <span class="s1">'-'</span> <span class="o">||</span> <span class="k">TRIM</span><span class="p">(</span><span class="s1">' 이순신 '</span><span class="p">)</span><span class="o">||</span> <span class="s1">'-'</span> <span class="k">AS</span> <span class="n">col1</span><span class="p">,</span>
+        <span class="s1">'-'</span><span class="o">||</span> <span class="n">LTRIM</span><span class="p">(</span><span class="s1">' 이순신 '</span><span class="p">)</span> <span class="o">||</span> <span class="s1">'-'</span> <span class="k">AS</span> <span class="n">col2</span><span class="p">,</span>
+        <span class="s1">'-'</span><span class="o">||</span> <span class="n">RTRIM</span><span class="p">(</span><span class="s1">' 이순신 '</span><span class="p">)</span> <span class="o">||</span> <span class="s1">'-'</span> <span class="k">AS</span> <span class="n">col3</span> 
+<span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+
+<span class="c1">-- 가상테이블(dual)을 이용한 오늘 날짜 </span>
+<span class="k">SELECT</span> <span class="n">sysdate</span> <span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+
+<span class="c1">-- [문자형 함수]</span>
+<span class="c1">-- 1. smith의정보를 사원번호, 성명, 담당업무(소문자) 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="k">LOWER</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="k">AS</span> <span class="n">job</span> 
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">ename</span> <span class="o">=</span> <span class="s1">'SMITH'</span><span class="p">;</span>
+
+<span class="c1">-- 2. 사원번호, 사원명(첫글자만 대문자), 담당업무(첫글자만대문자)로 출력</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">INITCAP</span><span class="p">(</span><span class="n">ename</span><span class="p">),</span> <span class="n">INITCAP</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="k">AS</span> <span class="n">job</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+          
+<span class="c1">-- 3. 이름의 첫글자가 ‘K’보다크고 ‘Y’보다 작은 사원의 정보( 사원번호, 이름, 업무, 급여, 부서번호)를 출력하되 이름순으로 정렬</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> <span class="n">deptno</span> 
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">SUBSTR</span><span class="p">(</span><span class="n">ename</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="s1">'K'</span> <span class="k">AND</span> <span class="n">SUBSTR</span><span class="p">(</span><span class="n">ename</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="s1">'Y'</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ename</span><span class="p">;</span>
+          
+<span class="c1">-- 4. 이름이 5글자 이상인사원들을 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="k">LENGTH</span><span class="p">(</span><span class="n">ename</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">-- 5. 이름을 15자로 맞추고글자는 왼쪽에 오른쪽에는 ‘*’로 채운다</span>
+<span class="k">SELECT</span>  <span class="n">RPAD</span><span class="p">(</span><span class="n">ename</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">ename</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+ 
+<span class="c1">-- 6. 월급은 10자로 맞추고숫자는 오른쪽에 왼쪽엔 ‘-‘로 채운다</span>
+<span class="k">SELECT</span>  <span class="n">LPAD</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sal</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 7. 월급을 숫자에서 ‘영일이삼사오육칠팔구’ 글자로 대체 : TRANSLATE</span>
+<span class="k">SELECT</span> <span class="k">TRANSLATE</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="s1">'0123456789'</span><span class="p">,</span> <span class="s1">'영일이삼사오육칠팔구'</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 8. 월급의 숫자에서 0을‘$’로 바꾸어 출력 : REPLACE</span>
+<span class="k">SELECT</span> <span class="k">REPLACE</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'$'</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- [날짜형 함수]</span>
+<span class="c1">-- 1. 현재까지 근무일 수가 많은 사람 순으로 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sysdate</span> <span class="o">-</span> <span class="n">nvl</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="n">sysdate</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 2. 현재 날짜에서 돌아오는 ‘화’요일의 날짜 구하기</span>
+<span class="k">SELECT</span> <span class="n">next_day</span><span class="p">(</span><span class="n">sysdate</span><span class="p">,</span> <span class="s1">'화'</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+
+<span class="c1">-- 3. 현재 날짜에서 해당 월의 마지막 날짜 구하기</span>
+<span class="k">SELECT</span> <span class="n">last_day</span><span class="p">(</span><span class="n">sysdate</span><span class="p">)</span>
+<span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span>
+
+<span class="c1">-- 4. 현재까지 근무일 수가 몇 주 몇 일인가를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span><span class="p">,</span> <span class="n">sysdate</span><span class="o">-</span><span class="n">hiredate</span> <span class="k">AS</span> <span class="n">total_day</span><span class="p">,</span>
+<span class="n">TRUNC</span><span class="p">((</span><span class="n">sysdate</span> <span class="o">-</span> <span class="n">hiredate</span><span class="p">)</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="k">AS</span> <span class="n">weeks</span><span class="p">,</span> <span class="n">CEIL</span><span class="p">(</span><span class="k">MOD</span><span class="p">(</span><span class="n">sysdate</span> <span class="o">-</span> <span class="n">hiredate</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span> <span class="n">days</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 5. 10번 부서의 사원의 현재까지의 근무 월수를 계산</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">TRUNC</span><span class="p">(</span><span class="n">months_between</span><span class="p">(</span><span class="n">sysdate</span><span class="p">,</span> <span class="n">hiredate</span><span class="p">))</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">deptno</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="c1">-- [변환함수]</span>
+<span class="c1">-- 1. 입사일자에서 입사년도를 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span><span class="p">,</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hireyear</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 2. 입사일자에서 입사월을 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span><span class="p">,</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'YYYY-MM'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hiremonths</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 3. 입사일자에서 입사일을 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span><span class="p">,</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'DD'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hireday</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 4. 1981년도에 입사한 사원 검색</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'YYYY'</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1981</span> <span class="p">;</span>
+
+<span class="c1">-- 5. 5월에 입사한 사원 검색</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">hiredate</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'MM'</span><span class="p">)</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="c1">-- 6. 입사일자를 ‘1999년 1월 1일’ 형식으로 출력</span>
+<span class="k">SELECT</span> <span class="n">ename</span><span class="p">,</span> <span class="n">to_char</span><span class="p">(</span><span class="n">hiredate</span><span class="p">,</span> <span class="s1">'YYYY"년" MM"월" DD"일"'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">hiredate</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- [조건함수]</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">(</span>
+    <span class="n">hakbun</span>  <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">name</span>    <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">jumin</span>   <span class="nb">char</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+    <span class="n">gender</span>  <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">age</span>     <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'9000'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">,</span> <span class="s1">'801212-1234567'</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">,</span> <span class="mi">26</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'8000'</span><span class="p">,</span> <span class="s1">'송혜교'</span><span class="p">,</span> <span class="s1">'921212-2234567'</span><span class="p">,</span> <span class="s1">'여자'</span><span class="p">,</span> <span class="mi">26</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'7000'</span><span class="p">,</span> <span class="s1">'홍길순'</span><span class="p">,</span> <span class="s1">'801212-2345678'</span><span class="p">,</span> <span class="s1">'여자'</span><span class="p">,</span> <span class="mi">26</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">info</span><span class="p">(</span><span class="n">hakbun</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">jumin</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'6000'</span><span class="p">,</span> <span class="s1">'홍길자'</span><span class="p">,</span> <span class="s1">'801212-1134567'</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">,</span> <span class="mi">26</span><span class="p">);</span>
+
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">info</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- 주민번호에서 성별 구하기</span>
+<span class="k">SELECT</span> <span class="n">decode</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="n">jumin</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'남자'</span><span class="p">,</span> <span class="s1">'여자'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">gender</span>
+<span class="k">FROM</span> <span class="n">info</span><span class="p">;</span>
+
+<span class="c1">-- 부서번호가 10이면 영업부, 20이면 관리부, 30이면 IT부 그 외는 기술부로 출력</span>
+<span class="k">SELECT</span> <span class="n">decode</span><span class="p">(</span><span class="n">deptno</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'영업부'</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">'관리부'</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">'IT부'</span><span class="p">,</span> <span class="s1">'기술부'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">deptno</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="c1">-- 업무(job)이 analyst이면 급여 증가가 10%이고 clerk이면 15%, manager이면 20%인 경우 사원번호, 사원명, 업무, 급여, 증가한 급여를 출력</span>
+<span class="k">SELECT</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span><span class="p">,</span> 
+<span class="k">CASE</span> <span class="n">job</span>  
+<span class="k">WHEN</span> <span class="s1">'ANALYST'</span> <span class="k">THEN</span> <span class="n">sal</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">1</span>
+<span class="k">WHEN</span> <span class="s1">'CLERK'</span>   <span class="k">THEN</span> <span class="n">sal</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">15</span>
+<span class="k">WHEN</span> <span class="s1">'MANAGER'</span> <span class="k">THEN</span> <span class="n">sal</span> <span class="o">*</span> <span class="mi">1</span><span class="p">.</span><span class="mi">2</span>
+<span class="k">ELSE</span> <span class="n">sal</span> <span class="k">END</span> <span class="n">plussal</span>
+<span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">ROWNUM</span> <span class="n">empno</span><span class="p">,</span> <span class="n">ename</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">WHERE</span> <span class="n">ROWNUM</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">-- 1. 업무가 ‘SALESMAN’인 사람들의 월급의 평균, 총합, 최소값, 최대값을 구하기</span>
+<span class="k">SELECT</span> <span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">avg</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">min</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="o">=</span> <span class="s1">'SALESMAN'</span><span class="p">;</span>
+
+<span class="c1">-- 집계함수는 NULL값도 처리해준다.</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="mi">9988</span><span class="p">,</span> <span class="s1">'홍홍이'</span><span class="p">,</span> <span class="s1">'SALESMAN'</span><span class="p">);</span> 
+
+<span class="c1">-- 2. 커미션(COMM)을 받는 사람들의 수는</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">comm</span><span class="p">)</span> <span class="n">cnt</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">nvl</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- [데이터 그룹]</span>
+<span class="cm">/*
+    SELECT columns  
+    FROM  table_name  
+    WHERE condition
+    GROUP BY group_by_expression
+    HAVING condition
+    ORDER BY column;
+ */</span>
+<span class="c1">-- 1. 부서별로인원수, 평균급여, 최저급여, 최고급여, 급여의 합을 구하기</span>
+<span class="c1">-- GROUP BY는 그룹핑하는 컬럼과 직계함수만 가능하다.</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">min</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>  
+<span class="k">FROM</span>  <span class="n">emp</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">job</span><span class="p">;</span>
+
+<span class="c1">-- 2. 부서별로인원수, 평균급여, 최저급여, 최고급여, 급여의 합을 구하기 (부서별 급여의 합이 높은 순으로)</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">min</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>   
+<span class="k">FROM</span>  <span class="n">emp</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">sum</span> <span class="k">DESC</span><span class="p">;</span>
+
+ <span class="c1">-- 3. 부서별업무별 그룹하여 부서번호, 업무, 인원수, 급여의 평균, 급여의 합을 구하기</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">min</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">max</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>  
+<span class="k">FROM</span>  <span class="n">emp</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">job</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">deptno</span><span class="p">;</span>
+
+<span class="c1">-- 4. 급여가 최대 2900 이상인 부서에 대해 부서번호, 평균 급여, 급여의 합을 출력</span>
+<span class="k">SELECT</span> <span class="n">deptno</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span>
+<span class="k">HAVING</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2900</span><span class="p">;</span>
+ 
+
+<span class="c1">-- 5. 업무별 급여의 평균이 3000이상인 업무에 대해 업무명, 평균 급여, 급여의 합을 출력</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="k">avg</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span>
+<span class="k">HAVING</span> <span class="n">round</span><span class="p">(</span><span class="k">avg</span><span class="p">(</span><span class="n">sal</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">3000</span><span class="p">;</span>
+ 
+
+<span class="c1">-- 6. 전체 합계 급여가 5000를초과하는 각 업무에 대해서 업무와 급여 합계를 출력(단, SALESMAN은제외하고 급여 합계가 높은 순으로 정렬)</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">WHERE</span> <span class="n">job</span> <span class="o">&lt;&gt;</span> <span class="s1">'SALESMAN'</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span>
+<span class="k">HAVING</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5000</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">sum</span> <span class="k">DESC</span><span class="p">;</span>
+ 
+<span class="c1">-- 7. 업무별최고 급여와 최소 급여의 차이를 구하라</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">max</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="o">-</span> <span class="k">min</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">AS</span> <span class="n">sal_gap</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span> 
+ 
+<span class="c1">-- 8. 부서 인원이 4명보다 많은 부서의 부서번호, 인원수, 급여의 합을 출력 </span>
+<span class="k">SELECT</span>  <span class="n">deptno</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span>
+<span class="k">FROM</span> <span class="n">emp</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">deptno</span>
+<span class="k">HAVING</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">;</span>
+
+<span class="c1">-- [GROUP BY 절에 사용하는 함수]</span>
+<span class="c1">-- ROLLUP : 결과에 그룹별 합계 정보를 추가</span>
+<span class="c1">-- CUBE : 그룹핑 된 컬럼의 합계 정보를 추가</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">job</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">rollup</span><span class="p">(</span><span class="n">job</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="n">job</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">sal</span><span class="p">)</span> <span class="k">sum</span> <span class="k">FROM</span> <span class="n">emp</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">cube</span><span class="p">(</span><span class="n">job</span><span class="p">);</span>
+
+<span class="c1">-- [연습문제] employees</span>
+<span class="c1">-- 1. 2003년에 입사한 사원들의 사번, 이름, 입사일을 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">employees</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">employee_id</span><span class="p">,</span> <span class="p">(</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">' '</span> <span class="o">||</span> <span class="n">Last_name</span><span class="p">)</span> <span class="n">full_name</span><span class="p">,</span> <span class="n">hire_date</span>  
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">hire_date</span> <span class="o">&gt;=</span> <span class="s1">'03/01/01'</span> <span class="k">AND</span> <span class="n">hire_date</span> <span class="o">&lt;=</span> <span class="s1">'03/12/31'</span><span class="p">;</span>
+
+<span class="c1">-- 2. 업무가 FI_ACCOUNT / FI_MGR / SA_MAN / SA_REP 인 사원들의 정보를 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">job_id</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'FI_ACCOUNT'</span><span class="p">,</span> <span class="s1">'FI_MGR'</span><span class="p">,</span> <span class="s1">'SA_MAN'</span><span class="p">,</span> <span class="s1">'SA_REP'</span><span class="p">);</span>
+
+<span class="c1">-- 3. 커미션을 받는 사원들의 명단을 출력</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">WHERE</span> <span class="n">nvl</span><span class="p">(</span><span class="n">commission_pct</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- 4. 업무가 SA_MAN 또는 SA_REP이면 "판매부서"를 그 외는 "그 외 부서"라고 출력</span>
+<span class="k">SELECT</span> <span class="n">decode</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">'SA_MAN'</span><span class="p">,</span> <span class="s1">'판매부서'</span><span class="p">,</span> <span class="s1">'SA_REP'</span><span class="p">,</span> <span class="s1">'판매부서'</span><span class="p">,</span> <span class="s1">'그 외 부서'</span><span class="p">)</span> <span class="k">AS</span> <span class="n">job_id</span>
+<span class="k">FROM</span> <span class="n">employees</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">job_id</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+:ET

@@ -1,0 +1,30 @@
+I"�<h1 id="crowling"><a href="">crowling</a></h1>
+
+<h2 id="hanbit">Hanbit</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.jsoup.Jsoup</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jsoup.nodes.Document</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jsoup.nodes.Element</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.jsoup.select.Elements</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hanbit</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// Jsoup으로 원하는 url을 가져온다</span>
+			<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"http://www.hanbit.co.kr/media/"</span><span class="o">;</span>
+			<span class="nc">Document</span> <span class="n">doc</span> <span class="o">=</span> <span class="nc">Jsoup</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">url</span><span class="o">).</span><span class="na">get</span><span class="o">();</span>
+<span class="c1">//			System.out.println(doc);</span>
+			
+			<span class="c1">// 가져온 url에서 원하는 부분을 선택해서 가져온다</span>
+			<span class="nc">Elements</span> <span class="n">body</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">select</span><span class="o">(</span><span class="s">"div.sub_book_list_area .book_tit &gt; a"</span><span class="o">);</span>
+			<span class="k">for</span><span class="o">(</span><span class="nc">Element</span> <span class="n">title</span> <span class="o">:</span> <span class="n">body</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// a 함수안에 있는 책이름을 가져오기위해 text()를 사용한다</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">title</span><span class="o">.</span><span class="na">text</span><span class="o">());</span>
+			<span class="o">}</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">body</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"예외발생"</span><span class="o">);</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

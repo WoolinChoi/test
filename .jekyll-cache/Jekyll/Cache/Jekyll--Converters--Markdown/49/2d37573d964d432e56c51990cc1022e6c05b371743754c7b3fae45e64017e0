@@ -1,0 +1,24 @@
+I"f<h1 id="ioothers"><a href="">ioOthers</a></h1>
+
+<h2 id="fileex">FileEx</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FileEx</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">File</span> <span class="n">f</span><span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"src\\io\\others"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">getPath</span><span class="o">());</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">getAbsolutePath</span><span class="o">());</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">isFile</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"파일입니다"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"디렉토리입니다"</span><span class="o">);</span>
+			<span class="nc">String</span><span class="o">[]</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="na">list</span><span class="o">();</span>
+			<span class="k">for</span><span class="o">(</span><span class="nc">String</span> <span class="n">m</span> <span class="o">:</span> <span class="n">sub</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="nc">File</span> <span class="n">f2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"src\\io\\others\\파일.txt"</span><span class="o">);</span>
+		<span class="n">f2</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

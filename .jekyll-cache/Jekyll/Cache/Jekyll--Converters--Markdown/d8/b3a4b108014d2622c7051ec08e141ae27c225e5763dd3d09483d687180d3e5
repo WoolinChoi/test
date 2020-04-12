@@ -1,0 +1,89 @@
+I"�.<h1 id="ioreaderwriter"><a href="">ioReaderWriter</a></h1>
+
+<h2 id="readerwritertest">ReaderWriterTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 메모장 만들기
+ */</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ReaderWriterTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+		<span class="nc">UIForm3</span> <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UIForm3</span><span class="o">();</span>
+		<span class="n">ui</span><span class="o">.</span><span class="na">addLayout</span><span class="o">();</span>
+		<span class="n">ui</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>	
+	<span class="o">}</span>	
+<span class="o">}</span>
+<span class="c1">//========================================</span>
+<span class="c1">//	화면을 관리하는 클래스 </span>
+<span class="c1">//----------------------------------------</span>
+<span class="kd">class</span> <span class="nc">UIForm3</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="nc">JTextArea</span> <span class="n">ta</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bSave</span><span class="o">,</span> <span class="n">bLoad</span><span class="o">,</span> <span class="n">bClear</span><span class="o">;</span>
+	<span class="nc">UIForm3</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">ta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>		
+		<span class="n">bSave</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"파일저장"</span><span class="o">);</span>
+		<span class="n">bLoad</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"파일읽기"</span><span class="o">);</span>
+		<span class="n">bClear</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"화면지우기"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JPanel</span> <span class="n">pCenter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">ta</span><span class="o">));</span>
+		<span class="nc">JPanel</span> <span class="n">pSouth</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">pSouth</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSave</span><span class="o">);</span>
+		<span class="n">pSouth</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bLoad</span><span class="o">);</span>
+		<span class="n">pSouth</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bClear</span><span class="o">);</span>
+		<span class="n">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">pCenter</span><span class="o">);</span>
+		<span class="n">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span>  <span class="n">pSouth</span><span class="o">);</span>
+		<span class="n">setSize</span><span class="o">(</span> <span class="mi">400</span><span class="o">,</span> <span class="mi">350</span> <span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span> <span class="kc">true</span> <span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">EventHandler</span> <span class="n">hdlr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">EventHandler</span><span class="o">();</span>
+		<span class="n">bSave</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+		<span class="n">bLoad</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">EventHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span><span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">){</span>
+			<span class="nc">Object</span> <span class="n">evt</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			<span class="c1">// "화일저장" 버튼이 눌렸을 때 </span>
+			<span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bSave</span><span class="o">){</span>
+				<span class="nc">JFileChooser</span> <span class="n">fd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFileChooser</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="na">showSaveDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">returnValue</span> <span class="o">==</span> <span class="nc">JFileChooser</span><span class="o">.</span><span class="na">APPROVE_OPTION</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="na">getSelectedFile</span><span class="o">();</span>
+					<span class="k">try</span> <span class="o">{</span>
+						<span class="nc">FileWriter</span> <span class="n">fw</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileWriter</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+						<span class="nc">String</span> <span class="n">content</span> <span class="o">=</span> <span class="n">ta</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+						<span class="n">fw</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">content</span><span class="o">);</span>
+						<span class="n">fw</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+						<span class="n">ta</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+					<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">){</span>
+						<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"저장 실패"</span><span class="o">);</span>
+					<span class="o">}</span>	
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">evt</span> <span class="o">==</span> <span class="n">bLoad</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">// "화일읽기" 버튼이 눌렸을 때 </span>
+				<span class="nc">JFileChooser</span> <span class="n">fd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JFileChooser</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="na">showOpenDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">returnValue</span> <span class="o">==</span> <span class="nc">JFileChooser</span><span class="o">.</span><span class="na">APPROVE_OPTION</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">File</span> <span class="n">f</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="na">getSelectedFile</span><span class="o">();</span>
+					<span class="k">try</span> <span class="o">{</span>
+						<span class="nc">FileReader</span> <span class="n">fr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileReader</span><span class="o">(</span><span class="n">f</span><span class="o">);</span>
+						<span class="kt">char</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">];</span>
+						<span class="n">fr</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+						<span class="n">ta</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">data</span><span class="o">));</span>
+						<span class="n">fr</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+					<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">){</span>
+						<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"읽기 실패"</span><span class="o">);</span>
+					<span class="o">}</span>	
+				<span class="o">}</span>
+			<span class="o">}</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

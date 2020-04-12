@@ -1,0 +1,36 @@
+I"�<h1 id="basic"><a href="">basic</a></h1>
+
+<h2 id="main">Main</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Student</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">();</span>
+		<span class="n">s</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="s">"홍길동"</span><span class="o">;</span>
+		<span class="n">s</span><span class="o">.</span><span class="na">kor</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+		<span class="n">s</span><span class="o">.</span><span class="na">eng</span> <span class="o">=</span> <span class="mi">88</span><span class="o">;</span>
+		<span class="n">s</span><span class="o">.</span><span class="na">math</span> <span class="o">=</span> <span class="mi">77</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"총합: "</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="na">calTotal</span><span class="o">());</span>
+		<span class="n">s</span><span class="o">.</span><span class="na">total</span> <span class="o">=</span> <span class="mi">300</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균: "</span> <span class="o">+</span> <span class="n">s</span><span class="o">.</span><span class="na">calAverage</span><span class="o">());</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="student">Student</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// OOP = Object Oriented Programming</span>
+<span class="c1">// 클래스 = 서로 다른 자료형의 변수들 + 메소드들</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">kor</span><span class="o">,</span> <span class="n">eng</span><span class="o">,</span> <span class="n">math</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">total</span><span class="o">;</span>
+	<span class="kt">double</span> <span class="n">avg</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="nf">calTotal</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">total</span> <span class="o">=</span> <span class="n">kor</span> <span class="o">+</span> <span class="n">eng</span> <span class="o">+</span> <span class="n">math</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">total</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kt">double</span> <span class="nf">calAverage</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">avg</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="n">total</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;</span>
+		<span class="k">return</span> <span class="n">avg</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

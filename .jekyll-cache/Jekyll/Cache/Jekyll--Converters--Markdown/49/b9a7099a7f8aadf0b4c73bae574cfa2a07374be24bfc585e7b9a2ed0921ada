@@ -1,0 +1,55 @@
+I"x<h1 id="etc"><a href="">etc</a></h1>
+
+<h2 id="test">Test</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Object</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">method</span><span class="o">();</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">data</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="nc">Object</span><span class="o">[]</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">a</span> <span class="o">=</span> <span class="s">"헬로우"</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+		<span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">36.6</span><span class="o">;</span>
+		<span class="nc">Object</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Object</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+		<span class="n">data</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+		<span class="n">data</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">data</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Double</span><span class="o">(</span><span class="n">d</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">data</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="test2">Test2</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test2</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Generics &lt;자료형&gt;를 해준다.</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">method</span><span class="o">();</span>
+		<span class="c1">// 출력</span>
+<span class="c1">//		for(int i = 0; i &lt; data.size(); i++) {</span>
+<span class="c1">//			// 데이타 하나씩 뺄 때</span>
+<span class="c1">//			String str = (String)data.get(i);</span>
+<span class="c1">//			System.out.println(str);	</span>
+<span class="c1">//		}</span>
+		<span class="c1">// 향상된 for문 - 데이타 추출할때만</span>
+		<span class="k">for</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span> <span class="o">:</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	<span class="kd">static</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">method</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">a</span> <span class="o">=</span> <span class="s">"올라"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">b</span> <span class="o">=</span> <span class="s">"헬로우"</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">c</span> <span class="o">=</span> <span class="s">"안녕"</span><span class="o">;</span>
+		<span class="c1">// 갯수가 몇 개인지 모를 때</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;(</span><span class="mi">3</span><span class="o">);</span> 
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"곤니치와"</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

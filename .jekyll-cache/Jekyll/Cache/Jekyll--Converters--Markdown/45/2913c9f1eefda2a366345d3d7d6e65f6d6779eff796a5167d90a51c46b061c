@@ -1,0 +1,162 @@
+I"@S<h1 id="ioobjectstream"><a href="">ioObjectStream</a></h1>
+
+<h2 id="datastreamtest">DataStreamTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataStreamTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">UIForm</span>  <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UIForm</span><span class="o">();</span>
+		<span class="n">ui</span><span class="o">.</span><span class="na">addToLayout</span><span class="o">();</span>
+		<span class="n">ui</span><span class="o">.</span><span class="na">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="c1">//-----------------------------------------</span>
+<span class="c1">// 화면을 관리하는 클래스</span>
+<span class="kd">class</span> <span class="nc">UIForm</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="c1">// 데이타를 저장할 변수</span>
+	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	<span class="kt">double</span> <span class="n">height</span><span class="o">;</span>
+	<span class="kt">char</span> <span class="n">bloodType</span><span class="o">;</span>
+	<span class="c1">// 화면 GUI에 관련한 변수</span>
+	<span class="nc">JTextField</span> <span class="n">tfName</span><span class="o">,</span> <span class="n">tfAge</span><span class="o">,</span> <span class="n">tfHeight</span><span class="o">,</span> <span class="n">tfBloodType</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bSave</span><span class="o">,</span> <span class="n">bLoad</span><span class="o">;</span>
+	<span class="nc">UIForm</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">tfName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfAge</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfHeight</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfBloodType</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">bSave</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"저장하기"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"../img/save.gif"</span><span class="o">));</span>
+		<span class="n">bLoad</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"읽어오기"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">ImageIcon</span><span class="o">(</span><span class="s">"../img/load.gif"</span><span class="o">));</span>	
+	<span class="o">}</span>
+	<span class="c1">// 화면 구성하는 메소</span>
+	<span class="kt">void</span> <span class="nf">addToLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">JPanel</span> <span class="n">pCenter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">5</span> <span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">10</span><span class="o">,</span><span class="mi">10</span><span class="o">));</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"이름"</span><span class="o">));</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfName</span><span class="o">);</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"나이"</span><span class="o">));</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfAge</span><span class="o">);</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"신장"</span><span class="o">));</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfHeight</span><span class="o">);</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"혈액형"</span><span class="o">));</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfBloodType</span><span class="o">);</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bSave</span><span class="o">);</span>
+		<span class="n">pCenter</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bLoad</span><span class="o">);</span>
+		<span class="n">getContentPane</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">pCenter</span><span class="o">);</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="c1">// 이벤트 처리하는 메소드 </span>
+	<span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">BtnHandler</span> <span class="n">bHdlr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BtnHandler</span><span class="o">();</span>
+		<span class="n">bSave</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bHdlr</span><span class="o">);</span>
+		<span class="n">bLoad</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">bHdlr</span><span class="o">);</span>				
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">BtnHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">evtBtn</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			<span class="c1">// "저장하기" 버튼이 눌렸을 </span>
+			<span class="k">if</span><span class="o">(</span><span class="n">evtBtn</span> <span class="o">==</span> <span class="n">bSave</span><span class="o">)</span> <span class="o">{</span>
+				<span class="cm">/*
+				1. 텍스트필드에서 입력값 얻어와서 변수에 저장
+				2. 파일출력스트림 생성 (filter 포함)
+				3. 스트림에 출력
+				4. 스트림 닫기
+				5. 텍스트필드 초기화 
+				*/</span>
+				<span class="n">name</span> <span class="o">=</span> <span class="n">tfName</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+				<span class="n">age</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">tfAge</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+				<span class="n">height</span> <span class="o">=</span> <span class="nc">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">tfHeight</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+				<span class="n">bloodType</span> <span class="o">=</span> <span class="o">(</span><span class="n">tfBloodType</span><span class="o">.</span><span class="na">getText</span><span class="o">()).</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>		
+				<span class="k">try</span> <span class="o">{</span>	
+					<span class="n">person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">bloodType</span><span class="o">);</span>
+					<span class="nc">ObjectOutputStream</span> <span class="n">oos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectOutputStream</span><span class="o">(</span>
+							<span class="k">new</span> <span class="nf">FileOutputStream</span><span class="o">(</span><span class="s">"person.ksm"</span><span class="o">));</span>
+					<span class="n">oos</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+					<span class="n">oos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+				<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span> 
+<span class="c1">//					System.out.println("쓰기 실패" + ex.getMessage());</span>
+					<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+				<span class="o">}</span>	
+				<span class="n">tfName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+				<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+				<span class="n">tfHeight</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+				<span class="n">tfBloodType</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>	
+			<span class="o">}</span>
+			<span class="c1">// "읽어오기" 버튼이 눌렸을 때</span>
+			<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">evtBtn</span> <span class="o">==</span> <span class="n">bLoad</span><span class="o">)</span> <span class="o">{</span>		
+			<span class="cm">/*
+			1. 파일입력스트림 생성 (filter 포함 )
+			2. 스트림에서 데이타 읽어서 변수에 저장
+			3. 텍스트필드에  출력
+			4. 스트림 닫기 			
+			*/</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="n">person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">age</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">bloodType</span><span class="o">);</span>
+					<span class="nc">ObjectInputStream</span> <span class="n">ois</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectInputStream</span><span class="o">(</span>
+							<span class="k">new</span> <span class="nf">FileInputStream</span><span class="o">(</span><span class="s">"person.ksm"</span><span class="o">));</span>
+					<span class="n">p</span> <span class="o">=</span> <span class="o">(</span><span class="n">person</span><span class="o">)(</span><span class="n">ois</span><span class="o">.</span><span class="na">readObject</span><span class="o">());</span>
+					<span class="n">name</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">name</span><span class="o">;</span>
+					<span class="n">age</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">age</span><span class="o">;</span>
+					<span class="n">height</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">height</span><span class="o">;</span>
+					<span class="n">bloodType</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">bloodType</span><span class="o">;</span>
+					<span class="n">ois</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>					
+				<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"읽기 실패"</span><span class="o">);</span>
+				<span class="o">}</span>
+					<span class="n">tfName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+					<span class="n">tfAge</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">age</span><span class="o">));</span>
+					<span class="n">tfHeight</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">height</span><span class="o">));</span>
+					<span class="n">tfBloodType</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">bloodType</span><span class="o">));</span>				
+				<span class="o">}</span>	
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="person-implements-serializable">Person implements Serializable</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">person</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kt">int</span> <span class="n">age</span><span class="o">;</span>
+	<span class="kt">double</span> <span class="n">height</span><span class="o">;</span>
+	<span class="kt">char</span> <span class="n">bloodType</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">person</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">public</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">age</span><span class="o">,</span> <span class="kt">double</span> <span class="n">height</span><span class="o">,</span> <span class="kt">char</span> <span class="n">bloodType</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">bloodType</span> <span class="o">=</span> <span class="n">bloodType</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getAge</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setAge</span><span class="o">(</span><span class="kt">int</span> <span class="n">age</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">age</span> <span class="o">=</span> <span class="n">age</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">double</span> <span class="nf">getHeight</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">height</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHegiht</span><span class="o">(</span><span class="kt">double</span> <span class="n">height</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">height</span> <span class="o">=</span> <span class="n">height</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">char</span> <span class="nf">getBloodType</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">bloodType</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBloodType</span><span class="o">(</span><span class="kt">char</span> <span class="n">bloodType</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">bloodType</span> <span class="o">=</span> <span class="n">bloodType</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

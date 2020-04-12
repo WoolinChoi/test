@@ -1,0 +1,87 @@
+I"�&<h1 id="nosql"><a href="">nosql</a></h1>
+
+<h2 id="nosql-1">nosql</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 33세만 검색</span>
+<span class="n">db</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="err">{</span><span class="n">age</span> <span class="p">:</span> <span class="mi">33</span><span class="err">}</span><span class="p">)</span>
+
+<span class="c1">-- 25세 이상만 명단 출력</span>
+<span class="n">db</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="err">{</span><span class="n">age</span> <span class="p">:</span> <span class="err">{$</span><span class="n">gte</span> <span class="p">:</span> <span class="mi">25</span><span class="err">}}</span><span class="p">)</span>
+
+<span class="c1">-- 25세 이상 33세 이하 명단 출력</span>
+<span class="n">db</span><span class="p">.</span><span class="n">members</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="err">{</span><span class="n">age</span><span class="p">:</span><span class="err">{$</span><span class="n">gte</span> <span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="err">$</span><span class="n">lte</span> <span class="p">:</span> <span class="mi">33</span><span class="err">}}</span><span class="p">)</span>
+
+<span class="c1">-- [연습]</span>
+<span class="n">db</span><span class="p">.</span><span class="n">printReplicationinfo</span><span class="p">()</span>
+
+<span class="n">use</span> <span class="n">persondb</span>
+
+<span class="n">db</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span> <span class="p">:</span> <span class="s1">'홍길동'</span><span class="err">}</span><span class="p">)</span>
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span> <span class="p">:</span> <span class="s1">'홍길자'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">persons</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span> <span class="p">:</span> <span class="s1">'홍길동'</span><span class="err">}</span><span class="p">)</span>
+<span class="c1">----------------------------------- 2번째 slave</span>
+<span class="n">db</span><span class="p">.</span><span class="n">printSlaveReplicationInfo</span><span class="p">()</span>
+
+<span class="n">use</span> <span class="n">persondb</span>
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="n">setSlaveOk</span><span class="p">()</span>
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="n">find</span><span class="p">()</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span> <span class="p">:</span> <span class="s1">'홍홍이'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="c1">----------------------------------- 3번째 slave</span>
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span> <span class="p">:</span> <span class="s1">'홍홍이'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="c1">-- [연습2]</span>
+<span class="n">mongod</span> <span class="c1">--dbpath C:\data\work\data1 --port 10000 --replSet bokjeSet</span>
+
+<span class="n">mongod</span> <span class="c1">--dbpath C:\data\work\data2 --port 20000 --replSet bokjeSet</span>
+
+<span class="n">mongod</span> <span class="c1">--dbpath C:\data\work\data3 --port 30000 --replSet bokjeSet</span>
+
+<span class="n">mongo</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">10000</span>
+
+<span class="n">mongo</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">20000</span>
+
+<span class="n">mongo</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">30000</span>
+
+<span class="n">config</span><span class="o">=</span><span class="err">{</span><span class="n">_id</span><span class="p">:</span><span class="s1">'bokjeSet'</span><span class="p">.</span><span class="n">members</span><span class="p">:[</span><span class="err">{</span><span class="n">_id</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="k">host</span><span class="p">:</span><span class="s1">'localhost:10000'</span><span class="err">}</span><span class="p">,</span> <span class="err">{</span><span class="n">_id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="k">host</span><span class="p">:</span><span class="s1">'localhost:20000'</span><span class="err">}</span><span class="p">,</span> <span class="err">{</span><span class="n">_id</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="k">host</span><span class="p">:</span><span class="s1">'localhost:30000'</span><span class="err">}</span><span class="p">]</span><span class="err">}</span>
+
+<span class="n">rs</span><span class="p">.</span><span class="n">intiate</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="o">//</span> <span class="err">첫번째</span> <span class="n">mongo</span><span class="err">를</span> <span class="n">master</span><span class="err">를</span> <span class="err">만들어주면</span> <span class="err">다른</span> <span class="n">slave</span><span class="err">에</span> <span class="err">읽을수있다</span><span class="p">.</span>
+<span class="n">db</span><span class="p">.</span><span class="n">isMaster</span><span class="p">()</span>
+
+<span class="n">use</span> <span class="n">persondb</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">persondb</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">name</span><span class="p">:</span><span class="s1">'kim'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="c1">--[연습3]</span>
+<span class="n">mongod</span> <span class="c1">--shardsvr --dbpath C:\data\work\sh1 --port 10000</span>
+
+<span class="n">mongod</span> <span class="c1">--shardsvr --dbpath C:\data\work\sh2 --port 20000</span>
+
+<span class="n">mongod</span> <span class="c1">--shardsvr --dbpath C:\data\work\sh3 --port 30000</span>
+
+<span class="n">mongod</span> <span class="c1">--configsvr --dbpath C:\data\work\cfg --port 40000</span>
+
+<span class="n">mongos</span> <span class="c1">--configdb localhost:40000 --chunkSize 1</span>
+
+<span class="n">mongo</span>
+
+<span class="n">use</span> <span class="k">admin</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">runCommand</span><span class="p">(</span><span class="err">{</span><span class="n">addshardsvr</span><span class="p">:</span><span class="s1">'localhost:10000'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">runCommand</span><span class="p">(</span><span class="err">{</span><span class="n">addshardsvr</span><span class="p">:</span><span class="s1">'localhost:20000'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">runCommand</span><span class="p">(</span><span class="err">{</span><span class="n">addshardsvr</span><span class="p">:</span><span class="s1">'localhost:30000'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">runCommand</span><span class="p">(</span><span class="err">{</span><span class="n">enableSharding</span><span class="p">:</span><span class="s1">'persondb'</span><span class="err">}</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">.</span><span class="n">runCommand</span><span class="p">(</span><span class="err">{</span><span class="n">shardCollection</span><span class="p">:</span><span class="s1">'persondb:persons'</span><span class="p">,</span><span class="k">key</span><span class="p">:</span><span class="err">{</span><span class="n">_id</span><span class="p">:</span><span class="mi">1</span><span class="err">}}</span><span class="p">)</span>
+
+<span class="k">for</span><span class="p">(</span><span class="n">var</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10000</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="err">{</span><span class="n">db</span><span class="p">.</span><span class="n">persons</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="err">{</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="err">}</span> <span class="p">)</span> <span class="err">}</span>
+</code></pre></div></div>
+:ET

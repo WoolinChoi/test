@@ -1,0 +1,206 @@
+I"R<h1 id="jquerycalculate"><a href="">jqueryCalculate</a></h1>
+
+<h2 id="calcformjson">CalcFormJson</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>ACalcFormJson<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"../02_jquery_ajax_basic/libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// #### javascript</span>
+<span class="cm">/*
+			document.forms[0].onsubmit = function(){
+				alert("ok");
+				return false; // 기존의 submit 이벤트 기능 막음
+			}
+*/</span>			
+			<span class="c1">// ##### jquery</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">form</span><span class="dl">"</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/calc-action.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">data</span> <span class="p">:</span> <span class="p">{</span>
+						<span class="dl">"</span><span class="s2">op1</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op1</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">op2</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op2</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">opr</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#opr</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> 
+					<span class="p">},</span>
+					<span class="na">dataType</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+					<span class="p">},</span>
+					<span class="na">error</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+				<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"./jsp/calc-action.jsp"</span> <span class="na">method=</span><span class="s">"get"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op1"</span> <span class="na">id=</span><span class="s">"op1"</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"opr"</span> <span class="na">id=</span><span class="s">"opr"</span> <span class="nt">&gt;</span>
+		<span class="nt">&lt;option&gt;</span>+<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>-<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>*<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>/<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>%<span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;/select&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op2"</span> <span class="na">id=</span><span class="s">"op2"</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"="</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;fieldset&gt;</span>
+		<span class="nt">&lt;legend&gt;</span>실행결과<span class="nt">&lt;/legend&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+	<span class="nt">&lt;/fieldset&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="calcformjson_jsp">CalcFormJson_jsp</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"application/json; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+    {
+    	"op1" : ${param.op1},
+    	"op2" : ${param.op2},
+    	"opr" : "${param.opr}",
+    	"result" : ${param.op1 + param.op2}
+    }
+</code></pre></div></div>
+
+<h2 id="calcformxml">CalcFormXml</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>CalcFormXml<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"../02_jquery_ajax_basic/libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// ##### jquery</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">form</span><span class="dl">"</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/calc-action-xml.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">data</span> <span class="p">:</span> <span class="p">{</span>
+						<span class="dl">"</span><span class="s2">op1</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op1</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">op2</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op2</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">opr</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#opr</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> 
+					<span class="p">},</span>
+					<span class="na">dataType</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">xml</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">data</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">"</span><span class="s2">result</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">();</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+					<span class="p">},</span>
+					<span class="na">error</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+				<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"./jsp/calc-action.jsp"</span> <span class="na">method=</span><span class="s">"get"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op1"</span> <span class="na">id=</span><span class="s">"op1"</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"opr"</span> <span class="na">id=</span><span class="s">"opr"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;option&gt;</span>+<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>-<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>*<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>/<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>%<span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;/select&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op2"</span> <span class="na">id=</span><span class="s">"op2"</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"="</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;fieldset&gt;</span>
+		<span class="nt">&lt;legend&gt;</span>실행결과<span class="nt">&lt;/legend&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+	<span class="nt">&lt;/fieldset&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="calcformxml_jsp">CalcFormXml_jsp</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version='1.0' encoding='UTF-8' ?&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/xml; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;response&gt;</span>
+	<span class="nt">&lt;op1&gt;</span>${param.op1}<span class="nt">&lt;/op1&gt;</span>
+	<span class="nt">&lt;opr&gt;</span>${param.opr}<span class="nt">&lt;/opr&gt;</span>
+	<span class="nt">&lt;op2&gt;</span>${param.op2}<span class="nt">&lt;/op2&gt;</span>
+	<span class="nt">&lt;result&gt;</span>${param.op1 + param.op2}<span class="nt">&lt;/result&gt;</span>
+<span class="nt">&lt;/response&gt;</span>
+</code></pre></div></div>
+
+<h2 id="calcform">CalcForm</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>CalcForm<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"../02_jquery_ajax_basic/libs/jquery-1.9.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// ##### jquery</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">form</span><span class="dl">"</span><span class="p">).</span><span class="nx">submit</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">./jsp/calc-action-json.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">data</span> <span class="p">:</span> <span class="p">{</span>
+						<span class="dl">"</span><span class="s2">op1</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op1</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">op2</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#op2</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">(),</span>
+						<span class="dl">"</span><span class="s2">opr</span><span class="dl">"</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#opr</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> 
+					<span class="p">},</span>
+					<span class="na">dataType</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">json</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#result</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+					<span class="p">},</span>
+					<span class="na">error</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+				<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"./jsp/calc-action.jsp"</span> <span class="na">method=</span><span class="s">"get"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op1"</span> <span class="na">id=</span><span class="s">'op1'</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"opr"</span> <span class="na">id=</span><span class="s">'opr'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;option&gt;</span>+<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>-<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>*<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>/<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;option&gt;</span>%<span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;/select&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"op2"</span> <span class="na">id=</span><span class="s">'op2'</span> <span class="na">size=</span><span class="s">"3"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"="</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+	<span class="nt">&lt;fieldset&gt;</span>
+		<span class="nt">&lt;legend&gt;</span>실행결과<span class="nt">&lt;/legend&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+	<span class="nt">&lt;/fieldset&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="calcform_jsp">CalcForm_jsp</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"application/json; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+    {
+    	"op1" : ${param.op1},
+    	"op2" : ${param.op2},
+    	"opr" : "${param.opr}",
+    	"result" : ${param.op1 + param.op2}
+    }
+</code></pre></div></div>
+:ET

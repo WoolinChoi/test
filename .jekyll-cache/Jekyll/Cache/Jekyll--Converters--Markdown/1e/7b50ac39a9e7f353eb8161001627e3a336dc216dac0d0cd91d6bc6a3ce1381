@@ -1,0 +1,350 @@
+I"M�<h1 id="file"><a href="">file</a></h1>
+
+<h2 id="exception">exception</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [에러와 예외]
+    1. 에러
+        문법적 오류
+    2. 예외
+        실행시 발생하는 오류로 예외가 발생하면 프로그램이 비정상 종료된다
+
+    [예외처리]
+    try:
+        예외 발생 가능 문장들
+    except Exception:
+        예외가 발생한 후에 실행할 문장들
+    else:
+        예외가 발생하지 않았을 때 실행되는 문장들
+    finally:
+        예외 발생 여부와 상관없이 무조건 실행되는 문장들
+
+    [참고] 파이썬 내장 예외
+        https://docs.python.org/3/library/exceptions.html
+"""</span>
+<span class="c1"># 0으로 나누기(1)
+# 10 / 0 -&gt; 예외발생 : ZeroDivisionError: division by zero
+</span><span class="k">try</span><span class="p">:</span>
+     <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외"</span><span class="p">)</span>
+
+<span class="c1"># 0으로 나누기(2)
+</span><span class="k">try</span><span class="p">:</span>
+     <span class="mi">10</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="c1"># 0으로 나누기(3)
+</span><span class="k">try</span><span class="p">:</span>
+     <span class="mi">10</span> <span class="o">+</span> <span class="mi">0</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외발생없음"</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"정상종료"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="readfile">readFile</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+@ 파일 읽고 쓰기
+    - 파일을 읽고 쓰기 전에 파일을 열어야 한다
+    - fileObj = open ( filename, mode )
+            mode 첫번째 글자 - 작업 표시
+            r(read)  : 파일 읽기
+            w(write) : 파일 쓰기 ( 파일이 없으면 생성하고 파일이 있으면 덮어쓴다 )
+            x(write) : 파일 쓰기 ( 파일이 없을 때만 생성하고 쓴다 )
+            a(append) : 파일 추가 ( 파일이 있으면 파일의 끝에서부터 추가하여 쓴다 )
+
+            mode 두번째 글자 - 파일 타입
+            t : 텍스트(text) 타입 ( 기본값 )
+            b : 이진(binary) 타입
+            두번째 글자가 없으면 텍스트 타입이다.
+
+            encoding='utf-8' : 한글
+
+    - 파일을 열고 사용 후에는 반드시 닫아야 한다
+    #### 파일을 자동으로 닫아주는 with 구문을 사용 ####
+"""</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp.xml"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="p">:</span> <span class="k">break</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp2.xml"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span> <span class="k">break</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+    <span class="n">f2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외발생:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s"> 정상종료"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp3.xml"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f3</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">f3</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span> <span class="k">break</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s">""</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외발생:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s"> 정상종료"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp2.xml"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f4</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f4</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"파일의 총 단어수:"</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+
+<span class="s">""" [연습]
+    함수 정의 : count_words
+    인자 : filename
+
+    인자로 받은 파일명을 open 하여 파일을 읽어서 단어를 수를 출력한다.
+    존재하지 않는 파일명으로 예외가 발생해도 아무런 일을 하지 않는다
+"""</span>
+<span class="k">def</span> <span class="nf">count_words</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/"</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="s">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"예외발생:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"파일의 총 단어수:"</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
+
+<span class="c1"># 존재하지 않는 파일명도 있음
+</span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sample.xml'</span><span class="p">,</span> <span class="s">'xxxx,xxx'</span><span class="p">,</span> <span class="s">'temp.json'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+    <span class="n">count_words</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="csv">csv</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">csv</span>
+<span class="c1"># [1] 리스트 데이타를 csv 파일에 저장한다
+# data = [[1, "김", "책임"], [2, "박", "선임"], [3, "주", "연구원"]]
+# with open("./data/imsi.csv", "wt", encoding="utf-8") as f:
+#     cout = csv.writer(f)
+#     cout.writerows(data)
+</span>
+<span class="c1"># [2] csv 파일을 읽어서 리스트 변수 저장 출력
+</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/imsi.csv"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">cin</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cin</span> <span class="k">if</span> <span class="n">row</span><span class="p">]</span>    <span class="c1"># row가 있으면 출력(공백제거)
+</span><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>    <span class="c1"># [[1, "김", "책임"], [2, "박", "선임"], [3, "주", "연구원"]]
+</span></code></pre></div></div>
+
+<h2 id="json">json</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># (1) 이름 : xxxx
+#     번호 : xxxx
+#     직업 : xxxx
+</span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp.json"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span>
+<span class="n">json_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<span class="c1"># print(data)
+# print(type(data))
+</span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"이름&gt;"</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>    <span class="c1"># 첫번째 요소
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"번호&gt;"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s">"No"</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"직업&gt;"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s">"Job"</span><span class="p">])</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># with 구문
+</span><span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/temp.json"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+        <span class="c1"># print(data)
+</span>        <span class="c1"># print(type(data))
+</span>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"이름&gt;"</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>  <span class="c1"># 첫번째 요소
+</span>            <span class="k">print</span><span class="p">(</span><span class="s">"번호&gt;"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s">"No"</span><span class="p">])</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"직업&gt;"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">item</span><span class="p">][</span><span class="s">"Job"</span><span class="p">])</span>
+<span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"예외발생:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s"> 정상종료"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="정규표현식">정규표현식</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>정규표현식 (Regular Expression)
+
+1. 확장문자
+    s :  공백문자 (스페이스, 탭 등 )
+    d :  숫자
+    D : 숫자가 아닌 문자 -&gt; [^0-9] 와 동일
+    w : 알파벳, 숫자, 언더스코어(_) -&gt; [A-Za-z0-9] 비슷
+    W : 알파벳, 숫자, 언더스코어(_)가 아닌 문자
+
+2. 특수문자
+    * : 0번 이상
+    + : 1번 이상
+    ? : 0 또는 1개의 문자 매칭
+    . : 정확히 1개 문자 매칭
+
+3. 플래스
+    g : 매칭되는 모든 값을 찾음
+    i : 대소문자 무시
+    m : 여러 줄 매칭
+
+[참고] 파이썬 정규식 표현 : https://wikidocs.net/4308
+</code></pre></div></div>
+
+<h2 id="reg_method">reg_method</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    # 패턴과 소스를 비교하는 메소드
+    - match() : 패턴의 일치여부 확인
+    - findall() : 일치하는 모든 문자열 리스트 반환
+    - search() : 첫번째 일치하는 객체 반환
+    - split() : 패턴에 맞게 소스를 분리한 후 문자열 조각의 리스트 반환
+    - sub() : 대체 인자로 변환
+
+    [참고] 파이썬 정규식 표현 : https://wikidocs.net/4308
+"""</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># match()
+</span><span class="n">msg</span> <span class="o">=</span> <span class="s">'We are happy. You are happy. Happy2019 2020'</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">"We"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">"happy"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s">".*happy"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>    <span class="c1"># 앞에 문자들이 있을때 .*찾는문자열 해준다.
+</span><span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># search()
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"happy"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>    <span class="c1"># 문자열과 일치하는 것을 찾아준다.
+</span><span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># split()
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>    <span class="c1"># 문자열 기준으로 잘라준다.
+</span><span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># sub()
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"@"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>    <span class="c1"># 문자열을 @로 바꿔준다.
+</span><span class="k">print</span><span class="p">(</span><span class="s">"-"</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="findall">findall</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># findall(검색어, 문자열) : 문자열에서 검색어와 일하는 내용들을 리스트로 반환
+</span><span class="n">msg</span> <span class="o">=</span> <span class="s">'We_are_happy!! You are happy?? Happy2019-2020 안녕'</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"happy"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>    <span class="c1"># search와 다르게 문자열을 모두 찾는다.
+</span><span class="k">print</span><span class="p">(</span><span class="s">"happy:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 소문자 모두 찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[a-z]"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"모든 소문자:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 소문자가 아닌 모두 찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[^a-z]"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"소문자가 아닌 모두:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 소문자(반복) 모두 찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[a-z]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"소문자(반복) 모두:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 소문자와 대문자 찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[a-zA-Z]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"소문자와 대문자:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 숫자 찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[0-9]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"숫자:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 소문자/대문자/숫자 아닌 거찾기
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[^a-zA-Z0-9]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"소문자/대문자/숫자가 아닌:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 영문자 숫자 _를 검색
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[</span><span class="err">\</span><span class="s">w]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"영문자 숫자 _:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># 영문자 숫자 _가 아닌 검색
+</span><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">"[</span><span class="err">\</span><span class="s">W]+"</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"영문자 숫자 _가 아닌:"</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="email">email</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    이메일 주소의 적합성 체크
+        kim@encore.com   : 올바른 이메일
+        kim@encore       : 잘못된 이메일 ( . 하나 없어서 )
+        kim_@encore.com  : 잘못된 이메일 ( 특수문자 안됨 )
+
+     [참고]
+        ^[]: 시작
+        [^] : not
+        {2,9} : 최소 2개 최대 9개
+        {2,} : 최소 2개만 지정하고 최대는 지정하지 않음
+        $ 끝
+        문자(.) : </span><span class="err">\</span><span class="s">. 으로 표시
+"""</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="c1"># compile
+</span><span class="k">def</span> <span class="nf">email_check</span><span class="p">(</span><span class="n">email</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"^[a-zA-Z0-9+-_.] + @[a-zA-Z0-9-] + </span><span class="err">\</span><span class="s">.[a-zA-Z0-9-.]+$"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">email</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"올바른 이메일입니다"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"잘못된 이메일입니다"</span><span class="p">)</span>
+
+<span class="n">email_check</span><span class="p">(</span><span class="s">'kim@encore.com'</span><span class="p">)</span>       <span class="c1"># 올바른 이메일
+</span><span class="n">email_check</span><span class="p">(</span><span class="s">'kim@encore'</span><span class="p">)</span>           <span class="c1"># 잘못된 이메일 (. 하나 없어서)
+</span><span class="n">email_check</span><span class="p">(</span><span class="s">'k!!m_@encore.com'</span><span class="p">)</span>     <span class="c1"># 잘못된 이메일 (특수문자 안됨)
+</span></code></pre></div></div>
+
+<h2 id="password">password</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    비밀번호 생성시 의 적합성 체크
+    1. 비밀번호의 길이는 6-10
+    2. 숫자와 알파벳으로만 구성되어야 함
+    3. 대문자와 소문자가 섞여야 함 ( 대문자 1개 이상, 소문자 0개 이상)
+    4. 위의 조건에 부합하면 잘못된 상황을 출력하고
+       조건을 모두 만족하면 가능한 비밀번호임을 출력한다.
+"""</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="k">def</span> <span class="nf">pwd_check</span><span class="p">(</span><span class="n">pwd</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"^(?=.*[a-z])(?=.*[A-Z])(?=.*</span><span class="err">\</span><span class="s">d)[a-zA-Z</span><span class="err">\</span><span class="s">d]{6,10}$"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"올바른 비밀번호입니다."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"잘못된 비밀번호입니다."</span><span class="p">)</span>
+
+<span class="n">pwd_check</span><span class="p">(</span><span class="s">'abcdE'</span><span class="p">)</span>          <span class="c1"># 길이오류
+</span><span class="n">pwd_check</span><span class="p">(</span><span class="s">'abcdef'</span><span class="p">)</span>         <span class="c1"># 대문자 포함하지 않아 오류
+</span><span class="n">pwd_check</span><span class="p">(</span><span class="s">'Abcdef2'</span><span class="p">)</span>        <span class="c1"># 성공
+</span><span class="n">pwd_check</span><span class="p">(</span><span class="s">'Abcdef_2'</span><span class="p">)</span>       <span class="c1"># 특수문자 포함
+</span></code></pre></div></div>
+:ET

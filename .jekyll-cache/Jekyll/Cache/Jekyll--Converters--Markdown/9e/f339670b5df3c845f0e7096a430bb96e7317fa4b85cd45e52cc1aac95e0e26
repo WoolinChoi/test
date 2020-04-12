@@ -1,0 +1,185 @@
+I"k?<h1 id="module"><a href="">module</a></h1>
+
+<h2 id="mymodule">mymodule</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [정리]
+
+    * 함수 : 파일 내에서 일정한 작업을 수행하는 코드 블록
+    * 모듈 : 함수나 클래스들을 파일
+            모듈이름은 py 확장자를 제외한 파일 이름
+    * 패키지 : 여러 모듈들을 모아놓은 디렉토리
+            패키지 = 디렉토리
+            모듈 = 파일
+
+    [ 모듈 ]
+    - 자주 사용되는 함수를 매번 작성하지 않고 하나의 모듈로 사용하여 재사용
+    - 모듈 단위로 분리하여 설계함으로 작업의 효율을 높임
+    - 동일한 함수나 클래스를 모듈로 관리
+
+        ` 표준 모듈 : 파이썬 안에 기본적으로 제공하는 모듈
+        ` 사용자 정의 모듈 : 개발자가 직접 정의한 모듈
+"""</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+
+<span class="k">def</span> <span class="nf">get_weather</span><span class="p">():</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="p">[</span><span class="s">'맑음'</span><span class="p">,</span> <span class="s">'비'</span><span class="p">,</span> <span class="s">'눈'</span><span class="p">,</span> <span class="s">'폭우'</span><span class="p">,</span> <span class="s">'돌풍'</span><span class="p">,</span> <span class="s">'따뜻'</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_date</span><span class="p">():</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="p">[</span><span class="s">'월'</span><span class="p">,</span> <span class="s">'화'</span><span class="p">,</span> <span class="s">'수'</span><span class="p">,</span> <span class="s">'목'</span><span class="p">,</span> <span class="s">'금'</span><span class="p">,</span> <span class="s">'토'</span><span class="p">,</span> <span class="s">'일'</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+
+<span class="c1"># 프로그램 시작점
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="n">get_weather</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는2"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">get_date</span><span class="p">(),</span> <span class="s">"요일입니다2"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="myfile">myfile</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1. 모듈 전체를 참조할 때 import
+</span><span class="kn">import</span> <span class="nn">mymodule</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">mymodule</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mymodule</span><span class="o">.</span><span class="n">get_date</span><span class="p">(),</span> <span class="s">"요일입니다"</span><span class="p">)</span>
+
+<span class="c1"># 2. 모듈에 별칭 부여
+</span><span class="kn">import</span> <span class="nn">mymodule</span> <span class="k">as</span> <span class="n">my</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">my</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">my</span><span class="o">.</span><span class="n">get_date</span><span class="p">(),</span> <span class="s">"요일입니다"</span><span class="p">)</span>
+
+<span class="c1"># 3. 모듈에서 필요한 부분만 import
+</span><span class="kn">from</span> <span class="nn">mymodule</span> <span class="kn">import</span> <span class="n">get_weather</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">get_weather</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+<span class="c1"># print(get_date(), "요일입니다")  # get_weather만 import했기때문이다.
+</span>
+<span class="c1"># 별칭가능
+</span><span class="kn">from</span> <span class="nn">mymodule</span> <span class="kn">import</span> <span class="n">get_weather</span> <span class="k">as</span> <span class="n">gw</span>
+
+<span class="n">today</span> <span class="o">=</span> <span class="n">gw</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="exmodule">exmodule</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    exmodule.py
+        sum() 함수 정의
+            - 인자 2개를 받아서 더한 값을 리턴하는 함수
+            - 두 개의 인자가 다른 자료형이면 "자료형이 달라서 계산할 수 없음" 출력
+            - 두 개의 인자가 같은 자료형일 경우만 더한 값을 리턴
+"""</span>
+<span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"자료형이 달라서 계산할 수 없음"</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<h2 id="exfile">exfile</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    exfile.py
+        - exmodule.py 안에 있는 sum() 호출하여 결과 출력
+"""</span>
+<span class="kn">from</span> <span class="nn">exmodule</span> <span class="kn">import</span> <span class="nb">sum</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="s">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="mypackagemymodule">mypackage.mymodule</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [정리]
+
+    * 함수 : 파일 내에서 일정한 작업을 수행하는 코드 블록
+    * 모듈 : 함수나 클래스들을 파일
+            모듈이름은 py 확장자를 제외한 파일 이름
+    * 패키지 : 여러 모듈들을 모아놓은 디렉토리
+            패키지 = 디렉토리
+            모듈 = 파일
+
+    [ 모듈 ]
+    - 자주 사용되는 함수를 매번 작성하지 않고 하나의 모듈로 사용하여 재사용
+    - 모듈 단위로 분리하여 설계함으로 작업의 효율을 높임
+    - 동일한 함수나 클래스를 모듈로 관리
+
+        ` 표준 모듈 : 파이썬 안에 기본적으로 제공하는 모듈
+        ` 사용자 정의 모듈 : 개발자가 직접 정의한 모듈
+"""</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+<span class="k">def</span> <span class="nf">get_weather</span><span class="p">():</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="p">[</span><span class="s">'맑음'</span><span class="p">,</span> <span class="s">'비'</span><span class="p">,</span> <span class="s">'눈'</span><span class="p">,</span> <span class="s">'폭우'</span><span class="p">,</span> <span class="s">'돌풍'</span><span class="p">,</span> <span class="s">'따뜻'</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_date</span><span class="p">():</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="p">[</span><span class="s">'월'</span><span class="p">,</span> <span class="s">'화'</span><span class="p">,</span> <span class="s">'수'</span><span class="p">,</span> <span class="s">'목'</span><span class="p">,</span> <span class="s">'금'</span><span class="p">,</span> <span class="s">'토'</span><span class="p">,</span> <span class="s">'일'</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">choice</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+
+<span class="c1"># 프로그램 시작점
+</span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">today</span> <span class="o">=</span> <span class="n">get_weather</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"오늘의 날씨는"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">get_date</span><span class="p">(),</span> <span class="s">"요일입니다"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="exfile2">exfile2</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    exfile2.py
+    mypackage 패키지 안에 있는 mymodule을 import하여 사용하고자 함
+"""</span>
+<span class="kn">import</span> <span class="nn">mypackage.mymodule</span>
+<span class="n">today</span> <span class="o">=</span> <span class="n">mypackage</span><span class="o">.</span><span class="n">mymodule</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">mypackage</span> <span class="kn">import</span> <span class="n">mymodule</span>
+<span class="c1"># get_weather() 호출하여 출력
+</span><span class="n">today</span> <span class="o">=</span> <span class="n">mymodule</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">today</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="mypackageexampleexmodule">mypackage.example.exmodule</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    exmodule.py
+        sum() 함수 정의
+            - 인자 2개를 받아서 더한 값을 리턴하는 함수
+            - 두 개의 인자가 다른 자료형이면 "자료형이 달라서 계산할 수 없음" 출력
+            - 두 개의 인자가 같은 자료형일 경우만 더한 값을 리턴
+"""</span>
+<span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">"자료형이 달라서 계산할 수 없음"</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</code></pre></div></div>
+
+<h2 id="mypackageexfile3">mypackage.exfile3</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    exfile3.py
+    mypackage / eaxm / exmodule.py 안엔 sum() 호출
+"""</span>
+<span class="kn">import</span> <span class="nn">example.exmodule</span>
+<span class="k">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">exmodule</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="s">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">example</span> <span class="kn">import</span> <span class="n">exmodule</span>
+<span class="k">print</span><span class="p">(</span><span class="n">exmodule</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="s">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">example.exmodule</span> <span class="kn">import</span> <span class="nb">sum</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="s">"3"</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="mainnamefirst">mainname.first</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'first 모듈 시작'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'first.py __name__:'</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>    <span class="c1"># __name__ 내부변수 출력
+</span><span class="k">print</span><span class="p">(</span><span class="s">'first 모듈 끝'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="mainnamesecond">mainname.second</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">first</span>  <span class="c1"># fist 모듈을 가져옴 -&gt; 에러나지만 관계없음
+</span><span class="k">print</span><span class="p">(</span><span class="s">'second.py __name__:'</span><span class="p">,</span> <span class="n">__name__</span><span class="p">)</span>  <span class="c1"># __name__ 변수 출력(__main__)
+</span>
+<span class="c1"># import로 모듈 가져오면 __name__ 변수에 모듈명(=파일명) 들어가고
+# import 하지 않는 상태라면 __name__ 변수에 __main__ 이름이 들어감
+</span></code></pre></div></div>
+:ET

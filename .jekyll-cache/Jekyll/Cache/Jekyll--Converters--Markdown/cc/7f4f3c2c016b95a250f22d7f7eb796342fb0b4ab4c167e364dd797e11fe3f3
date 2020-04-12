@@ -1,0 +1,493 @@
+I"ɋ<h1 id="setting"><a href="">setting</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>Hadoop 설정</li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>자바 및 Hadoop 환경 변수
+    <ul>
+      <li>자바 및 Hadoop 환경 변수 추가(설정파일 수정할 때는 MultiExe 보다 하나씩 하는 것이 나을 수 있음)
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi ~/.bash_profile
+<span class="c">#### HADOOP 2.7.7 start ############</span>
+<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin
+<span class="nb">export </span><span class="nv">HADOOP_HOME</span><span class="o">=</span>/opt/hadoop/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/sbin
+<span class="c">#### HADOOP 2.7.7end############</span>
+<span class="c">#### JAVA 1.8.0 start#############</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk/current
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$JAVA_HOME</span>/bin
+<span class="c">#### JAVA 1.8.0 end##############</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span><span class="nb">source</span> ~/.bash_profile
+</code></pre></div>        </div>
+      </li>
+      <li>자바 및 Hadoop 버전 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ java -version
+2) [hadoop@nn01 ~]$ hadoop version
+</code></pre></div>        </div>
+      </li>
+      <li>자바 확인
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span><span class="o">)</span> <span class="o">[</span><span class="n">hadoop</span><span class="nd">@nn01</span> <span class="o">~]</span><span class="err">$</span> <span class="n">cd</span> <span class="n">tmp</span>
+<span class="mi">2</span><span class="o">)</span> <span class="o">[</span><span class="n">hadoop</span><span class="nd">@nn01</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">vi</span> <span class="nc">Hello</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Hello World!!!"</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="mi">3</span><span class="o">)</span> <span class="o">[</span><span class="n">hadoop</span><span class="nd">@nn01</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">javac</span> <span class="nc">Hello</span><span class="o">.</span><span class="na">java</span>
+<span class="mi">4</span><span class="o">)</span> <span class="o">[</span><span class="n">hadoop</span><span class="nd">@nn01</span> <span class="n">tmp</span><span class="o">]</span><span class="err">$</span> <span class="n">java</span> <span class="nc">Hello</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>키 설정
+    <ul>
+      <li>비밀번호없이 각노드를 접속할 수 있도록 공개키 공유(SSH)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@nn01 ~]# vi /etc/hosts(모든 노드 다 지운다 localhost 꼭!!!)
+192.168.56.101 nn01
+192.168.56.102 dn01
+192.168.56.103 dn02
+</code></pre></div>        </div>
+      </li>
+      <li>키 만들기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ssh-keygen
+2) [hadoop@dn01 ~]$ ssh-keygen
+3) [hadoop@dn02 ~]$ ssh-keygen
+</code></pre></div>        </div>
+      </li>
+      <li>키 복사하기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ssh-copy-id hadoop@dn01
+2) [hadoop@nn01 ~]$ ssh-copy-id hadoop@nn01
+3) [hadoop@nn01 ~]$ ssh-copy-id hadoop@dn02
+4) [hadoop@dn01 ~]$ ssh-copy-id hadoop@dn01
+5) [hadoop@dn01 ~]$ ssh-copy-id hadoop@nn01
+6) [hadoop@dn01 ~]$ ssh-copy-id hadoop@dn02
+7) [hadoop@dn02 ~]$ ssh-copy-id hadoop@dn01
+8) [hadoop@dn02 ~]$ ssh-copy-id hadoop@nn01
+9) [hadoop@dn02 ~]$ ssh-copy-id hadoop@dn02
+</code></pre></div>        </div>
+      </li>
+      <li>패스워드없이 이동 가능(나올 때는 exit 또는 logout)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ ssh dn01
+2) [hadoop@nn01 ~]$ ssh dn02
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Hadoop 설정
+    <ul>
+      <li>start-all.sh
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start-dfs.sh and start-yarn.sh
+</code></pre></div>        </div>
+      </li>
+      <li>core-site.xml 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/core-site.xml
+<span class="c">########## core-site.xml ##########</span>
+<span class="c"># &lt;configuration&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; fs.defaultFS &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; hdfs://nn01:9000 &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;/configuration&gt;</span>
+<span class="c">########## core-site.xml ##########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>hdfs-site.xml 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/hdfs-site.xml
+<span class="c">########## hdfs-site.xml ###########</span>
+<span class="c"># &lt;configuration&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.replication &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; 1 &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.namenode.http-address &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; nn01:50070 &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.namenode.secondary.http-address &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; nn01:50090 &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.namenode.name.dir &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; file:/home/hadoop/hadoop_data/hdfs/namenode &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.datanode.data.dir &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; file:/home/hadoop/hadoop_data/hdfs/datanode &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.namenode.checkpoint.dir &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; file:/home/hadoop/hadoop_data/hdfs/namesecondary &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt; dfs.webhdfs.enabled &lt;/name&gt;</span>
+<span class="c"># &lt;value&gt; true &lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;/configuration&gt;</span>
+<span class="c">########## hdfs-site.xml ###########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>yarn-site.xml 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/yarn-site.xml
+<span class="c">######## yarn-site.xml ##########</span>
+<span class="c"># &lt;configuration&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;nn01:8030&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;nn01:8031&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;nn01:8032&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;nn01&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;/configuration&gt;</span>
+<span class="c">######## yarn-site.xml ##########</span>
+</code></pre></div>        </div>
+      </li>
+      <li>mapred-site.xml 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span><span class="nb">cp</span> /opt/hadoop/current/etc/hadoop/mapred-site.xml.template /opt/hadoop/current/etc/hadoop/mapred-site.xml
+2<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/mapred-site.xml
+<span class="c"># &lt;configuration&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;yarn&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;mapreduce.jobtracker.hosts.exclude.filename&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;$HADOOP_HOME/etc/hadoop/exclude&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;property&gt;</span>
+<span class="c"># &lt;name&gt;mapreduce.jobtracker.hosts.filename&lt;/name&gt;</span>
+<span class="c"># &lt;value&gt;$HADOOP_HOME/etc/hadoop/include&lt;/value&gt;</span>
+<span class="c"># &lt;/property&gt;</span>
+<span class="c"># &lt;/configuration&gt;</span>
+</code></pre></div>        </div>
+      </li>
+      <li>Masters, Slaves 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/masters
+<span class="c">########## masters ############</span>
+nn01
+<span class="c">########## masters ############</span>
+2<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/slaves
+<span class="c">########## slaves ############</span>
+dn01
+dn02
+<span class="c">########## slaves ############</span>
+</code></pre></div>        </div>
+      </li>
+      <li>hadoop-env.sh 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/hadoop-env.sh
+<span class="c"># The java implementation to use.</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk/current
+</code></pre></div>        </div>
+      </li>
+      <li>yarn-env.sh 설정
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi /opt/hadoop/current/etc/hadoop/yarn-env.sh
+<span class="c"># some Java parameters</span>
+<span class="nb">export </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/opt/jdk/current
+</code></pre></div>        </div>
+      </li>
+      <li>nn01 설정을 dn01와 dn02 복사하기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@nn01 ~]# scp -r /opt/hadoop/* dn01:/opt/hadoop
+2) [root@nn01 ~]# scp -r /opt/hadoop/* dn02:/opt/hadoop
+3) [root@dn01 ~]# rm -rf /opt/hadoop/current
+4) [root@dn01 ~]# ln -s /opt/hadoop/2.7.7 /opt/hadoop/current
+5) [root@dn01 ~]# chown -R hadoop:hadoop /opt/hadoop/
+6) [root@dn02 ~]# rm -rf /opt/hadoop/current
+7) [root@dn02 ~]# ln -s /opt/hadoop/2.7.7 /opt/hadoop/current
+8) [root@dn02 ~]# chown -R hadoop:hadoop /opt/hadoop/
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Hadoop 확인
+    <ul>
+      <li>Hadoop namenode 디렉토리 생성(nn01 : Namenode)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ mkdir -p ~/hadoop_data/hdfs/namenode
+2) [hadoop@nn01 ~]$ mkdir -p ~/hadoop_data/hdfs/namesecondary
+</code></pre></div>        </div>
+      </li>
+      <li>Hadoop datanode 디렉토리 생성(dn01 : Datanode)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn01 ~]$ mkdir -p ~/hadoop_data/hdfs/datanode
+</code></pre></div>        </div>
+      </li>
+      <li>Hadoop datanode 디렉토리 생성(dn02 : Datanode)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@dn02 ~]$ mkdir -p ~/hadoop_data/hdfs/datanode
+</code></pre></div>        </div>
+      </li>
+      <li>Namenode 포맷(nn01)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ hadoop namenode -format
+</code></pre></div>        </div>
+      </li>
+      <li>Daemon 시작(nn01)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ start-all.sh
+</code></pre></div>        </div>
+      </li>
+      <li>서비스 정상 확인
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 ~]$ jps
+2) [hadoop@dn01 ~]$ jps
+3) [hadoop@dn02 ~]$ jps
+</code></pre></div>        </div>
+      </li>
+      <li>GUI(윈도우 브라우저로 접속가능)
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) http://192.168.56.101:50070/
+2) http://192.168.56.101:8088/
+</code></pre></div>        </div>
+      </li>
+      <li>오류찾기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [hadoop@nn01 current]$ ls -al /opt/hadoop/current/logs/
+</code></pre></div>        </div>
+      </li>
+      <li>set nu 하기
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>영구적] vi /etc/virc
+<span class="c">########## virc ##########</span>
+<span class="nb">set </span>nu
+<span class="c">########## virc ##########</span>
+2<span class="o">)</span> <span class="o">[</span>일시적] 파일 안 :set nu / 파일 밖 <span class="nb">cat</span> <span class="nt">-n</span>
+</code></pre></div>        </div>
+      </li>
+      <li>su - root 하기
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1) [root@nn01 ~]# vi /etc/pam.d/su
+2) 10,11,12 라인에 vagrant 라고 보이는 3줄 주석처리
+3) [root@nn01 ~]# su - hadoop
+</code></pre></div>        </div>
+      </li>
+      <li>나갈 때 stop-all.sh  꼭!!!</li>
+      <li>비정상 종료시 hdfs dfsadmin -safemode leave</li>
+    </ul>
+  </li>
+  <li>Hadoop으로 Java 파일 분산처리
+    <ul>
+      <li>sample.WordCount.java 생성
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">sample</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.StringTokenizer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.conf.Configuration</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.fs.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.LongWritable</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.io.Text</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Job</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Mapper</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.Reducer</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.FileInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.input.TextInputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.FileOutputFormat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.hadoop.mapreduce.lib.output.TextOutputFormat</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WordCount</span> 
+<span class="o">{</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyMapper</span> <span class="kd">extends</span> <span class="nc">Mapper</span><span class="o">&lt;</span><span class="nc">LongWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">&gt;</span> 
+  <span class="c1">// 입력&lt;key, value&gt; : &lt;Long, Text&gt;</span>
+  <span class="c1">// 출력&lt;key, value&gt; : &lt;Text, Long&gt;</span>
+  <span class="o">{</span>
+  <span class="c1">// 출력 Key, value</span>
+  <span class="kd">private</span> <span class="nc">Text</span> <span class="n">word</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Text</span><span class="o">();</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="nc">LongWritable</span> <span class="n">one</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LongWritable</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">map</span><span class="o">(</span><span class="nc">LongWritable</span> <span class="nc">Key</span><span class="o">,</span> <span class="nc">Text</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+      <span class="c1">// 문자열로 자라준다.</span>
+      <span class="nc">String</span> <span class="n">line</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+      <span class="c1">// 모든 이유로 잘라준다.</span>
+      <span class="nc">StringTokenizer</span> <span class="n">itr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringTokenizer</span><span class="o">(</span><span class="n">line</span><span class="o">,</span> <span class="s">"\t\r\n\f |:;,.()&lt;&gt;"</span><span class="o">);</span>
+      <span class="k">while</span><span class="o">(</span><span class="n">itr</span><span class="o">.</span><span class="na">hasMoreTokens</span><span class="o">())</span> 
+      <span class="o">{</span>
+          <span class="n">word</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">itr</span><span class="o">.</span><span class="na">nextToken</span><span class="o">());</span>
+          <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">word</span><span class="o">,</span> <span class="n">one</span><span class="o">);</span>    
+      <span class="o">}</span> <span class="c1">// end of while</span>
+  <span class="o">}</span> <span class="c1">// end of map</span>
+  <span class="o">}</span> <span class="c1">// end of MyMapper</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyReducer</span> <span class="kd">extends</span> <span class="nc">Reducer</span><span class="o">&lt;</span><span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">,</span> <span class="nc">Text</span><span class="o">,</span> <span class="nc">LongWritable</span><span class="o">&gt;</span> 
+  <span class="c1">// 입력&lt;key, value&gt; : &lt;Long, Text&gt;</span>
+  <span class="c1">// 출력&lt;key, value&gt; : &lt;Text, Long&gt;</span>
+  <span class="o">{</span>
+  <span class="kd">private</span> <span class="nc">LongWritable</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LongWritable</span><span class="o">();</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">Text</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Iterable</span><span class="o">&lt;</span><span class="nc">LongWritable</span><span class="o">&gt;</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">InterruptedException</span> 
+  <span class="o">{</span>
+      <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="k">for</span><span class="o">(</span><span class="nc">LongWritable</span> <span class="n">val</span> <span class="o">:</span> <span class="n">value</span><span class="o">)</span> 
+      <span class="o">{</span>
+          <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+      <span class="o">}</span> <span class="c1">// end of for</span>
+      <span class="n">result</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span> <span class="c1">// java int형 -&gt; hadoop LongWritable형으로 지정</span>
+      <span class="n">context</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">result</span><span class="o">);</span> 
+  <span class="o">}</span> <span class="c1">// end of reduce </span>
+  <span class="o">}</span> <span class="c1">// end of MyReducer</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span>
+  <span class="o">{</span>
+  <span class="nc">Configuration</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Configuration</span><span class="o">();</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">)</span> 
+  <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"사용: WordCount &lt;input&gt; &lt;output&gt;"</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of if</span>
+  <span class="nc">Job</span> <span class="n">job</span> <span class="o">=</span> <span class="nc">Job</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">conf</span><span class="o">,</span> <span class="s">"WordCount"</span><span class="o">);</span>
+  <span class="c1">// 각 클래스 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setJarByClass</span><span class="o">(</span><span class="nc">WordCount</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setMapperClass</span><span class="o">(</span><span class="nc">MyMapper</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setReducerClass</span><span class="o">(</span><span class="nc">MyReducer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 출력 key와 value 타입 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputKeyClass</span><span class="o">(</span><span class="nc">Text</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputValueClass</span><span class="o">(</span><span class="nc">LongWritable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 입력포맷과 출력포맷 지정</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setInputFormatClass</span><span class="o">(</span><span class="nc">TextInputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">setOutputFormatClass</span><span class="o">(</span><span class="nc">TextOutputFormat</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="c1">// 파일입력포맷과 파일출력포맷 지정</span>
+  <span class="nc">FileInputFormat</span><span class="o">.</span><span class="na">addInputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]));</span>
+  <span class="nc">FileOutputFormat</span><span class="o">.</span><span class="na">setOutputPath</span><span class="o">(</span><span class="n">job</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Path</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+  <span class="c1">// job을 실행</span>
+  <span class="c1">// job이 다 실행하고 끝날때까지 기다리기</span>
+  <span class="n">job</span><span class="o">.</span><span class="na">waitForCompletion</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+  <span class="o">}</span> <span class="c1">// end of main  </span>
+<span class="o">}</span> <span class="c1">// end of wordcount</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Maven -&gt; Update Project 후 Run As -&gt; Maven install</p>
+      </li>
+      <li>
+        <p>생성된 .jar 파일을 WinSCP로 /home/hadoop 에서 /source 디렉터리 생성한 후 업로드</p>
+      </li>
+      <li>보낸 .jar 파일 확인 및 실행
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span> <span class="nb">ls source
+</span>2<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span><span class="nb">mkdir </span>data
+3<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>vi data/mydata.txt
+<span class="c">########## mydata.txt ###########</span>
+good monring
+i loves coffee
+hello world
+<span class="c">########## mydata.txt ###########</span>
+4<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-mkdir</span> <span class="nt">-p</span> /input/data
+5<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-ls</span> /input/data
+6<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-put</span> /home/hadoop/data/mydata.txt /input/data
+7<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-ls</span> /input/data
+8<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>yarn jar /home/hadoop/source/lab1.jar sample.WordCount /input/data/mydata.txt /output/wordcount
+9<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-ls</span> /output/wordcount
+10<span class="o">)</span> <span class="o">[</span>hadoop@nn01 ~]<span class="nv">$ </span>hdfs dfs <span class="nt">-cat</span> /output/wordcount/part-r-00000
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>core-site.xml
+    <ul>
+      <li>HDFS와 맵리듀스에서 공통적으로 사용할 환경 정보를 설정</li>
+      <li>core-site.xml에 설정값이 없을 경우 core-default.xml에 있는 기본값을 사용</li>
+    </ul>
+  </li>
+  <li>hdfs-site.xml
+    <ul>
+      <li>HDFS에서 사용할 환경 정보를 설정</li>
+      <li>hdfs-site.xml에 설정값이 없을 경우 hdfs-default.xml에 있는 기본값을 사용</li>
+    </ul>
+  </li>
+  <li>yarn-site.xml
+    <ul>
+      <li>Hadoop2에서 자원관리하는 정보를 설정</li>
+    </ul>
+  </li>
+  <li>mapred-site.xml
+    <ul>
+      <li>맵리듀스에서 사용할 환경 정보를 설정</li>
+      <li>mapred-site.xml에 설정값이 없을 경우 mapred-default.xml에 있는 기본값을 사용</li>
+    </ul>
+  </li>
+  <li>masters
+    <ul>
+      <li>보조네임노드를 실행할 서버를 설정</li>
+      <li>(*) 마스트노드(즉 네임노드)를 설정하는 것이 아님</li>
+    </ul>
+  </li>
+  <li>slaves
+    <ul>
+      <li>데이터노드를 실행할 서버를 설정</li>
+    </ul>
+  </li>
+  <li>hadoop-env.sh(hadoop1)
+    <ul>
+      <li>하둡을 실행하는 쉘 스크립트 파일에서 필요한 환경변수 설정</li>
+      <li>JDK 경로, 클래스 패스, 데몬 실행 옵션 등 환경 변수를 설정</li>
+    </ul>
+  </li>
+  <li>yarn-env.sh(hadoop2에서 추가)</li>
+  <li>Hadoop 명령어
+    <ol>
+      <li>파일 목록보기 : ls, lsr
+        <ul>
+          <li>ls : 지정한 디렉토리에 있는 파일의 정보를 출력</li>
+          <li>lsr : 하위 디렉토리 정보까지 출력</li>
+        </ul>
+      </li>
+      <li>파일용량파일 : du, dus
+        <ul>
+          <li>du : 지정한 디렉토리나 파일의 사용량을 확인 ( 출력결과 바이트 단위 )</li>
+          <li>dus : 전체 합계 용량 출력결과</li>
+        </ul>
+      </li>
+      <li>파일내용보기 : cat, text
+        <ul>
+          <li>cat : 지정한 파일의 내용을 출력</li>
+          <li>text : cat은 텍스트파일만 출력하는데 text는 zip 파일 형태로 압축한 파일도 텍스트형태로 출력</li>
+        </ul>
+      </li>
+      <li>디렉터리생성 : mkdir</li>
+      <li>파일복사
+        <ul>
+          <li>put / copyFromLocal : 로컬 파일 시스템의 파일 및 디렉토리를 HDFS의 경로로 복사</li>
+          <li>get / copyToLocal : HDFS에 저장된 데이타를 로컬 파일 시스템으로 복사</li>
+          <li>getmerge : 모든 파일의 내용을 하나로 합친 후, 로컬파일 시스템에 단 하나의 파일로 복사</li>
+          <li>cp : HDFS에서 디텍토리나 파일 복사</li>
+        </ul>
+      </li>
+      <li>파일이동
+        <ul>
+          <li>mv : 디렉토리나 파일을 목적지 경로로 이동</li>
+          <li>moveFromLocal : put명령어와 동일한 로컬파일 시스템으로 복사된 후 소스 경로의 파일은 삭제</li>
+        </ul>
+      </li>
+      <li>삭제
+        <ul>
+          <li>rm : 디렉토리나 파일 삭제, 디렉토리인 경우 반드시 비어 있어야 삭제</li>
+          <li>rmr : 디렉토리나 파일 삭제, 디렉토리인 경우 비어 있지 않아도 삭제</li>
+        </ul>
+      </li>
+      <li>카운트 조회
+        <ul>
+          <li>count : 지정한 경로에 대한 전체 디렉토리 개수, 전체 파일 개수, 전체 파일 크기 출력</li>
+        </ul>
+      </li>
+      <li>권한변경
+        <ul>
+          <li>chmod : 지정한 경로에대한 권한 변경</li>
+          <li>chown : 지정한 파일과 디렉토리에 대한 소유권을 변경</li>
+          <li>chgrp : 지정한 파일과 디렉토리에 대한 소유권 그룹만 변경</li>
+          <li>-R : 하위 디렉토리의 정보도 모두 변경</li>
+        </ul>
+      </li>
+      <li>통계정보조회 : stat</li>
+      <li>휴지통비우기 : expunge</li>
+      <li>0바이트 파일 생성 : touchz</li>
+    </ol>
+  </li>
+</ul>
+:ET

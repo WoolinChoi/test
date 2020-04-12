@@ -1,0 +1,228 @@
+I"T<h1 id="selenium"><a href="">selenium</a></h1>
+
+<h2 id="참고">참고</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. selenium
+    - 주로 웹앱을 테스트하는데 이용하는 프레임워크
+    - 웹 브라우저를 원격으로 조작할 때 사용
+    - 자동으로 URL을 열고 클릭, 스크롤, 문자 입력등의 동작을 조작할 수 있다.
+    - webdriver라는 API를 통해 운영체제에 설치된 Chrome등의 브라우저를 제어하게 된다.
+
+    [설치]  메뉴 &gt; File &gt; Settings &gt; Project Interpreter &gt; + 버튼
+     selenium 검색 후 인스톨
+        &gt; pip install selenium
+
+    [참고] Selenium의 버전은 자주 업데이트 되고, 브라우저의 업데이트 마다 새로운 Driver를 잡아주기 때문에
+        항상 최신버전을 깔아 주는 것이 좋다.
+
+    [매뉴얼]
+    ` https://selenium-python.readthedocs.io/index.html
+    ` https://docs.seleniumhq.org/docs/
+
+2. 크롬 웹드라이버 ( Chrome WebDriver )
+    [다운로드] http://chromedriver.chromium.org/downloads
+        chromedirver_win32.zip 파일 다운로드 받고 압축풀기
+        2019.07.24 - ChromeDriver 75.0.3770.140  ( 반드시 이 버전만 되었다 )
+
+3. *** 셀레니움에서 지원안 할 예정
+    화면없는 웹 브라우저 : PhantomJS
+    - 화면없이 명령줄을 이용
+    - 웹 개발시 테스트 및 성능 측정, 화면 캡쳐 등에 활용
+
+    http://phantomjs.org
+    http://phantomjs.org/download.html
+    다운받아 압축푼 경로 / bin / phantomjs.exe 실행하면
+    콘솔 화면&gt; console.log('hello')  // 자바스크립트 명령어
+</code></pre></div></div>
+
+<h2 id="driver">driver</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span> <span class="n">Selenium</span><span class="err">은</span> <span class="n">driver</span><span class="err">객체를</span> <span class="err">통해</span> <span class="err">여러가지</span> <span class="err">메소드를</span> <span class="err">제공한다</span><span class="o">.</span>
+  <span class="o">-</span> <span class="n">HTML</span><span class="err">을</span> <span class="err">브라우저에서</span> <span class="err">파싱해주기</span> <span class="err">때문에</span> <span class="err">굳이</span> <span class="n">Python</span><span class="err">와</span> <span class="n">BeautifulSoup</span><span class="err">을</span> <span class="err">사용하지</span> <span class="err">않아도</span> <span class="err">된다</span><span class="o">.</span>
+
+
+<span class="p">[</span> <span class="n">URL</span><span class="err">에</span> <span class="err">접근하는</span> <span class="n">api</span> <span class="p">]</span>
+
+<span class="n">get</span><span class="p">(</span><span class="err">‘</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">url</span><span class="o">.</span><span class="n">com</span><span class="err">’</span><span class="p">)</span>
+
+
+<span class="mf">1.</span> <span class="n">DOM</span> <span class="err">내부에</span> <span class="err">있는</span> <span class="err">여러</span> <span class="err">요소</span> <span class="err">중</span> <span class="err">첫</span> <span class="err">번째</span> <span class="err">요소</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="err">찾는다</span><span class="o">.</span>
+
+<span class="n">find_element_by_name</span><span class="p">(</span><span class="err">‘</span><span class="n">HTML_name</span><span class="err">’</span><span class="p">)</span>
+<span class="n">find_element_by_id</span><span class="p">(</span><span class="err">‘</span><span class="n">HTML_id</span><span class="err">’</span><span class="p">)</span>
+<span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="err">‘</span><span class="c1">#css &gt; div.selector’)
+</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="err">‘</span><span class="n">some_class_name</span><span class="err">’</span><span class="p">)</span>
+<span class="n">find_element_by_tag_name</span><span class="p">(</span><span class="err">‘</span><span class="n">h1</span><span class="err">’</span><span class="p">)</span>
+<span class="n">find_element_by_xpath</span><span class="p">(</span><span class="err">‘</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">body</span><span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">xpath</span><span class="err">’</span><span class="p">)</span> <span class="p">:</span> <span class="n">xpath</span> <span class="err">지정하여</span> <span class="err">해당</span> <span class="err">요소</span> <span class="err">추출</span>
+<span class="n">find_element_by_link_text</span><span class="p">(</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">)</span> <span class="p">:</span> <span class="err">링크</span> <span class="err">텍스트로</span> <span class="err">요소</span> <span class="err">추출</span>
+
+<span class="mf">2.</span> <span class="n">DOM</span><span class="err">에서</span> <span class="err">모든</span> <span class="err">요소</span> <span class="err">추출</span>
+<span class="n">find_elemens_by_css_selector</span><span class="p">(</span><span class="err">‘</span><span class="c1">#css &gt; div.selector’)
+</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="err">‘</span><span class="n">some_class_name</span><span class="err">’</span><span class="p">)</span>
+<span class="n">find_elements_by_tag_name</span><span class="p">(</span><span class="err">‘</span><span class="n">h1</span><span class="err">’</span><span class="p">)</span>
+
+<span class="mf">3.</span> <span class="n">DOM</span> <span class="err">요소에</span> <span class="err">적용할</span> <span class="err">수</span> <span class="err">있는</span> <span class="err">메소드와</span> <span class="err">속성</span>
+<span class="n">clear</span><span class="p">()</span>             <span class="p">:</span> <span class="err">글자를</span> <span class="err">지움</span>
+<span class="n">click</span><span class="p">()</span>             <span class="p">:</span> <span class="err">클릭</span>
+<span class="n">get_attribute</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">:</span> <span class="err">요소의</span> <span class="err">속성</span> <span class="n">name</span><span class="err">에</span> <span class="err">해당하는</span> <span class="err">값을</span> <span class="err">추출</span>
+<span class="n">is_displayed</span><span class="p">()</span>      <span class="p">:</span> <span class="err">요소가</span> <span class="err">화면에</span> <span class="err">출력되는지</span> <span class="err">확인</span>
+<span class="n">is_enabled</span><span class="p">()</span>
+<span class="n">is_selected</span><span class="p">()</span>
+<span class="n">save_screenshot</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">submit</span><span class="p">()</span>
+
+<span class="err">외에도</span> <span class="err">많은</span> <span class="err">속성과</span> <span class="err">메소드가</span> <span class="err">있습니다</span><span class="o">.</span>
+
+<span class="err">또한</span> <span class="err">각</span> <span class="err">브라우저</span> <span class="err">드라이버</span> <span class="err">객체의</span> <span class="err">속성도</span> <span class="err">있습니다</span><span class="o">.</span>
+</code></pre></div></div>
+
+<h2 id="test">test</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+ 간단하게 크롬 브라우저를 실행하여 페이지 열기
+"""</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="c1"># 1. webdriver 객체생성
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./webdriver/chromedriver.exe"</span><span class="p">)</span>
+
+<span class="c1"># 2. 페이지 접근
+</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"http://www.naver.com"</span><span class="p">)</span>
+
+<span class="c1"># 3. 화면을 캡처해서 저장하기
+</span><span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s">"WebSite.png"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="google">google</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'''
+1. 크롬웹드라이버로 구글 사이트 열기
+
+2. 실제 크롬창에서 '플레이데이터'라고 검색버튼을 누른다.
+    개발자모드(F12)에서 이 부분을 보면
+    &lt;input name='q' value='플레이데이터'~~ &gt;
+    그리고 'google검색' 버튼이 type='submit' 인거 확인
+'''</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./webdriver/chromedriver.exe"</span><span class="p">)</span>
+
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"http://www.google.com"</span><span class="p">)</span>
+
+<span class="c1"># selenium이 입력을 해줌
+</span><span class="n">bt</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">"q"</span><span class="p">)</span>
+<span class="n">bt</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">"플레이데이터"</span><span class="p">)</span>
+<span class="n">bt</span><span class="o">.</span><span class="n">submit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="naver">naver</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+네이버 로그인 페이지를 실행하기
+    크롬에서 네이버 로그인 페이지를 개발자모드에서 확인하여
+    로그인 폼의 아이디와 비밀번호 입력 name 확인
+    아이디 : id
+    비밀번호 : pw
+"""</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+
+<span class="c1"># 0. 네이버 로그인 정보
+</span><span class="n">myID</span> <span class="o">=</span> <span class="s">'아이디값'</span>
+<span class="n">myPW</span> <span class="o">=</span> <span class="s">'비밀번호값'</span>
+
+<span class="c1"># 1. webdriver 객체생성
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">'./webdriver/chromedriver.exe'</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>    <span class="c1"># 암묵적으로 자원로드될 때까지 3초 기다림
+</span>
+<span class="c1"># 네이버로그인 하기 -[결론] 네이버 보안에 걸림
+# 보안에 안걸렸으면 로그인된 상태로 많은 정보를 가져올 수 있다
+</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://nid.naver.com/nidlogin.login'</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">'id'</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">myID</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">'pw'</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">myPW</span><span class="p">)</span>
+<span class="c1"># 로그인 버튼을 눌러주자.
+</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">'//*[@id="frmNIDLogin"]/fieldset/input'</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+
+<span class="s">""" 보안에 걸리지 않으면 Naver 페이 들어가기 - 어차피 안됨
+driver.get('https://order.pay.naver.com/home')
+html = driver.page_source
+soup = BeautifulSoup(html, 'html.parser')
+notices = soup.select('div.p_inr &gt; div.p_info &gt; a &gt; span')
+
+for n in notices:
+    print(n.text.strip())
+"""</span>
+</code></pre></div></div>
+
+<h2 id="facebook">facebook</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [연습] 페이스북에 접속해서 로그인 하기
+
+        로그인 후에 보안창은 없는데 안 넘어가서
+
+        from selenium.webdriver.common.keys import Keys
+
+        아이디와 패스워드 지정후에
+        elem.send_keys(Keys.RETURN)
+
+"""</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+
+<span class="c1"># 0. 페이스북 로그인 정보
+</span><span class="n">myID</span> <span class="o">=</span> <span class="s">'아이디값'</span>
+<span class="n">myPW</span> <span class="o">=</span> <span class="s">'비밀번호값'</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">'./webdriver/chromedriver.exe'</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://ko-kr.facebook.com/'</span><span class="p">)</span>
+<span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">'email'</span><span class="p">)</span>
+<span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">myID</span><span class="p">)</span>
+<span class="n">elem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s">'pass'</span><span class="p">)</span>
+<span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">myPW</span><span class="p">)</span>
+<span class="n">elem</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">RETURN</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="goobne">Goobne</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    [ 굽네치킨 매장 주소 가져오기 ]
+
+    굽네치킨 http://www.goobne.co.kr &gt; 매장찾기 &gt; 매장찾기
+                  http://www.goobne.co.kr/store/search_store.jsp
+
+    개발자모드( F12 ) 열고 페이지 번호를 누르면
+    &lt;tbody&gt; 부분이 교체되는 것을 볼 수 있다
+
+    또한 2번 페이지 번호에 &lt;a href="javascript:store.getList('2');"&gt;2&lt;/a&gt;로 자바스트립트 함수를 호출한다.
+
+    이 때 WebDriver 라는 특정 웹 브라우저의 원격 제어 인터페이스를 이용하고
+    selenium 패키지를 이용하여  DOM  요소를 가져오거나 자바스크립트에서 제어하는 동작을 할 수 있도록 한다.
+"""</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1">#-------------------------------1. 웹 페이지 접근
+# 웹드라이버 객체 생성
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">'./webdriver/chromedriver'</span><span class="p">)</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># 페이지 접근
+</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.goobne.co.kr/store/search_store.jsp'</span><span class="p">)</span>
+
+<span class="c1"># 웹페이지에서 소스 가져오기
+</span><span class="k">for</span> <span class="n">page_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="s">'store.getList("</span><span class="si">%</span><span class="s">s")'</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">page_idx</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">page_source</span>
+
+    <span class="c1"># 필요한 요소만 추출(파싱)
+</span>    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">'html.parser'</span><span class="p">)</span>
+    <span class="c1"># print(soup)
+</span>    <span class="k">for</span> <span class="n">store_list</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">'tbody'</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">'id'</span><span class="p">:</span><span class="s">'store_list'</span><span class="p">}):</span>
+        <span class="c1"># 지점명 - 전화번호 - 주소 만 추출
+</span>        <span class="n">name</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'tr &gt; td:first-child'</span><span class="p">)</span>
+        <span class="n">tel</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'.store_phone &gt; a'</span><span class="p">)</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'.t_left &gt; a'</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">tel</span><span class="p">,</span> <span class="n">addr</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'-'</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'-'</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

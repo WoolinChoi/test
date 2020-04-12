@@ -1,0 +1,171 @@
+I"i<h1 id="webapi"><a href="">webapi</a></h1>
+
+<h2 id="openweather">openweather</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+    전세계날씨제공 API : http://openweathermap.org
+
+    1. 회원가입 : 메뉴 &gt; Sign Up &gt; 사용용도 : Education &gt; 대충가입 (무료는 1번에 60번 호출 가능 )
+    2. 개발자모드 : Sign In &gt; API Keys 에서 내가 발급받은 키 (추가 키 가능)
+    3. 발급받고 바로 지정 안됨 (시간소요)
+"""</span>
+
+<span class="c1"># API 키를 지정합니다. 자신의 키로 변경해서 사용해주세요.
+</span><span class="n">apikey</span> <span class="o">=</span> <span class="s">"e2c0b303b5954b5cb53c2126be06c61f"</span>
+
+<span class="c1"># 날씨를 확인할 도시 지정하기
+</span><span class="n">cities</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Seoul, KR"</span><span class="p">,</span> <span class="s">"Tokyo, JP"</span><span class="p">,</span> <span class="s">"New York, US"</span><span class="p">]</span>
+<span class="n">api</span> <span class="o">=</span> <span class="s">"http://api.openweathermap.org/data/2.5/weather?q={city}&amp;appid={key}"</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">cities</span><span class="p">:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">city</span><span class="o">=</span><span class="n">cname</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">apikey</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># print(res.text)    # type이 str이기 때문에
+</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>    <span class="c1"># json으로 만들기
+</span>    <span class="c1"># print(data)    # type이 dict으로 바뀜
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"도시명:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"name"</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"날씨:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"weather"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">"main"</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"최저온도:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">"main"</span><span class="p">][</span><span class="s">"temp_min"</span><span class="p">]</span><span class="o">-</span><span class="mf">273.15</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"최고온도:"</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">"main"</span><span class="p">][</span><span class="s">"temp_min"</span><span class="p">]</span><span class="o">-</span><span class="mf">273.15</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"습도:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"main"</span><span class="p">][</span><span class="s">"humidity"</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"기압:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"main"</span><span class="p">][</span><span class="s">"pressure"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h2 id="tourinfo">tourInfo</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">'''
+    http://www.data.go.kr
+            - 회원가입필수
+            - 일반인증키 요청 ( 바로 받을 수 있고 자료요청시 바로 승인됨 )
+
+    &gt;  관광자원통계서비스  &gt;  상세기능 &gt; 유료관광지방문객수조회
+    : 전국의 주요 유로관광지 방문객수를 조회하기 위한 서비스로서
+    기간,지역, 관광지별 외국인 방문객수와 내국인 방문객수를 조회한다.
+
+    의미있는 데이타를 추출하여 출력한다
+
+'''</span>
+
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
+
+<span class="n">access_key</span> <span class="o">=</span> <span class="s">'r6j5ATGdXxiy57RCSG4gD5DWdM51YxkvX05Wb2mWdlNzh9ev8EdNL6x11u4hmqErPC4xDtDJpYDK6bIi8UGHww</span><span class="si">%3</span><span class="s">D</span><span class="si">%3</span><span class="s">D'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList'</span>
+<span class="n">queryParams</span> <span class="o">=</span> <span class="s">'?_type=json'</span>
+<span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;serviceKey='</span> <span class="o">+</span> <span class="n">access_key</span>
+<span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;YM='</span> <span class="o">+</span> <span class="s">'201201'</span>
+<span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;SIDO='</span> <span class="o">+</span> <span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">'부산광역시'</span><span class="p">)</span>
+<span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;GUNGU='</span> <span class="o">+</span> <span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">'해운대구'</span><span class="p">)</span>
+<span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;RES_NM='</span> <span class="o">+</span> <span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="s">'부산시립미술관'</span><span class="p">)</span>
+
+<span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">queryParams</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="n">returnData</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">returnData</span><span class="p">))</span>    <span class="c1"># type: str
+</span>
+<span class="c1"># json 변경(딕셔너리 형태)
+</span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">returnData</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>    <span class="c1"># type: dict
+</span>
+<span class="c1"># "해운대구" 값을 출력
+</span><span class="k">print</span><span class="p">(</span><span class="s">"gungu:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"response"</span><span class="p">][</span><span class="s">"body"</span><span class="p">][</span><span class="s">"items"</span><span class="p">][</span><span class="s">"item"</span><span class="p">][</span><span class="s">"gungu"</span><span class="p">])</span>
+
+<span class="c1"># "부산시립미술관" 값을 출력
+</span><span class="k">print</span><span class="p">(</span><span class="s">"resNm:"</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s">"response"</span><span class="p">][</span><span class="s">"body"</span><span class="p">][</span><span class="s">"items"</span><span class="p">][</span><span class="s">"item"</span><span class="p">][</span><span class="s">"resNm"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h2 id="tour">tour</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="s">"""  관광지 입장객 정보 획득을 위한 파라메터 설정하여 결과를 얻어오는 함수
+       - 년도, 시도, 구군, 페이지번호, 한페이지결과수를 지정 """</span>
+<span class="k">def</span> <span class="nf">getTourPointVistor</span><span class="p">(</span><span class="n">yyyymm</span><span class="p">,</span> <span class="n">sido</span><span class="p">,</span> <span class="n">gungu</span><span class="p">,</span> <span class="n">nPagenum</span><span class="p">,</span> <span class="n">nItems</span><span class="p">):</span>
+
+    <span class="n">access_key</span> <span class="o">=</span> <span class="s">"r6j5ATGdXxiy57RCSG4gD5DWdM51YxkvX05Wb2mWdlNzh9ev8EdNL6x11u4hmqErPC4xDtDJpYDK6bIi8UGHww</span><span class="si">%3</span><span class="s">D</span><span class="si">%3</span><span class="s">D"</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">'http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList'</span>
+    <span class="n">queryParams</span> <span class="o">=</span> <span class="s">'?_type=json'</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;serviceKey='</span> <span class="o">+</span> <span class="n">access_key</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;YM='</span> <span class="o">+</span> <span class="n">yyyymm</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;SIDO='</span> <span class="o">+</span> <span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">sido</span><span class="p">)</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;GUNGU='</span> <span class="o">+</span> <span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">gungu</span><span class="p">)</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;RES_NM='</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;pageNo='</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nPagenum</span><span class="p">)</span>
+    <span class="n">queryParams</span> <span class="o">+=</span> <span class="s">'&amp;numOfRows'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nItems</span><span class="p">)</span>
+
+    <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span> <span class="o">+</span> <span class="n">queryParams</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="n">returnData</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">)</span>
+    <span class="n">jsonData</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">returnData</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsonData</span>
+
+<span class="s">''' 각 항목을 JSON 구조로 변경하고 추가하는 함수'''</span>
+<span class="k">def</span> <span class="nf">getTourPointData</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">yyyymm</span><span class="p">,</span> <span class="n">jsonResult</span><span class="p">):</span>
+    <span class="n">addrCd</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'addrCd'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'addrCd'</span><span class="p">]</span>
+    <span class="n">gungu</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'gungu'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'gungu'</span><span class="p">]</span>
+    <span class="n">sido</span>  <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'sido'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'sido'</span><span class="p">]</span>
+    <span class="n">resNm</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'resNm'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'resNm'</span><span class="p">]</span>
+    <span class="n">rnum</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'rnum'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'rnum'</span><span class="p">]</span>
+    <span class="n">ForNum</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'ForNum'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'ForNum'</span><span class="p">]</span>
+    <span class="n">NatNum</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="s">'NatNum'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">item</span><span class="p">[</span><span class="s">'NatNum'</span><span class="p">]</span>
+
+    <span class="n">jsonResult</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">'yyyymm'</span> <span class="p">:</span> <span class="n">yyyymm</span><span class="p">,</span>
+                       <span class="s">'addrCd'</span> <span class="p">:</span> <span class="n">addrCd</span><span class="p">,</span>          <span class="c1"># 지역코드 ( 우편번호와 일치한다고 하는데 )
+</span>                       <span class="s">'sido'</span><span class="p">:</span> <span class="n">sido</span><span class="p">,</span>                <span class="c1"># 시도
+</span>                       <span class="s">'gungo'</span> <span class="p">:</span> <span class="n">gungu</span><span class="p">,</span>             <span class="c1"># 구군
+</span>                       <span class="s">'RES_NM'</span> <span class="p">:</span> <span class="n">resNm</span><span class="p">,</span>             <span class="c1"># 관광지명
+</span>                       <span class="s">'rnum'</span> <span class="p">:</span> <span class="n">rnum</span><span class="p">,</span>               <span class="c1"># 관광지에 고유하게 부여된 코드값
+</span>                       <span class="s">'ForNum'</span> <span class="p">:</span> <span class="n">ForNum</span><span class="p">,</span>           <span class="c1"># 외국인수
+</span>                       <span class="s">'NatNum'</span> <span class="p">:</span> <span class="n">NatNum</span><span class="p">})</span>          <span class="c1"># 내국인수
+</span>
+
+<span class="s">''' 추출할 변수 지정하고 필요한 함수 호출하여 결과 받는 메인 함수'''</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">jsonResult</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 결과 저장 변수
+</span>
+    <span class="c1"># 검색할 변수값 지정
+</span>    <span class="n">sido</span> <span class="o">=</span> <span class="s">'서울특별시'</span>      <span class="c1"># 시도
+</span>    <span class="n">gungu</span> <span class="o">=</span> <span class="s">''</span>               <span class="c1"># 구군
+</span>    <span class="n">nPagenum</span> <span class="o">=</span> <span class="mi">1</span>             <span class="c1"># 페이지번호
+</span>    <span class="n">nTotal</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nItems</span> <span class="o">=</span> <span class="mi">100</span>              <span class="c1"># 한 페이지의 레코드 수? 100개가 넘으면 다음 페이지로 넘어가도록
+</span>                              <span class="c1"># sido가 경기도면 100개가 넘어가 페이지 처리가 필요하단다
+</span>    <span class="n">nStartYear</span> <span class="o">=</span> <span class="mi">2015</span>         <span class="c1"># 추출할 년도의 시작년도
+</span>    <span class="n">nEndYear</span> <span class="o">=</span> <span class="mi">2017</span>           <span class="c1"># 추출할 년도의 종료년도
+</span>
+    <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nStartYear</span><span class="p">,</span> <span class="n">nEndYear</span><span class="p">):</span>    <span class="c1"># 2015 ~ 2016
+</span>        <span class="k">for</span> <span class="n">month</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>    <span class="c1"># 1 ~ 12
+</span>            <span class="n">yyyymm</span> <span class="o">=</span> <span class="s">'{0}{1:0&gt;2}'</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">month</span><span class="p">))</span>    <span class="c1"># 201501, {숫자:0&gt;자릿수}
+</span>            <span class="n">nPagenum</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">jsonData</span> <span class="o">=</span> <span class="n">getTourPointVistor</span><span class="p">(</span><span class="n">yyyymm</span><span class="p">,</span> <span class="n">sido</span><span class="p">,</span> <span class="n">gungu</span><span class="p">,</span> <span class="n">nPagenum</span><span class="p">,</span> <span class="n">nItems</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">jsonData</span><span class="p">[</span><span class="s">"response"</span><span class="p">][</span><span class="s">"header"</span><span class="p">][</span><span class="s">"resultMsg"</span><span class="p">]</span> <span class="o">==</span> <span class="s">"OK"</span><span class="p">:</span>    <span class="c1"># 가져온 resultMsg가 OK면 실행
+</span>                    <span class="c1"># print(jsonData["response"]["body"])    # 확인
+</span>                    <span class="n">nTotal</span> <span class="o">=</span> <span class="n">jsonData</span><span class="p">[</span><span class="s">"response"</span><span class="p">][</span><span class="s">"body"</span><span class="p">][</span><span class="s">"totalCount"</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">nTotal</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>    <span class="c1"># totalCount가 0이면 break
+</span>                        <span class="k">break</span>
+                    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">jsonData</span><span class="p">[</span><span class="s">"response"</span><span class="p">][</span><span class="s">"body"</span><span class="p">][</span><span class="s">"items"</span><span class="p">][</span><span class="s">"item"</span><span class="p">]:</span>
+                        <span class="n">getTourPointData</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">yyyymm</span><span class="p">,</span> <span class="n">jsonResult</span><span class="p">)</span>
+                    <span class="n">nPage</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">nTotal</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">nPagenum</span> <span class="o">==</span> <span class="n">nPage</span><span class="p">:</span>
+                        <span class="k">break</span>
+                    <span class="n">nPagenum</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./data/</span><span class="si">%</span><span class="s">s_관광지입장정보 </span><span class="si">%</span><span class="s">d_</span><span class="si">%</span><span class="s">d.json"</span> <span class="o">%</span> <span class="p">(</span><span class="n">sido</span><span class="p">,</span> <span class="n">nStartYear</span><span class="p">,</span> <span class="n">nEndYear</span><span class="p">),</span> <span class="s">"wt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">saveToJson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">jsonResult</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">saveToJson</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s_관광지입장정보_</span><span class="si">%</span><span class="s">d_</span><span class="si">%</span><span class="s">d.json로 저장되었습니다.'</span><span class="o">%</span><span class="p">(</span><span class="n">sido</span><span class="p">,</span> <span class="n">nStartYear</span><span class="p">,</span> <span class="n">nEndYear</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+
+<span class="s">''' 프로그램 시작점 '''</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+:ET

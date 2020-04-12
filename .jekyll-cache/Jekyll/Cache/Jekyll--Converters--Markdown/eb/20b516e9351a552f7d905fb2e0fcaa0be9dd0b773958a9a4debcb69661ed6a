@@ -1,0 +1,476 @@
+I"��<h1 id="mybatisguest"><a href="">mybatisGuest</a></h1>
+
+<h2 id="listcomment">listComment</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=utf-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="nt">%&gt;</span>    
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.service.CommentService"</span> <span class="nt">%&gt;</span>  
+<span class="c">&lt;!-- 서비스의 메소드 호출  --&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">//Map condition = new HashMap();</span>
+	<span class="nc">List</span><span class="o">&lt;</span><span class="nc">Comment</span><span class="err">&gt;</span> <span class="n">mList</span> <span class="o">=</span> <span class="nc">CommentService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">selectComment</span><span class="o">();</span>
+<span class="nt">%&gt;</span>  
+<span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span> 
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>listComment<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"insertCommentForm.jsp"</span><span class="nt">&gt;</span>방명록 남기기<span class="nt">&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;</span>
+
+<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;tr&gt;&lt;td&gt;</span>글번호<span class="nt">&lt;/td&gt;&lt;td&gt;</span>작성자<span class="nt">&lt;/td&gt;&lt;td&gt;</span>등록일<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">for</span><span class="o">(</span><span class="nc">Comment</span> <span class="n">comment</span> <span class="o">:</span> <span class="n">mList</span><span class="o">){</span> <span class="nt">%&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getCommentNo</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">"viewComment.jsp?cId=</span><span class="nt">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getCommentNo</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">&gt;&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getUserId</span><span class="o">()</span> <span class="nt">%&gt;</span>님이 쓴 글<span class="nt">&lt;/a&gt;&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getRegDate</span><span class="o">()</span> <span class="nt">%&gt;&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// for-end </span><span class="nt">%&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="viewcomment">ViewComment</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="nt">%&gt;</span>   
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.service.CommentService"</span> <span class="nt">%&gt;</span>          
+<span class="c">&lt;!-- 키에 해당하는 글번호를 넘겨받아 서비스의 메소드 호출  --&gt;</span>
+<span class="nt">&lt;%</span> 
+  <span class="kt">long</span> <span class="n">commentNo</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cId"</span><span class="o">));</span>
+  <span class="nc">Comment</span> <span class="n">comment</span> <span class="o">=</span> <span class="nc">CommentService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">selectCommentByPrimaryKey</span><span class="o">(</span><span class="n">commentNo</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>ViewComment<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// 삭제를 눌렀을 때</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">btnDelete</span><span class="dl">"</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+				<span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">deleteComment.jsp?cId=</span><span class="nt">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getCommentNo</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="dl">"</span><span class="p">;</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span> <span class="na">action=</span><span class="s">"modityComment.jsp"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">"1"</span><span class="nt">&gt;</span>
+            작성자 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"commentNo"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getCommentNo</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+            메세지 : <span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">"message"</span> <span class="na">rows=</span><span class="s">"3"</span> <span class="na">cols=</span><span class="s">"30"</span><span class="nt">&gt;&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getCommentContent</span><span class="o">()</span> <span class="nt">%&gt;&lt;/textarea&gt;&lt;br/&gt;&lt;br/&gt;</span>
+            등록일 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"regDate"</span> <span class="na">value=</span><span class="s">"</span><span class="nt">&lt;%=</span> <span class="n">comment</span><span class="o">.</span><span class="na">getRegDate</span><span class="o">()</span> <span class="nt">%&gt;</span><span class="s">"</span><span class="nt">/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">id=</span><span class="s">"btnModify"</span> <span class="na">value=</span><span class="s">"수정"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">id=</span><span class="s">"btnDelete"</span> <span class="na">value=</span><span class="s">"삭제"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="insertcommentform">InsertCommentForm</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>InsertCommentForm<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	메세지를 남겨주세요.
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span> <span class="na">action=</span><span class="s">"insertCommentSave.jsp"</span> <span class="nt">&gt;</span>
+	<span class="nt">&lt;table&gt;</span>
+		<span class="nt">&lt;tr&gt;&lt;td&gt;</span>사용자<span class="nt">&lt;/td&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"userId"</span> <span class="na">size=</span><span class="s">"15"</span><span class="nt">/&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+		<span class="nt">&lt;tr&gt;&lt;td&gt;</span>메세지<span class="nt">&lt;/td&gt;&lt;td&gt;&lt;textarea</span> <span class="na">name=</span><span class="s">"commentContent"</span> <span class="na">rows=</span><span class="s">"10"</span> <span class="na">columns=</span><span class="s">"40"</span><span class="nt">&gt;&lt;/textarea&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+		<span class="nt">&lt;tr&gt;&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"입력"</span><span class="nt">/&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="insertcommentsave">InsertCommentSave</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="nt">%&gt;</span>    
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.service.CommentService"</span> <span class="nt">%&gt;</span>   
+<span class="c">&lt;!--  이전 폼에서 넘겨오는 데이타의 한글 처리  --&gt;</span>
+<span class="nt">&lt;%</span> 
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"utf-8"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+  
+<span class="c">&lt;!--  이전 폼의 각각의 데이터를 빈즈의 멤버로 지정  --&gt;</span>
+<span class="nt">&lt;jsp:useBean </span><span class="na">id=</span><span class="s">"comment"</span><span class="na"> class=</span><span class="s">"mybatis.guest.model.Comment"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;jsp:setProperty </span><span class="na">name=</span><span class="s">"comment"</span><span class="na"> property=</span><span class="s">"*"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/jsp:useBean&gt;</span>   
+ 
+<span class="c">&lt;!-- 서비스의 메소드 호출  --&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="nc">CommentService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">insertComment</span><span class="o">(</span><span class="n">comment</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>InsertCommentSave<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	입력되었는지 확인해보세요. <span class="nt">&lt;br/&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"listComment.jsp"</span><span class="nt">&gt;</span>목록보기<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="deletecomment">DeleteComment</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="nt">%&gt;</span>    
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.service.CommentService"</span> <span class="nt">%&gt;</span> 
+<span class="c">&lt;!-- 
+	1. import
+	2. 이전 화면에서 넘어오는 cId 값을 얻어오기
+	3. Service에 함수를 호출
+ --&gt;</span>
+<span class="nt">&lt;%</span> 
+	<span class="kt">long</span> <span class="n">commentNo</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"cId"</span><span class="o">));</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">CommentService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">deleteCommentByPrimaryKey</span><span class="o">(</span><span class="n">commentNo</span><span class="o">);</span>
+<span class="nt">%&gt;</span> 
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>DeleteComment<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="err">&gt;</span> <span class="mi">0</span><span class="o">){</span> <span class="nt">%&gt;</span> 
+		삭제되었습니다.
+	<span class="nt">&lt;%</span> <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span> 
+		다시 시도해주세요.
+	<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// if-end </span><span class="nt">%&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"listComment.jsp"</span><span class="nt">&gt;</span>목록보기<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="moditycomment">modityComment</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="nt">%&gt;</span>    
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"mybatis.guest.service.CommentService"</span> <span class="nt">%&gt;</span> 
+<span class="nt">&lt;%</span>
+	<span class="c1">// 1. 수정할 데이터를 가져온다.</span>
+	<span class="nc">Comment</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Comment</span><span class="o">();</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">setCommentNo</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"commentNo"</span><span class="o">)));</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">setCommentContent</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"message"</span><span class="o">));</span>
+	<span class="n">c</span><span class="o">.</span><span class="na">setRegDate</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"regDate"</span><span class="o">));</span>
+	
+	<span class="c1">// 2. Service에 modifyCommentByPrimaryKey() 호출</span>
+	<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">CommentService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">modifyCommentByPrimaryKey</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>modityComment<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%</span> <span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="err">&gt;</span> <span class="mi">0</span><span class="o">){</span> <span class="nt">%&gt;</span> 
+		수정되었습니다.
+	<span class="nt">&lt;%</span> <span class="o">}</span><span class="k">else</span><span class="o">{</span> <span class="nt">%&gt;</span> 
+		다시 시도해주세요.
+	<span class="nt">&lt;%</span> <span class="o">}</span> <span class="c1">// if-end </span><span class="nt">%&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"listComment.jsp"</span><span class="nt">&gt;</span>목록보기<span class="nt">&lt;/a&gt;</span>	
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="comment">Comment</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mybatis.guest.model</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Comment</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kt">long</span> <span class="n">commentNo</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">commentContent</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">regDate</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="kt">long</span> <span class="nf">getCommentNo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">commentNo</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCommentNo</span><span class="o">(</span><span class="kt">long</span> <span class="n">commentNo</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">commentNo</span> <span class="o">=</span> <span class="n">commentNo</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getUserId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUserId</span><span class="o">(</span><span class="nc">String</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">userId</span> <span class="o">=</span> <span class="n">userId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCommentContent</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">commentContent</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCommentContent</span><span class="o">(</span><span class="nc">String</span> <span class="n">commentContent</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">commentContent</span> <span class="o">=</span> <span class="n">commentContent</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getRegDate</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">regDate</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRegDate</span><span class="o">(</span><span class="nc">String</span> <span class="n">regDate</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">regDate</span> <span class="o">=</span> <span class="n">regDate</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="mybatisconfig_xml">MybatisConfig_xml</h2>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;</span>
+<span class="nt">&lt;configuration&gt;</span>
+	<span class="c">&lt;!-- db connect file --&gt;</span>
+	<span class="nt">&lt;properties</span> <span class="na">resource=</span><span class="s">"db.properties"</span><span class="nt">&gt;&lt;/properties&gt;</span>
+	
+	<span class="c">&lt;!-- 기타설정 --&gt;</span>
+	<span class="nt">&lt;settings&gt;</span>
+		<span class="nt">&lt;setting</span> <span class="na">name=</span><span class="s">"mapUnderscoreToCamelCase"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/settings&gt;</span>
+	
+	<span class="c">&lt;!-- alias 별칭 --&gt;</span>
+	<span class="nt">&lt;typeAliases&gt;</span>
+		<span class="nt">&lt;typeAlias</span> <span class="na">type=</span><span class="s">"mybatis.guest.model.Comment"</span> <span class="na">alias=</span><span class="s">"Comment"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/typeAliases&gt;</span>
+	
+	<span class="nt">&lt;environments</span> <span class="na">default=</span><span class="s">"development"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;environment</span> <span class="na">id=</span><span class="s">"development"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;transactionManager</span> <span class="na">type=</span><span class="s">"JDBC"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;dataSource</span> <span class="na">type=</span><span class="s">"POOLED"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driver"</span> <span class="na">value=</span><span class="s">"${driver}"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">value=</span><span class="s">"${url}"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">value=</span><span class="s">"${username}"</span><span class="nt">/&gt;</span>
+				<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"${password}"</span><span class="nt">/&gt;</span>
+			<span class="nt">&lt;/dataSource&gt;</span>
+		<span class="nt">&lt;/environment&gt;</span>
+	<span class="nt">&lt;/environments&gt;</span>
+	
+	<span class="c">&lt;!-- 각각 mapper 등록 --&gt;</span>
+	<span class="nt">&lt;mappers&gt;</span>
+		<span class="nt">&lt;mapper</span> <span class="na">resource=</span><span class="s">"mybatis/guest/mapper/CommentMapper.xml"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/mappers&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</code></pre></div></div>
+
+<h2 id="dbconnectinfo">DBconnectInfo</h2>
+<div class="language-s highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># db connect info</span><span class="w">
+</span><span class="n">driver</span><span class="o">=</span><span class="n">oracle.jdbc.driver.OracleDriver</span><span class="w">
+</span><span class="n">url</span><span class="o">=</span><span class="n">jdbc</span><span class="o">:</span><span class="n">oracle</span><span class="o">:</span><span class="n">thin</span><span class="o">:@</span><span class="m">192.168.0.116</span><span class="o">:</span><span class="m">1521</span><span class="o">:</span><span class="n">orcl</span><span class="w">
+</span><span class="n">username</span><span class="o">=</span><span class="n">team5</span><span class="w">
+</span><span class="n">password</span><span class="o">=</span><span class="m">1004</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="commentmapper_xml">CommentMapper_xml</h2>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"mapper.CommentMapper"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"selectComment"</span> <span class="na">parameterType=</span><span class="s">"hashmap"</span> <span class="na">resultType=</span><span class="s">"Comment"</span><span class="nt">&gt;</span>
+		SELECT * 
+		FROM comment_tab
+		<span class="nt">&lt;where&gt;</span>
+			<span class="c">&lt;!-- &lt;![CDATA[comment_no &gt;= 20]]&gt; --&gt;</span>
+			<span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"commentNo != null"</span><span class="nt">&gt;</span>
+				comment_no=#{commentNo}
+			<span class="nt">&lt;/if&gt;</span>
+		<span class="nt">&lt;/where&gt;</span>
+	<span class="nt">&lt;/select&gt;</span>
+	
+<span class="c">&lt;!-- 	&lt;select id="selectCommentByPK" parameterType="long" resultType="Comment"&gt; --&gt;</span>
+<span class="c">&lt;!-- 		SELECT *  --&gt;</span>
+<span class="c">&lt;!-- 		FROM comment_tab  --&gt;</span>
+<span class="c">&lt;!-- 		WHERE comment_no=#{commentNo} --&gt;</span>
+<span class="c">&lt;!-- 	&lt;/select&gt; --&gt;</span>
+	
+	<span class="nt">&lt;insert</span> <span class="na">id=</span><span class="s">"insertComment"</span> <span class="na">parameterType=</span><span class="s">"Comment"</span><span class="nt">&gt;</span>
+		INSERT INTO comment_tab(comment_no, user_id, comment_content, reg_date) 
+		VALUES (seq_comment_no.nextval, #{userId}, #{commentContent}, sysdate)
+	<span class="nt">&lt;/insert&gt;</span>
+	
+	<span class="nt">&lt;delete</span> <span class="na">id=</span><span class="s">"deleteCommentByPK"</span> <span class="na">parameterType=</span><span class="s">"long"</span><span class="nt">&gt;</span>
+		DELETE FROM comment_tab 
+		WHERE comment_no=#{commentNo}
+	<span class="nt">&lt;/delete&gt;</span>
+	
+	<span class="nt">&lt;update</span> <span class="na">id=</span><span class="s">"modifyCommentByPK"</span> <span class="na">parameterType=</span><span class="s">"long"</span><span class="nt">&gt;</span>
+		UPDATE comment_tab 
+		SET comment_content=#{commentContent}
+		WHERE comment_no=#{commentNo}
+	<span class="nt">&lt;/update&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>
+
+<h2 id="commentrepository">CommentRepository</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mybatis.guest.session</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.io.Resources</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ibatis.session.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mybatis.guest.model.Comment</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommentRepository</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">namespace</span> <span class="o">=</span> <span class="s">"mapper.CommentMapper"</span><span class="o">;</span>
+	
+	<span class="nc">SqlSessionFactory</span> <span class="nf">getSqlSessionFactory</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">InputStream</span> <span class="n">inStream</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">inStream</span> <span class="o">=</span> <span class="nc">Resources</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">"mybatis-config.xml"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"config 파일 연결 실패: "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		
+		<span class="nc">SqlSessionFactory</span> <span class="n">sessFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SqlSessionFactoryBuilder</span><span class="o">().</span><span class="na">build</span><span class="o">(</span><span class="n">inStream</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">sessFactory</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 방명록 전체 검색</span>
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Comment</span><span class="o">&gt;</span> <span class="nf">selectComment</span><span class="o">(){</span>
+		<span class="c1">// mybatis가 관리는 Connection 하나를 얻어오기 - Connection 개념 -&gt; SqlSeesion</span>
+		<span class="nc">SqlSession</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">getSqlSessionFactory</span><span class="o">().</span><span class="na">openSession</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+<span class="c1">//			return sess.selectList("mapper.CommentMapper.selectComment");</span>
+			<span class="k">return</span> <span class="n">sess</span><span class="o">.</span><span class="na">selectList</span><span class="o">(</span><span class="n">namespace</span> <span class="o">+</span> <span class="s">".selectComment"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="c1">// Connection mybatis에게 반환</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 방명록 글 번호로 검색</span>
+	<span class="kd">public</span> <span class="nc">Comment</span> <span class="nf">selectCommentByPK</span><span class="o">(</span><span class="kt">long</span> <span class="n">commentNo</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">SqlSession</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">getSqlSessionFactory</span><span class="o">().</span><span class="na">openSession</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 쿼리문에 ?가 있으면 ?는 commentNo로 하겠다 이때, selectComment에서 commentNo를 찾는다. </span>
+			<span class="nc">Map</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">();</span>
+			<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"commentNo"</span><span class="o">,</span> <span class="n">commentNo</span><span class="o">);</span>
+			<span class="nc">Comment</span> <span class="n">c</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="na">selectOne</span><span class="o">(</span><span class="n">namespace</span> <span class="o">+</span> <span class="s">".selectComment"</span><span class="o">,</span> <span class="n">map</span><span class="o">);</span>
+			<span class="k">return</span> <span class="n">c</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 방명록 입력</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertComment</span><span class="o">(</span><span class="nc">Comment</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">SqlSession</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">getSqlSessionFactory</span><span class="o">().</span><span class="na">openSession</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 입력됬다는 값을 result로 받아 if문으로 commit과 rollback해준다.</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">namespace</span> <span class="o">+</span> <span class="s">".insertComment"</span><span class="o">,</span> <span class="n">c</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 글 번호로 방명록 삭제</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">deleteCommentByPK</span><span class="o">(</span><span class="kt">long</span> <span class="n">commentNo</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">SqlSession</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">getSqlSessionFactory</span><span class="o">().</span><span class="na">openSession</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">namespace</span> <span class="o">+</span> <span class="s">".deleteCommentByPK"</span><span class="o">,</span> <span class="n">commentNo</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 글 번호로 방명록 수정</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">modifyCommentByPK</span><span class="o">(</span><span class="nc">Comment</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">SqlSession</span> <span class="n">sess</span> <span class="o">=</span> <span class="n">getSqlSessionFactory</span><span class="o">().</span><span class="na">openSession</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">namespace</span> <span class="o">+</span> <span class="s">".modifyCommentByPK"</span><span class="o">,</span> <span class="n">c</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">result</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="n">sess</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">sess</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="commentservice">CommentService</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">mybatis.guest.service</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mybatis.guest.model.Comment</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">mybatis.guest.session.CommentRepository</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommentService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">CommentService</span> <span class="n">service</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="nf">CommentService</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">CommentService</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">service</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommentService</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">service</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="nc">CommentRepository</span> <span class="n">repo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CommentRepository</span><span class="o">();</span>
+	<span class="c1">// 방명록 전체 검색</span>
+	<span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Comment</span><span class="o">&gt;</span> <span class="nf">selectComment</span><span class="o">(){</span>
+		<span class="k">return</span> <span class="n">repo</span><span class="o">.</span><span class="na">selectComment</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 방명록 글 번호로 검색(return 값의 자료형은 Comment)</span>
+	<span class="kd">public</span> <span class="nc">Comment</span> <span class="nf">selectCommentByPrimaryKey</span><span class="o">(</span><span class="kt">long</span> <span class="n">cId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">repo</span><span class="o">.</span><span class="na">selectCommentByPK</span><span class="o">(</span><span class="n">cId</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 방명록 입력(return값이 필요없기 때문에 void)</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertComment</span><span class="o">(</span><span class="nc">Comment</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">repo</span><span class="o">.</span><span class="na">insertComment</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 글 번호로 방명록 삭제(return 값의 자료형은 int)</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">deleteCommentByPrimaryKey</span><span class="o">(</span><span class="kt">long</span> <span class="n">cId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">repo</span><span class="o">.</span><span class="na">deleteCommentByPK</span><span class="o">(</span><span class="n">cId</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 글 번호로 방명록 수정(return 값의 자료형은 int)</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">modifyCommentByPrimaryKey</span><span class="o">(</span><span class="nc">Comment</span> <span class="n">c</span><span class="o">){</span>
+		<span class="k">return</span> <span class="n">repo</span><span class="o">.</span><span class="na">modifyCommentByPK</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="log4j_xml">Log4j_xml</h2>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd"&gt;</span>
+<span class="nt">&lt;log4j:configuration</span> <span class="na">xmlns:log4j=</span><span class="s">"http://jakarta.apache.org/log4j/"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">"console"</span> <span class="na">class=</span><span class="s">"org.apache.log4j.ConsoleAppender"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;layout</span> <span class="na">class=</span><span class="s">"org.apache.log4j.PatternLayout"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">"ConversionPattern"</span> <span class="na">value=</span><span class="s">"%d{yyyy-MM-dd HH:mm:ss} [%-5p](%-35c{1}:%-3L) %m%n"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;/layout&gt;</span>
+	<span class="nt">&lt;/appender&gt;</span>
+	
+	<span class="nt">&lt;root&gt;</span>
+		<span class="nt">&lt;level</span> <span class="na">value=</span><span class="s">"DEBUG"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">"console"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;/root&gt;</span>
+<span class="nt">&lt;/log4j:configuration&gt;</span>
+</code></pre></div></div>
+:ET

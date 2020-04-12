@@ -1,0 +1,75 @@
+I"�%<h1 id="jqueryidcheck"><a href="">jqueryIdcheck</a></h1>
+
+<h2 id="idcheck">IdCheck</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">contentType=</span><span class="s">"text/xml; charset=utf-8"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> import=</span><span class="s">"java.sql.*"</span><span class="nt">%&gt;</span>
+
+<span class="nt">&lt;%</span>
+<span class="nc">String</span> <span class="n">driver</span><span class="o">=</span><span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">user</span><span class="o">=</span><span class="s">"team5"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">pass</span><span class="o">=</span><span class="s">"1004"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">dbURL</span><span class="o">=</span><span class="s">"jdbc:oracle:thin:@192.168.0.116:1521:orcl"</span><span class="o">;</span>
+	<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+	<span class="nc">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbURL</span><span class="o">,</span><span class="n">user</span><span class="o">,</span><span class="n">pass</span><span class="o">);</span>
+	
+	<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM membertest WHERE id='"</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"userId"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"'"</span><span class="o">;</span>
+	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+	<span class="nc">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+	<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>		
+
+	<span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">"NO"</span><span class="o">;</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">()){</span>		
+		<span class="n">result</span> <span class="o">=</span> <span class="s">"YES"</span><span class="o">;</span>
+	<span class="o">}</span>		
+	
+	<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="n">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+</code></pre></div></div>
+
+<h2 id="idform">IdForm</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span> <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>IdForm<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="c1">// 			$(".userinput").keyup(function(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#id_check</span><span class="dl">"</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">IdCheck.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">data</span> <span class="p">:</span> <span class="p">{</span><span class="na">userId</span> <span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">input[name='id']</span><span class="dl">"</span><span class="p">).</span><span class="nx">val</span><span class="p">()},</span>
+					<span class="na">dataType</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">text</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+						<span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">YES</span><span class="dl">"</span><span class="p">){</span>
+							<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#idmessage</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="dl">"</span><span class="s2">이미 사용중인 아이디 입니다</span><span class="dl">"</span><span class="p">);</span>
+							<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#idmessage</span><span class="dl">"</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+						<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+							<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#idmessage</span><span class="dl">"</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="dl">"</span><span class="s2">사용가능한 아이디입니다</span><span class="dl">"</span><span class="p">);</span>
+							<span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#idmessage</span><span class="dl">"</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+						<span class="p">}</span>
+					<span class="p">},</span>
+					<span class="na">error</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">name=</span><span class="s">"id"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"userinput"</span> <span class="na">size=</span><span class="s">"15"</span> <span class="nt">/&gt;</span>
+	<span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">id=</span><span class="s">"id_check"</span><span class="nt">&gt;</span>중복체크<span class="nt">&lt;/button&gt;&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="c">&lt;!-- display가 none이기때문에 show로 보여줘야한다 --&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"idmessage"</span> <span class="na">style=</span><span class="s">"display:none;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

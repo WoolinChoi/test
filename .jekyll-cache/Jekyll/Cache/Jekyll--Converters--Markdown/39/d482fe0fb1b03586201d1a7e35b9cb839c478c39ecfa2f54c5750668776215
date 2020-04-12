@@ -1,0 +1,126 @@
+I"�<h1 id="chapter23"><a href="">chapter2~3</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>목록보기 : ls ( -l , -a, -R)</li>
+  <li>디렉토리변경 : cd / pwd</li>
+  <li>파일관리
+    <ul>
+      <li>복사 : cp</li>
+      <li>삭제 : rm</li>
+      <li>이동 : mv</li>
+    </ul>
+  </li>
+  <li>디렉토리관리
+    <ul>
+      <li>생성 : mkdir</li>
+      <li>삭제 : rmdir / rm -rf</li>
+    </ul>
+  </li>
+  <li>파일생성/보기 :  cat</li>
+  <li>파일, 디렉토리 찾기 : find
+    <ul>
+      <li>-name  : 이름으로 찾기</li>
+      <li>-type f / d : f(파일 찾기), d(디렉토리 찾기)</li>
+    </ul>
+  </li>
+  <li>화면 지우기 : clear</li>
+  <li>파일링크
+    <ul>
+      <li>하드링크 : ln [원본파일명] [하드링크파일명]</li>
+      <li>심볼릭링크 : ln -s [원본파일명] [하드링크파일명]</li>
+      <li>차이점 : 하드 링크는 원본 파일과 동일한 inode를 직접적으로 가리키고 심볼릭 링크의 경우는 만들게 되면 또 다른 inode를 생성해서 이를 바라봅니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>실습 4-3(p220)
+    <ol>
+      <li>ls 명령에 대한 옵션에 대해서 도움말 출력하기
+  <br /> man ls</li>
+      <li>경로안의 모든 파일을 나열하는 옵션과 함께 실행하여 출력하기
+  <br /> ls -a</li>
+      <li>파일의 크기가 kb 단위로 나열되도록 실행하여 출력하기
+  <br /> ls -k</li>
+      <li>파일목록이 가로로 나열하여 출력하기
+  <br /> ls -m</li>
+      <li>파일이름에 그래픽 문자가 아닌 것이 있으면 ‘?’로 표시하기
+  <br /> ls -q</li>
+      <li>정렬 순서를 내림차순으로 출력하기
+  <br /> ls -r</li>
+      <li>최근 파일이 제일 먼저 오도록 파일시간 순으로 정렬하기
+  <br /> ls -t</li>
+      <li>파일 정렬방식을 세로로 출력하기
+  <br /> ls -C</li>
+      <li>심볼릭 링크 파일들을 그냥 파일로 출력하기
+  <br /> ls -L</li>
+    </ol>
+  </li>
+  <li>실습 3-11(p160)
+    <ol>
+      <li>홈 디렉터리에서 workspace 디렉터리 생성하기
+  <br /> mkdir workspace</li>
+      <li>홈 디렉터리 위치에서 workspace 디렉터리에 빈파일 sample.txt 파일 생성하기
+  <br /> touch workspace/sample.txt</li>
+      <li>workspace 디렉터리에서 sample.txt 파일이 생성되었는지 확인하기
+  <br /> ls workspace/sample.txt</li>
+      <li>workspace 디렉터리에서 copy_workspace 디렉터리로 복사하기
+  <br /> cp -r workspace copy_workspace</li>
+      <li>/etc/hosts 파일과 /etc/services 파일을 한꺼번에 copy_workspace 디렉터리로 복사하기
+  <br /> cp /etc/hosts /etc/services copy_workspace</li>
+      <li>홈 디렉터리 위치에서 copy_workspace 디렉터리에 존재하는 파일목록을 자세하게 출력하기
+  <br /> ls -l copy_workspace</li>
+      <li>비어있지 않은 workspace 디렉터리와 copy_workspace 디렉터리를 한꺼번에 삭제하기
+  <br /> rm -r workspace copy_workspace</li>
+      <li>workspace 디렉터리와 copy_workspace 디렉터리가 정상적으로 모두 삭제되었는지 확인하기
+  <br /> ls</li>
+    </ol>
+  </li>
+  <li>실습 3-15(p185)
+    <ol>
+      <li>홈 디렉터리에서 workspace 디렉터리 생성하기
+  <br /> mkdir workspace</li>
+      <li>홈 디렉터리 위치에서 workspace 디렉터리에 빈파일 sample.txt 파일 생성하기
+  <br /> touch workspace/sample.txt</li>
+      <li>workspace 디렉터리에 sample.txt 파일이 생성되었는지 확인하기
+  <br /> ls workspace/sample.txt</li>
+      <li>workspace 디렉터리를 mv_workspace 디렉터리로 이동하기
+  <br /> mv workspace mv_workspace</li>
+      <li>/etc/hosts 파일과 /etc/services 파일을 한꺼번에 mv_workspace 디렉터리로 복사하기
+  <br /> cp /etc/hosts /etc/services mv_workspace</li>
+      <li>홈 디렉터리 위치에서 copy_workspace 디렉터리에 존재하는 파일목록을 자세하게 출력하기
+  <br /> ls -l mv_workspace</li>
+      <li>mv_workspace 디렉터리에 sample.txt 파일 삭제하기
+  <br /> rm -i workspace/sample.txt</li>
+      <li>mv_workspace 디렉터리를 삭제여부를 물어가면서 삭제하기
+  <br /> rm -ri mv_workspace</li>
+      <li>mv_workspace 디렉터리가 정상적으로 삭제되었는지 확인하기
+  <br /> ls</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>디렉토리
+    <ul>
+      <li>홈디렉토리 : cd ~</li>
+      <li>루트디렉토리 : cd /</li>
+    </ul>
+  </li>
+  <li>su root / su - root
+    <ul>
+      <li>su root : su는 기존 사용자 환경에서 설정된 환경변수를 그냥 그대로 유지합니다.</li>
+      <li>su - root : su -는 기존 사용자 환경에서 사용하던 환경변수를 모두 지워버립니다.</li>
+    </ul>
+  </li>
+  <li>rmdir  / rm
+    <ul>
+      <li>rmdir : 디렉터리를 삭제</li>
+      <li>rm : 파일을 삭제</li>
+    </ul>
+  </li>
+</ul>
+:ET

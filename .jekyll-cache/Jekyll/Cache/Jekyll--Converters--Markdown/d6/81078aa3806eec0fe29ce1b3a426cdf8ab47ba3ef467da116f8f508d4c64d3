@@ -1,0 +1,68 @@
+I"�<h1 id="tabpane"><a href="">tabpane</a></h1>
+
+<h2 id="customeradmin-extends-jpanel">CustomerAdmin extends JPanel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerAdmin</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>
+	<span class="nc">JButton</span> <span class="n">b</span><span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"내버튼"</span><span class="o">);</span>
+	
+	<span class="kd">public</span> <span class="nf">CustomerAdmin</span><span class="o">()</span> <span class="o">{</span>
+			<span class="n">setBackground</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">blue</span><span class="o">);</span>
+			<span class="n">add</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="rentadmin-extends-jpanel">RentAdmin extends JPanel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RentAdmin</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">RentAdmin</span><span class="o">()</span> <span class="o">{</span>
+			<span class="n">setBackground</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">yellow</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="videoadmin-extends-jpanel">VideoAdmin extends JPanel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VideoAdmin</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">VideoAdmin</span><span class="o">()</span> <span class="o">{</span>
+			<span class="n">setBackground</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">red</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="videoshop-extends-jframe">VideoShop extends JFrame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VideoShop</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="nc">CustomerAdmin</span>	<span class="n">customer</span><span class="o">;</span>
+	<span class="nc">VideoAdmin</span>		<span class="n">video</span><span class="o">;</span>
+	<span class="nc">RentAdmin</span>		<span class="n">rent</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">VideoShop</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">//각각의 화면을 관리하는 클래스 객체 생성</span>
+			<span class="n">customer</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">CustomerAdmin</span><span class="o">();</span>
+			<span class="n">video</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">VideoAdmin</span><span class="o">();</span>
+			<span class="n">rent</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">RentAdmin</span><span class="o">();</span>
+
+			<span class="nc">JTabbedPane</span>  <span class="n">pane</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTabbedPane</span><span class="o">();</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"고객관리"</span><span class="o">,</span> <span class="n">customer</span><span class="o">);</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"비디오관리"</span><span class="o">,</span> <span class="n">video</span><span class="o">);</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"대여관리"</span><span class="o">,</span> <span class="n">rent</span><span class="o">);</span>
+
+			<span class="n">pane</span><span class="o">.</span><span class="na">setSelectedIndex</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+
+			<span class="n">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">pane</span><span class="o">);</span>
+			<span class="n">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span><span class="mi">200</span><span class="o">);</span>
+			<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+			<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">new</span> <span class="nf">VideoShop</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

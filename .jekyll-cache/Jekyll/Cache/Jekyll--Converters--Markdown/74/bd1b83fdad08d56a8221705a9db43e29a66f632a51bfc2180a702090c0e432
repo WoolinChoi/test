@@ -1,0 +1,84 @@
+I"�"<h1 id="basic"><a href="">basic</a></h1>
+
+<h2 id="basic-1">Basic</h2>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- SQL(DDL/DML/DCL)</span>
+<span class="c1">-- DDL</span>
+
+<span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">emp_copy</span> <span class="k">As</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">emp</span><span class="p">;</span>
+
+<span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">emp_copy</span><span class="p">;</span>
+
+<span class="c1">-- 1. 사원번호가 7782인 사원의 부서를 30번으로 변경</span>
+<span class="c1">-- UPDATE table_name SET column=value WHERE condition;</span>
+<span class="k">UPDATE</span> <span class="n">emp_copy</span> <span class="k">SET</span> <span class="n">deptno</span><span class="o">=</span><span class="mi">30</span> <span class="k">WHERE</span> <span class="n">empno</span><span class="o">=</span><span class="mi">7782</span><span class="p">;</span>
+
+<span class="c1">-- 2. 사원번호가 7782인 사원의 이름을 홍길숙으로 변경하고 급여를 3500으로 변경</span>
+<span class="k">UPDATE</span> <span class="n">emp_copy</span> <span class="k">SET</span> <span class="n">ename</span><span class="o">=</span><span class="s1">'HOUNG'</span><span class="p">,</span> <span class="n">sal</span><span class="o">=</span><span class="mi">3500</span> <span class="k">WHERE</span> <span class="n">empno</span><span class="o">=</span><span class="mi">7782</span><span class="p">;</span>
+
+<span class="c1">-- 3. 모든 부서원의 보너스를 300씩 인상 변경</span>
+<span class="c1">-- nvl은 null 값을 0으로 변경</span>
+<span class="k">UPDATE</span> <span class="n">emp_copy</span> <span class="k">SET</span> <span class="n">comm</span><span class="o">=</span><span class="n">nvl</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">300</span><span class="p">;</span>
+
+<span class="c1">-- 4. 사원번호가 7499인 사원의 정보를 삭제</span>
+<span class="c1">-- DELETE FROM table_name WHERE condition;</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">emp_copy</span> <span class="k">WHERE</span> <span class="n">empno</span><span class="o">=</span><span class="mi">7499</span><span class="p">;</span>
+
+<span class="c1">-- 5. 입사일자가 81년 6월 1일 이전인 사원의 정보를 삭제</span>
+<span class="c1">-- 문자들은 ''해주고 범위는 &gt;, &lt;로 정해줄 수있다.</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">emp_copy</span> <span class="k">WHERE</span> <span class="n">hiredate</span><span class="o">&lt;</span><span class="s1">'81/06/01'</span><span class="p">;</span>
+
+<span class="c1">-- 6. 입사(사원번호 9999, 사원명 본인명, 업부 IT, 월급 6000)</span>
+<span class="c1">--  INSERT INTO table_name(columns) VALUES (values);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">emp_copy</span><span class="p">(</span><span class="n">empno</span><span class="p">,</span> <span class="n">ename</span><span class="p">,</span> <span class="n">job</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">9999</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">,</span> <span class="s1">'IT'</span><span class="p">,</span> <span class="mi">6000</span><span class="p">);</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">emp_copy</span><span class="p">;</span>
+
+<span class="c1">-- 7. 테이블 만들기</span>
+<span class="c1">-- 테이블명 : student</span>
+<span class="c1">-- 학번	id	char(4)</span>
+<span class="c1">-- 학생이름 name	varchar2(10)</span>
+<span class="c1">-- 국어점수 kor	number(3)</span>
+<span class="c1">-- 수학점수 math	number(3)</span>
+<span class="c1">-- 총점	total	number(3)</span>
+<span class="c1">-- 평균	avg	number(5, 2)</span>
+<span class="c1">-- CREATE TABLE table_name(</span>
+<span class="c1">--  column_name data_type</span>
+<span class="c1">--  column_name data_type);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">student</span><span class="p">(</span>
+    <span class="n">id</span> <span class="nb">char</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">name</span> <span class="n">varchar2</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">kor</span>	<span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">math</span> <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="n">total</span> <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+    <span class="k">avg</span>	<span class="n">number</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">);</span>
+    
+<span class="c1">-- 테이블 구조 확인</span>
+<span class="k">DESC</span> <span class="n">student</span><span class="p">;</span>
+
+<span class="c1">-- 데이타(레코더) 확인</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">student</span><span class="p">;</span> 
+
+<span class="c1">-- 영어점수 컬럼 추가(eng number(3))</span>
+<span class="c1">-- ALTER   TABLE  table_name ADD ([column_name data_type]);</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">student</span> <span class="k">ADD</span> <span class="p">(</span><span class="n">eng</span> <span class="n">number</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+
+<span class="c1">-- 총점 컬럼 삭제</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">student</span> <span class="k">DROP</span> <span class="p">(</span><span class="n">total</span><span class="p">);</span>
+
+<span class="c1">-- 평균 컬럼에서 소숫점 1자리 변경</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">student</span> <span class="k">MODIFY</span> <span class="p">(</span><span class="k">avg</span> <span class="n">number</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+
+<span class="c1">-- 데이타입력</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">student</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'8001'</span><span class="p">,</span> <span class="s1">'홍길동'</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">student</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">kor</span><span class="p">,</span> <span class="n">math</span><span class="p">,</span> <span class="n">eng</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">'8088'</span><span class="p">,</span> <span class="s1">'홍길순'</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">88</span><span class="p">);</span>
+
+<span class="c1">-- 데이타검색</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">student</span><span class="p">;</span>
+
+<span class="c1">-- 홍길순 학생의 평균값을 입력하세요</span>
+<span class="k">UPDATE</span> <span class="n">student</span> <span class="k">SET</span> <span class="k">avg</span><span class="o">=</span><span class="p">(</span><span class="n">kor</span><span class="o">+</span><span class="n">math</span><span class="o">+</span><span class="n">eng</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span> <span class="k">WHERE</span> <span class="n">name</span><span class="o">=</span><span class="s1">'홍길순'</span><span class="p">;</span>
+</code></pre></div></div>
+:ET

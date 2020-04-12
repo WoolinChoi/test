@@ -1,0 +1,1421 @@
+I"��<h1 id="videoshop"><a href="">videoShop</a></h1>
+
+<h2 id="videoshop-1">VideoShop</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">view.CustomerView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">view.RentView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">view.VideoView</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VideoShop</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="nc">CustomerView</span>	<span class="n">customer</span><span class="o">;</span>
+	<span class="nc">VideoView</span>		<span class="n">video</span><span class="o">;</span>
+	<span class="nc">RentView</span>		<span class="n">rent</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">VideoShop</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">//각각의 화면을 관리하는 클래스 객체 생성</span>
+			<span class="n">customer</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">CustomerView</span><span class="o">();</span>
+			<span class="n">video</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">VideoView</span><span class="o">();</span>
+			<span class="n">rent</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">RentView</span><span class="o">();</span>
+
+			<span class="nc">JTabbedPane</span>  <span class="n">pane</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTabbedPane</span><span class="o">();</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"고객관리"</span><span class="o">,</span> <span class="n">customer</span><span class="o">);</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"비디오관리"</span><span class="o">,</span> <span class="n">video</span><span class="o">);</span>
+			<span class="n">pane</span><span class="o">.</span><span class="na">addTab</span><span class="o">(</span><span class="s">"대여관리"</span><span class="o">,</span> <span class="n">rent</span><span class="o">);</span>
+
+			<span class="n">pane</span><span class="o">.</span><span class="na">setSelectedIndex</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+
+			<span class="c1">// 화면크기지정</span>
+			<span class="n">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">pane</span><span class="o">);</span>
+			<span class="n">setSize</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span><span class="mi">600</span><span class="o">);</span>
+			<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+			<span class="n">setDefaultCloseOperation</span><span class="o">(</span><span class="nc">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>	
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">new</span> <span class="nf">VideoShop</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="oraclecon">OracleCon</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OracleCon</span> <span class="o">{</span>
+	<span class="kd">static</span> <span class="nc">OracleCon</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+	<span class="kd">private</span> <span class="nf">OracleCon</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 1. 드라이버 로딩</span>
+		<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"단 한번"</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 첫번째 부를때는 null이기때문에 호출되지만 나머지는 null이 아니기때문에 호출이 안된다. </span>
+		<span class="k">if</span><span class="o">(</span><span class="n">con</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OracleCon</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="customermodel">CustomerModel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.dao.CustomerDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Customer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerModel</span> <span class="kd">implements</span> <span class="nc">CustomerDao</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@safesoo7.iptime.org:1521:XE"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">CustomerModel</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+	 	<span class="c1">// 1. 드라이버로딩</span>
+		<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+		<span class="nc">OracleCon</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 회원가입</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertCustomer</span><span class="o">(</span><span class="nc">Customer</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+		
+		<span class="c1">// 3. sql 문장 만들기</span>
+		<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO customer_management(phonenumber, name, additionalnumber, address, email) "</span>
+				<span class="o">+</span> <span class="s">"VALUES(?, ?, ?, ?, ?)"</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+		
+		<span class="c1">// 4. sql 전송객체 (PreparedStatement)	</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustTel1</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustName</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustTel2</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustAddr</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustEmail</span><span class="o">());</span>
+		
+		<span class="c1">// 5. sql 전송</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+		
+		<span class="c1">// 6. 닫기 </span>
+		<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 전화번호로 검색</span>
+	<span class="kd">public</span> <span class="nc">Customer</span> <span class="nf">selectByTel</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 연결 객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+				
+			<span class="c1">// sql 문장 만들기</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM customer_management WHERE phonenumber = ?"</span><span class="o">;</span>
+				
+			<span class="c1">// sql 전송 객체 얻어오기</span>
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">tel</span><span class="o">);</span>
+			
+			<span class="c1">// sql 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Customer</span><span class="o">();</span>
+			<span class="c1">// 결과 처리</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel1</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"PHONENUMBER"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"NAME"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel2</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"ADDITIONALNUMBER"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustAddr</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"ADDRESS"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustEmail</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"EMAIL"</span><span class="o">));</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">vo</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+		<span class="c1">// 닫기 : finally에 넣어준다.</span>
+		<span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 회원수정	</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">updateCustomer</span><span class="o">(</span><span class="nc">Customer</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"연결성공"</span><span class="o">);</span>
+			
+		<span class="c1">// 3. sql 문장 만들기</span>
+		<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE customer_management "</span>
+				<span class="o">+</span> <span class="s">"SET phonenumber = ?, name = ?, additionalnumber = ?, address = ?, email = ? "</span>
+				<span class="o">+</span> <span class="s">"WHERE phonenumber = ?"</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+		
+		<span class="c1">// 4. sql 전송객체 (PreparedStatement)	</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustTel1</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustName</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustTel2</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustAddr</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustEmail</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getCustTel1</span><span class="o">());</span>
+				
+		<span class="c1">// 5. sql 전송</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				
+		<span class="c1">// 6. 닫기 </span>
+		<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="videomodel">VideoModel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.dao.VideoDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Video</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VideoModel</span> <span class="kd">implements</span> <span class="nc">VideoDao</span><span class="o">{</span>
+	<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@safesoo7.iptime.org:1521:XE"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">VideoModel</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">{</span>
+		<span class="c1">// 1. 드라이버로딩</span>
+		<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+		<span class="nc">OracleCon</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 입력했을 때 </span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertVideo</span><span class="o">(</span><span class="nc">Video</span> <span class="n">vo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st2</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st3</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+		<span class="nc">String</span> <span class="n">video_num</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO "</span> <span class="o">+</span>
+					<span class="s">"video(VideoNumber,"</span> <span class="o">+</span>
+					<span class="s">" Title, Genre, Director,"</span> <span class="o">+</span>
+					<span class="s">" Actor, Description)"</span> <span class="o">+</span>
+					<span class="s">" VALUES (seq_video_number.nextval, ?, ?, ?, ?, ?)"</span><span class="o">;</span>
+
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getVideoName</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getGenre</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getDirector</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getActor</span><span class="o">());</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getExp</span><span class="o">());</span>
+
+			<span class="kt">int</span> <span class="n">res1</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+			<span class="k">if</span> <span class="o">(</span><span class="n">res1</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+				<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+			<span class="o">}</span>
+
+			<span class="nc">String</span> <span class="n">sql2</span> <span class="o">=</span> <span class="s">"SELECT seq_video_number.currval AS cur FROM dual"</span><span class="o">;</span>
+			<span class="n">st2</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql2</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sql2</span><span class="o">);</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st2</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+
+			<span class="k">if</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">video_num</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"cur"</span><span class="o">);</span>
+			<span class="o">}</span>
+
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">video_num</span><span class="o">);</span>
+
+			<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+				<span class="nc">String</span> <span class="n">sql3</span> <span class="o">=</span> <span class="s">"INSERT INTO "</span> <span class="o">+</span>
+						<span class="s">"video_management(ItemNumber, VideoNumber)"</span> <span class="o">+</span>
+						<span class="s">" VALUES (seq_item_number.nextval, ?)"</span><span class="o">;</span>
+				<span class="n">st3</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql3</span><span class="o">);</span>
+
+				<span class="n">st3</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">video_num</span><span class="o">);</span>
+
+				<span class="kt">int</span> <span class="n">res2</span> <span class="o">=</span> <span class="n">st3</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+				<span class="k">if</span> <span class="o">(</span><span class="n">res2</span> <span class="o">!=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+					<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+					<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">rs</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">con</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 비디오 검색했을 때</span>
+	<span class="kd">public</span> <span class="nc">ArrayList</span> <span class="nf">searchVideo</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel</span><span class="o">,</span> <span class="nc">String</span> <span class="n">word</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+
+			<span class="nc">String</span><span class="o">[]</span> <span class="n">cols</span> <span class="o">=</span> <span class="o">{</span><span class="s">"Title"</span><span class="o">,</span> <span class="s">"Director"</span><span class="o">};</span>
+
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT VideoNumber, Title , Genre, Director, Actor FROM video "</span> <span class="o">+</span>
+					<span class="s">" WHERE "</span> <span class="o">+</span> <span class="n">cols</span><span class="o">[</span><span class="n">sel</span><span class="o">]</span> <span class="o">+</span> <span class="s">" LIKE  '%"</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="s">"%' "</span><span class="o">;</span>
+
+			<span class="nc">ArrayList</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+
+			<span class="c1">// 6. 결과처리</span>
+			<span class="k">while</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="nc">ArrayList</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"VideoNumber"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Title"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Genre"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Director"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Actor"</span><span class="o">));</span>
+
+				<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+		<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 검색해서 나온 값을 눌렀을 때</span>
+	<span class="kd">public</span> <span class="nc">Video</span> <span class="nf">selectByPK</span><span class="o">(</span><span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">Video</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Video</span><span class="o">();</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT VideoNumber, Title , Genre, Director, Actor, Description FROM video "</span> 
+					<span class="o">+</span> <span class="s">" WHERE VideoNumber = ?"</span><span class="o">;</span>
+
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vNum</span><span class="o">);</span>
+			
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="c1">// 6. 결과처리</span>
+			<span class="k">while</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setVideoNo</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"VideoNumber"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setVideoName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Title"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setGenre</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Genre"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setDirector</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Director"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setActor</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Actor"</span><span class="o">));</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setExp</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"Description"</span><span class="o">));</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">vo</span><span class="o">;</span>
+		<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>	
+	<span class="o">}</span>
+	
+	<span class="c1">// 수정하기</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">modifyVideo</span><span class="o">(</span><span class="nc">Video</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">{</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+
+		<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"Update video SET "</span> <span class="o">+</span>
+				<span class="s">" VideoNumber = ?, "</span> <span class="o">+</span>
+				<span class="s">" Title = ?, "</span> <span class="o">+</span>
+				<span class="s">" Genre = ?, "</span> <span class="o">+</span>
+				<span class="s">" Director = ?, "</span> <span class="o">+</span>
+				<span class="s">" Actor = ?, "</span> <span class="o">+</span>
+				<span class="s">" Description = ? "</span> <span class="o">+</span>
+				<span class="s">" WHERE VideoNumber = ? "</span><span class="o">;</span>
+
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+
+		<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getVideoNo</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getVideoName</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getGenre</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getDirector</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getActor</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getExp</span><span class="o">());</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getVideoNo</span><span class="o">());</span>
+
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+		<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 삭제하기</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteVideo</span><span class="o">(</span><span class="nc">Video</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">{</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+
+		<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"DELETE FROM video WHERE VideoNumber = ? "</span><span class="o">;</span>
+
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+		<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vo</span><span class="o">.</span><span class="na">getVideoNo</span><span class="o">());</span>
+
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+
+		<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="rentmodel">RentModel</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.dao.RentDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Customer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RentModel</span> <span class="kd">implements</span> <span class="nc">RentDao</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">driver</span> <span class="o">=</span> <span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">"jdbc:oracle:thin:@safesoo7.iptime.org:1521:XE"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">user</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">pass</span> <span class="o">=</span> <span class="s">"oracle"</span><span class="o">;</span>
+	<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">RentModel</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 1. 드라이버로딩</span>
+		<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+		<span class="nc">OracleCon</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 대여 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">rentVideo</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">,</span> <span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+			<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+			<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+			<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="c1">// 3. sql 문장</span>
+				<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO rental_management(RentalNumber, PhoneNumber, ItemNumber, RentalDate) "</span> <span class="o">+</span> 
+						<span class="s">"VALUES (seq_rental_number.nextval, ?, ?, sysdate)"</span><span class="o">;</span>
+				
+				<span class="c1">// 4. 전송 객체</span>
+				<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">tel</span><span class="o">);</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">vNum</span><span class="o">);</span>
+				
+				<span class="c1">// 5. 전송</span>
+				<span class="kt">int</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"완료"</span><span class="o">);</span>
+			<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+				<span class="c1">// 6. 닫기</span>
+				<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+				<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 반납 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">returnVideo</span><span class="o">(</span><span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">rs</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 3. sql 문장</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"UPDATE rental_management SET returnconfirm = 1, "</span> <span class="o">+</span> 
+					<span class="s">" overduedays = CASE WHEN sysdate - rentaldate - 3 &lt;= 0 THEN 0 "</span> <span class="o">+</span> 
+					<span class="s">" WHEN sysdate - rentaldate - 3 &gt; 0 THEN sysdate - rentaldate - 3 "</span> <span class="o">+</span> 
+					<span class="s">" END "</span> <span class="o">+</span> 
+					<span class="s">" WHERE itemnumber = ? AND returnconfirm = 0"</span><span class="o">;</span>
+			
+			<span class="c1">// 4. 전송 객체</span>
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">vNum</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"완료"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>			
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 미납정보 검색 메소드 </span>
+	<span class="kd">public</span> <span class="nc">ArrayList</span> <span class="nf">selectList</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+		<span class="nc">ArrayList</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 3. sql 문장</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT rm.itemnumber itemnumber, rm.phonenumber phonenumber, vm.videonumber videonumber, "</span> <span class="o">+</span>
+					<span class="s">" rm.rentaldate rentaldate, rm.rentaldate+3 as returndate, rm.returnconfirm returnconfirm"</span> <span class="o">+</span> 
+					<span class="s">" FROM video_management vm INNER JOIN rental_management rm"</span> <span class="o">+</span> 
+					<span class="s">" ON vm.itemnumber = rm.itemnumber"</span> <span class="o">+</span> 
+					<span class="s">" INNER JOIN video v"</span> <span class="o">+</span> 
+					<span class="s">" ON v.videonumber = vm.videonumber"</span> <span class="o">+</span> 
+					<span class="s">" INNER JOIN customer c "</span> <span class="o">+</span> 
+					<span class="s">" ON rm.phonenumber = c.phone_number"</span><span class="o">+</span>
+					<span class="s">" WHERE rm.returnconfirm = 1 "</span><span class="o">;</span>
+				
+			<span class="c1">// 4. 전송 객체</span>
+			<span class="n">st</span>  <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			
+			<span class="c1">// 5. 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			
+			<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="nc">ArrayList</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"ITEMNUMBER"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"PHONENUMBER"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"VIDEONUMBER"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"RENTALDATE"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"RETURNDATE"</span><span class="o">));</span>
+				<span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"RETURNCONFIRM"</span><span class="o">));</span>
+				
+				<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">list</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 전화입력 후 엔터치면 고객명을 출력하는 메소드</span>
+	<span class="kd">public</span> <span class="nc">Customer</span> <span class="nf">insertSelectName</span><span class="o">(</span><span class="nc">String</span> <span class="n">mNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+		<span class="c1">// 2. Connection 연결객체 얻어오기</span>
+		<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">user</span><span class="o">,</span> <span class="n">pass</span><span class="o">);</span>
+		<span class="nc">PreparedStatement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+					
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="c1">// 3. sql 문장</span>
+			<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT name FROM customer_management WHERE phonenumber LIKE '%' || ? || '%'"</span><span class="o">;</span>
+			
+			<span class="c1">// 4. 전송 객체</span>
+			<span class="n">st</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">mNum</span><span class="o">);</span>
+						
+			<span class="c1">// 5. 전송</span>
+			<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+			<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Customer</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+				<span class="n">vo</span><span class="o">.</span><span class="na">setCustName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"NAME"</span><span class="o">));</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">vo</span><span class="o">;</span>
+		<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+			<span class="c1">// 6. 닫기</span>
+			<span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+			<span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="customerdao">CustomerDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">model.vo.Customer</span><span class="o">;</span>
+<span class="cm">/** 고객관리 JDBC 연결 */</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CustomerDao</span> <span class="o">{</span>
+	<span class="c1">// 회원가입</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insertCustomer</span><span class="o">(</span><span class="nc">Customer</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 전화번호로 검색</span>
+	<span class="kd">public</span> <span class="nc">Customer</span> <span class="nf">selectByTel</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 고객정보 수정</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">updateCustomer</span><span class="o">(</span><span class="nc">Customer</span> <span class="n">vo</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="videodao">VideoDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Video</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">VideoDao</span> <span class="o">{</span>
+	<span class="c1">// 비디오 입력</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertVideo</span><span class="o">(</span><span class="nc">Video</span> <span class="n">vo</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 비디오 내용 검색</span>
+	<span class="kd">public</span> <span class="nc">ArrayList</span> <span class="nf">searchVideo</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel</span><span class="o">,</span> <span class="nc">String</span> <span class="n">word</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 비디오 번호 검색</span>
+	<span class="kd">public</span> <span class="nc">Video</span> <span class="nf">selectByPK</span><span class="o">(</span><span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="rentdao">RentDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">RentDao</span> <span class="o">{</span>
+	<span class="c1">// 대여 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">rentVideo</span><span class="o">(</span><span class="nc">String</span> <span class="n">tel</span><span class="o">,</span> <span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 반납 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">returnVideo</span><span class="o">(</span><span class="kt">int</span> <span class="n">vNum</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+	<span class="c1">// 미납정보 검색 메소드</span>
+	<span class="kd">public</span> <span class="nc">ArrayList</span> <span class="nf">selectList</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="customer">Customer</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Customer</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">custName</span><span class="o">;</span>		<span class="c1">// 고객명</span>
+	<span class="nc">String</span> <span class="n">custTel1</span><span class="o">;</span>		<span class="c1">// 전화번호</span>
+	<span class="nc">String</span> <span class="n">custTel2</span><span class="o">;</span>		<span class="c1">// 보조 전화번호</span>
+	<span class="nc">String</span> <span class="n">custAddr</span><span class="o">;</span>		<span class="c1">// 주소</span>
+	<span class="nc">String</span> <span class="n">custEmail</span><span class="o">;</span>		<span class="c1">// 이메일</span>
+
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCustName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">custName</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCustName</span><span class="o">(</span><span class="nc">String</span> <span class="n">custName</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">custName</span> <span class="o">=</span> <span class="n">custName</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCustTel1</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">custTel1</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCustTel1</span><span class="o">(</span><span class="nc">String</span> <span class="n">custTel1</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">custTel1</span> <span class="o">=</span> <span class="n">custTel1</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCustTel2</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">custTel2</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCustTel2</span><span class="o">(</span><span class="nc">String</span> <span class="n">custTel2</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">custTel2</span> <span class="o">=</span> <span class="n">custTel2</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCustAddr</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">custAddr</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCustAddr</span><span class="o">(</span><span class="nc">String</span> <span class="n">custAddr</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">custAddr</span> <span class="o">=</span> <span class="n">custAddr</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getCustEmail</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">custEmail</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCustEmail</span><span class="o">(</span><span class="nc">String</span> <span class="n">custEmail</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">custEmail</span> <span class="o">=</span> <span class="n">custEmail</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="video">Video</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Video</span> <span class="o">{</span>
+	<span class="kt">int</span> <span class="n">videoNo</span><span class="o">;</span>				<span class="c1">// 비디오번호</span>
+	<span class="nc">String</span> <span class="n">genre</span><span class="o">;</span>				<span class="c1">// 장르</span>
+	<span class="nc">String</span> <span class="n">videoName</span><span class="o">;</span>			<span class="c1">// 비디오명</span>
+	<span class="nc">String</span> <span class="n">director</span><span class="o">;</span>			<span class="c1">// 감독</span>
+	<span class="nc">String</span> <span class="n">actor</span><span class="o">;</span>				<span class="c1">// 배우</span>
+	<span class="nc">String</span> <span class="n">exp</span><span class="o">;</span>					<span class="c1">// 설명</span>
+	
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVideoNo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">videoNo</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setVideoNo</span><span class="o">(</span><span class="kt">int</span> <span class="n">videoNo</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">videoNo</span> <span class="o">=</span> <span class="n">videoNo</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getGenre</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">genre</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setGenre</span><span class="o">(</span><span class="nc">String</span> <span class="n">genre</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">genre</span> <span class="o">=</span> <span class="n">genre</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getVideoName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">videoName</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setVideoName</span><span class="o">(</span><span class="nc">String</span> <span class="n">videoName</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">videoName</span> <span class="o">=</span> <span class="n">videoName</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getDirector</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">director</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDirector</span><span class="o">(</span><span class="nc">String</span> <span class="n">director</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">director</span> <span class="o">=</span> <span class="n">director</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getActor</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">actor</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setActor</span><span class="o">(</span><span class="nc">String</span> <span class="n">actor</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">actor</span> <span class="o">=</span> <span class="n">actor</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getExp</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">exp</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setExp</span><span class="o">(</span><span class="nc">String</span> <span class="n">exp</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">exp</span> <span class="o">=</span> <span class="n">exp</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="customerview">CustomerView</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.CustomerModel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.dao.CustomerDao</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Customer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomerView</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>
+	<span class="nc">JTextField</span>	<span class="n">tfCustName</span><span class="o">,</span> <span class="n">tfCustTel</span><span class="o">,</span>  <span class="n">tfCustTelAid</span><span class="o">,</span> <span class="n">tfCustAddr</span><span class="o">,</span> <span class="n">tfCustEmail</span><span class="o">;</span>
+	<span class="nc">JButton</span>		<span class="n">bCustRegist</span><span class="o">,</span> <span class="n">bCustModify</span><span class="o">;</span>
+	
+	<span class="nc">JTextField</span>  <span class="n">tfCustNameSearch</span><span class="o">,</span>  <span class="n">tfCustTelSearch</span><span class="o">;</span>
+	<span class="nc">JButton</span>		<span class="n">bCustNameSearch</span><span class="o">,</span>  <span class="n">bCustTelSearch</span><span class="o">;</span>
+	
+	<span class="c1">// 변수</span>
+	<span class="nc">CustomerDao</span> <span class="n">dao</span><span class="o">;</span>
+	
+	<span class="kd">public</span> <span class="nf">CustomerView</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">addLayout</span><span class="o">();</span>
+		<span class="n">connectDB</span><span class="o">();</span>
+		<span class="n">eventProc</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ButtonEventHandler</span> <span class="n">btnHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ButtonEventHandler</span><span class="o">();</span>
+		
+		<span class="c1">// 이벤트 등록</span>
+		<span class="n">bCustRegist</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">btnHandler</span><span class="o">);</span>
+		<span class="n">bCustModify</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">btnHandler</span><span class="o">);</span>
+		<span class="n">bCustNameSearch</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">btnHandler</span><span class="o">);</span>
+		<span class="n">bCustTelSearch</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">btnHandler</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 버튼 이벤트 핸들러 만들기</span>
+	<span class="kd">class</span> <span class="nc">ButtonEventHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			
+			<span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bCustRegist</span><span class="o">)</span> <span class="o">{</span>  
+				<span class="n">registCustomer</span><span class="o">();</span>  <span class="c1">// 회원등록</span>
+			<span class="o">}</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bCustModify</span><span class="o">)</span> <span class="o">{</span>  
+				<span class="n">updateCustomer</span><span class="o">();</span>  <span class="c1">// 회원정보수정</span>
+			<span class="o">}</span>			
+			<span class="k">else</span>  <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bCustTelSearch</span><span class="o">)</span> <span class="o">{</span> 
+				<span class="n">searchByTel</span><span class="o">();</span>      <span class="c1">// 전화번호 검색</span>
+			<span class="o">}</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bCustNameSearch</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// 이름검색</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이름검색"</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 회원가입하는 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">registCustomer</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 1. 화면 텍스트필드의 입력값 얻어오기			</span>
+		<span class="c1">// 2. 1값들을 Customer 클래스의 멤버로지정			</span>
+		<span class="c1">// 3. Model 클래스 안에 insertCustomer () 메소드 호출하여 2번 VO 객체를 넘김</span>
+		<span class="c1">// 4. 화면 초기화</span>
+		<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Customer</span><span class="o">();</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel1</span><span class="o">(</span><span class="n">tfCustName</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustName</span><span class="o">(</span><span class="n">tfCustTel</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel2</span><span class="o">(</span><span class="n">tfCustTelAid</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustAddr</span><span class="o">(</span><span class="n">tfCustAddr</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustEmail</span><span class="o">(</span><span class="n">tfCustEmail</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">dao</span><span class="o">.</span><span class="na">insertCustomer</span><span class="o">(</span><span class="n">vo</span><span class="o">);</span>
+			<span class="n">clearTextField</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>		
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">clearTextField</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">tfCustName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfCustTel</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfCustTelAid</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfCustAddr</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfCustEmail</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 전화번호에 의한 검색</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">searchByTel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 1. 입력한 전화번호 얻어오기</span>
+		<span class="c1">// 2. Model의 전화번호 검색메소드 selectByTel()  호출</span>
+		<span class="c1">// 3. 2번의 넘겨받은 Customer의 각각의 값을 화면 텍스트 필드 지정</span>
+		<span class="nc">String</span> <span class="n">tel</span> <span class="o">=</span> <span class="n">tfCustTelSearch</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">selectByTel</span><span class="o">(</span><span class="n">tel</span><span class="o">);</span>
+			<span class="n">tfCustTel</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustTel1</span><span class="o">());</span>
+			<span class="n">tfCustName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustName</span><span class="o">());</span>
+			<span class="n">tfCustTelAid</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustTel2</span><span class="o">());</span>
+			<span class="n">tfCustAddr</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustAddr</span><span class="o">());</span>
+			<span class="n">tfCustEmail</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustEmail</span><span class="o">());</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 회원정보수정</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateCustomer</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//		JOptionPane.showMessageDialog(null, "수정");</span>
+		<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Customer</span><span class="o">();</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel1</span><span class="o">(</span><span class="n">tfCustName</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustName</span><span class="o">(</span><span class="n">tfCustTel</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustTel2</span><span class="o">(</span><span class="n">tfCustTelAid</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustAddr</span><span class="o">(</span><span class="n">tfCustAddr</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setCustEmail</span><span class="o">(</span><span class="n">tfCustEmail</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">dao</span><span class="o">.</span><span class="na">updateCustomer</span><span class="o">(</span><span class="n">vo</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">ex</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">connectDB</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">dao</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomerModel</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"드라이버 오류 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		
+		<span class="n">tfCustName</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tfCustTel</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tfCustTelAid</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tfCustAddr</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tfCustEmail</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+
+
+		<span class="n">tfCustNameSearch</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+		<span class="n">tfCustTelSearch</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">20</span><span class="o">);</span>
+
+		<span class="n">bCustRegist</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"회원가입"</span><span class="o">);</span>
+		<span class="n">bCustModify</span>			<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"회원수정"</span><span class="o">);</span>
+		<span class="n">bCustNameSearch</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"이름검색"</span><span class="o">);</span>
+		<span class="n">bCustTelSearch</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"번호검색"</span><span class="o">);</span>
+
+		<span class="c1">// 회원가입 부분 붙이기 </span>
+		<span class="nc">JPanel</span> <span class="n">pRegist</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridBagLayout</span><span class="o">());</span>
+		<span class="nc">GridBagConstraints</span> <span class="n">cbc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GridBagConstraints</span><span class="o">();</span>
+		<span class="n">cbc</span><span class="o">.</span><span class="na">weightx</span>	<span class="o">=</span> <span class="mf">1.0</span><span class="o">;</span>
+		<span class="n">cbc</span><span class="o">.</span><span class="na">weighty</span>	<span class="o">=</span> <span class="mf">1.0</span><span class="o">;</span>
+		<span class="n">cbc</span><span class="o">.</span><span class="na">fill</span> <span class="o">=</span> <span class="nc">GridBagConstraints</span><span class="o">.</span><span class="na">BOTH</span><span class="o">;</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> 
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> 
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 이 름 "</span><span class="o">),</span>	<span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustName</span> <span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCustModify</span><span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCustRegist</span><span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 전 화 "</span><span class="o">),</span>	<span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustTel</span><span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 추가전화 "</span><span class="o">),</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustTelAid</span><span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 주 소 "</span><span class="o">),</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustAddr</span><span class="o">,</span>	<span class="n">cbc</span><span class="o">);</span>
+
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span>	<span class="mi">0</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span>	<span class="mi">1</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 이메일 "</span><span class="o">),</span> <span class="n">cbc</span><span class="o">);</span>
+		
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridx</span> <span class="o">=</span>	<span class="mi">1</span><span class="o">;</span>	 			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridy</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridwidth</span> <span class="o">=</span>	<span class="mi">3</span><span class="o">;</span>			
+		<span class="n">cbc</span><span class="o">.</span><span class="na">gridheight</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="n">pRegist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustEmail</span><span class="o">,</span> <span class="n">cbc</span><span class="o">);</span>
+
+		<span class="c1">// 회원검색 부분 붙이기</span>
+		<span class="nc">JPanel</span> <span class="n">pSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">pSearch</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+				<span class="nc">JPanel</span> <span class="n">pSearchName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+				<span class="n">pSearchName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 이 름 "</span><span class="o">));</span>
+				<span class="n">pSearchName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustNameSearch</span><span class="o">);</span>
+				<span class="n">pSearchName</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCustNameSearch</span><span class="o">);</span>
+				<span class="nc">JPanel</span> <span class="n">pSearchTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+				<span class="n">pSearchTel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 전화번호 "</span><span class="o">));</span>
+				<span class="n">pSearchTel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfCustTelSearch</span><span class="o">);</span>
+				<span class="n">pSearchTel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bCustTelSearch</span><span class="o">);</span>
+		<span class="n">pSearch</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pSearchName</span><span class="o">);</span>
+		<span class="n">pSearch</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pSearchTel</span><span class="o">);</span>
+
+		<span class="c1">// 전체 패널에 붙이기</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">pRegist</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">pSearch</span><span class="o">);</span>	
+	<span class="o">}</span>
+<span class="o">}</span>		
+</code></pre></div></div>
+
+<h2 id="videoview">VideoView</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.border.TitledBorder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.table.AbstractTableModel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.VideoModel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Video</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">VideoView</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>	
+	<span class="c1">// member field</span>
+	<span class="nc">JTextField</span>		<span class="n">tfVideoNum</span><span class="o">,</span> <span class="n">tfVideoTitle</span><span class="o">,</span> <span class="n">tfVideoDirector</span><span class="o">,</span> <span class="n">tfVideoActor</span><span class="o">;</span>
+	<span class="nc">JComboBox</span>		<span class="n">comVideoJanre</span><span class="o">;</span>
+	<span class="nc">JTextArea</span>		<span class="n">taVideoContent</span><span class="o">;</span>
+
+	<span class="nc">JCheckBox</span>		<span class="n">cbMultiInsert</span><span class="o">;</span>
+	<span class="nc">JTextField</span>		<span class="n">tfInsertCount</span><span class="o">;</span>
+
+	<span class="nc">JButton</span>			<span class="n">bVideoInsert</span><span class="o">,</span> <span class="n">bVideoModify</span><span class="o">,</span> <span class="n">bVideoDelete</span><span class="o">;</span>
+
+	<span class="nc">JComboBox</span>		<span class="n">comVideoSearch</span><span class="o">;</span>
+	<span class="nc">JTextField</span>		<span class="n">tfVideoSearch</span><span class="o">;</span>
+	
+	<span class="nc">JTable</span>			<span class="n">tableVideo</span><span class="o">;</span> <span class="c1">// view 역할</span>
+	
+	<span class="nc">VideoTableModel</span> <span class="n">tbModelVideo</span><span class="o">;</span> <span class="c1">// model 역할</span>
+	
+	<span class="c1">// 비지니스 로직 : 모델 클래스 변수 선언</span>
+	<span class="nc">VideoModel</span> <span class="n">db</span><span class="o">;</span>
+
+	<span class="c1">// constructor method</span>
+	<span class="kd">public</span> <span class="nf">VideoView</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">addLayout</span><span class="o">();</span> 	<span class="c1">// 화면설계</span>
+		<span class="n">initStyle</span><span class="o">();</span>
+		<span class="n">eventProc</span><span class="o">();</span>
+		<span class="n">connectDB</span><span class="o">();</span>	<span class="c1">// DB연결</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">connectDB</span><span class="o">()</span> <span class="o">{</span>	<span class="c1">// DB연결</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">db</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VideoModel</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"드라이버 로딩 실패"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ButtonEventHandler</span> <span class="n">hdlr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ButtonEventHandler</span><span class="o">();</span>
+		<span class="n">bVideoInsert</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+		<span class="n">bVideoModify</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+		<span class="n">bVideoDelete</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+		<span class="n">tfVideoSearch</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">hdlr</span><span class="o">);</span>
+		
+		<span class="n">cbMultiInsert</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">tfInsertCount</span><span class="o">.</span><span class="na">setEditable</span><span class="o">(</span><span class="n">cbMultiInsert</span><span class="o">.</span><span class="na">isSelected</span><span class="o">());</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+		
+		<span class="c1">// JTextArea 비디오 검색에서 클릭 했을 때</span>
+		<span class="n">tableVideo</span><span class="o">.</span><span class="na">addMouseListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">MouseAdapter</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">mouseClicked</span><span class="o">(</span><span class="nc">MouseEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+				<span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">tableVideo</span><span class="o">.</span><span class="na">getSelectedRow</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">vNum</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Integer</span><span class="o">)</span><span class="n">tableVideo</span><span class="o">.</span><span class="na">getValueAt</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">);</span>
+				
+				<span class="c1">// 1. 선택한 비디오 번호를 모델단의 selectByPK() 호출 시 인자로 보내기</span>
+				<span class="c1">// 2. 넘겨받은 Video에서 해당 값들 화면 출력하기</span>
+				<span class="nc">Video</span> <span class="n">vo</span><span class="o">;</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="n">vo</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">selectByPK</span><span class="o">(</span><span class="n">vNum</span><span class="o">);</span>
+					<span class="n">tfVideoNum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getVideoNo</span><span class="o">()));</span>
+					<span class="n">tfVideoTitle</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getVideoName</span><span class="o">());</span>
+					<span class="n">comVideoJanre</span><span class="o">.</span><span class="na">setSelectedItem</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getGenre</span><span class="o">()));</span>
+					<span class="n">tfVideoDirector</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getDirector</span><span class="o">());</span>
+					<span class="n">tfVideoActor</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getActor</span><span class="o">());</span>
+					<span class="n">taVideoContent</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getExp</span><span class="o">());</span>	
+				<span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+				<span class="o">}</span>			
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span>		
+	
+	<span class="c1">// 버튼 이벤트 핸들러 만들기</span>
+	<span class="kd">class</span> <span class="nc">ButtonEventHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			
+			<span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bVideoInsert</span><span class="o">)</span> <span class="o">{</span>  
+				<span class="n">registVideo</span><span class="o">();</span>					<span class="c1">// 비디오 등록</span>
+			<span class="o">}</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bVideoModify</span><span class="o">)</span> <span class="o">{</span>  
+				<span class="n">modifyVideo</span><span class="o">();</span>					<span class="c1">// 비디오 정보 수정</span>
+			<span class="o">}</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bVideoDelete</span><span class="o">)</span> <span class="o">{</span>  
+				<span class="n">deleteVideo</span><span class="o">();</span>					<span class="c1">// 비디오 정보 삭제</span>
+			<span class="o">}</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">tfVideoSearch</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">try</span> <span class="o">{</span>
+					<span class="n">searchVideo</span><span class="o">();</span>				<span class="c1">// 비디오 검색</span>
+				<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+					<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 입고 클릭시  - 비디오 정보 등록</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">registVideo</span><span class="o">(){</span>
+		<span class="nc">Video</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Video</span><span class="o">();</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setVideoName</span><span class="o">(</span><span class="n">tfVideoTitle</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setGenre</span><span class="o">(</span><span class="n">comVideoJanre</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setDirector</span><span class="o">(</span><span class="n">tfVideoDirector</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setActor</span><span class="o">(</span><span class="n">tfVideoActor</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="n">vo</span><span class="o">.</span><span class="na">setExp</span><span class="o">(</span><span class="n">taVideoContent</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+		<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">tfInsertCount</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">db</span><span class="o">.</span><span class="na">insertVideo</span><span class="o">(</span><span class="n">vo</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		<span class="n">clearTextField</span><span class="o">();</span>
+	<span class="o">}</span>
+	<span class="kt">void</span> <span class="nf">clearTextField</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">tfVideoNum</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfVideoTitle</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfVideoDirector</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+		<span class="n">tfVideoActor</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">initStyle</span><span class="o">()</span> <span class="o">{</span>   <span class="c1">// 입력하지 못하게 만듬.</span>
+		<span class="n">tfVideoNum</span><span class="o">.</span><span class="na">setEditable</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+		<span class="n">tfInsertCount</span><span class="o">.</span><span class="na">setEditable</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>		
+		<span class="n">tfInsertCount</span><span class="o">.</span><span class="na">setHorizontalAlignment</span><span class="o">(</span><span class="nc">JTextField</span><span class="o">.</span><span class="na">RIGHT</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 수정 클릭시 - 비디오 정보 수정</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">modifyVideo</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">Video</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Video</span><span class="o">();</span>
+			<span class="c1">// 비디오 번호는 기본키라 변경 불가</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setVideoName</span><span class="o">(</span><span class="n">tfVideoTitle</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setGenre</span><span class="o">(</span><span class="n">comVideoJanre</span><span class="o">.</span><span class="na">getSelectedItem</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setDirector</span><span class="o">(</span><span class="n">tfVideoDirector</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setActor</span><span class="o">(</span><span class="n">tfVideoActor</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setExp</span><span class="o">(</span><span class="n">taVideoContent</span><span class="o">.</span><span class="na">getText</span><span class="o">());</span>
+
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">db</span><span class="o">.</span><span class="na">modifyVideo</span><span class="o">(</span><span class="n">vo</span><span class="o">);</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+			<span class="o">}</span>
+			<span class="n">clearTextField</span><span class="o">();</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 삭제 클릭시 - 비디오 정보 삭제</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteVideo</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">Video</span> <span class="n">vo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Video</span><span class="o">();</span>
+			<span class="n">vo</span><span class="o">.</span><span class="na">setVideoNo</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">tfVideoNum</span><span class="o">.</span><span class="na">getText</span><span class="o">()));</span>
+			
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">db</span><span class="o">.</span><span class="na">deleteVideo</span><span class="o">(</span><span class="n">vo</span><span class="o">);</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+			<span class="o">}</span>
+			<span class="n">clearTextField</span><span class="o">();</span>
+		<span class="o">}</span>
+	
+	<span class="c1">// 비디오현황검색</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">searchVideo</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+			<span class="kt">int</span> <span class="n">sel</span> <span class="o">=</span> <span class="n">comVideoSearch</span><span class="o">.</span><span class="na">getSelectedIndex</span><span class="o">();</span> <span class="c1">// 비디오번호를 선택하면 0, 제목을 선택하면 1</span>
+			<span class="nc">String</span> <span class="n">word</span> <span class="o">=</span> <span class="n">tfVideoSearch</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="c1">// 검색결과를 화면 JTextArea의 내용을 담당하는 TableModel 안에 data에 지정</span>
+				<span class="n">tbModelVideo</span><span class="o">.</span><span class="na">data</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">searchVideo</span><span class="o">(</span><span class="n">sel</span><span class="o">,</span> <span class="n">word</span><span class="o">);</span>
+				<span class="n">tbModelVideo</span><span class="o">.</span><span class="na">fireTableDataChanged</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"검색실패 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+	
+	<span class="c1">//  화면설계 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 멤버변수의 객체 생성</span>
+		<span class="n">tfVideoNum</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfVideoTitle</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfVideoDirector</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfVideoActor</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">cbJanreStr</span> <span class="o">=</span> <span class="o">{</span><span class="s">"멜로"</span><span class="o">,</span> <span class="s">"엑션"</span><span class="o">,</span> <span class="s">"스릴"</span><span class="o">,</span> <span class="s">"코미디"</span><span class="o">};</span>
+		<span class="n">comVideoJanre</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">(</span><span class="n">cbJanreStr</span><span class="o">);</span>
+		<span class="n">taVideoContent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">();</span>
+		
+		<span class="n">cbMultiInsert</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JCheckBox</span><span class="o">(</span><span class="s">"다중입고"</span><span class="o">);</span>
+		<span class="n">tfInsertCount</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="s">"1"</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+	
+		<span class="n">bVideoInsert</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"입고"</span><span class="o">);</span>
+		<span class="n">bVideoModify</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"수정"</span><span class="o">);</span>
+		<span class="n">bVideoDelete</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"삭제"</span><span class="o">);</span>
+		
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">cbVideoSearch</span> <span class="o">=</span> <span class="o">{</span><span class="s">"제목"</span><span class="o">,</span> <span class="s">"감독"</span><span class="o">};</span>
+		<span class="n">comVideoSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">(</span><span class="n">cbVideoSearch</span><span class="o">);</span>
+		<span class="n">tfVideoSearch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		
+		<span class="n">tbModelVideo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">VideoTableModel</span><span class="o">();</span>
+		<span class="n">tableVideo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTable</span><span class="o">(</span><span class="n">tbModelVideo</span><span class="o">);</span>
+
+		<span class="c1">// 화면 구성</span>
+		<span class="c1">// 왼쪽 영역 </span>
+		<span class="nc">JPanel</span> <span class="n">p_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+			<span class="c1">// 왼쪽 - 메인 영역</span>
+			<span class="nc">JPanel</span> <span class="n">p_west_c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="n">p_west_c</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+				
+				<span class="c1">// 왼쪽 - 메인 - 중앙</span>
+				<span class="nc">JPanel</span> <span class="n">p_west_c_c</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+				<span class="n">p_west_c_c</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">TitledBorder</span><span class="o">(</span><span class="s">"비디오정보입력"</span><span class="o">));</span>
+					
+					<span class="c1">// 비디오 정보 입력</span>
+					<span class="nc">JPanel</span> <span class="n">p_west_c_c_1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+					<span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span><span class="mi">2</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 비디오 번호 "</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfVideoNum</span><span class="o">);</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 제    목 "</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfVideoTitle</span><span class="o">);</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 장    르  "</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">comVideoJanre</span><span class="o">);</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 감    독 "</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfVideoDirector</span><span class="o">);</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 배    우 "</span><span class="o">));</span>
+	                <span class="n">p_west_c_c_1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfVideoActor</span><span class="o">);</span>
+					
+					<span class="c1">// 비디오 설명 입력</span>
+					<span class="nc">JPanel</span> <span class="n">p_west_c_c_2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+					<span class="n">p_west_c_c_2</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+					<span class="n">p_west_c_c_2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"설명"</span><span class="o">),</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+					<span class="n">p_west_c_c_2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">taVideoContent</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+				
+				<span class="n">p_west_c_c</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+				<span class="n">p_west_c_c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_c_c_1</span><span class="o">);</span>
+				<span class="n">p_west_c_c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_c_c_2</span><span class="o">);</span>
+			
+			<span class="n">p_west_c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_c_c</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+			
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_c</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>	
+			
+				<span class="c1">// 왼쪽 - 메인 - 아래</span>
+				<span class="nc">JPanel</span> <span class="n">p_west_c_s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+				<span class="n">p_west_c_s</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">TitledBorder</span><span class="o">(</span><span class="s">"다중입고시 선택하시오"</span><span class="o">));</span>
+				<span class="n">p_west_c_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cbMultiInsert</span><span class="o">);</span>
+				<span class="n">p_west_c_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfInsertCount</span><span class="o">);</span>
+				<span class="n">p_west_c_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">"개"</span><span class="o">));</span>
+		
+			<span class="c1">// 왼쪽 - 버튼 영역</span>
+			<span class="nc">JPanel</span> <span class="n">p_west_s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="n">p_west_s</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+			<span class="n">p_west_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bVideoInsert</span><span class="o">);</span>
+			<span class="n">p_west_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bVideoModify</span><span class="o">);</span>
+			<span class="n">p_west_s</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bVideoDelete</span><span class="o">);</span>
+			
+			<span class="n">p_west_c</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_c_s</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_west_s</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+		
+		<span class="c1">// 오른쪽 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_east</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="c1">// 오른쪽 패널 위에 이름</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">TitledBorder</span><span class="o">(</span><span class="s">"비디오검색"</span><span class="o">));</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+			
+			<span class="nc">JPanel</span> <span class="n">p_east_north</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="n">p_east_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">comVideoSearch</span><span class="o">);</span>
+			<span class="n">p_east_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfVideoSearch</span><span class="o">);</span>
+			
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_east_north</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">tableVideo</span><span class="o">),</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		
+		<span class="c1">// 전체 영역 </span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_west</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_east</span><span class="o">);</span>		
+	<span class="o">}</span>
+	
+	<span class="c1">//화면에 테이블 붙이는 메소드 </span>
+	<span class="kd">class</span> <span class="nc">VideoTableModel</span> <span class="kd">extends</span> <span class="nc">AbstractTableModel</span> <span class="o">{</span> 
+		  
+		<span class="nc">ArrayList</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">columnNames</span> <span class="o">=</span> <span class="o">{</span><span class="s">"비디오번호"</span><span class="o">,</span> <span class="s">"제목"</span><span class="o">,</span> <span class="s">"장르"</span><span class="o">,</span> <span class="s">"감독"</span><span class="o">,</span> <span class="s">"배우"</span><span class="o">};</span>
+
+		<span class="c1">// 1. 기본적인 TabelModel  만들기</span>
+		<span class="c1">// 아래 세 함수는 TabelModel 인터페이스의 추상함수인데</span>
+		<span class="c1">// AbstractTabelModel에서 구현되지 않았기에...</span>
+		<span class="c1">// 반드시 사용자 구현 필수!!!!</span>
+
+		    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColumnCount</span><span class="o">()</span> <span class="o">{</span> 
+		        <span class="k">return</span> <span class="n">columnNames</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> 
+		    <span class="o">}</span> 
+		     
+		    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRowCount</span><span class="o">()</span> <span class="o">{</span> 
+		        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> 
+		    <span class="o">}</span> 
+
+		    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getValueAt</span><span class="o">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span> 
+				<span class="nc">ArrayList</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ArrayList</span><span class="o">)</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">row</span><span class="o">);</span>
+		        <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">col</span><span class="o">);</span> 
+		    <span class="o">}</span>
+		    
+		    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getColumnName</span><span class="o">(</span><span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span>
+		    	<span class="k">return</span> <span class="n">columnNames</span><span class="o">[</span><span class="n">col</span><span class="o">];</span>
+		    <span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="rentview">RentView</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.border.TitledBorder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.table.AbstractTableModel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.RentModel</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">model.vo.Customer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RentView</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="o">{</span>
+	<span class="nc">JTextField</span> <span class="n">tfRentTel</span><span class="o">,</span> <span class="n">tfRentCustName</span><span class="o">,</span> <span class="n">tfRentVideoNum</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bRent</span><span class="o">;</span>
+	
+	<span class="nc">JTextField</span> <span class="n">tfReturnVideoNum</span><span class="o">;</span>
+	<span class="nc">JButton</span> <span class="n">bReturn</span><span class="o">;</span>
+	
+	<span class="nc">JTable</span> <span class="n">tableRecentList</span><span class="o">;</span>
+	
+	<span class="nc">RentTableModel</span> <span class="n">rentTM</span><span class="o">;</span>
+	
+	<span class="c1">// 비지니스 로직 역할을 하는 모델 클래스 선언</span>
+	<span class="nc">RentModel</span> <span class="n">db</span><span class="o">;</span>
+
+	<span class="c1">//	 생성자 함수</span>
+	<span class="kd">public</span> <span class="nf">RentView</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">addLayout</span><span class="o">();</span>	<span class="c1">// 화면구성</span>
+		<span class="n">eventProc</span><span class="o">();</span>	<span class="c1">// DB연결</span>
+		<span class="n">connectDB</span><span class="o">();</span>
+		
+		<span class="n">selectNonReturn</span><span class="o">();</span> <span class="c1">// 미납여부</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// DB 연결</span>
+	<span class="kt">void</span> <span class="nf">connectDB</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">db</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RentModel</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 이벤트 등록</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">eventProc</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">ActionHandler</span> <span class="n">ah</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ActionHandler</span><span class="o">();</span>
+		<span class="c1">// 이벤트가 발생할 객체들을 핸들러로 연결</span>
+		<span class="n">tfRentTel</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">ah</span><span class="o">);</span>
+		<span class="n">bRent</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">ah</span><span class="o">);</span>
+		<span class="n">bReturn</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">ah</span><span class="o">);</span>
+		                         
+	<span class="o">}</span>
+	<span class="kd">class</span> <span class="nc">ActionHandler</span> <span class="kd">implements</span> <span class="nc">ActionListener</span> <span class="o">{</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이벤트"</span><span class="o">);</span>
+			<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+			
+			<span class="k">if</span><span class="o">(</span> <span class="n">o</span> <span class="o">==</span> <span class="n">tfRentTel</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">selectCustName</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bRent</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">rentVideo</span><span class="o">();</span>
+				<span class="n">selectNonReturn</span><span class="o">();</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">bReturn</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">returnVideo</span><span class="o">();</span>
+				<span class="n">selectNonReturn</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 전화입력 후 엔터치면 고객명을 출력하는 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">selectCustName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 1. 화면에서 필요한 정보를 얻어오기</span>
+		<span class="c1">// 2. 모델쪽 메소드를 호출 </span>
+		<span class="c1">// 3. 결과처리</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="nc">String</span> <span class="n">mNum</span> <span class="o">=</span> <span class="n">tfRentTel</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+			<span class="nc">Customer</span> <span class="n">vo</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">insertSelectName</span><span class="o">(</span><span class="n">mNum</span><span class="o">);</span>
+			<span class="n">tfRentCustName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">vo</span><span class="o">.</span><span class="na">getCustName</span><span class="o">());</span>	
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 비디오 대여시 처리하는 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">rentVideo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 1. 화면에서 필요한 정보를 얻어오기</span>
+		<span class="c1">// 2. 모델쪽 메소드를 호출 </span>
+		<span class="c1">// 3. 대여 후 결과처리</span>
+		<span class="nc">String</span> <span class="n">tel</span> <span class="o">=</span> <span class="n">tfRentTel</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="nc">String</span> <span class="n">vNum</span> <span class="o">=</span> <span class="n">tfRentVideoNum</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">db</span><span class="o">.</span><span class="na">rentVideo</span><span class="o">(</span><span class="n">tel</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">vNum</span><span class="o">));</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+		
+	<span class="o">}</span>
+	
+	<span class="c1">// 비디오 반납시 처리하는 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">returnVideo</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 1. 화면에서 필요한 정보를 얻어오기</span>
+		<span class="c1">// 2. 모델쪽 메소드를 호출 </span>
+		<span class="c1">// 3. 대여 후 결과처리</span>
+		<span class="nc">String</span> <span class="n">vNum</span> <span class="o">=</span> <span class="n">tfReturnVideoNum</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">db</span><span class="o">.</span><span class="na">returnVideo</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">vNum</span><span class="o">));</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	<span class="c1">// 미납목록 출력하는 메소드</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">selectNonReturn</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">rentTM</span><span class="o">.</span><span class="na">data</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="na">selectList</span><span class="o">();</span>
+			<span class="n">rentTM</span><span class="o">.</span><span class="na">fireTableDataChanged</span><span class="o">();</span>
+			
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"에러 : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+	
+	
+	<span class="cm">/*	객체 생성 및 화면 구성   */</span>
+	<span class="kt">void</span> <span class="nf">addLayout</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// 멤버 변수 객체 생성</span>
+		<span class="n">tfRentTel</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfRentCustName</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		<span class="n">tfRentVideoNum</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">();</span>
+		
+		<span class="n">bRent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"대여"</span><span class="o">);</span>
+		<span class="n">tfReturnVideoNum</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="n">bReturn</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">"반납"</span><span class="o">);</span>
+		
+		<span class="n">rentTM</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RentTableModel</span><span class="o">();</span>
+		<span class="n">tableRecentList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JTable</span><span class="o">(</span><span class="n">rentTM</span><span class="o">);</span>
+		
+		<span class="c1">// 화면 구성</span>
+		<span class="c1">// 위쪽 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_north</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_north</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+		
+			<span class="c1">// 위쪽 왼쪽</span>
+			<span class="nc">JPanel</span> <span class="n">p_north_west</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">TitledBorder</span><span class="o">(</span><span class="s">"대여"</span><span class="o">));</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">2</span><span class="o">));</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 전 화 번 호 "</span><span class="o">));</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfRentTel</span><span class="o">);</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 고 객 명 "</span><span class="o">));</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfRentCustName</span><span class="o">);</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 대 여 번 호  "</span><span class="o">));</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfRentVideoNum</span><span class="o">);</span>
+			<span class="n">p_north_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bRent</span><span class="o">);</span>
+
+		<span class="n">p_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_north_west</span><span class="o">);</span>
+		
+			<span class="c1">// 위쪽 오른쪽</span>
+			<span class="nc">JPanel</span> <span class="n">p_north_east</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="n">p_north_east</span><span class="o">.</span><span class="na">setBorder</span><span class="o">(</span><span class="k">new</span> <span class="nc">TitledBorder</span><span class="o">(</span><span class="s">"반납"</span><span class="o">));</span>
+			<span class="n">p_north_east</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">FlowLayout</span><span class="o">());</span>
+			<span class="n">p_north_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 대 여 번 호"</span><span class="o">));</span>
+			<span class="n">p_north_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfReturnVideoNum</span><span class="o">);</span>
+			<span class="n">p_north_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bReturn</span><span class="o">);</span>
+			
+		<span class="n">p_north</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">p_north_east</span><span class="o">);</span>
+			
+		<span class="c1">// 센터 영역</span>
+		<span class="nc">JPanel</span> <span class="n">p_center</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">p_center</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">tableRecentList</span><span class="o">));</span>
+		
+		<span class="c1">// 전체 영역</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_north</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="n">p_center</span><span class="o">,</span> <span class="nc">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+		
+	<span class="o">}</span>
+
+	<span class="kd">class</span> <span class="nc">RentTableModel</span> <span class="kd">extends</span> <span class="nc">AbstractTableModel</span> <span class="o">{</span> 
+		  
+		<span class="nc">ArrayList</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">();</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">columnNames</span> <span class="o">=</span> <span class="o">{</span><span class="s">"대여번호"</span><span class="o">,</span> <span class="s">"전화번호"</span><span class="o">,</span> <span class="s">"비디오번호"</span><span class="o">,</span> <span class="s">"대여일"</span><span class="o">,</span> <span class="s">"반납예정일"</span><span class="o">,</span> <span class="s">"반납여부"</span><span class="o">};</span>
+
+			<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColumnCount</span><span class="o">()</span> <span class="o">{</span> 
+		        <span class="k">return</span> <span class="n">columnNames</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> 
+		    <span class="o">}</span> 
+		     
+		    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRowCount</span><span class="o">()</span> <span class="o">{</span> 
+		        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> 
+		    <span class="o">}</span> 
+
+		    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getValueAt</span><span class="o">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span> 
+				<span class="nc">ArrayList</span> <span class="n">temp</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ArrayList</span><span class="o">)</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">row</span><span class="o">);</span>
+		        <span class="k">return</span> <span class="n">temp</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">col</span><span class="o">);</span> 
+		    <span class="o">}</span>
+		    
+		    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getColumnName</span><span class="o">(</span><span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span>
+		    	<span class="k">return</span> <span class="n">columnNames</span><span class="o">[</span><span class="n">col</span><span class="o">];</span>
+		    <span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

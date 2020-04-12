@@ -1,0 +1,136 @@
+I"�<<h1 id="datatype"><a href="">datatype</a></h1>
+
+<h2 id="naming">Naming</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 데이타 타입(자료형)
+ * 1. 기본형(프리미티브)
+ *		논리형 : boolean
+ *		문자형 : char
+ *		정수형 : int / long
+ *		실수형 : double
+ *
+ * 2. 참조형(레퍼런스) : 클래스, 배열 
+ * 		-&gt; new 연산자를 이용해서 메모리 할당(확보)
+ * 		ex) String(new를 안써도 되는 예외)
+ */</span>
+
+<span class="c1">// 한줄주석</span>
+<span class="cm">/*
+      여러줄 주석
+ */</span>
+<span class="cm">/**
+      도움말 주석
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex01_Naming</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 1. 변수선언</span>
+		<span class="kt">char</span> <span class="n">a</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">b</span><span class="o">;</span>
+		<span class="kt">double</span> <span class="n">c</span><span class="o">;</span>
+		<span class="c1">// 2. 값 지정</span>
+		<span class="n">a</span> <span class="o">=</span> <span class="sc">'김'</span><span class="o">;</span>	    <span class="c1">// char형은 ''으로 문자 하나만 지정</span>
+		<span class="n">b</span> <span class="o">=</span> <span class="mi">1000000000</span><span class="o">;</span>	<span class="c1">// int형은 21억아래로 지정 </span>
+		<span class="n">c</span> <span class="o">=</span> <span class="mf">100.3</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="caution">Caution</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex02_Caution</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 실수형</span>
+		<span class="c1">// float f;	// 4Byte</span>
+		<span class="kt">double</span> <span class="n">f</span><span class="o">;</span>
+		<span class="n">f</span> <span class="o">=</span> <span class="mf">3.6</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"실수:"</span> <span class="o">+</span> <span class="n">f</span><span class="o">);</span>
+		<span class="c1">// 문자형-정수형</span>
+		<span class="kt">char</span> <span class="n">ch</span><span class="o">;</span>
+		<span class="n">ch</span> <span class="o">=</span> <span class="mi">65</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"ch값:"</span> <span class="o">+</span> <span class="n">ch</span><span class="o">);</span>
+		<span class="c1">// int i;</span>
+		<span class="c1">// i = 'a';</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="sc">'a'</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"i값:"</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+		<span class="kt">long</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">10000000000L</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"l값:"</span> <span class="o">+</span> <span class="n">l</span><span class="o">);</span>
+		<span class="c1">// int i2 = 1000000000;</span>
+		<span class="c1">// 형변환 - casting</span>
+		<span class="kt">double</span> <span class="n">db</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span><span class="mi">100</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"db값:"</span> <span class="o">+</span> <span class="n">db</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">in</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="mf">100.1</span><span class="o">;</span>	<span class="c1">// 메모리가 적을때 ()에 자료형을 넣어 casting을 해준다.</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"in값:"</span> <span class="o">+</span> <span class="n">in</span><span class="o">);</span>	
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="declaration">Declaration</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex03_Declaration</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// (1) 변수 선언 -&gt; 값 대입</span>
+		<span class="kt">int</span> <span class="n">kor</span><span class="o">;</span>
+		<span class="n">kor</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+		<span class="c1">// (2) 초기화 = 변수 선언 + 값 지정(대입)</span>
+		<span class="kt">int</span> <span class="n">eng</span> <span class="o">=</span> <span class="mi">33</span><span class="o">;</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">kor</span> <span class="o">==</span> <span class="n">eng</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"같다"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"다르다"</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="kt">int</span> <span class="n">temp</span><span class="o">;</span>	<span class="c1">// swap</span>
+		<span class="n">temp</span> <span class="o">=</span> <span class="n">kor</span><span class="o">;</span>
+		<span class="n">kor</span> <span class="o">=</span> <span class="n">eng</span><span class="o">;</span>
+		<span class="n">eng</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"국어:"</span> <span class="o">+</span> <span class="n">kor</span> <span class="o">+</span> <span class="s">", 영어:"</span> <span class="o">+</span> <span class="n">eng</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">"국어:%d, 영어:%d"</span><span class="o">,</span> <span class="n">kor</span><span class="o">,</span> <span class="n">eng</span><span class="o">);</span>
+		<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="string">String</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex04_String</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="s">"홍길동"</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="s">"홍길동"</span><span class="o">);</span>
+		<span class="c1">// 주소를 비교한다.</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"같다"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"다르다"</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="c1">// 값을 비교한다. String은 equals를 써야한다.</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">b</span><span class="o">))</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이름이 같다"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"이름이 다르다"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="scanner">Scanner</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="c1">// import java.lang.*;	// *로 모두 import 해준다.</span>
+<span class="c1">// ctrl + shift + o</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex05_Scanner</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="c1">// 학생명을 입력 받아</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"학생이름입력=&gt;"</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>	
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"국어점수=&gt;"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">kor</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"영어점수=&gt;"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">eng</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"수학점수=&gt;"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">math</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="c1">// 총점을 구해서 출력</span>
+		<span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="n">kor</span> <span class="o">+</span> <span class="n">eng</span> <span class="o">+</span> <span class="n">math</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"총점: "</span> <span class="o">+</span> <span class="n">total</span><span class="o">);</span>
+		<span class="c1">// 평균을 구해서 출력</span>
+		<span class="kt">double</span> <span class="n">avg</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span><span class="n">total</span><span class="o">/</span><span class="mi">3</span><span class="o">;</span>	<span class="c1">// int형과 int형을 계산하면 int형으로 계산되니 double형으로 casting해준다.</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균: "</span> <span class="o">+</span> <span class="n">avg</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,446 @@
+I"?�<h1 id="basic"><a href="">basic</a></h1>
+
+<h2 id="test">Test</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Test<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">'../lib/jquery-3.4.1.min.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// $(선택자).동작하기();</span>
+	<span class="c1">// 1-방식</span>
+<span class="cm">/*
+ 	$(document).ready(function(){
+		$('#here').hide();
+	}); 
+*/</span>
+<span class="cm">/*
+	// 2-방식 : JQuery 문법 방식
+	jQuery(function(){
+		$('#here').hide();
+	});
+*/</span>	
+	<span class="c1">// 3-방식 : 축약형</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#here</span><span class="dl">'</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"here"</span><span class="nt">&gt;</span>
+		오늘은 행복한 화요일
+	<span class="nt">&lt;/div&gt;</span>
+	확인
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="basic-1">Basic</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>Basic<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nf">#here</span> <span class="p">{</span>
+		<span class="nl">position</span> <span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+		<span class="nl">top</span> <span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+		<span class="nl">left</span> <span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="c">&lt;!-- 구글서버에 있는 jquery --&gt;</span>
+<span class="c">&lt;!-- &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"&gt;&lt;/script&gt; --&gt;</span>
+
+<span class="c">&lt;!-- 인터넷이 안될 때 우리서버에 있는 jquery(권장) --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">'../lib/jquery-3.4.1.min.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+<span class="c1">// 		$('#here').click(function(){</span>
+<span class="c1">// 			$('#here').text('클리하면 내용 변경');</span>
+<span class="c1">// 		});</span>
+	
+		<span class="c1">// 반복적으로 사용할 것은 변수로 잡아준다. </span>
+		<span class="kd">var</span> <span class="nx">here</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#here</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 		here.fadeOut(500).here.fadeIn('slow');</span>
+<span class="c1">// 		here.slideUp('slow').here.slideDown(1000);</span>
+		<span class="nx">here</span><span class="p">.</span><span class="nx">animate</span><span class="p">({</span><span class="na">top</span> <span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="na">left</span> <span class="p">:</span> <span class="mi">400</span><span class="p">});</span>
+
+		<span class="kd">var</span> <span class="nx">student</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#student</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 		var name = $('#name');</span>
+		<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">student</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">#name</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// 한번에 여러가지를 바꿔줄 때는 '바꿀꺼' : '바꿀값'해준다. </span>
+		<span class="nx">name</span><span class="p">.</span><span class="nx">css</span><span class="p">({</span>
+			<span class="dl">'</span><span class="s1">background</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">#AF3</span><span class="dl">'</span><span class="p">,</span>
+			<span class="dl">'</span><span class="s1">color</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">red</span><span class="dl">'</span><span class="p">,</span>
+			<span class="dl">'</span><span class="s1">font-size</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">34pt</span><span class="dl">'</span>
+		<span class="p">});</span>
+<span class="cm">/*
+ 		here.click(function(){
+			here.text('클릭하면 내용 변경');
+	 	});
+		
+		here.mouseEnter(function(){
+			here.text('마우스가 들어옴');
+		});
+		
+		here.mouseLeave(function(){
+			here.text('마우스가 나감');
+		});
+		
+		here.hover(function(){
+			here.css('border', '2px solid green');
+		}, function(){
+			here.css('border', '2px dashed red');
+		}); 
+*/</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"here"</span><span class="nt">&gt;</span>아자아자 제이쿼리~~!!!<span class="nt">&lt;/div&gt;</span>
+	
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"student"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"name"</span><span class="nt">&gt;</span>홍길동<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"age"</span><span class="nt">&gt;</span>34<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="basic2">Basic2</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;title&gt;</span>Basic2<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nc">.active</span> <span class="p">{</span><span class="nl">border</span> <span class="p">:</span> <span class="m">2px</span> <span class="nb">solid</span> <span class="no">red</span><span class="p">;}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">'../lib/jquery-3.4.1.min.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// window.load = function(){}의 jquery문</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="c1">// ####[1] 첫번째 목록에서 남자는 빨간색 여자는 하늘색 지정</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.man</span><span class="dl">'</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+			<span class="dl">'</span><span class="s1">background</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">orange</span><span class="dl">'</span><span class="p">,</span>
+			<span class="dl">'</span><span class="s1">color</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">red</span><span class="dl">'</span>	
+		<span class="p">});</span>
+		
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.woman</span><span class="dl">'</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+			<span class="dl">'</span><span class="s1">background</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">black</span><span class="dl">'</span><span class="p">,</span>
+			<span class="dl">'</span><span class="s1">color</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">blue</span><span class="dl">'</span>	
+		<span class="p">});</span>
+		
+		<span class="c1">// ####[2] css 와 연결</span>
+		<span class="kd">var</span> <span class="nx">inputText</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.inputText</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// 3가지 inputText를 한번에 선택하고싶을 때</span>
+<span class="c1">// 		inputText.focus(function(){</span>
+<span class="c1">// 			inputText.addClass('active');</span>
+<span class="c1">// 		});</span>
+<span class="c1">// 		inputText.blur(function(){</span>
+<span class="c1">// 			inputText.removeClass('active');</span>
+<span class="c1">// 		});</span>
+		
+		<span class="c1">// 한가지 inputText만 선택하고싶을 때는 $(this)를 해준다.</span>
+		<span class="nx">inputText</span><span class="p">.</span><span class="nx">focus</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">active</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">});</span>
+		<span class="nx">inputText</span><span class="p">.</span><span class="nx">blur</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">active</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">});</span>
+		
+		<span class="c1">// ####[3] 자바스크립트 innerHTML 유사한 역할</span>
+		<span class="c1">// 동작하기('인자', '값');인자가 있면 setter, 동작하기('값');인자가없으면 getter</span>
+<span class="c1">// 		alert($('#divText').text());</span>
+		
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#divText</span><span class="dl">'</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;img src="images/puppy.jpg"&gt;</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#divHtml</span><span class="dl">'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;img src="images/puppy.jpg"&gt;</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#divEmpty</span><span class="dl">'</span><span class="p">).</span><span class="nx">empty</span><span class="p">();</span>
+		
+		<span class="c1">// changeGrim 요소의 속성 attr()을 'images/cat.jpg'으로 바꾸기(setter)</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#changeGrim</span><span class="dl">'</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">src</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">images/cat.jpg</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// ####[4] 값 지정하기</span>
+		<span class="c1">// val() : value를 얻어오거나 지정하는 함수</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#tf</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="dl">'</span><span class="s1">나는 홍길동</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// ta에 '작성중입니다'으로 지정</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#ta</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="dl">'</span><span class="s1">작성중입니다</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// comboBox에 '인천'으로 지정</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#sel</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="dl">'</span><span class="s1">incheon</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// list에서 '제주도', '독도'로 지정</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#sel_m</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">([</span><span class="dl">'</span><span class="s1">seom1</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">seom3</span><span class="dl">'</span><span class="p">]);</span>
+		
+		<span class="c1">// radio에서 '여자'로 지정</span>
+		<span class="kd">var</span> <span class="nx">gender</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">input[name="gender"]</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">gender</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="dl">'</span><span class="s1">checked</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">true</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="c1">// '확인'버튼이 눌렸을 때 사용자가 입력하거나 지정한 모든 값들을 result에 출력</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#check</span><span class="dl">'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#result</span><span class="dl">'</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span>
+					<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#tf</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> 
+					<span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#ta</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
+					<span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#sel</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
+					<span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#sel_m</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span>
+					<span class="o">+</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">input[name="gender"]:checked</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+			<span class="p">);</span>
+	 	<span class="p">});</span>
+		
+		<span class="c1">// ####[5] 동적구조 변경</span>
+		<span class="kd">var</span> <span class="nx">actor</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#actor</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">tae</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#tae</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">su</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#su</span><span class="dl">'</span><span class="p">);</span>
+		<span class="kd">var</span> <span class="nx">bin</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#bin</span><span class="dl">'</span><span class="p">);</span>
+		
+		<span class="nx">actor</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">tae</span><span class="p">);</span>
+		<span class="nx">su</span><span class="p">.</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">actor</span><span class="p">);</span>
+		
+		<span class="c1">// 동적으로 태그 추가</span>
+		<span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;div&gt;</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">n</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="dl">'</span><span class="s1">새배우</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">actor</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
+		
+		<span class="nx">actor</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;div id="old"&gt;헌배우&lt;/div&gt;</span><span class="dl">'</span><span class="p">);</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;div id="old2"&gt;헌배우2&lt;/div&gt;</span><span class="dl">'</span><span class="p">).</span><span class="nx">appendTo</span><span class="p">(</span><span class="nx">actor</span><span class="p">);</span>
+		
+		<span class="c1">// ####[6] 복수개 요소인 경우 - each() 활용</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.data</span><span class="dl">'</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+			<span class="p">});</span>				
+		<span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="c">&lt;!--  1 --&gt;</span>
+	<span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"man"</span><span class="nt">&gt;</span>김수현<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"woman"</span><span class="nt">&gt;</span>김희애<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"woman"</span><span class="nt">&gt;</span>송혜교<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"man"</span><span class="nt">&gt;</span>하정우<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"woman"</span><span class="nt">&gt;</span>김태희<span class="nt">&lt;/li&gt;</span>
+	<span class="nt">&lt;/ul&gt;</span>
+	<span class="c">&lt;!-- 2 --&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"inputText"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"inputText"</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">class=</span><span class="s">"inputText"</span><span class="nt">/&gt;</span>
+	
+
+	<span class="c">&lt;!-- 3 --&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"divText"</span><span class="nt">&gt;</span>여기에 글씨를<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"divHtml"</span><span class="nt">&gt;</span>여기에 그림을<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"divEmpty"</span><span class="nt">&gt;</span>여기를 비움<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;p&gt;</span>
+		<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"images/puppy.jpg"</span> <span class="na">id=</span><span class="s">'changeGrim'</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/p&gt;</span>
+		
+	<span class="c">&lt;!-- 4 --&gt;</span>	
+		<span class="nt">&lt;p&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"tf"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">size=</span><span class="s">"20"</span> <span class="nt">/&gt;</span>
+		<span class="nt">&lt;textarea</span> <span class="na">id=</span><span class="s">"ta"</span> <span class="na">rows=</span><span class="s">"3"</span> <span class="na">cols=</span><span class="s">"20"</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+		<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"sel"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seoul"</span><span class="nt">&gt;</span>서울<span class="nt">&lt;/option&gt;</span>	<span class="c">&lt;!-- option에 value 값 없어도 됨 --&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"busan"</span><span class="nt">&gt;</span>부산<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"masan"</span><span class="nt">&gt;</span>마산<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"incheon"</span><span class="nt">&gt;</span>인천<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;/select&gt;</span>
+		<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"sel_m"</span> <span class="na">multiple=</span><span class="s">"multiple"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seom1"</span><span class="nt">&gt;</span>제주도<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seom2"</span><span class="nt">&gt;</span>울릉도<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seom3"</span><span class="nt">&gt;</span>독도<span class="nt">&lt;/option&gt;</span>
+			<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">"seom4"</span><span class="nt">&gt;</span>거제도<span class="nt">&lt;/option&gt;</span>
+		<span class="nt">&lt;/select&gt;</span>
+		
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'radio'</span> <span class="na">name=</span><span class="s">'gender'</span> <span class="na">value=</span><span class="s">'male'</span><span class="err">)</span><span class="nt">/&gt;</span>남자
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'radio'</span> <span class="na">name=</span><span class="s">'gender'</span> <span class="na">value=</span><span class="s">'female'</span><span class="nt">/&gt;</span>여자
+		
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">id=</span><span class="s">'check'</span> <span class="na">value=</span><span class="s">'확인'</span><span class="nt">/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">id=</span><span class="s">'sel'</span> <span class="na">value=</span><span class="s">'초기화'</span><span class="nt">/&gt;</span> <span class="c">&lt;!--  [과제] 클릭시 값 지정하려면  --&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">'result'</span><span class="nt">&gt;&lt;/div&gt;</span>
+		<span class="nt">&lt;/p&gt;</span>
+		
+	<span class="c">&lt;!-- 5 --&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"actor"</span><span class="nt">&gt;</span>배우<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tae"</span><span class="nt">&gt;</span>김태희<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"su"</span><span class="nt">&gt;</span>김수현<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"bin"</span><span class="nt">&gt;</span>현빈<span class="nt">&lt;/div&gt;</span>
+		<span class="c">&lt;!-- [ 과제 ] 동적 테이블 만들기  --&gt;</span>
+
+	<span class="c">&lt;!-- 6 --&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"data"</span><span class="nt">&gt;</span>이름<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"data"</span><span class="nt">&gt;</span>직업<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"data"</span><span class="nt">&gt;</span>나이<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="filter">Filter</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Filter<span class="nt">&lt;/title&gt;</span>
+<span class="c">&lt;!--4. class 속성제어 --&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nc">.bg</span> <span class="p">{</span> <span class="nl">background</span> <span class="p">:</span> <span class="no">yellow</span><span class="p">;</span> <span class="p">}</span>
+	<span class="nc">.border</span> <span class="p">{</span> <span class="nl">border</span> <span class="p">:</span> <span class="m">3px</span> <span class="nb">dotted</span> <span class="no">red</span><span class="p">;</span> <span class="p">}</span>
+	<span class="nc">.borderRed</span> <span class="p">{</span> <span class="nl">border</span> <span class="p">:</span> <span class="m">3px</span> <span class="nb">dotted</span> <span class="no">red</span><span class="p">;</span> <span class="p">}</span>
+	<span class="nc">.borderBlue</span> <span class="p">{</span> <span class="nl">border</span> <span class="p">:</span> <span class="m">3px</span> <span class="nb">dotted</span> <span class="no">blue</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">'../lib/jquery-3.4.1.min.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="c1">// ####[1] 요소 찾기 (filter)</span>
+<span class="c1">// 		$('li').css('border', '1px dotted yellow');</span>
+		
+		<span class="c1">// (1) li중에서 첫번째 요소 </span>
+<span class="c1">// 		$('li').filter(':first').css('background', 'red');</span>
+<span class="c1">// 		$('li:first').css('background', 'red');</span>
+		
+		<span class="c1">// (2) 짝수요소 </span>
+<span class="c1">// 		$('li').filter(':even').css('background', 'red');</span>
+<span class="c1">// 		$('li:even').css('background', 'red');</span>
+		
+		<span class="c1">// (3) 네번째 요소</span>
+<span class="c1">// 		$('li').filter(':eq(3)').css('background', 'red');</span>
+<span class="c1">// 		$('li:eq(3)').css('background', 'red');</span>
+		
+		<span class="c1">// (4) 세번째까지의 요소</span>
+<span class="c1">// 		$('li').filter(':lt(2)').css('background', 'red');</span>
+<span class="c1">// 		$('li:lt(2)').css('background', 'red');</span>
+		
+		<span class="c1">// (5) 첫버째를 제외한 요소</span>
+<span class="c1">// 		$('li').not(':first').css('background', 'red');</span>
+<span class="c1">// 		$('li:not(li:first)').css('background', 'red');</span>
+		
+		<span class="c1">// (6) '튀김'을 포함한 요소</span>
+<span class="c1">// 		$('li').filter(':contains("튀김")').css('background', 'red');</span>
+<span class="c1">// 		$('li:contains("튀김")').css('background', 'red');</span>
+
+		<span class="c1">// (7) ul의 첫번째 li 요소 </span>
+<span class="c1">// 		$('ul').find('li:first').css('background', 'red');</span>
+		
+		<span class="c1">// (8) li 요소를 클릭하면 bg 클래스 추가</span>
+<span class="c1">// 		$('li').each(function(){</span>
+<span class="c1">// 			$(this).click(function(){</span>
+<span class="c1">// 				$(this).toggleClass('bg');</span>
+<span class="c1">// 			});</span>
+<span class="c1">// 		});</span>
+		
+		<span class="c1">// (1) 어묵 밑에 자식 요소들만 css의 border 클래스 적용</span>
+<span class="c1">// 		$('li:contains("어묵")').find('li:parent').css('border', '3px dotted red');</span>
+<span class="c1">// 		$('li').filter(function(index){ return (index &gt; 2) &amp; (index </span><span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="p">}).</span><span class="nx">css</span><span class="p">(</span><span class="dl">'</span><span class="s1">border</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">3px dotted red</span><span class="dl">'</span><span class="p">);</span>
+
+		<span class="c1">// (2) li 요소 마우스가 올라가면 bg 클래스 적용, 마우스가 내려가면 bg 클래스가 제거한다. 단, 어묵 밑에 자식요소는 제외</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">li</span><span class="dl">'</span><span class="p">).</span><span class="nx">not</span><span class="p">(</span><span class="dl">'</span><span class="s1">#food ul &gt; li, #food :nth-child(3)</span><span class="dl">'</span><span class="p">).</span><span class="nx">hover</span><span class="p">(</span>
+			<span class="kd">function</span><span class="p">(){</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">bg</span><span class="dl">'</span><span class="p">);},</span> 
+			<span class="kd">function</span><span class="p">(){</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">bg</span><span class="dl">'</span><span class="p">);</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+		<span class="nt">&lt;h1&gt;</span>제이쿼리 시작<span class="nt">&lt;/h1&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>내가 좋아하는 음식 <span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"food"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;li&gt;</span>떡볶이<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>어묵<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>
+				<span class="nt">&lt;ul&gt;</span>
+					<span class="nt">&lt;li&gt;</span>어묵꼬치<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>어묵튀김<span class="nt">&lt;/li&gt;</span>
+					<span class="nt">&lt;li&gt;</span>어묵탕<span class="nt">&lt;/li&gt;</span>
+				<span class="nt">&lt;/ul&gt;</span>
+			<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>닭튀김<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>돼지튀김<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>소튀김<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>구두튀김<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+		<span class="c">&lt;!-- 2. 추가하고 다시 확인 --&gt;</span>
+		<span class="nt">&lt;h2&gt;</span>내가 좋아하는 술<span class="nt">&lt;/h2&gt;</span>
+		<span class="nt">&lt;ul&gt;</span>
+			<span class="nt">&lt;li&gt;</span>와인<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>맥주<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>막걸리<span class="nt">&lt;/li&gt;</span>
+			<span class="nt">&lt;li&gt;</span>소주<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;/ul&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="event">Event</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Event<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+	<span class="nc">.bg</span> <span class="p">{</span> <span class="nl">background</span> <span class="p">:</span> <span class="no">yellow</span><span class="p">;</span> <span class="p">}</span>
+	<span class="nc">.border</span> <span class="p">{</span> <span class="nl">border</span> <span class="p">:</span> <span class="m">3px</span> <span class="nb">dotted</span> <span class="no">red</span><span class="p">;</span> <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">'../lib/jquery-3.4.1.min.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="c1">// 이벤트 연결 방식</span>
+		<span class="c1">// ####[1] bind : 매번 이벤트 연결</span>
+<span class="cm">/*
+		$('li').bind('click', function(){
+			$('#result').text($(this).text());	
+		});
+*/</span>
+		<span class="c1">// ####[2] one : 한번만 이벤트 연결</span>
+<span class="cm">/*
+		$('li').one('click', function(){
+			$('#result').text($(this).text());	
+		});
+*/</span>
+		<span class="c1">// ####[3] 축약형</span>
+<span class="cm">/*
+		$('li').click(function(){
+			$('#result').text($(this).text());
+		});
+*/</span>		
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+			<span class="c1">// li를 시간을 넣어서 추가하기</span>
+			<span class="kd">var</span> <span class="nx">li</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;li&gt;</span><span class="dl">'</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">ul</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">li</span><span class="p">);</span>
+		<span class="p">});</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="dl">'</span><span class="s1">cursor</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">pointer</span><span class="dl">'</span><span class="p">);</span>
+		
+<span class="c1">// 		$('li').click(function(evt){</span>
+<span class="c1">// 			$('#result').text($(this).text());</span>
+<span class="c1">// 			for(var prop in evt){</span>
+<span class="c1">// 				console.log(prop + ' : ' + evt[prop]);</span>
+<span class="c1">// 			};</span>
+<span class="c1">// 		});</span>
+
+		<span class="c1">// 동적으로 추가된 요소는 이벤트가 적용되지 않음</span>
+		<span class="c1">// live() : 1.7 이전 -&gt; 안쓰임</span>
+		<span class="c1">// on() : 1.7 이후</span>
+		<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">ul</span><span class="dl">'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">li</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#result</span><span class="dl">'</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+		<span class="p">});</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;h1&gt;</span>제이쿼리 이벤트<span class="nt">&lt;/h1&gt;</span>
+	 <span class="nt">&lt;ul&gt;</span>
+		<span class="nt">&lt;li&gt;</span>부에노스 아이레스<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>바르셀로나<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>리마<span class="nt">&lt;/li&gt;</span>
+		<span class="nt">&lt;li&gt;</span>라파스<span class="nt">&lt;/li&gt;</span>
+	 <span class="nt">&lt;/ul&gt;</span>	
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"result"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,524 @@
+I"l<h1 id="cafe"><a href="">cafe</a></h1>
+
+<h2 id="menu">Menu</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">language=</span><span class="s">"java"</span> <span class="na">contentType=</span><span class="s">"text/html; charset=UTF-8"</span>
+    <span class="na">pageEncoding=</span><span class="s">"UTF-8"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">page</span> <span class="na">import=</span><span class="s">"menu.model.*, menu.service.*, java.util.*"</span> <span class="err">%</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;</span><span class="err">%</span>
+	<span class="na">ArrayList</span><span class="err">&lt;</span><span class="na">MenuRec</span><span class="nt">&gt;</span> result = MenuService.getInstance().selectAll();
+%&gt;
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>menu<span class="nt">&lt;/title&gt;</span>
+	<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"style.css"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-3.4.1.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+	<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+		<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+			<span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.menuCount</span><span class="dl">'</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+				<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">change</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+					<span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+					<span class="kd">var</span> <span class="nx">item</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">span</span><span class="dl">'</span><span class="p">);</span>
+					<span class="kd">var</span> <span class="nx">mId</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">input</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+					
+					<span class="k">if</span><span class="p">(</span><span class="nx">count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">){</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#listTable</span><span class="dl">'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="dl">'</span><span class="s1">&lt;tr class="menuList"&gt;&lt;td&gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">item</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span> <span class="o">+</span><span class="dl">'</span><span class="s1">&lt;/td&gt;&lt;td&gt;</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">count</span> 
+								<span class="o">+</span> <span class="dl">"</span><span class="s2">&lt;/td&gt;&lt;td&gt;&lt;input type='hidden' name='menuId' value='</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">mId</span> 
+								<span class="o">+</span> <span class="dl">"</span><span class="s2">'/&gt;&lt;input type='button' value='삭제' /&gt;&lt;/td&gt;&lt;/tr&gt;</span><span class="dl">"</span><span class="p">);</span>
+						
+						<span class="nx">total</span> <span class="o">+=</span> <span class="nx">count</span> <span class="o">*</span> <span class="nx">item</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">text</span><span class="p">();</span>
+						<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#total</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">total</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+			<span class="p">});</span>
+			
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#listTable</span><span class="dl">'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">input[value="삭제"]</span><span class="dl">'</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+				
+				<span class="kd">var</span> <span class="nx">menuItem</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">siblings</span><span class="p">();</span>
+				<span class="kd">var</span> <span class="nx">subt</span> <span class="o">=</span> <span class="nx">menuItem</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span> <span class="o">*</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">.menu</span><span class="dl">'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">span:contains(</span><span class="dl">'</span><span class="o">+</span><span class="nx">menuItem</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span><span class="o">+</span><span class="dl">'</span><span class="s1">)</span><span class="dl">'</span><span class="p">).</span><span class="nx">next</span><span class="p">().</span><span class="nx">text</span><span class="p">();</span>
+				
+				<span class="nx">total</span> <span class="o">-=</span> <span class="nx">subt</span><span class="p">;</span>
+				<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#total</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">total</span><span class="p">);</span>
+				<span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">parent</span><span class="p">().</span><span class="nx">remove</span><span class="p">();</span>
+			<span class="p">});</span>
+			
+			<span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+				<span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#listTable</span><span class="dl">'</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">tr:gt(2)</span><span class="dl">'</span><span class="p">);</span>
+				<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+				<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+					<span class="kd">var</span> <span class="nx">menuCount</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">td</span><span class="dl">'</span><span class="p">).</span><span class="nx">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+					<span class="kd">var</span> <span class="nx">menuId</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">eq</span><span class="p">(</span><span class="nx">i</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">input[type="hidden"]</span><span class="dl">'</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+					
+					<span class="kd">var</span> <span class="nx">rs</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+					<span class="nx">rs</span><span class="p">.</span><span class="nx">menuId</span> <span class="o">=</span> <span class="nx">menuId</span><span class="p">;</span>
+					<span class="nx">rs</span><span class="p">.</span><span class="nx">menuCount</span> <span class="o">=</span> <span class="nx">menuCount</span><span class="p">;</span>
+					<span class="nx">list</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">rs</span><span class="p">);</span>
+				<span class="p">}</span>
+				
+				<span class="c1">//JSON.stringify(list)</span>
+				<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+					<span class="na">type</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">data</span> <span class="p">:</span> <span class="p">{</span><span class="na">param</span> <span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">list</span><span class="p">)},</span>
+					<span class="na">url</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">OrderMenu.jsp</span><span class="dl">"</span><span class="p">,</span>
+					<span class="na">success</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+						<span class="nx">alert</span><span class="p">(</span><span class="nx">result</span> <span class="o">+</span> <span class="dl">"</span><span class="s2"> 주문 완료</span><span class="dl">"</span><span class="p">);</span>
+					<span class="p">},</span>
+					<span class="na">error</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span><span class="nx">status</span><span class="p">,</span><span class="nx">error</span><span class="p">){</span>
+					    <span class="nx">alert</span><span class="p">(</span><span class="dl">"</span><span class="s2">code:</span><span class="dl">"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="o">+</span><span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="o">+</span><span class="dl">"</span><span class="s2">message:</span><span class="dl">"</span><span class="o">+</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="o">+</span><span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="o">+</span><span class="dl">"</span><span class="s2">error:</span><span class="dl">"</span><span class="o">+</span><span class="nx">error</span><span class="p">);</span>
+					<span class="p">}</span>
+				<span class="p">});</span>
+			<span class="p">});</span>
+		<span class="p">});</span>
+	<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"leftdiv"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">"menutbl"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">id=</span><span class="s">"menutitle"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">colspan=</span><span class="s">3</span> <span class="na">id=</span><span class="s">"titleText"</span><span class="nt">&gt;</span>M E N U<span class="nt">&lt;/th&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;</span><span class="err">%</span> <span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">i = </span><span class="s">0,</span> <span class="na">k = </span><span class="s">0;</span> <span class="na">i</span> <span class="err">&lt;</span> <span class="na">3</span><span class="err">;</span> <span class="na">i</span><span class="err">++){</span> <span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">class=</span><span class="s">"menus"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;</span><span class="err">%</span> 
+					<span class="na">for</span> <span class="err">(</span><span class="na">int</span> <span class="na">j = </span><span class="s">0;</span> <span class="na">j</span> <span class="err">&lt;</span> <span class="na">3</span><span class="err">;</span> <span class="na">j</span><span class="err">++,</span><span class="na">k</span><span class="err">++){</span> 
+						<span class="na">MenuRec</span> <span class="na">rec = </span><span class="s">result.get(k);</span>
+				<span class="err">%</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">id=</span><span class="s">'menu&lt;%=k %&gt;'</span> <span class="na">class=</span><span class="s">'menu'</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">"&lt;%=rec.getMenuImg() %&gt;"</span> <span class="nt">/&gt;</span> <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+					<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">'label&lt;%=k%&gt;'</span> <span class="na">value=</span><span class="s">'&lt;%=rec.getMenuName()%&gt;'</span><span class="nt">&gt;&lt;</span><span class="err">%=</span><span class="na">rec</span><span class="err">.</span><span class="na">getMenuName</span><span class="err">()%</span><span class="nt">&gt;&lt;/span&gt;</span> <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">'price&lt;%=k%&gt;'</span>
+					<span class="na">value=</span><span class="s">'&lt;%=rec.getMenuPrice()%&gt;'</span><span class="nt">&gt;&lt;</span><span class="err">%=</span><span class="na">rec</span><span class="err">.</span><span class="na">getMenuPrice</span><span class="err">()%</span><span class="nt">&gt;&lt;/span&gt;</span>원 <span class="nt">&lt;br</span> <span class="nt">/&gt;</span> <span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"menu&lt;%=k%&gt;Count"</span>
+					<span class="na">id=</span><span class="s">"menu&lt;%=k%&gt;Count"</span> <span class="na">class=</span><span class="s">'menuCount'</span><span class="nt">&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'0'</span><span class="nt">&gt;</span>0<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'1'</span><span class="nt">&gt;</span>1<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'2'</span><span class="nt">&gt;</span>2<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'3'</span><span class="nt">&gt;</span>3<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'4'</span><span class="nt">&gt;</span>4<span class="nt">&lt;/option&gt;</span>
+						<span class="nt">&lt;option</span> <span class="na">value=</span><span class="s">'5'</span><span class="nt">&gt;</span>5<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;/select&gt;&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">value=</span><span class="s">'&lt;%=rec.getMenuId()%&gt;'</span><span class="nt">/&gt;&lt;/td&gt;</span>
+				<span class="nt">&lt;</span><span class="err">%</span> <span class="err">}</span> <span class="err">//</span> <span class="na">end</span> <span class="na">of</span> <span class="na">for</span> <span class="na">j</span> <span class="err">%</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;</span><span class="err">%</span> <span class="err">}</span> <span class="err">//</span> <span class="na">end</span> <span class="na">of</span> <span class="na">for</span> <span class="na">i</span> <span class="err">%</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+	
+	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"rightdiv"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">"listTable"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">id=</span><span class="s">"listtitle"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;th</span> <span class="na">colspan=</span><span class="s">3</span> <span class="na">id=</span><span class="s">"titleText"</span><span class="nt">&gt;</span>주문내역<span class="nt">&lt;/th&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">id=</span><span class="s">"totallist"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">'3'</span><span class="nt">&gt;</span>총합 : <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">id=</span><span class="s">'total'</span> <span class="nt">/&gt;</span> 원 <span class="nt">&lt;input</span>
+					<span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'주문하기'</span> <span class="na">id=</span><span class="s">'btn'</span> <span class="nt">/&gt;</span>
+				<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+			<span class="nt">&lt;tr</span> <span class="na">id=</span><span class="s">"listtr"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"150"</span><span class="nt">&gt;</span>목록<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"100"</span><span class="nt">&gt;</span>갯수<span class="nt">&lt;/td&gt;</span>
+				<span class="nt">&lt;td</span> <span class="na">width=</span><span class="s">"50"</span><span class="nt">&gt;</span>삭제<span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;/table&gt;</span>
+	<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ordermenu">OrderMenu</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@page </span><span class="na">import=</span><span class="s">"com.google.gson.JsonArray"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"java.util.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"com.google.gson.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%@ page </span><span class="na">import=</span><span class="s">"menu.model.*, menu.service.*"</span> <span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span> 
+	<span class="n">request</span><span class="o">.</span><span class="na">setCharacterEncoding</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
+	
+	<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"param"</span><span class="o">);</span>
+    
+    <span class="nc">JsonParser</span> <span class="n">jsonParser</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JsonParser</span><span class="o">();</span>
+    <span class="nc">JsonArray</span> <span class="n">jsonArray</span> <span class="o">=</span> <span class="o">(</span><span class="nc">JsonArray</span><span class="o">)</span> <span class="n">jsonParser</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+    
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">menuId</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">jsonArray</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">menuCount</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">jsonArray</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">jsonArray</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">k</span><span class="o">++){</span>
+    	<span class="nc">JsonObject</span> <span class="n">jo</span> <span class="o">=</span> <span class="n">jsonArray</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">k</span><span class="o">).</span><span class="na">getAsJsonObject</span><span class="o">();</span>
+    	<span class="n">menuId</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">jo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"menuId"</span><span class="o">).</span><span class="na">getAsInt</span><span class="o">();</span>
+    	<span class="n">menuCount</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">jo</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"menuCount"</span><span class="o">).</span><span class="na">getAsInt</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">MenuService</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">insertOrder</span><span class="o">(</span><span class="n">menuId</span><span class="o">,</span> <span class="n">menuCount</span><span class="o">);</span>
+    
+	<span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+<span class="nt">%&gt;</span>
+</code></pre></div></div>
+
+<h2 id="menudao">MenuDao</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">menu.model</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuDao</span> <span class="o">{</span>
+	<span class="c1">// Single Pattern </span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="nc">MenuDao</span> <span class="n">instance</span><span class="o">;</span>
+		
+		<span class="c1">// DB 연결시  관한 변수 </span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> 	<span class="n">dbDriver</span>	<span class="o">=</span>	<span class="s">"oracle.jdbc.driver.OracleDriver"</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUrl</span>		<span class="o">=</span>	<span class="s">"jdbc:oracle:thin:@192.168.0.116:1521:orcl"</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbUser</span>		<span class="o">=</span>	<span class="s">"team5"</span><span class="o">;</span>
+		<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span>		<span class="n">dbPass</span>		<span class="o">=</span>	<span class="s">"1004"</span><span class="o">;</span>
+		
+		<span class="kd">private</span> <span class="nc">Connection</span>	 		<span class="n">con</span><span class="o">;</span>	
+		
+		<span class="c1">//--------------------------------------------</span>
+		<span class="c1">//#####	 객체 생성하는 메소드 </span>
+		<span class="kd">public</span> <span class="kd">static</span> <span class="nc">MenuDao</span>	<span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MenuDao</span><span class="o">();</span>
+			<span class="o">}</span>
+			<span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+		<span class="o">}</span>
+		
+		<span class="kd">private</span> <span class="nf">MenuDao</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>		
+			<span class="k">try</span> <span class="o">{</span>				
+				<span class="cm">/********************************************
+					1. 오라클 드라이버를 로딩
+						( DBCP 연결하면 삭제할 부분 )
+				*/</span>
+				<span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">dbDriver</span><span class="o">);</span>	
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">MenuException</span><span class="o">(</span><span class="s">"DB 연결시 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 메뉴 아이템 정보 불러오는 메소드</span>
+		<span class="kd">public</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">MenuRec</span><span class="o">&gt;</span> <span class="nf">selectAll</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>
+			<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">MenuRec</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">MenuRec</span><span class="o">&gt;();</span>
+			<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+				<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT * FROM goods"</span><span class="o">;</span>
+				<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+				
+				<span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+					<span class="nc">MenuRec</span> <span class="n">m</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MenuRec</span><span class="o">();</span>
+					<span class="n">m</span><span class="o">.</span><span class="na">setMenuId</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"GID"</span><span class="o">));</span>
+					<span class="n">m</span><span class="o">.</span><span class="na">setMenuName</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"GNAME"</span><span class="o">));</span>
+					<span class="n">m</span><span class="o">.</span><span class="na">setMenuPrice</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"PRICE"</span><span class="o">));</span>
+					<span class="n">m</span><span class="o">.</span><span class="na">setMenuCount</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"GCNT"</span><span class="o">));</span>
+					<span class="n">m</span><span class="o">.</span><span class="na">setMenuImg</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">"IMG"</span><span class="o">));</span>
+					<span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">MenuException</span><span class="o">(</span><span class="s">"메뉴판 ) 테이블 조회 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">);</span>	
+			<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>				
+				<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 주문 입력하는 메소드</span>
+		<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertOrder</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">OrderRec</span><span class="o">&gt;</span> <span class="n">rec</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// 주문 입력하는 메소드</span>
+		<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertOrder</span><span class="o">(</span><span class="kt">int</span> <span class="n">menuId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">menuCount</span><span class="o">,</span> <span class="kt">int</span> <span class="n">sId</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>			
+			<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>			
+			
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+				<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"INSERT INTO sales (sid, snum, gid, scnt, sdate) "</span>
+						<span class="o">+</span> <span class="s">"VALUES (SEQ_SALES_SID.nextval, ?, ?, ?, sysdate)"</span><span class="o">;</span>
+				<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">sId</span><span class="o">));</span>
+				<span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">menuId</span><span class="o">));</span>
+				<span class="n">ps</span><span class="o">.</span><span class="na">setInt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">menuCount</span><span class="o">);</span>
+				
+				<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">();</span>
+				<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">MenuException</span><span class="o">(</span><span class="s">"메뉴판 ) 테이블 조회 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>	
+			<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>	
+				<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="o">}</span>			
+		<span class="o">}</span>
+
+		<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSalesNumber</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>		
+			<span class="nc">Connection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">con</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">dbUrl</span><span class="o">,</span> <span class="n">dbUser</span><span class="o">,</span> <span class="n">dbPass</span><span class="o">);</span>
+				<span class="nc">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">"SELECT seq_sales_snum.nextval AS snum FROM dual"</span><span class="o">;</span>
+				<span class="n">ps</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+				<span class="n">rs</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+					<span class="n">result</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">"snum"</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+				<span class="k">throw</span> <span class="k">new</span> <span class="nf">MenuException</span><span class="o">(</span><span class="s">"메뉴판 ) 테이블 조회 오류  : "</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">);</span>	
+			<span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">rs</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>				
+				<span class="k">if</span><span class="o">(</span><span class="n">ps</span>   <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">ps</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+				<span class="k">if</span><span class="o">(</span><span class="n">con</span>  <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span><span class="k">try</span> <span class="o">{</span><span class="n">con</span><span class="o">.</span><span class="na">close</span><span class="o">();}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">SQLException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{}}</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="menuexception">MenuException</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">menu.model</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuException</span> <span class="kd">extends</span> <span class="nc">Exception</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="nf">MenuException</span><span class="o">(){</span>
+  		<span class="kd">super</span><span class="o">();</span>
+  	<span class="o">}</span>
+  	
+  <span class="kd">public</span> <span class="nf">MenuException</span><span class="o">(</span><span class="nc">String</span> <span class="n">error</span><span class="o">)</span> <span class="o">{</span>
+  		<span class="kd">super</span><span class="o">(</span><span class="n">error</span><span class="o">);</span>
+  	<span class="o">}</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="menurec">MenuRec</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">menu.model</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuRec</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">menuId</span><span class="o">;</span>		<span class="c1">// 상품번호</span>
+	<span class="nc">String</span> <span class="n">menuName</span><span class="o">;</span>	<span class="c1">// 상품명</span>
+	<span class="kt">int</span> <span class="n">menuPrice</span><span class="o">;</span>		<span class="c1">// 가격</span>
+	<span class="kt">int</span> <span class="n">menuCount</span><span class="o">;</span>		<span class="c1">// 갯수</span>
+	<span class="nc">String</span> <span class="n">menuImg</span><span class="o">;</span>		<span class="c1">// 이미지</span>
+		
+	<span class="kd">public</span> <span class="nf">MenuRec</span><span class="o">(</span><span class="nc">String</span> <span class="n">menuId</span><span class="o">,</span> <span class="nc">String</span> <span class="n">menuName</span><span class="o">,</span> <span class="kt">int</span> <span class="n">menuPrice</span><span class="o">,</span> <span class="kt">int</span> <span class="n">menuCount</span><span class="o">,</span> <span class="nc">String</span> <span class="n">menuImg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuId</span> <span class="o">=</span> <span class="n">menuId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuName</span> <span class="o">=</span> <span class="n">menuName</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuPrice</span> <span class="o">=</span> <span class="n">menuPrice</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuCount</span> <span class="o">=</span> <span class="n">menuCount</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuImg</span> <span class="o">=</span> <span class="n">menuImg</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="nf">MenuRec</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getMenuId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuId</span><span class="o">(</span><span class="nc">String</span> <span class="n">menuId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuId</span> <span class="o">=</span> <span class="n">menuId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getMenuName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuName</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuName</span><span class="o">(</span><span class="nc">String</span> <span class="n">menuName</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuName</span> <span class="o">=</span> <span class="n">menuName</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMenuPrice</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuPrice</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuPrice</span><span class="o">(</span><span class="kt">int</span> <span class="n">menuPrice</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuPrice</span> <span class="o">=</span> <span class="n">menuPrice</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMenuCount</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">menuCount</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuCount</span> <span class="o">=</span> <span class="n">menuCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getMenuImg</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuImg</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuImg</span><span class="o">(</span><span class="nc">String</span> <span class="n">menuImg</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuImg</span> <span class="o">=</span> <span class="n">menuImg</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="orderrec">OrderRec</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">menu.model</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderRec</span> <span class="o">{</span>
+	<span class="kt">int</span> <span class="n">salesId</span><span class="o">;</span>		<span class="c1">// 판매번호</span>
+	<span class="kt">int</span> <span class="n">orderId</span><span class="o">;</span>		<span class="c1">// 주문번호</span>
+	<span class="kt">int</span> <span class="n">menuId</span><span class="o">;</span>			<span class="c1">// 상품번호</span>
+	<span class="kt">int</span> <span class="n">menuCount</span><span class="o">;</span>		<span class="c1">// 판매갯수</span>
+	<span class="nc">String</span> <span class="n">orderDate</span><span class="o">;</span>	<span class="c1">// 판매날짜</span>
+	
+	<span class="kd">public</span> <span class="nf">OrderRec</span><span class="o">(</span><span class="kt">int</span> <span class="n">salesId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">orderId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">menuId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">menuCount</span><span class="o">,</span> <span class="nc">String</span> <span class="n">orderDate</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">();</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">salesId</span> <span class="o">=</span> <span class="n">salesId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">orderId</span> <span class="o">=</span> <span class="n">orderId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuId</span> <span class="o">=</span> <span class="n">menuId</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuCount</span> <span class="o">=</span> <span class="n">menuCount</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">orderDate</span> <span class="o">=</span> <span class="n">orderDate</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSalesId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">salesId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSalesId</span><span class="o">(</span><span class="kt">int</span> <span class="n">salesId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">salesId</span> <span class="o">=</span> <span class="n">salesId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getOrderId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">orderId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setOrderId</span><span class="o">(</span><span class="kt">int</span> <span class="n">orderId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">orderId</span> <span class="o">=</span> <span class="n">orderId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMenuId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuId</span><span class="o">(</span><span class="kt">int</span> <span class="n">menuId</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuId</span> <span class="o">=</span> <span class="n">menuId</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMenuCount</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">menuCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMenuCount</span><span class="o">(</span><span class="kt">int</span> <span class="n">menuCount</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">menuCount</span> <span class="o">=</span> <span class="n">menuCount</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">String</span> <span class="nf">getOrderDate</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">orderDate</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setOrderDate</span><span class="o">(</span><span class="nc">String</span> <span class="n">orderDate</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">orderDate</span> <span class="o">=</span> <span class="n">orderDate</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="menuservice">MenuService</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">menu.service</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">menu.model.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MenuService</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="nc">MenuService</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="nc">MenuService</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span> <span class="o">{</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MenuService</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">private</span> <span class="nf">MenuService</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">MenuRec</span><span class="o">&gt;</span> <span class="nf">selectAll</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">MenuException</span><span class="o">{</span>
+		<span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">MenuRec</span><span class="o">&gt;</span> <span class="n">rec</span> <span class="o">=</span> <span class="nc">MenuDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">selectAll</span><span class="o">();</span>
+		
+		<span class="k">return</span> <span class="n">rec</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertOrder</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">OrderRec</span><span class="o">&gt;</span> <span class="n">rec</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MenuException</span><span class="o">{</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="nc">MenuDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">insertOrder</span><span class="o">(</span><span class="n">rec</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">insertOrder</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">menuId</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">menuCount</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">MenuException</span><span class="o">{</span>
+		
+		<span class="nc">MenuDao</span> <span class="n">dao</span> <span class="o">=</span> <span class="nc">MenuDao</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">sId</span> <span class="o">=</span> <span class="n">dao</span><span class="o">.</span><span class="na">getSalesNumber</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">menuId</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">result</span> <span class="o">+=</span> <span class="n">dao</span><span class="o">.</span><span class="na">insertOrder</span><span class="o">(</span><span class="n">menuId</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">menuCount</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">sId</span><span class="o">);</span>
+		<span class="o">}</span>		
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="style_css">Style_css</h2>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@CHARSET</span> <span class="s1">"UTF-8"</span><span class="p">;</span>
+
+<span class="k">@import</span> <span class="sx">url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css)</span><span class="p">;</span>
+<span class="k">@import</span> <span class="sx">url(http://fonts.googleapis.com/earlyaccess/jejugothic.css)</span><span class="p">;</span>
+<span class="nt">body</span> <span class="p">{</span>
+	<span class="nl">padding</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+	<span class="nl">margin</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">div</span> <span class="p">{</span>
+	<span class="nl">float</span><span class="p">:</span><span class="nb">left</span><span class="p">;</span>
+	<span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#rightdiv</span> <span class="p">{</span>
+	<span class="nl">left</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">td</span><span class="nc">.menu</span> <span class="p">{</span>
+	<span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	<span class="nl">text-align</span> <span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.menutbl</span> <span class="p">{</span>
+	<span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+	<span class="nl">padding</span><span class="p">:</span><span class="m">0px</span><span class="p">;</span>		
+	<span class="nl">border</span><span class="p">:</span><span class="m">1px</span> <span class="nb">dotted</span> <span class="no">black</span><span class="p">;</span>
+	<span class="nl">border-radius</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Nanum Gothic'</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.menutbl</span> <span class="nt">tr</span> <span class="nt">td</span> <span class="p">{</span>
+	<span class="nl">padding-top</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.menutbl</span> <span class="nt">tr</span> <span class="nt">td</span> <span class="nt">img</span> <span class="p">{</span>
+	<span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.menutbl</span> <span class="nt">tr</span> <span class="nt">td</span> <span class="nt">select</span> <span class="p">{</span>
+	<span class="nl">margin</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
+	<span class="nl">padding</span><span class="p">:</span><span class="m">3px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#menutitle</span> <span class="p">{</span>
+	<span class="nl">height</span><span class="p">:</span><span class="m">100px</span><span class="p">;</span>
+	<span class="nl">background-color</span> <span class="p">:</span><span class="m">#EEEAE3</span><span class="p">;</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Jeju Gothic'</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#titleText</span> <span class="p">{</span>
+	<span class="nl">font-size</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+	<span class="nl">text-align</span> <span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+	<span class="nl">padding-left</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+	<span class="nl">padding-bottom</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.menus</span> <span class="p">{</span>
+	<span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#listTable</span> <span class="p">{</span>
+	<span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+	<span class="nl">padding</span><span class="p">:</span><span class="m">0px</span><span class="p">;</span>
+	<span class="nl">border-collapse</span><span class="p">:</span> <span class="nb">collapse</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#listtitle</span> <span class="p">{</span>
+	<span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Jeju Gothic'</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+	<span class="nl">background-color</span> <span class="p">:</span><span class="m">#EEEAE3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#listtr</span> <span class="p">{</span>
+	<span class="nl">height</span><span class="p">:</span><span class="m">50px</span><span class="p">;</span>
+	<span class="nl">border-bottom</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">dotted</span><span class="p">;</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Nanum Gothic'</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#listTable</span> <span class="nt">td</span> <span class="p">{</span>
+	<span class="nl">text-align</span> <span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+	<span class="nl">border-bottom</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">dotted</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#totallist</span> <span class="p">{</span>
+	<span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Nanum Gothic'</span><span class="p">,</span> <span class="nb">serif</span><span class="p">;</span>
+	<span class="nl">height</span><span class="p">:</span><span class="m">50px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

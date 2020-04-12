@@ -1,0 +1,1126 @@
+I"[�<h1 id="baduk"><a href="">baduk</a></h1>
+
+<h2 id="baduk-1">Baduk</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//================================================</span>
+<span class="c1">//	바둑알 하나에 대한 정보를 저장하는 클래스</span>
+<span class="c1">//================================================</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Baduk</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Serializable</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span>			    <span class="no">BLACK_BADUK</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span>      		<span class="no">WHITE_BADUK</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span>      		<span class="no">NONE_BADUK</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+
+  <span class="kt">int</span> <span class="n">row</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">col</span><span class="o">;</span>
+  <span class="kt">int</span> <span class="n">color</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="nf">Baduk</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="nf">Baduk</span><span class="o">(</span><span class="kt">int</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">col</span> <span class="o">=</span> <span class="n">col</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">color</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getRow</span><span class="o">()</span> <span class="o">{</span>
+  	<span class="k">return</span> <span class="n">row</span><span class="o">;</span>
+  <span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCol</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">col</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getColor</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">color</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">,</span> <span class="kt">int</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">col</span> <span class="o">=</span> <span class="n">col</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">color</span> <span class="o">=</span> <span class="n">color</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukclient">BadukClient</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//=====================================================</span>
+<span class="c1">//	 서버에 연결하여 클라이언트의 이벤트 및 메세지를 받아</span>
+<span class="c1">//	서버에 전송하고 서버에서 보내는 데이타를 받아</span>
+<span class="c1">//  화면에 표시해주는 클래스</span>
+<span class="c1">//=====================================================</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">class</span>  <span class="nc">BadukClient</span> <span class="kd">extends</span> <span class="nc">JPanel</span> <span class="kd">implements</span> <span class="nc">ActionListener</span><span class="o">,</span> <span class="nc">Runnable</span> <span class="o">{</span>
+	<span class="c1">// 생성자 기본 인자</span>
+	<span class="nc">String</span> <span class="n">serverIP</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">id</span><span class="o">;</span>
+
+	<span class="c1">// 화면 구성에 관련된 멤버 변수</span>
+	<span class="nc">MyCanvas</span>	<span class="n">canvas</span><span class="o">;</span>
+	<span class="nc">JButton</span>		<span class="n">btnStop</span><span class="o">,</span> <span class="n">btnGame</span><span class="o">;</span>
+
+	<span class="nc">JTextField</span>	<span class="n">tfBlackRock</span><span class="o">,</span> <span class="n">tfWhiteRock</span><span class="o">,</span> <span class="n">tfOrder</span><span class="o">,</span> <span class="n">tfWinner</span><span class="o">;</span>
+
+	<span class="nc">JComboBox</span>	<span class="n">comMember</span><span class="o">;</span>
+	<span class="nc">JTextArea</span>	<span class="n">taChatting</span><span class="o">;</span>
+	<span class="nc">JTextField</span>	<span class="n">tfMessage</span><span class="o">;</span>
+
+	<span class="c1">// 네트워크 연결에 관련된 멤버 변수</span>
+	<span class="nc">Socket</span>		<span class="n">socClient</span><span class="o">;</span>
+	<span class="nc">ObjectInputStream</span>	<span class="n">inStream</span><span class="o">;</span>
+	<span class="nc">ObjectOutputStream</span>	<span class="n">outStream</span><span class="o">;</span>
+	
+	<span class="kd">final</span> <span class="kd">static</span> <span class="kt">int</span>	<span class="no">PORT</span><span class="o">=</span><span class="mi">7777</span><span class="o">;</span>
+
+	<span class="nc">Thread</span>		<span class="n">thread</span><span class="o">;</span>
+
+	<span class="c1">// 게임정보에 관련된 멤버 변수</span>
+	<span class="nc">Vector</span>		<span class="n">badukRock</span><span class="o">;</span>	<span class="c1">// 바둑알정보(Rock)를 저장할 벡터</span>
+	<span class="kt">boolean</span>		<span class="n">bGamming</span><span class="o">;</span>
+
+
+	<span class="c1">//==================================================</span>
+	<span class="cm">/* ClientBadukMain 실행시 도스에서 입력값으로 서버IP와 사용자아이디 지정
+	   인자값이 없는 경우는 127.0.0.1 서버에 guest 아이디 지정
+	*/</span>
+	<span class="nc">BadukClient</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">(</span><span class="s">"127.0.0.1"</span><span class="o">,</span> <span class="s">"guest"</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="nc">BadukClient</span><span class="o">(</span><span class="nc">String</span> <span class="n">serverIP</span><span class="o">,</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">serverIP</span> <span class="o">=</span> <span class="n">serverIP</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">id</span>		<span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+
+		<span class="n">createGUI</span><span class="o">();</span>		<span class="c1">// 화면출력 UI 완성</span>
+		
+		<span class="n">connectServer</span><span class="o">();</span>	<span class="c1">// 서버에 연결하기</span>
+	<span class="o">}</span>
+
+	<span class="c1">//=================================================</span>
+	<span class="cm">/* 화면을 완성하는 GUI 구성하기
+		- 화면 관련 멤버 변수의 객체를 생성
+		- JPanel에 layout에 맞게 붙이기
+	*/</span>
+	<span class="kt">void</span> <span class="nf">createGUI</span><span class="o">()</span> <span class="o">{</span>
+<span class="c1">//&lt;- 1 </span>
+		<span class="c1">// West 영역 완성</span>
+		<span class="n">tfBlackRock</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfWhiteRock</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfOrder</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="n">tfWinner</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+		<span class="nc">JLabel</span> <span class="n">lBlackRock</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 흑기사 "</span><span class="o">);</span>
+		<span class="nc">JLabel</span> <span class="n">lWhiteRock</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 백기사 "</span><span class="o">);</span>		
+		<span class="nc">JLabel</span> <span class="n">lOrder</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 순  번 "</span><span class="o">);</span>
+		<span class="nc">JLabel</span> <span class="n">lWinner</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 승  리 "</span><span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_west</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lBlackRock</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfBlackRock</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lWhiteRock</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfWhiteRock</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lOrder</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfOrder</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lWinner</span><span class="o">);</span>
+		<span class="n">p_west</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">tfWinner</span><span class="o">);</span>
+
+
+		<span class="c1">//	East 영역 완성</span>
+		<span class="n">comMember</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JComboBox</span><span class="o">();</span>
+		<span class="n">taChatting</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextArea</span><span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="mi">15</span><span class="o">);</span>
+		<span class="n">tfMessage</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JTextField</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+		<span class="nc">JPanel</span> <span class="n">p_east</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">));</span>
+			<span class="nc">JPanel</span> <span class="n">p_east_up</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+			<span class="nc">JLabel</span> <span class="n">lMember</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JLabel</span><span class="o">(</span><span class="s">" 접속자 "</span> <span class="o">);</span>
+			<span class="n">p_east_up</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lMember</span><span class="o">);</span>
+			<span class="n">p_east_up</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">comMember</span><span class="o">);</span>		
+			<span class="c1">//** TextArea의 내용이 많이지만 스크롤바 생기도록</span>
+			<span class="nc">JScrollPane</span> <span class="n">sp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JScrollPane</span><span class="o">(</span><span class="n">taChatting</span><span class="o">);</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"North"</span><span class="o">,</span> <span class="n">p_east_up</span><span class="o">);</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span>  <span class="n">sp</span><span class="o">);</span>
+		<span class="n">p_east</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">tfMessage</span><span class="o">);</span>
+
+
+		<span class="c1">//	South 영역 완성</span>
+		<span class="n">btnStop</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">" 그만하기 "</span><span class="o">);</span>
+		<span class="n">btnGame</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">JButton</span><span class="o">(</span><span class="s">" 게임하기 "</span><span class="o">);</span>
+
+		<span class="nc">JPanel</span> <span class="n">p_south</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">JPanel</span><span class="o">();</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">GridLayout</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">btnGame</span><span class="o">);</span>
+		<span class="n">p_south</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">btnStop</span><span class="o">);</span>
+
+		<span class="c1">//	Center 영역 완성</span>
+		<span class="n">canvas</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">MyCanvas</span><span class="o">();</span>
+		
+
+		<span class="c1">// 전체 클래스에 부분완성된 영역 붙이기</span>
+		<span class="n">setLayout</span><span class="o">(</span><span class="k">new</span> <span class="nc">BorderLayout</span><span class="o">());</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"West"</span><span class="o">,</span> <span class="n">p_west</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"East"</span><span class="o">,</span> <span class="n">p_east</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"South"</span><span class="o">,</span> <span class="n">p_south</span><span class="o">);</span>
+		<span class="n">add</span><span class="o">(</span><span class="s">"Center"</span><span class="o">,</span> <span class="n">canvas</span><span class="o">);</span>
+<span class="c1">//-&gt; 1</span>
+
+<span class="c1">//&lt;- 2</span>
+		<span class="c1">// 이벤트 등록</span>
+		<span class="n">tfMessage</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">btnGame</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+		<span class="n">btnStop</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="c1">//==================================================</span>
+	<span class="cm">/*	소켓클래스로 서버에 연결
+		1. 소켓클래스 생성 ( serverIP, port번호 )
+		2. 생성된 소켓객체의 입력/출력 스트림 얻어오기
+	*/</span>
+	<span class="kt">void</span> <span class="nf">connectServer</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span><span class="o">{</span>
+<span class="c1">//&lt;- 2</span>
+			<span class="n">socClient</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">Socket</span><span class="o">(</span><span class="n">serverIP</span><span class="o">,</span> <span class="no">PORT</span><span class="o">);</span>
+			<span class="n">inStream</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectInputStream</span><span class="o">(</span><span class="n">socClient</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+			<span class="n">outStream</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectOutputStream</span><span class="o">(</span><span class="n">socClient</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+
+			<span class="c1">// =&gt; 서버로부터 데이타 읽기 위해 쓰레드 구현</span>
+			<span class="n">thread</span>		<span class="o">=</span> <span class="k">new</span> <span class="nc">Thread</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+			<span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+
+<span class="c1">//-&gt; 3		//	=&gt; 접속후 아이디를 서버에 전송</span>
+			<span class="n">sendId</span><span class="o">();</span>
+
+		<span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"서버 연결 실패 :"</span><span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+
+<span class="c1">//&lt;- 2</span>
+	<span class="c1">//====================================================</span>
+	<span class="cm">/*	서버에서 데이타를 보내는 데이타 읽기
+		0. 반복문
+		1. 소켓의 입력스트림으로 BadukServerProtocol 객체 읽어오기
+		2. 1의 객체에서 상태값과 데이타 얻어오기
+		3. 상태값에 따라 각각의 구현 함수 호출
+	*/</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">while</span><span class="o">(</span><span class="n">socClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span><span class="o">{</span>
+				<span class="nc">BadukServerProtocol</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">)</span><span class="n">inStream</span><span class="o">.</span><span class="na">readObject</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">state</span>	<span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="na">getState</span><span class="o">();</span>
+				<span class="nc">Object</span> <span class="n">data</span>	<span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="na">getData</span><span class="o">();</span>
+				<span class="k">switch</span><span class="o">(</span><span class="n">state</span><span class="o">){</span>
+					<span class="c1">// 챗팅메세지를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">Chatting</span> <span class="o">:</span>
+						<span class="n">setChatting</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+<span class="c1">//&lt;-- 3				// 멤버가 추가된 경우 멤버아이디들를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">CHANGE_MEMBER_ID</span> <span class="o">:</span>
+						<span class="n">addMemberId</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+
+<span class="c1">//&lt;-- 4				// 게임신청자 데이타를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">SET_BADUK_GAMMER</span> <span class="o">:</span>
+						<span class="n">setBadukGammer</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+
+<span class="c1">//&lt;-- 5				// 게임시작됨을 알리는 데이타 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">START_GAME</span> <span class="o">:</span>
+						<span class="n">startGameConfirm</span><span class="o">();</span> <span class="k">break</span><span class="o">;</span>
+						
+<span class="c1">//&lt;-- 6				// 놓여진 바둑알에 대한 데이타 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">SET_BADUK_ROCK</span> <span class="o">:</span>
+						<span class="n">setBakukRock</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+
+<span class="c1">//&lt;-- 7				// 게임이 종료됨을 알리는 데이타 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">END_GAME</span> <span class="o">:</span>
+						<span class="n">endGame</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+				<span class="o">}</span>
+			<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+
+	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="nc">ActionEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Object</span> <span class="n">o</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getSource</span><span class="o">();</span>
+
+	 	<span class="c1">// 챗메세지 텍스트필드에서 엔터 이벤트 발생시</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">tfMessage</span><span class="o">)</span> <span class="n">chatMessageSend</span><span class="o">();</span>
+
+<span class="c1">//&lt;-- 4</span>
+		<span class="c1">// "게임하기" 버튼을 눌렸을때</span>
+		<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="n">btnGame</span><span class="o">)</span> <span class="n">startGame</span><span class="o">();</span>
+	<span class="o">}</span>
+
+
+	<span class="c1">//==================================================</span>
+	<span class="cm">/*	클라이언트에서 서버로 전송할 데이타클래스 생성하고,
+		텍스트필드에 입력한 값 얻어서 지정후 서버로 전송
+		1. 메세지입력 텍스트필드에서 입력값 얻어오기
+		2. 공백인지 확인후 공백이면 리턴
+		3. 클라이언트에서 서버로 전송 데이타 객체 생성 
+			( BadukClientProtocol )
+		4. 3번 객체에 상태와 데이타 지정
+		5. 서버로 전송 ( 소켓의 출력스트림에 write )
+		6. 텍스트필드를 초기화하고 포커스 지정
+	*/</span>
+	<span class="kt">void</span> <span class="nf">chatMessageSend</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">tfMessage</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">""</span><span class="o">))</span> <span class="k">return</span><span class="o">;</span>
+		<span class="nc">BadukClientProtocol</span> <span class="n">obj</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientProtocol</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">Chatting</span><span class="o">);</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+		<span class="n">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+
+		<span class="c1">// 데이타 전송후 텍스트필드 지우고 포커스 맞추기</span>
+		<span class="n">tfMessage</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+		<span class="n">tfMessage</span><span class="o">.</span><span class="na">requestFocus</span><span class="o">();</span>
+	<span class="o">}</span>
+
+	<span class="kt">void</span> <span class="nf">sendInformation</span><span class="o">(</span> <span class="nc">BadukClientProtocol</span> <span class="n">obj</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">try</span><span class="o">{</span>
+			<span class="n">outStream</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span> <span class="n">obj</span> <span class="o">);</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="s">"메세지 전송 실패 :"</span><span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+
+	<span class="kt">void</span> <span class="nf">setChatting</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">taChatting</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">data</span> <span class="o">+</span> <span class="s">"\n"</span><span class="o">);</span>
+
+		<span class="c1">//**  ScrollBar를 밑으로 자동으로 내리도록</span>
+		<span class="c1">//**</span>
+		<span class="n">taChatting</span><span class="o">.</span><span class="na">setCaretPosition</span><span class="o">(</span><span class="n">taChatting</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">lastIndexOf</span><span class="o">(</span><span class="s">"\n"</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+	<span class="o">}</span>
+
+<span class="c1">//-&gt; 2</span>
+
+<span class="c1">//&lt;-- 3</span>
+	<span class="c1">//----------------------------------------------------</span>
+	<span class="cm">/*	서버에 접속후 입력한 아이디를 서버에 전송
+		1. 클라이언트에서 서버로 전송 데이타 객체 생성 
+			( BadukClientProtocol )
+		2. 1번 객체에 state는 BadukClientProtocol.SEND_ID로 지정
+		3. 1번 객체에 data는 입력받은 id로 지정
+		4. 서버로 전송 ( 소켓의 출력스트림에 write )
+			: sendInformation() 이용
+	*/</span>
+	<span class="kt">void</span> <span class="nf">sendId</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">BadukClientProtocol</span> <span class="n">obj</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientProtocol</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">SEND_ID</span><span class="o">);</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+		<span class="n">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+		
+	<span class="o">}</span>
+
+	<span class="c1">//---------------------------------------------------</span>
+	<span class="cm">/*	넘겨받은 아이디값들을 콤보박스에 추가
+		1. 넘겨받은 객체를 다시 String[]로 형변환
+		2. 기존의 콤보박스의 내용들 모두 지움
+		3. String[] 배열값을 콤보박스에 하나씩 추가
+	*/</span>
+	<span class="kt">void</span> <span class="nf">addMemberId</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">ids</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">[])</span><span class="n">data</span><span class="o">;</span>
+		<span class="n">comMember</span><span class="o">.</span><span class="na">removeAllItems</span><span class="o">();</span>  <span class="c1">// removeAll() 는 AWT 메소드라 안됨</span>
+		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ids</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">comMember</span><span class="o">.</span><span class="na">addItem</span><span class="o">(</span><span class="n">ids</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+		<span class="o">}</span>	
+	<span class="o">}</span>
+
+	<span class="c1">//---------------------------------------------------</span>
+	<span class="c1">// 과제 클라이언트가 종료하고 나갈때 서버에 알린후 소켓 닫기</span>
+	<span class="kt">void</span> <span class="nf">sendExit</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">BadukClientProtocol</span> <span class="n">obj</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientProtocol</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">EXIT</span><span class="o">);</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+		<span class="n">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+		<span class="k">try</span><span class="o">{</span>
+		<span class="n">inStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">outStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="n">socClient</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">){}</span>
+	<span class="o">}</span>
+
+<span class="c1">//--&gt; 3</span>
+
+
+<span class="c1">//&lt;-- 4	</span>
+	<span class="c1">//---------------------------------------------------</span>
+	<span class="cm">/*	"게임하기", "구경하기" 버튼 클릭시 서버에 전송
+		1. 클라이언트에서 서버로 전송 데이타 객체 생성 
+			( BadukClientProtocol )
+		2. 1번 객체에 state는 넘겨받은 상태값으로 지정
+		3. 서버로 전송 ( 소켓의 출력스트림에 write )
+			: sendInformation() 이용
+		4. "게임하기" 버튼을 한번 누르면 비활성화
+	*/</span>
+	<span class="kt">void</span> <span class="nf">startGame</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">//if(socClient == null) connectServer();</span>
+		<span class="nc">BadukClientProtocol</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientProtocol</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">REQUEST_GAME</span><span class="o">);</span>
+		<span class="n">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+		<span class="n">btnGame</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------------</span>
+	<span class="cm">/*	1. 넙겨받은 데이타(BadukServerProtocol의 data임)를 벡터로 변환
+		2. 벡터의 0번째 요소( 흑돌 게임자의 아이디 )를 얻어 흑돌게임자 텍스트필드에 지정
+		3. 벡터의 1번째 요소( 흰돌 게임자의 아이디 )를 얻어 흰돌게임자 텍스트필드에 지정
+	*/</span>
+	<span class="kt">void</span> <span class="nf">setBadukGammer</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Vector</span> <span class="n">gammers</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Vector</span><span class="o">)</span> <span class="n">data</span><span class="o">;</span>
+		<span class="n">tfBlackRock</span><span class="o">.</span><span class="na">setText</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">gammers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+		<span class="n">tfWhiteRock</span><span class="o">.</span><span class="na">setText</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">gammers</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+	<span class="o">}</span>
+<span class="c1">//--&gt; 4</span>
+
+
+<span class="c1">//&lt;-- 5</span>
+	<span class="c1">//--------------------------------------------------</span>
+	<span class="cm">/*	게임시작시 초기화 작업
+		1. 바둑알정보(Rock 클래스)을 저장할 벡터변수(badukRock) 객체 생성
+		2. 게임이 시작됨을 지정할 변수(bGamming)을 true로 초기화
+		3. 승리자 텍스트필드 초기화
+		4. 바둑판 캔버스 초기화
+	 */</span>
+	<span class="kt">void</span> <span class="nf">startGameConfirm</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">badukRock</span>	<span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">();</span>
+		<span class="n">bGamming</span>	<span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">tfWinner</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+		<span class="n">canvas</span><span class="o">.</span><span class="na">repaint</span><span class="o">();</span>
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------------</span>
+	<span class="cm">/* 마우스 클릭한 위치에 대한 바둑알의 정보를 서버에 전송
+		1. 인자로 넘어온 값을 벡터에 저장
+		2. 서버에 전송
+			- BadukClientProtocol 객체 생성
+			- state에 BadukClientProtocol.SET_BADUK_ROCK로 지정
+			- data에 1번 객체
+			- BadukClientProtocol 객체 서버로 전송
+	 */</span>
+	<span class="kt">void</span> <span class="nf">sendSetBaduk</span><span class="o">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Vector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">();</span>
+		<span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="n">row</span><span class="o">));</span>
+		<span class="n">v</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="n">col</span><span class="o">));</span>
+
+		<span class="nc">BadukClientProtocol</span>	<span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientProtocol</span><span class="o">();</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">SET_BADUK_ROCK</span><span class="o">);</span>
+		<span class="n">obj</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+		<span class="n">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="c1">//--&gt; 5</span>
+
+<span class="c1">//&lt;-- 6</span>
+	<span class="c1">//-----------------------------------------------------</span>
+	<span class="cm">/* 서버로부터 놓여진 바둑돌의 위치정보를 받았을때
+		1. 넘겨받은 객체를 Baduk클래스로 형변환
+		2. Baduk객체에서 색상을 얻어서 흑인지 비교후 순서를 백으로 지정
+		3. 아니면 흑으로 지정
+		4. Baduk객체를 바둑돌을 저장하는 벡터(badukRock)에 추가
+		5. 캔버스를 다시 그리기
+	 */</span>
+	<span class="kt">void</span> <span class="nf">setBakukRock</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">Baduk</span> <span class="n">al</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Baduk</span><span class="o">)</span><span class="n">data</span><span class="o">;</span>
+		
+		<span class="k">if</span><span class="o">(</span><span class="n">al</span><span class="o">.</span><span class="na">getColor</span><span class="o">()</span> <span class="o">==</span> <span class="nc">Baduk</span><span class="o">.</span><span class="na">BLACK_BADUK</span><span class="o">)</span>
+			<span class="n">tfOrder</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">" 백 "</span><span class="o">);</span>
+		<span class="k">else</span> 
+			<span class="n">tfOrder</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">" 흑 "</span><span class="o">);</span>
+
+		<span class="n">badukRock</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">al</span><span class="o">);</span>
+		<span class="n">canvas</span><span class="o">.</span><span class="na">repaint</span><span class="o">();</span>
+		
+	<span class="o">}</span>
+
+
+<span class="c1">//&lt;-- 7</span>
+	<span class="c1">//------------------------------------------------</span>
+	<span class="cm">/* 게임승리자를 출력하고 모든 화면 초기화
+		1. 게임진행중을 확인하는 boolean 변수(bGamming)에 false 지정
+		2. 넘겨받은 데이타값을 승리자 텍스트필드에 출력
+		3. "게임하기"버튼을 활성화
+	 */</span>
+	<span class="kt">void</span> <span class="nf">endGame</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">bGamming</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+		<span class="nc">String</span> <span class="n">winner</span> <span class="o">=</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span> <span class="n">data</span><span class="o">;</span>
+		<span class="c1">//tfWinner.setText(winner);</span>
+		<span class="nc">JOptionPane</span><span class="o">.</span><span class="na">showMessageDialog</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">winner</span> <span class="o">+</span> <span class="s">"님께서 승리하셨습니다!!"</span><span class="o">);</span>
+		<span class="n">btnGame</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">tfBlackRock</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+		<span class="n">tfWhiteRock</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+		<span class="n">tfOrder</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+		<span class="n">tfWinner</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">""</span><span class="o">);</span>
+	<span class="o">}</span>
+
+
+
+	<span class="c1">//###################################################</span>
+	<span class="cm">/* 바둑판 모양을 만든 Canvas
+	*/</span>
+	<span class="kd">class</span> <span class="nc">MyCanvas</span> <span class="kd">extends</span> <span class="nc">Canvas</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">term</span><span class="o">;</span>			<span class="c1">// 한칸의 길이</span>
+		<span class="nc">Point</span> <span class="n">ptS</span><span class="o">,</span> <span class="n">ptE</span><span class="o">;</span>		<span class="c1">// 바둑판의 시작점과 끝점좌표</span>
+
+		<span class="c1">//----------------------------------------------</span>
+		<span class="cm">/* Canvas의 그림 그리는 역할을 하는 paint() overriding
+		*/</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">paint</span><span class="o">(</span><span class="nc">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">// 캔버스의 폭과 높이를 구하여 정사각형의 폭과 높이로 계산</span>
+			<span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">getWidth</span><span class="o">();</span>
+			<span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">getHeight</span><span class="o">();</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">w</span> <span class="o">&gt;</span> <span class="n">h</span><span class="o">)</span> <span class="n">w</span> <span class="o">=</span> <span class="n">h</span><span class="o">;</span>
+			<span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">w</span> <span class="o">&lt;</span> <span class="n">h</span><span class="o">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+
+			<span class="c1">// 4면의 여백</span>
+			<span class="kt">int</span> <span class="n">margin</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+			
+			<span class="c1">// 바둑 한칸의 길이</span>
+			<span class="n">term</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">18</span><span class="o">;</span>
+
+			<span class="c1">// 시작좌표와 끝좌표 지정</span>
+			<span class="n">ptS</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Point</span><span class="o">(</span><span class="n">margin</span><span class="o">,</span> <span class="n">margin</span><span class="o">);</span>
+			<span class="n">ptE</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Point</span><span class="o">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">margin</span><span class="o">,</span> <span class="n">h</span> <span class="o">-</span> <span class="n">margin</span><span class="o">);</span>
+
+			<span class="c1">// 바둑판 글 긋기</span>
+			<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">19</span> <span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+				<span class="n">g</span><span class="o">.</span><span class="na">drawLine</span><span class="o">(</span><span class="n">ptS</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">ptS</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">term</span> <span class="o">*</span> <span class="n">i</span> <span class="o">,</span> <span class="n">ptE</span><span class="o">.</span><span class="na">x</span><span class="o">,</span>  <span class="n">ptS</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">term</span> <span class="o">*</span> <span class="n">i</span><span class="o">);</span>
+				<span class="n">g</span><span class="o">.</span><span class="na">drawLine</span><span class="o">(</span><span class="n">ptS</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">term</span> <span class="o">*</span> <span class="n">i</span><span class="o">,</span> <span class="n">ptS</span><span class="o">.</span><span class="na">y</span><span class="o">,</span> <span class="n">ptS</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">term</span> <span class="o">*</span> <span class="n">i</span><span class="o">,</span> <span class="n">ptE</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+			<span class="o">}</span>
+
+			<span class="c1">//!!!!!!!! 여기는 나중에 참고</span>
+			<span class="c1">//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+			<span class="c1">// 서버로 넘어온 바둑알정보를 저장하는 벡터에 데이타가 있다면</span>
+			<span class="c1">// 벡터의 각각 바둑알정보(Rock 클래스)을 얻어 row,column,color 값을 얻어와서</span>
+			<span class="c1">// 화면에 그 정보로 원 그리기</span>
+			<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>	<span class="c1">// 바둑알의  x좌표, y좌표, 색상을 저장할 변수</span>
+			<span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">term</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>			<span class="c1">// 바둑알의 반지름을 저장할 변수</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">badukRock</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>				
+				<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">badukRock</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++){</span>
+					<span class="nc">Baduk</span>	<span class="n">al</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Baduk</span><span class="o">)</span><span class="n">badukRock</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+					<span class="n">x</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="na">getCol</span><span class="o">();</span>
+					<span class="n">y</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="na">getRow</span><span class="o">();</span>
+					<span class="n">c</span> <span class="o">=</span> <span class="n">al</span><span class="o">.</span><span class="na">getColor</span><span class="o">();</span>
+					
+					<span class="k">if</span><span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="nc">Baduk</span><span class="o">.</span><span class="na">BLACK_BADUK</span> <span class="o">)</span>	<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">black</span><span class="o">);</span>
+					<span class="k">else</span>	<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">yellow</span> <span class="o">);</span>
+
+					<span class="n">g</span><span class="o">.</span><span class="na">fillArc</span><span class="o">(</span><span class="n">ptS</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">term</span> <span class="o">-</span> <span class="n">r</span><span class="o">,</span> <span class="n">ptS</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">term</span> <span class="o">-</span> <span class="n">r</span><span class="o">,</span> <span class="n">term</span><span class="o">,</span> <span class="n">term</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">360</span><span class="o">);</span>
+				<span class="o">}</span>
+				<span class="c1">// 마지막바둑알에는 빨간 사각표시</span>
+				<span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="nc">Color</span><span class="o">.</span><span class="na">red</span> <span class="o">);</span>
+				<span class="n">g</span><span class="o">.</span><span class="na">drawRect</span><span class="o">(</span><span class="n">ptS</span><span class="o">.</span><span class="na">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">term</span> <span class="o">-</span> <span class="n">r</span><span class="o">,</span> <span class="n">ptS</span><span class="o">.</span><span class="na">y</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">term</span> <span class="o">-</span> <span class="n">r</span><span class="o">,</span> <span class="n">term</span><span class="o">,</span> <span class="n">term</span><span class="o">);</span>
+			<span class="o">}</span>
+
+		<span class="o">}</span>
+
+
+		<span class="c1">//----------------------------------------------</span>
+		<span class="cm">/* 생성자 함수
+		 */</span>
+		<span class="nc">MyCanvas</span><span class="o">(){</span>
+<span class="c1">//&lt;-- 6</span>
+			<span class="c1">// 바둑판에서 마우스 클릭시 서버에 데이타 전송</span>
+			<span class="cm">/*	1. 눌려진 좌표값 얻어오기
+				2. 1번에서 x값이 바둑판의 몇번째 세로줄인지 지정
+					( getXValue() 이용 )
+				3. 1번에서 y값이 바둑판의 몇번째 가로줄인지 지정
+					( getYValue() 이용 )
+				4. 서버에 전송하기 위해 sendSetBaduk() 호출
+			 */</span>
+			<span class="n">addMouseListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">MouseAdapter</span><span class="o">()</span> <span class="o">{</span>
+				<span class="kd">public</span> <span class="kt">void</span> <span class="nf">mouseReleased</span><span class="o">(</span><span class="nc">MouseEvent</span> <span class="n">ev</span><span class="o">){</span>
+					<span class="nc">Point</span> <span class="n">pt</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="na">getPoint</span><span class="o">();</span>
+					<span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">getXValue</span><span class="o">(</span><span class="n">pt</span><span class="o">.</span><span class="na">x</span><span class="o">);</span>
+					<span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">getYValue</span><span class="o">(</span><span class="n">pt</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+
+					<span class="k">if</span><span class="o">(</span><span class="n">bGamming</span> <span class="o">){</span>
+						<span class="k">if</span><span class="o">(</span><span class="n">row</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">row</span> <span class="o">&gt;</span> <span class="mi">18</span> <span class="o">||</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">col</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="o">)</span>
+							<span class="k">return</span><span class="o">;</span>
+						<span class="n">sendSetBaduk</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">);</span>
+					<span class="o">}</span>
+					
+				<span class="o">}</span>
+			<span class="o">});</span>
+<span class="c1">//--&gt; 6</span>
+		<span class="o">}</span>
+
+
+		<span class="c1">//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+		<span class="c1">// 클릭한 x좌표값을 바둑판에서의 column 값으로 변경</span>
+		<span class="kt">int</span> <span class="nf">getXValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">x</span> <span class="o">-=</span> <span class="n">ptS</span><span class="o">.</span><span class="na">x</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">term</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">x</span> <span class="o">%</span> <span class="n">term</span><span class="o">;</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">term</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="n">v</span><span class="o">++;</span>
+			<span class="k">return</span> <span class="n">v</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="c1">//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+		<span class="c1">// 클릭한 x좌표값을 바둑판에서의 column 값으로 변경</span>
+		<span class="kt">int</span> <span class="nf">getYValue</span><span class="o">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">){</span>
+			<span class="n">y</span> <span class="o">-=</span> <span class="n">ptS</span><span class="o">.</span><span class="na">y</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="n">term</span><span class="o">;</span>
+			<span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">y</span> <span class="o">%</span> <span class="n">term</span><span class="o">;</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">term</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="n">v</span><span class="o">++;</span>
+			<span class="k">return</span> <span class="n">v</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">};</span>	
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukclientmain">BadukClientMain</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//====================================================</span>
+<span class="c1">//	클라이언트 프로그램을 실행하는 클래스</span>
+<span class="c1">//	( main() 포함 )</span>
+<span class="c1">//====================================================</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadukClientMain</span> <span class="kd">extends</span> <span class="nc">JFrame</span> <span class="o">{</span>
+	<span class="nc">BadukClient</span>			<span class="n">badukClient</span><span class="o">;</span>       
+
+	<span class="kd">public</span> <span class="nf">BadukClientMain</span><span class="o">(</span><span class="nc">String</span> <span class="n">server</span><span class="o">,</span> <span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">badukClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClient</span><span class="o">(</span><span class="n">server</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+		<span class="n">getContentPane</span><span class="o">().</span> <span class="n">add</span><span class="o">(</span><span class="n">badukClient</span><span class="o">);</span>
+		<span class="c1">//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );</span>
+
+		
+<span class="c1">//--&gt; 3</span>
+		<span class="c1">// 종료시 서버에 나감을 알림</span>
+		<span class="n">addWindowListener</span><span class="o">(</span><span class="k">new</span> <span class="nc">WindowAdapter</span><span class="o">()</span> <span class="o">{</span>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">windowClosing</span><span class="o">(</span><span class="nc">WindowEvent</span> <span class="n">ev</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">badukClient</span><span class="o">.</span><span class="na">sendExit</span><span class="o">();</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">BadukClientMain</span> <span class="n">main</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukClientMain</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+		<span class="n">main</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">880</span><span class="o">,</span><span class="mi">660</span><span class="o">);</span>
+		<span class="n">main</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukclientprotocol">BadukClientProtocol</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//=============================================================</span>
+<span class="c1">//	클라이언트에서 서버로 전송할  데이타를 캡슐화한 클래스</span>
+<span class="c1">//=============================================================</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadukClientProtocol</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Serializable</span> <span class="o">{</span>
+	<span class="c1">//---------------------------------------------</span>
+	<span class="c1">// 클라이언트에서 서버로 전송시 상태값</span>
+	
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="nc">Chatting</span>    <span class="o">=</span>  <span class="mi">200</span><span class="o">;</span>	<span class="c1">// 챗팅메세지 </span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="no">SEND_ID</span>		<span class="o">=</span>  <span class="mi">300</span><span class="o">;</span> <span class="c1">// 처음 접속시 아이디</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="no">EXIT</span>		<span class="o">=</span>  <span class="mi">400</span><span class="o">;</span> <span class="c1">// 접속을 끊을때</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="no">REQUEST_GAME</span> <span class="o">=</span>  <span class="mi">0</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="no">VIEW_GAME</span>    <span class="o">=</span>  <span class="mi">1</span><span class="o">;</span>
+
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>			<span class="no">SET_BADUK_ROCK</span>    <span class="o">=</span>  <span class="mi">11</span><span class="o">;</span>
+
+	<span class="nc">Object</span> 						 <span class="n">data</span><span class="o">;</span>
+	<span class="kt">int</span>                <span class="n">state</span><span class="o">;</span>
+
+	<span class="kd">public</span> <span class="nf">BadukClientProtocol</span><span class="o">()</span> <span class="o">{</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setData</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">;</span>		
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getData</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">data</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukserver">BadukServer</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//===================================================================</span>
+<span class="c1">//	서버 프로그램을 시작하는 클래스</span>
+<span class="c1">//	클라이언트가 요청한 결과를 구현한 클래스</span>
+<span class="c1">//===================================================================</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadukServer</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>	
+  <span class="nc">Vector</span> 				<span class="n">member</span><span class="o">;</span>		<span class="c1">// 클라이언트접속시 정보 저장할 벡터</span>
+  <span class="nc">ServerSocket</span> 	<span class="n">server</span><span class="o">;</span>
+  <span class="nc">Thread</span> 				<span class="n">serverThread</span><span class="o">;</span>
+  <span class="kt">int</span>           <span class="n">serverPort</span> <span class="o">=</span> <span class="mi">7777</span><span class="o">;</span>
+   
+	<span class="c1">// 게임에 관한 멤버 변수</span>
+	<span class="nc">BadukService</span>	<span class="n">blackClient</span><span class="o">;</span>	<span class="c1">// 흑돌게임 클라이언트</span>
+	<span class="nc">BadukService</span>	<span class="n">whiteClient</span><span class="o">;</span>	<span class="c1">// 흰돌게임 클라이언트</span>
+	<span class="nc">BadukService</span>	<span class="n">currentClient</span><span class="o">;</span>	<span class="c1">// 현재차례 클라이언트</span>
+	<span class="nc">Vector</span>			<span class="n">badukRock</span><span class="o">;</span>		<span class="c1">// 바둑알정보를 저장할 벡터</span>
+	<span class="kt">int</span><span class="o">[][]</span>			<span class="n">badukPan</span><span class="o">;</span>	<span class="c1">// 바둑판 위치 저장</span>
+	<span class="nc">String</span>			<span class="n">winner</span><span class="o">;</span>			<span class="c1">// 이긴사람의 아이디 저장</span>
+
+  <span class="c1">//--------------------------------------------------------</span>
+  <span class="cm">/*	생성자 함수
+	1. ServerSocket 객체 생성
+	2. 벡터 객체 생성
+	3. 클라이언트 접속을 기다리기 위해 쓰레드 구현
+  */</span>
+  <span class="kd">public</span> <span class="nf">BadukServer</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+       <span class="n">server</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerSocket</span><span class="o">(</span><span class="n">serverPort</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	    <span class="c1">// System.out.println(e);</span>
+    <span class="o">}</span>
+    <span class="n">member</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">();</span>
+
+    <span class="n">serverThread</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Thread</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="n">serverThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+  <span class="o">}</span>
+  
+  <span class="c1">//--------------------------------------------------------</span>
+  <span class="cm">/* 쓰레드 구현
+	1. ServerSocket의 accept() 함수로 클라이언트 접속 대기
+	2. 접속한 클라이언트와 소켓을 주고받을 역할을 하는 클래스 생성
+		( BadukService )
+	3. 2의 객체를 벡터에 추가
+  */</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">try</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"서버 구동 시작 !!!  "</span><span class="o">);</span>    			
+    		<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">Socket</span> <span class="n">s</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="na">accept</span><span class="o">();</span>
+				<span class="nc">BadukService</span> <span class="n">cs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukService</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">s</span><span class="o">);</span>
+				<span class="n">member</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="n">cs</span><span class="o">);</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Client 접속 : "</span> <span class="o">+</span> <span class="n">cs</span><span class="o">);</span>    			
+    		<span class="o">}</span>
+      <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+      
+      <span class="o">}</span>
+  <span class="o">}</span>
+
+  <span class="c1">//-------------------------------------------------------</span>
+  <span class="cm">/* 각 클라이언트와 데이타 전송을 담당하는 BadukService객체에서
+    한 클라이언트에서 데이타를 읽었으면 모든 멤버에게 전송
+  */</span>  
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">setChatting</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">Chatting</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+		<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+	<span class="o">}</span>
+
+  <span class="kd">public</span>  <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">broadcast</span><span class="o">(</span><span class="nc">BadukServerProtocol</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+  		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">member</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+  			<span class="nc">BadukService</span> <span class="n">client</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BadukService</span><span class="o">)</span><span class="n">member</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+  			<span class="n">client</span><span class="o">.</span><span class="na">sendInformation</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+  		<span class="o">}</span>
+  <span class="o">}</span>
+  
+<span class="c1">//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span>
+<span class="c1">//&lt;-- 3</span>
+   <span class="c1">//-------------------------------------------------------</span>
+   <span class="cm">/*	Vector의 요소인 BadukService를 얻어서 각각의 아이디를 얻어
+		String 배열에 추가후 각각 클라이언트에 전송
+		1. Vector의 크기만큼 String 배열을 생성
+		2. 배열에서 하나씩 요소(BadukService)를 얻기
+		3. 얻은 각 BadukService의 id값을 String 배열에 추가
+		4. 클라이언트로 전송할 객체 생성 ( BadukServerProtocol )
+		5. 4번 객체의 state값을 BadukServerProtocol.CHANGE_MEMBER_ID로 지정
+		6. 4번 객체의 data값을 위의 String배열로 지정
+		7. 모든 클라이언트에 전송 ( boaadcast() 이용 )
+	*/</span>
+   <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">sendAddMember</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">String</span><span class="o">[]</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[</span><span class="n">member</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">BadukService</span> <span class="n">client</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BadukService</span><span class="o">)</span> <span class="n">member</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+			<span class="n">str</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getID</span><span class="o">());</span>
+		<span class="o">}</span>	
+		<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">CHANGE_MEMBER_ID</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+		<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="c1">// 종료시</span>
+  <span class="cm">/* 나가는 접속자의 아이디를 인자로 받아 같은 아이디를 가지고 있는 BadukService를 찾아
+    벡터에서 제거
+	1. 벡터의 크기만큼 반복문 구동하여 요소(BadukService)를 하나씩 얻어온다
+	2. 인자로 받은 아이디와 같은 아이디 있는지 비교하여
+	3. 벡터에서 그 요소를 제거
+	4. 다른 클라이언트에게 전송 sendAddMember(); 호출
+   */</span>
+  <span class="kt">void</span> <span class="nf">sendRemoveMember</span><span class="o">(</span><span class="nc">String</span> <span class="n">removeId</span> <span class="o">)</span> <span class="o">{</span>
+		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">member</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="nc">BadukService</span> <span class="n">client</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BadukService</span><span class="o">)</span> <span class="n">member</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">removeId</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getID</span><span class="o">()))</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">removeId</span> <span class="o">+</span><span class="s">" 나간다~!!"</span><span class="o">);</span>
+				<span class="n">member</span><span class="o">.</span><span class="na">removeElementAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+				<span class="c1">// 다른 클라이언트에게 알리기 위해</span>
+				<span class="n">sendAddMember</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>		
+  <span class="o">}</span>
+
+<span class="c1">//&lt;-- 4</span>
+  <span class="c1">//------------------------------------------------------</span>
+  <span class="cm">/* 처음에 신청한 게임자는 흑돌로 지정하고, 그다음에 신청한
+	게임자는 흰돌로 지정한후 게임을 시작한다
+	1. 흑돌 게임자 변수(blackClient)가 null 이라면 첫번째 게임자이므로 
+		인자로 넘어온 BadukService객체를 흑돌게임머 변수로 지정
+	2. 흑돌 게임자 아이디를 모든 클라이언트에 전송
+		sendBadukGammer()를 이용하여 모든 클라이언트에 전송
+	3. 흰돌 게임자 변수(whiteClient)가 null 이라면 두번째 게임자이므로 
+		인자로 넘어온 BadukService객체를 흰돌게임머 변수로 지정
+	4. 흰돌 게임자 아이디를 모든 클라이언트에 전송
+		sendBadukGammer()를 이용하여 모든 클라이언트에 전송
+   */</span>
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">requestGame</span><span class="o">(</span><span class="nc">BadukService</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+  	   	<span class="k">if</span> <span class="o">(</span><span class="n">blackClient</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+  	   		<span class="n">blackClient</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+		   		<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="n">sendBadukGammer</span><span class="o">();</span>	
+					<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>			
+  	   	<span class="o">}</span>	
+  	   	<span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">whiteClient</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+	  			<span class="n">whiteClient</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+  		   	<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="n">sendBadukGammer</span><span class="o">();</span>	
+					<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+
+<span class="c1">//&lt;-- 5		// 게임시작</span>
+					<span class="n">startGame</span><span class="o">();</span>
+  	   	<span class="o">}</span>
+   <span class="o">}</span>
+
+
+  <span class="c1">//####################################################</span>
+  <span class="c1">//----------------------------------------------------</span>
+  <span class="cm">/* 흑돌게임자의 아이디와 흰돌게임자의 아이디를 얻어
+	벡터에 저장하고나서 모든 클라이언트에 전송
+	( BadukServerProtocol 객체로 전송하고자 )
+   */</span>
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="nc">BadukServerProtocol</span> <span class="nf">sendBadukGammer</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">blackID</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">blackClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+		   <span class="n">blackID</span> <span class="o">=</span> <span class="n">blackClient</span><span class="o">.</span><span class="na">getID</span><span class="o">();</span>
+		<span class="nc">String</span> <span class="n">whiteID</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">whiteClient</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+			<span class="n">whiteID</span> <span class="o">=</span> <span class="n">whiteClient</span><span class="o">.</span><span class="na">getID</span><span class="o">();</span>
+		<span class="nc">Vector</span> <span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">();</span>
+		<span class="n">v</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="n">blackID</span><span class="o">);</span>
+		<span class="n">v</span><span class="o">.</span><span class="na">addElement</span><span class="o">(</span><span class="n">whiteID</span><span class="o">);</span>
+		<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">SET_BADUK_GAMMER</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+		<span class="k">return</span> <span class="n">p</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="c1">//-------------------------------------------------</span>
+  <span class="cm">/* 게임을 시작하면 흑돌 먼저 순서로 지정하고 바둑알 저장할 벡터 생성하고
+	바둑판정보 저장할 변수 초기화 한 후	모든 클라이언트에게 게임시작임을 전송
+   */</span>
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">startGame</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">currentClient</span> <span class="o">=</span> <span class="n">blackClient</span><span class="o">;</span>
+  		<span class="n">badukRock</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+  		<span class="n">badukPan</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">19</span><span class="o">][</span><span class="mi">19</span><span class="o">];</span>
+  		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">19</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+  			<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">19</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span>
+  				<span class="n">badukPan</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="nc">Baduk</span><span class="o">.</span><span class="na">NONE_BADUK</span><span class="o">;</span>
+			<span class="nc">BadukServerProtocol</span>  <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+			<span class="n">p2</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">START_GAME</span><span class="o">);</span>
+			<span class="n">broadcast</span><span class="o">(</span><span class="n">p2</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="c1">//--&gt; 4</span>
+
+
+<span class="c1">//&lt;-- 6</span>
+<span class="c1">//------------------------------------------------------------</span>
+<span class="cm">/*  1. 클릭한 접속자가 현재게임자가 아니라면 리턴
+	2. 넘겨받은 Object 인자에서 x,y좌표 얻어오기
+	3. 흑돌게임자라면 흑색을 흰돌게임자라면 흰색을 지정
+	4. 2번과 3번의 데이타 ( x값, y값, 색상)을 Baduk 객체에 저장
+	5. 4번의 Baduk객체를 바둑알정보를 저장하는 벡터(badukRock)에 추가 저장
+	6. 모든 클라이언트에 SET_BADUK_ROCK 상태에 5번 객체를 전송
+ */</span>
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">sendBadukRock</span><span class="o">(</span><span class="nc">BadukService</span> <span class="n">c</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">obj</span><span class="o">){</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">currentClient</span> <span class="o">!=</span> <span class="n">c</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+  	   	
+  
+		<span class="nc">Vector</span> <span class="n">v</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Vector</span><span class="o">)</span><span class="n">obj</span><span class="o">;</span>
+   	<span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="o">((</span><span class="nc">Integer</span><span class="o">)</span><span class="n">v</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">)).</span><span class="na">intValue</span><span class="o">();</span>
+   	<span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="o">((</span><span class="nc">Integer</span><span class="o">)</span><span class="n">v</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">intValue</span><span class="o">();</span>
+
+		<span class="kt">int</span> <span class="n">color</span> <span class="o">=</span> <span class="nc">Baduk</span><span class="o">.</span><span class="na">BLACK_BADUK</span><span class="o">;</span>
+  	<span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="n">whiteClient</span><span class="o">)</span>
+  	  <span class="n">color</span> <span class="o">=</span> <span class="nc">Baduk</span><span class="o">.</span><span class="na">WHITE_BADUK</span><span class="o">;</span>
+  	   	
+  	<span class="nc">Baduk</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Baduk</span><span class="o">(</span><span class="n">color</span><span class="o">,</span> <span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">);</span>
+  	<span class="n">badukRock</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">al</span><span class="o">);</span>
+
+  	<span class="nc">BadukServerProtocol</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">SET_BADUK_ROCK</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">al</span><span class="o">);</span>
+  	<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+
+  	<span class="c1">//------------------------------------------------------------</span>
+ 	  <span class="c1">//  2. 오목 확인 체크하기</span>
+ 	  <span class="n">badukPan</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span> <span class="o">=</span> <span class="n">color</span><span class="o">;</span>
+ 	  <span class="c1">// isGame(b);</span>
+
+   	<span class="k">if</span><span class="o">(</span><span class="n">isGame</span><span class="o">(</span><span class="n">al</span><span class="o">))</span> <span class="o">{</span>
+ 			<span class="c1">// 승패가 결정되면 게임종료하기</span>
+   		<span class="n">gameEnd</span><span class="o">();</span>
+   		<span class="k">return</span><span class="o">;</span>
+   	<span class="o">}</span>	
+   		
+   		
+		<span class="c1">//------------------------------------------------------------</span>
+		<span class="c1">//  1. 순서를 바꾸기 ( 흑-&gt; 백, 백 -&gt; 흑 )</span>
+  	<span class="k">if</span><span class="o">(</span><span class="n">currentClient</span> <span class="o">==</span> <span class="n">blackClient</span><span class="o">)</span>
+  	  <span class="n">currentClient</span> <span class="o">=</span> 	<span class="n">whiteClient</span><span class="o">;</span>
+  	<span class="k">else</span>
+  	  <span class="n">currentClient</span> <span class="o">=</span> 	<span class="n">blackClient</span><span class="o">;</span>
+  <span class="o">}</span>
+
+	<span class="c1">//##################################################################</span>
+	<span class="cm">/*  가장 최근에 놓여진 바둑알 정보를 기점으로 상하좌우대각선 방향으로
+	  동일한 색의 바둑알이 5개 있는지 확인
+	 */</span>
+  <span class="kd">public</span>  <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">isGame</span><span class="o">(</span><span class="nc">Baduk</span> <span class="n">curBaduk</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">bend</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">curBaduk</span><span class="o">.</span><span class="na">getRow</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">col</span> <span class="o">=</span> <span class="n">curBaduk</span><span class="o">.</span><span class="na">getCol</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">color</span> <span class="o">=</span> <span class="n">curBaduk</span><span class="o">.</span><span class="na">getColor</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="n">winner</span> <span class="o">=</span> <span class="n">currentClient</span><span class="o">.</span><span class="na">getID</span><span class="o">();</span>
+		<span class="n">number</span> <span class="o">+=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span><span class="c1">//Up</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">+=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span><span class="c1">//Down </span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span><span class="c1">//Left</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">+=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span><span class="c1">//Right </span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span><span class="c1">//left , Up</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">+=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span><span class="c1">//right, down</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span><span class="c1">//right, up</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="n">number</span> <span class="o">+=</span> <span class="n">getSerialNumber</span><span class="o">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span><span class="c1">//left , Down</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="o">)</span>
+			<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+	   <span class="n">winner</span> <span class="o">=</span> <span class="s">"무승부"</span><span class="o">;</span>
+		<span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">int</span> <span class="nf">getSerialNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">row</span><span class="o">,</span> <span class="kt">int</span> <span class="n">col</span><span class="o">,</span> <span class="kt">int</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">rInc</span><span class="o">,</span> <span class="kt">int</span> <span class="n">cInc</span><span class="o">)</span> <span class="o">{</span>
+   	<span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+   	
+   	<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+   		<span class="k">if</span><span class="o">(</span><span class="n">row</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">row</span> <span class="o">&gt;</span> <span class="mi">18</span> <span class="o">||</span> <span class="n">col</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">col</span> <span class="o">&gt;</span> <span class="mi">18</span><span class="o">)</span>
+   			<span class="k">break</span><span class="o">;</span>
+   		<span class="k">if</span><span class="o">(</span><span class="n">badukPan</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span> <span class="o">!=</span> <span class="n">color</span><span class="o">)</span>
+   			<span class="k">break</span><span class="o">;</span>
+   		<span class="n">row</span> <span class="o">+=</span> <span class="n">rInc</span><span class="o">;</span>
+   		<span class="n">col</span> <span class="o">+=</span> <span class="n">cInc</span><span class="o">;</span>
+  		<span class="n">n</span><span class="o">++;</span>
+  	<span class="o">}</span>
+  	<span class="k">return</span> <span class="n">n</span><span class="o">;</span>
+  <span class="o">}</span>
+
+
+   <span class="c1">//------------------------------------------------------------</span>
+   <span class="cm">/* 클라이언트에게 게임이 끝났음을 전송
+	*/</span>
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">gameEnd</span><span class="o">()</span> <span class="o">{</span>
+	  <span class="n">reStartInit</span><span class="o">();</span> 
+  	<span class="nc">BadukServerProtocol</span>  <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServerProtocol</span><span class="o">();</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="nc">BadukServerProtocol</span><span class="o">.</span><span class="na">END_GAME</span><span class="o">);</span>
+		<span class="n">p</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">winner</span><span class="o">);</span>
+  	<span class="n">broadcast</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">reStartInit</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">currentClient</span>	<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">whiteClient</span>		<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">blackClient</span>		<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">badukRock</span>		<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="n">badukPan</span>		<span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="o">}</span>
+
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">arg</span><span class="o">)</span> <span class="o">{</span>
+   	<span class="nc">BadukServer</span> <span class="n">cs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BadukServer</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukserverprotocol">BadukServerProtocol</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//=============================================================</span>
+<span class="c1">//	서버에서 클라이언트로 전송할  데이타를 캡슐화한 클래스</span>
+<span class="c1">//=============================================================</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadukServerProtocol</span> <span class="kd">implements</span> <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Serializable</span> <span class="o">{</span>
+	<span class="c1">// 서버에서 클라이언트로 전송시 상태값</span>
+	
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="nc">Chatting</span>		 <span class="o">=</span> <span class="mi">200</span><span class="o">;</span> <span class="c1">// 채팅메세지</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="no">CHANGE_MEMBER_ID</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span> 	<span class="c1">// 멤버 아이디 변경시</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="no">SET_BADUK_GAMMER</span> <span class="o">=</span> <span class="mi">300</span><span class="o">;</span> <span class="c1">// 게임자 지정시</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="no">START_GAME</span>		 <span class="o">=</span>  <span class="mi">10</span><span class="o">;</span> <span class="c1">// 게임 시작시</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="no">END_GAME</span>		 <span class="o">=</span>  <span class="mi">20</span><span class="o">;</span> <span class="c1">// 게임 종료시</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span>		<span class="no">SET_BADUK_ROCK</span>   <span class="o">=</span>  <span class="mi">30</span><span class="o">;</span> <span class="c1">// 바둑알이 놓여졌을때</span>
+
+
+	<span class="nc">Object</span> 						<span class="n">data</span><span class="o">;</span>
+	<span class="kt">int</span>               <span class="n">state</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">BadukServerProtocol</span><span class="o">()</span> <span class="o">{</span>
+		
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setData</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">;</span>		
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getData</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">data</span><span class="o">;</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">int</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="badukservice">BadukService</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//===================================================</span>
+<span class="c1">//	한 클라이언트와 소켓으로 데이타를 주고 받는 클래스</span>
+<span class="c1">//===================================================</span>
+<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BadukService</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+  <span class="nc">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">"guest"</span><span class="o">;</span>
+	
+	<span class="nc">Socket</span>			      	<span class="n">socServer</span> <span class="o">;</span>
+   
+	<span class="nc">ObjectInputStream</span>   <span class="n">inStream</span><span class="o">;</span>
+	<span class="nc">ObjectOutputStream</span>	<span class="n">outStream</span><span class="o">;</span>
+  <span class="nc">BadukServer</span> 		    <span class="n">server</span><span class="o">;</span>
+
+
+
+    <span class="c1">//----------------------------------------------------------</span>
+	<span class="cm">/*	생성자 함수
+		1. 인자로 넘겨받은 객체를 멤버변수로 지정
+		2. 소켓의 입출력 스트림 얻어오기
+		3. 쓰레드 구현
+	*/</span>
+  <span class="kd">public</span> <span class="nf">BadukService</span><span class="o">(</span><span class="nc">BadukServer</span> <span class="n">server</span><span class="o">,</span> <span class="nc">Socket</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+    	  <span class="k">this</span><span class="o">.</span><span class="na">server</span> <span class="o">=</span> <span class="n">server</span><span class="o">;</span>
+    	  <span class="n">socServer</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+
+				<span class="n">outStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectOutputStream</span><span class="o">(</span><span class="n">socServer</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">());</span>
+				<span class="n">inStream</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectInputStream</span><span class="o">(</span><span class="n">socServer</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">());</span>
+				<span class="n">start</span><span class="o">();</span>
+			
+      <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="o">}</span>
+
+
+
+	<span class="c1">//---------------------------------------------------------</span>
+	<span class="cm">/*	쓰레드 루핑구문으로 클라이언트가 전송한 데이타 읽기
+		데이타의 상태에 따라 각각의 구현 함수 호출
+	*/</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">BadukClientProtocol</span>  <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="nc">BadukClientProtocol</span><span class="o">)</span><span class="n">inStream</span><span class="o">.</span><span class="na">readObject</span><span class="o">();</span>
+				<span class="kt">int</span> <span class="n">state</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="na">getState</span><span class="o">();</span>
+				<span class="nc">Object</span>  <span class="n">data</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="na">getData</span><span class="o">();</span>
+				<span class="k">switch</span><span class="o">(</span><span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+					<span class="c1">// 클라이언트의 쳇팅 메세지를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">Chatting</span> <span class="o">:</span>	<span class="n">setChatting</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+
+<span class="c1">//--&gt; 3				// 클라이언트 접속 후 아이디를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">SEND_ID</span> <span class="o">:</span>	<span class="n">setID</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+					<span class="c1">// 종료시</span>
+					<span class="k">case</span> <span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">EXIT</span>	<span class="o">:</span>	<span class="n">removeID</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+					
+<span class="c1">//--&gt; 4				// 클라이언트의 게임요청을 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">REQUEST_GAME</span> <span class="o">:</span> <span class="n">requestGame</span><span class="o">();</span> <span class="k">break</span><span class="o">;</span>
+
+<span class="c1">//--&gt; 6				// 클라이언트가 바둑판에 클릭했을때의 바둑알정보를 받은 경우</span>
+					<span class="k">case</span> <span class="nc">BadukClientProtocol</span><span class="o">.</span><span class="na">SET_BADUK_ROCK</span> <span class="o">:</span>  <span class="n">setBadukRock</span><span class="o">(</span><span class="n">data</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+					
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+		<span class="o">}</span>
+	<span class="o">}</span><span class="c1">//run</span>
+
+	<span class="c1">//--------------------------------------------------------</span>
+	<span class="cm">/*	클라이언트가 챗팅을 위한 데이타 객체를 전송했을때
+		그 객체의 data 값을 각 클라이언트에 전송
+	*/</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setChatting</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">id</span> <span class="o">+</span> <span class="s">" &gt;&gt; "</span> <span class="o">+</span> <span class="o">(</span><span class="nc">String</span><span class="o">)</span><span class="n">data</span><span class="o">;</span>
+		<span class="n">server</span><span class="o">.</span><span class="na">setChatting</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+	<span class="o">}</span>
+
+	<span class="c1">//--------------------------------------------------------</span>
+	<span class="cm">/*	소켓의 출력스트림으로 전송객체 전송
+	*/</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendInformation</span><span class="o">(</span><span class="nc">Object</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+    	<span class="n">outStream</span><span class="o">.</span><span class="na">writeObject</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+    <span class="o">}</span><span class="k">catch</span><span class="o">(</span><span class="nc">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="c1">// --&gt; 3</span>
+	<span class="c1">//--------------------------------------------------------</span>
+	<span class="cm">/*	읽어들인 아이디를 멤버변수 id로 지정하고 모든 클라이언트의 멤버 추가를 전송
+	*/</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setID</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+
+    	<span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+      	<span class="n">server</span><span class="o">.</span><span class="na">sendAddMember</span><span class="o">();</span>		
+		
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getID</span><span class="o">()</span> <span class="o">{</span>
+    	<span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+	<span class="c1">// 종료시</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeID</span><span class="o">(</span><span class="nc">String</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+      	<span class="n">server</span><span class="o">.</span><span class="na">sendRemoveMember</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="c1">//--&gt; 4</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">requestGame</span><span class="o">()</span> <span class="o">{</span>
+   		<span class="n">server</span><span class="o">.</span><span class="na">requestGame</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+   <span class="o">}</span>
+
+<span class="c1">//--&gt; 6</span>
+	<span class="c1">//-----------------------------------------------------</span>
+	<span class="cm">/* 바둑알의 정보를 담은 데이타를 받아 각각의 행과 열값을 얻어 각각 클라이언트에 전송
+	 */</span>
+   	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBadukRock</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">server</span><span class="o">.</span><span class="na">sendBadukRock</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>		
+		<span class="o">}</span>
+<span class="o">}</span>	 
+</code></pre></div></div>
+:ET

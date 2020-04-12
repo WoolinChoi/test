@@ -1,0 +1,346 @@
+I"�I<h1 id="chapter11"><a href="">chapter11</a></h1>
+
+<h2 id="학습">학습</h2>
+<ul>
+  <li>프로세스 확인</li>
+  <li>쉘 프로그래밍 기초
+    <ul>
+      <li>쉘 : 사용자와 시스템 간의 인터페이스</li>
+      <li>쉘 스크립트 : 쉘에서 실행하는 프로그램
+        <ul>
+          <li>컴파일 단계가 없어서 속도 빠르게 실행</li>
+          <li>오류를 못 찾음</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="실습">실습</h2>
+<ul>
+  <li>복습
+    <ol>
+      <li>guest 그룹에 guest3 계정을 추가
+  <br /> gpasswd -g guest guest3</li>
+      <li>guest3 계정에 비밀번호 지정(생성된 계정 확인)
+  <br /> 1) passwd guest3
+  <br /> 2) tail /etc/passwd</li>
+      <li>어제 만든 guest1 계정과 guest2 계정을 홈디렉토리까지 삭제하면서 계정 삭제(삭제된 계정을 확인)
+  <br /> 1) userdel -r guest1 
+  <br /> 2) ls /home
+  <br /> 3) userdel -r guest2
+  <br /> 4) ls /home</li>
+      <li>guest3 홈디렉토리에 korea 디렉토리 생성하고 접근권한 확인
+  <br /> 1) mkdir /home/guest3/korea
+  <br /> 2) ls -l /home/guest3</li>
+      <li>guest3 계정으로 사용자 변경하고 korea 디렉토리에 temp.txt 파일 생성(만일 가능하지 않다면 권한을 변경해서 파일 생성)
+  <br /> 1) su - guest3
+  <br /> 2) chmod a+w /home/guest3/korea
+  <br /> 3) cat &gt; korea/temp.txt</li>
+      <li>korea디렉토리의 소유자를 centos로 변경
+  <br /> chown centos/home/guest3/korea</li>
+    </ol>
+  </li>
+  <li>쉘
+    <ol>
+      <li>연습
+  <br /> 1) mkdir shelltest
+  <br /> 2) cd shelltest
+  <br /> 3) vi test.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh                   # 쉘쓰기위해 써준다</span>
+  <span class="nb">echo</span> <span class="s1">'name: '</span> <span class="nv">$USER</span>         <span class="c"># echo : 화면에 한 줄의 문자열을 출력</span>
+  <span class="nb">echo</span> <span class="s1">'host: '</span> &amp;HOSTNAME
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 4) sh ./test.sh
+  <br /> 5) ./test.sh                   # 허가 거부
+  <br /> 6) chmod a+x test.sh
+  <br /> 7) ./test.sh                   # 현재디렉터리를 위해 ./를 붙혀준다.</p>
+      </li>
+      <li>출력
+  <br /> 1) vi var1.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nv">myvar</span><span class="o">=</span><span class="s1">'Hi'</span>              <span class="c"># 변수</span>
+  <span class="nb">echo</span> <span class="nv">$myvar</span>             <span class="c"># Hi</span>
+  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$myvar</span><span class="s2">"</span>           <span class="c"># Hi</span>
+  <span class="nb">echo</span> <span class="s1">'$myvar'</span>           <span class="c"># $myvar, 그냥 문자열로 취급한다.</span>
+  <span class="nb">echo</span> <span class="s1">'input-&gt;'</span>          
+  <span class="nb">read </span>myvar              <span class="c"># 입력한 값을 read 명령어를 통해 myvar 담는다 </span>
+  <span class="nb">echo</span> <span class="s1">'result-&gt;'</span> <span class="nv">$myvar</span>  <span class="c"># 입력한 값을 출력해준다.</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./var1.sh</p>
+      </li>
+      <li>연산
+  <br /> 1) vi numcal.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nv">num1</span><span class="o">=</span>100                <span class="c"># 기호 앞뒤로는 공백을 주면 안된다.</span>
+  <span class="nv">num2</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$num1</span> + 200<span class="sb">`</span> <span class="c"># `expr`연산에는 기호 앞뒤로 공백을 준다.</span>
+  <span class="nv">num3</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="se">\(</span> <span class="nv">$num1</span> + 200 <span class="se">\)</span> / 10 <span class="se">\*</span> 2<span class="sb">`</span> 
+  <span class="nb">echo</span> <span class="s1">'num2='</span> <span class="nv">$num2</span>
+  <span class="nb">echo</span> <span class="s1">'num3='</span> <span class="nv">$num3</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./numcal.sh</p>
+      </li>
+      <li>매개변수
+  <br /> 1) vi var2.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">echo</span> <span class="s1">'filename='</span> <span class="nv">$0</span>         <span class="c"># filename은 0번째</span>
+  <span class="nb">echo</span> <span class="s1">'parameter='</span> <span class="nv">$1</span>        <span class="c"># parameter는 1번째</span>
+  <span class="nb">echo</span> <span class="nv">$*</span>                     <span class="c"># *는 0번째는 안보여진다.</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./var2.sh
+  <br /> 3) sh ./var2.sh hello
+  <br /> 4) sh ./var2.sh hello world</p>
+      </li>
+      <li>조건문
+  <br /> 1) vi condi.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="o">=</span> <span class="nv">$2</span> <span class="o">]</span>
+  <span class="k">then 
+  </span><span class="nb">echo</span> <span class="s1">'같다'</span>
+  <span class="k">else 
+  </span><span class="nb">echo</span> <span class="s1">'다르다'</span>
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi.sh hong hong
+  <br /> 3) sh ./condi.sh hong gile</p>
+      </li>
+      <li>조건연산자
+  <br /> 1) vi condi2.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$1</span> <span class="nt">-ge</span> 90 <span class="o">]</span>
+  <span class="k">then 
+  </span><span class="nb">echo</span> <span class="s1">'A학점'</span>
+  <span class="k">elif</span><span class="o">[</span> <span class="nv">$1</span> <span class="nt">-ge</span> 80]
+  <span class="k">then 
+  </span><span class="nb">echo</span> <span class="s1">'B학점'</span>
+  <span class="k">else
+  </span><span class="nb">echo</span> <span class="s1">'C학점'</span>
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi2.sh 80</p>
+      </li>
+      <li>case문
+  <br /> 1) vi condi3.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">echo</span> <span class="s1">'점수-&gt;'</span>
+  <span class="nb">read </span>grade
+  <span class="k">case</span> <span class="s2">"</span><span class="nv">$grade</span><span class="s2">"</span> <span class="k">in
+  </span>100<span class="p">)</span> <span class="nb">echo</span> <span class="s1">'A학점'</span><span class="p">;;</span>
+  9?<span class="p">)</span> <span class="nb">echo</span> <span class="s1">'B학점'</span><span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span>  <span class="nb">echo</span> <span class="s1">'C학점'</span><span class="p">;;</span>
+  <span class="k">esac</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi3.sh</p>
+      </li>
+      <li>파일관련 옵션
+  <br /> 1) vi condi4.sh hello
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nv">fn</span><span class="o">=</span>test.sh
+  <span class="k">if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="nv">$fn</span> <span class="o">]</span>
+  <span class="k">then 
+  </span><span class="nb">head</span> <span class="nt">-5</span> <span class="nv">$fn</span>
+  <span class="k">else
+  </span><span class="nb">echo</span> <span class="s1">'Not file'</span>
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi4.sh</p>
+      </li>
+      <li>논리연산자
+  <br /> 1) vi condi5.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">echo</span> <span class="s1">'파일명입력-&gt;'</span>
+  <span class="nb">read </span>file_name
+  <span class="k">if</span> <span class="o">[</span> <span class="nt">-e</span> <span class="nv">$file_name</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-s</span> <span class="nv">$file_name</span> <span class="o">]</span>
+  <span class="k">then 
+  </span><span class="nb">head</span> <span class="nt">-10</span> <span class="nv">$file_name</span>
+  <span class="k">else
+  </span><span class="nb">echo</span> <span class="s1">'Not Found or Size 0'</span>
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi5.sh</p>
+      </li>
+      <li>반복문
+  <br /> 1) vi condi6.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">sum</span><span class="o">=</span>0
+  <span class="c"># for cnt in 1 2 3 4 5</span>
+  <span class="c"># for cnt in `seq 1 5`</span>
+  <span class="k">for</span> <span class="o">((</span><span class="nv">cnt</span><span class="o">=</span>1<span class="p">;</span>cnt&lt;<span class="o">=</span>5<span class="p">;</span>cnt++<span class="o">))</span>
+  <span class="k">do
+  </span><span class="nb">sum</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$sum</span> + <span class="nv">$cnt</span><span class="sb">`</span>
+  <span class="k">done
+  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$sum</span><span class="s2">"</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi6.sh</p>
+      </li>
+      <li>while
+  <br /> 1) vi condi7.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  <span class="nb">sum</span><span class="o">=</span>0
+  <span class="nv">cnt</span><span class="o">=</span>1
+  <span class="k">while</span> <span class="o">[</span> <span class="nv">$cnt</span> <span class="nt">-le</span> 10 <span class="o">]</span>
+  <span class="k">do
+  </span><span class="nb">sum</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$sum</span> + <span class="nv">$cnt</span><span class="sb">`</span>
+  <span class="nv">cnt</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$cnt</span> + 1<span class="sb">`</span>
+  <span class="k">done
+  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$sum</span><span class="s2">"</span>
+  <span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./condi7.sh</p>
+      </li>
+      <li>함수
+  <br /> 1) vi func.sh
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">#!/bin/sh</span>
+  func1<span class="o">()</span>
+  <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s1">'you choose 1'</span>
+  <span class="o">}</span>
+  func2<span class="o">()</span>
+  <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s1">'you choose 2'</span>
+  <span class="o">}</span>
+  <span class="nb">echo</span> <span class="s1">'You can choose : (1/2)'</span>
+  <span class="nb">read </span>sel
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$sel</span> <span class="nt">-eq</span> <span class="s1">'1'</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span>func1
+  <span class="k">else
+  </span>func2
+  <span class="k">fi
+  </span><span class="nb">exit </span>0
+</code></pre></div>        </div>
+        <p><br /> 2) sh ./func.sh</p>
+      </li>
+    </ol>
+  </li>
+  <li>파일
+    <ol>
+      <li>다운받기
+  <br /> wget http://stat-computing.org/dataexpo/2009/1987.csv.bz2</li>
+      <li>압축풀기
+  <br /> bzip2 -d 1987.csv.bz2</li>
+      <li>파일 내용 확인
+  <br /> head 1987.csv</li>
+      <li>첫 줄(제목)을 제거하기
+  <br /> sed -e ‘1d’ 1987.csv &gt; 1987_temp.csv</li>
+      <li>파일명 변경
+  <br /> mv 1987_temp.csv 1987.csv</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="정리">정리</h2>
+<ul>
+  <li>프로세스 : 현재 실행중인 프로그램
+    <ul>
+      <li>ps : 현재 실행 중인 프로세스의 상태확인</li>
+      <li>ps -e : 시스템에서 실행 중인 모든 프로세스의 정보 출력</li>
+      <li>ps -f : 프로세스에 대한 상세한 정보 출력</li>
+      <li>ps -a : 터미널에 실행한 프로세스의 정보 출력</li>
+      <li>ps -u : 프로세스 소유자, CPU와 메모리 사용량 등 상세한 정보 출력</li>
+      <li>ps -x : 시스템에서 실행 중인 모든 프로세스 정보 출력</li>
+      <li>ps -ef : 시스템에서 실행 중인 모든 프로세스의 상태에 대한 상세한 정보 출력</li>
+      <li>ps -aux : 터미널 창에서 프로세스의 상태에 대한 모든 정보 출력</li>
+    </ul>
+  </li>
+  <li>kill [시그널] [PID]: 프로세스 종류를 위해 지정한 시그널을 해당 프로세스에 전달
+    <ul>
+      <li>-9 : 프로세스 강제종료</li>
+      <li>&amp; : 백그라운드로 보낸 프로세스도 종료가능</li>
+    </ul>
+  </li>
+  <li>쉘 프로그래밍 기초문법
+    <ul>
+      <li>매개변수
+        <ul>
+          <li>자바의 main() 함수의 인자 개념</li>
+          <li>java Hello [한단어] [두단어]</li>
+        </ul>
+      </li>
+      <li>조건문
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="o">[</span>조건]
+  <span class="k">then
+  </span>true인 경우 실행 
+  <span class="k">else
+  </span>false인 경우 실행
+  <span class="k">fi</span>
+</code></pre></div>        </div>
+      </li>
+      <li>조건 연산자
+        <ul>
+          <li>-eq : 같다</li>
+          <li>-neq : 다르다</li>
+          <li>-gt : 크다</li>
+          <li>-ge : 크거나같다</li>
+          <li>-lt : 작다</li>
+          <li>-le : 작거나같다</li>
+          <li>! : 부정</li>
+        </ul>
+      </li>
+      <li>case문
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">case</span> 변수 <span class="k">in</span>
+  <span class="o">[</span>값1]<span class="p">)</span> <span class="o">[</span>명령문1]<span class="p">;;</span>
+  <span class="o">[</span>값2]<span class="p">)</span> <span class="o">[</span>명령문2]<span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span> 그외<span class="p">;;</span>
+  <span class="k">esac</span>
+</code></pre></div>        </div>
+      </li>
+      <li>파일관련 옵션
+        <ul>
+          <li>-f : file 이라면 true</li>
+          <li>-d : directory 이라면 true</li>
+          <li>-e : 존재한다면 true</li>
+          <li>-r : 읽기 가능하면 true</li>
+          <li>-w : 쓰기 가능하면 true</li>
+          <li>-x : 실행이 가능하면 true</li>
+          <li>-s : 크기가 0이 아니라면 true</li>
+        </ul>
+      </li>
+      <li>논리연산자
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="o">[</span>A] <span class="o">&amp;&amp;</span> <span class="o">[</span>B] 동일 <span class="k">if</span> <span class="o">[</span>A <span class="nt">-a</span> B]
+  <span class="k">if</span> <span class="o">[</span>A] <span class="o">||</span> <span class="o">[</span>B] 동일 <span class="k">if</span> <span class="o">[</span>A <span class="nt">-o</span> B]
+</code></pre></div>        </div>
+      </li>
+      <li>반복문
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">for</span> <span class="o">[</span>변수] <span class="k">in</span> <span class="o">[</span>값1] <span class="o">[</span>값2]
+  <span class="k">do</span> 
+  <span class="o">[</span>반복실행할 문장들]
+  <span class="k">done
+  for</span> <span class="o">[</span>변수] <span class="k">in</span> <span class="sb">`</span><span class="nb">seq </span>1 100<span class="sb">`</span>     <span class="c"># 주의! ``해주기</span>
+  <span class="k">do</span>
+  <span class="o">[</span>반복실행할 문장들]
+  <span class="k">done
+  for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span>1<span class="p">;</span>i&lt;<span class="o">=</span>5,i++<span class="o">))</span>
+  <span class="k">do</span>
+  <span class="o">[</span>반복실행할 문장들]
+  <span class="k">done</span>
+</code></pre></div>        </div>
+      </li>
+      <li>while문
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">while</span> <span class="o">[</span>조건]
+  <span class="k">do</span>
+  <span class="o">[</span>반복할 문장들]
+  <span class="k">done</span>
+</code></pre></div>        </div>
+        <ul>
+          <li>제어문 : break / continue / return</li>
+          <li>무한루프 걸릴 시 다른 터미널 열고
+            <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ps <span class="nt">-ef</span> | <span class="nb">grep </span>condi10.sh 찾은 후 <span class="nb">kill</span> <span class="nt">-9</span> <span class="o">[</span>pid]
+</code></pre></div>            </div>
+          </li>
+          <li>함수 : 역할별로 구분 / 반복구문</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

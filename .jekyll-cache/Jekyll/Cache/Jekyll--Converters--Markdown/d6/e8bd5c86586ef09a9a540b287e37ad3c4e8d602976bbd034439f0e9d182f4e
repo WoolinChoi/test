@@ -1,0 +1,258 @@
+I"5x<h1 id="operator"><a href="">operator</a></h1>
+
+<h2 id="incdec">IncDec</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 증가 감소 연산자 : ++, --
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex01_IncDec</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span><span class="o">=</span><span class="mi">5</span><span class="o">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">7</span><span class="o">;</span>
+<span class="c1">//		System.out.println("A=" + (a + 1) + ", B=" + (b + 1) ); // ()를 넣어준다. a = 6, b = 8</span>
+<span class="c1">//		a = a + 1;</span>
+<span class="c1">//		b = b - 1;</span>
+<span class="c1">//		System.out.println("A=" + a + ", B=" + b); // a = 6, b = 6</span>
+<span class="c1">//		a++;</span>
+<span class="c1">//		b--;</span>
+<span class="c1">//		System.out.println("A=" + a + ", B=" + b); // a = 7, b = 5		</span>
+<span class="c1">//		++a;</span>
+<span class="c1">//		--b;</span>
+<span class="c1">//		System.out.println("A=" + a + ", B=" + b); // a = 7, b = 5</span>
+<span class="c1">//		int result = ++a;</span>
+<span class="c1">//		System.out.println("Result=" + result + ", A=" + a); // result = 6, A = 6</span>
+<span class="c1">//		int result2 = a++;</span>
+<span class="c1">//		System.out.println("Result=" + result2 + ", A=" + a); // result = 6, A = 7</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A="</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span> <span class="o">+</span> <span class="s">", B="</span> <span class="o">+</span> <span class="o">--</span><span class="n">b</span><span class="o">);</span> <span class="c1">// A = 6, B = 6</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A="</span> <span class="o">+</span> <span class="n">a</span><span class="o">++</span> <span class="o">+</span> <span class="s">", B="</span> <span class="o">+</span> <span class="n">b</span><span class="o">--);</span> <span class="c1">// A = 6, B = 6</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A="</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">", B="</span> <span class="o">+</span> <span class="n">b</span><span class="o">);</span>   <span class="c1">// A = 7, B = 5	</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="not">Not</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * not : 결과를 반대로 하는 연산자
+ * 		- 일반논리(true/false) : !
+ * 		- 이진논리(비트의 값: 0/1) : ~
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex02_Not</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+			<span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span> <span class="c1">// false</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(!</span><span class="n">result</span><span class="o">);</span> <span class="c1">// true</span>
+			<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">15</span><span class="o">;</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(~</span><span class="n">a</span><span class="o">);</span> <span class="c1">// 음수, +(0)에서 이진논리로 인해서 -(1)이 된다.</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="arithmetic">Arithmetic</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 산술연산자 : *  /  %, +  -
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex03_Arithmetic</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 1. 숫자하나를 입력받기(Scanner - import java.util.*)</span>
+		<span class="c1">// 2. 홀수인지 짝수인지 연산하여 출력(% : 나머지 연산자)</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"숫자 하나 입력-&gt;"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">su</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">(</span> <span class="n">su</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"짝수"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"홀수"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="comparable">Comparable</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 비교연산자 : &gt;  &lt;  &gt;=  &lt;=, ==  !=
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex04_Comparable</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">100</span><span class="o">,</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">100</span><span class="o">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+		<span class="kt">double</span> <span class="n">avg</span> <span class="o">=</span> <span class="o">(</span><span class="kt">double</span><span class="o">)(</span><span class="n">k</span> <span class="o">+</span> <span class="n">e</span> <span class="o">+</span> <span class="n">m</span><span class="o">)</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"평균: "</span> <span class="o">+</span> <span class="n">avg</span><span class="o">);</span>
+		<span class="nc">String</span> <span class="n">score</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+<span class="c1">//		if(avg &gt;= 90) {</span>
+<span class="c1">//			System.out.println("A학점");</span>
+<span class="c1">//		}else if(avg &gt;= 80) {</span>
+<span class="c1">//			System.out.println("B학점");</span>
+<span class="c1">//		}else if(avg &gt;= 70) {</span>
+<span class="c1">//			System.out.println("C학점");</span>
+<span class="c1">//		}</span>
+		<span class="k">switch</span><span class="o">((</span><span class="kt">int</span><span class="o">)(</span><span class="n">avg</span> <span class="o">/</span> <span class="mi">10</span><span class="o">))</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">10</span><span class="o">:</span>
+		<span class="k">case</span> <span class="mi">9</span><span class="o">:</span> <span class="n">score</span> <span class="o">=</span> <span class="s">"A학점"</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">8</span><span class="o">:</span> <span class="n">score</span> <span class="o">=</span> <span class="s">"B학점"</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">7</span><span class="o">:</span> <span class="n">score</span> <span class="o">=</span> <span class="s">"C학점"</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">6</span><span class="o">:</span> <span class="n">score</span> <span class="o">=</span> <span class="s">"D학점"</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">default</span><span class="o">:</span> <span class="n">score</span> <span class="o">=</span> <span class="s">"F학점"</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"학점: "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="gennerallogical">GenneralLogical</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 논리연산자
+ * 	- 일반 논리(true/false) : &amp;&amp;  ||
+ * 	- 이진 논리(bit에 있는 1/0) : &amp;  |  ^
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex05_GenneralLogical</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>	
+		<span class="c1">// 문자 하나를 입력받아</span>
+		<span class="c1">// (1) 대문자인지 출력</span>
+		<span class="c1">// (2) 대문자인지 소문자인지 그외인지 출력</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"문자 하나 입력-&gt;"</span><span class="o">);</span>
+		<span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">next</span><span class="o">().</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="c1">// 기본형만 casting 된다.</span>
+<span class="c1">//		if(Character.isUpperCase(ch) == true) {</span>
+<span class="c1">//			System.out.println("대문자입니다.");</span>
+<span class="c1">//		}else if(Character.isLowerCase(ch) == true){</span>
+<span class="c1">//			System.out.println("소문자입니다.");</span>
+<span class="c1">//		}else {</span>
+<span class="c1">//			System.out.println("잘못입력했습니다.");</span>
+<span class="c1">//		}</span>
+		<span class="c1">// 문자 'A'보다 크거나 같고, 'Z'보다 작거나 같으면 =&gt; 대문자</span>
+		<span class="c1">// 그렇지않으면 대문자 아님</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">'A'</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">'Z'</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"대문자"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">'a'</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">'z'</span><span class="o">){</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"소문자"</span><span class="o">);</span>
+		<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"그 외"</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="cm">/*
+		int 성적 = 75;
+		char 태도 = 'A';
+		// 성적향상반 조건 - 80점이상이고 태도는 'A'이어야 함
+		if(성적 &gt;= 80 &amp;&amp; 태도 == 'A') {
+			System.out.println("성적향상반");
+		}
+		// 우등생 조건 - 성적은 80점이상이거나 태도는 'A'이면 가능
+		if(성적 &gt;= 80 || 태도 == 'A') {
+			System.out.println("성적향상반");
+		}
+		*/</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="binarylogical">BinaryLogical</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex06_BinaryLogical</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">15</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">and</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">or</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">xor</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">and</span><span class="o">);</span> <span class="c1">// 1010, 10</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">or</span><span class="o">);</span> <span class="c1">// 1111, 15</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">xor</span><span class="o">);</span> <span class="c1">// 0101, 5</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="shift">Shift</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * Shift : 모든 비트의 값을 이동하는 연산자
+ * 
+ * &gt;&gt; : 오른쪽이동
+ * &lt;&lt; : 왼쪽이동
+ * &gt;&gt;&gt; : 오른쪽이동(부호에 0)
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex07_Shift</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span> <span class="c1">// +(0), -(1)값은 유지된다.</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="o">);</span> <span class="c1">// 0001, 1</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="o">);</span> <span class="c1">// 1000, 8</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h2 id="shortcircuitlogic">ShortCircuitLogic</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 숏서킷로직 : 일반논리에 적용
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex08_ShortCircuitLogic</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">&amp;&amp;</span> <span class="o">++</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"조건만족"</span><span class="o">);</span> <span class="c1">// 출력여부, false</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A="</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// a=?, 3 </span>
+		<span class="k">if</span><span class="o">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">||</span> <span class="o">++</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"조건만족2"</span><span class="o">);</span> <span class="c1">// true</span>
+		<span class="o">}</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A="</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// a=?, 3</span>
+		<span class="cm">/*
+	    int a = -5;
+	    if ( ( a &gt; 0 ) &amp; ( ( ++a / 3 ) &gt; 0 ) ) {
+	           a++;
+	    }
+	    System.out.println( a );  // 일반논리였으면 -5, 이진논리를넣으면 -4
+		*/</span>
+		<span class="c1">// 우리가 생각하는대로 바꾸려면 일반논리자리에 이진논리를 넣는다.</span>
+		<span class="c1">// if(a &gt; 1 || ++a &gt; 3) =&gt; if(a &gt; 1 | ++a &gt; 3)</span>
+		<span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">-</span> <span class="mi">7</span> <span class="o">^</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">&amp;</span> <span class="mi">4</span><span class="o">;</span> <span class="c1">// 0111 7</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">z</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="samhang">Samhang</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 삼항연산자
+ * 		(조건)? A : B
+ * 		조건이 true이면 A 실행하고 false이면 B 실행한다.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex09_Samhang</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//		int score = 70;</span>
+<span class="c1">//		String result = (score &gt;= 80)? "합격" : "불합격";</span>
+<span class="c1">//		System.out.println(result);</span>
+		<span class="c1">// [문제] 두수를 입력받아 큰 수를 출력(삼항연산자 이용)</span>
+<span class="c1">//		Scanner input = new Scanner(System.in);</span>
+<span class="c1">//		System.out.print("첫번째 숫자=&gt;");</span>
+<span class="c1">//		int su = input.nextInt();</span>
+<span class="c1">//		System.out.print("두번째 숫자=&gt;");</span>
+<span class="c1">//		int su2 = input.nextInt();</span>
+<span class="c1">//		int max = (su &gt; su2)? su : su2;</span>
+<span class="c1">//		System.out.println("큰수: " + max);	</span>
+<span class="c1">//		[삼항연산자] 세 정수가 A, B, C가 주어진다. 이 때, 두번째로 큰 정수를 출력하는 프로그램을 작성하시오.</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"세 정수를 입력하시오"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+		<span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="o">((</span><span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">c</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="o">))?</span> 
+				<span class="n">b</span> <span class="o">:</span> <span class="o">((</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">c</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">c</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="n">b</span> <span class="o">&amp;&amp;</span> <span class="n">b</span> <span class="o">&gt;=</span> <span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="o">))?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">c</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"두번째 큰수: "</span> <span class="o">+</span> <span class="n">second</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="assignment">Assignment</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 대입연산잔 : = 
+ * 		- 축약대입연산자(산술/이진논리/쉬프트)
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ex10_Assignment</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>
+		<span class="n">a</span> <span class="o">+=</span> <span class="n">b</span><span class="o">;</span> <span class="c1">// a = a + b;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A= "</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// 17</span>
+		<span class="n">a</span> <span class="o">-=</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A= "</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// 10</span>
+		<span class="n">a</span> <span class="o">*=</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A= "</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// 70</span>
+		<span class="n">a</span> <span class="o">%=</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A= "</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// 0</span>
+		<span class="n">a</span> <span class="o">/=</span> <span class="n">b</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"A= "</span> <span class="o">+</span> <span class="n">a</span><span class="o">);</span> <span class="c1">// 0</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,52 @@
+I"�<h1 id="mvcsimple"><a href="">mvcSimple</a></h1>
+
+<h2 id="start">Start</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span><span class="nt">%&gt;</span>
+<span class="nt">&lt;%</span>
+	<span class="c1">// 변수를 프로젝트 명으로 잡음.</span>
+	<span class="nc">String</span> <span class="n">projectName</span> <span class="o">=</span> <span class="s">"/Jsp"</span><span class="o">;</span>
+<span class="nt">%&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>Start<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	기존 모델 1 방식으로 연결
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span><span class="n">projectName</span> <span class="nt">%&gt;</span><span class="s">/05_mvc_class/1_mvcSimple/simpleView.jsp"</span><span class="nt">&gt;</span>기존 방식<span class="nt">&lt;/a&gt;&lt;br/&gt;</span>
+	MVC 방식으로 연결
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span><span class="n">projectName</span><span class="nt">%&gt;</span><span class="s">/xxxx.simple"</span><span class="nt">&gt;</span>MVC 요청<span class="nt">&lt;/a&gt;&lt;br/&gt;</span>
+	MVC 방식으로 연결 2
+	<span class="c">&lt;!-- 쿼리 스트링 추가  --&gt;</span>
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span><span class="n">projectName</span><span class="nt">%&gt;</span><span class="s">/simple?type=first"</span><span class="nt">&gt;</span>MVC 요청2<span class="nt">&lt;/a&gt;&lt;br/&gt;</span> <span class="c">&lt;!-- 모든 요청이 SimpleControl 로 집중 --&gt;</span>
+	MVC 방식으로 연결 3
+	<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"</span><span class="nt">&lt;%=</span><span class="n">projectName</span><span class="nt">%&gt;</span><span class="s">/SimpleControl"</span><span class="nt">&gt;</span>MVC 요청3<span class="nt">&lt;/a&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="simpleview">SimpleView</h2>
+<div class="language-jsp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;%@ page </span><span class="na">language=</span><span class="s">"java"</span><span class="na"> contentType=</span><span class="s">"text/html; charset=UTF-8"</span><span class="na">
+    pageEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">%&gt;</span> 
+<span class="nt">&lt;%</span>
+	<span class="nc">Object</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getAttribute</span><span class="o">(</span><span class="s">"param"</span><span class="o">);</span>
+	<span class="nc">String</span> <span class="n">reqData</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameter</span><span class="o">(</span><span class="s">"type"</span><span class="o">);</span>
+<span class="nt">%&gt;</span>    
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+	<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=UTF-8"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;title&gt;</span>SimpleView<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;%=</span> <span class="n">obj</span> <span class="nt">%&gt;</span> <span class="nt">&lt;br/&gt;</span> <span class="nt">&lt;%=</span><span class="n">reqData</span> <span class="nt">%&gt;</span>
+	복잡하다고 지나친 좌절과 놀람은 금물입니다. <span class="nt">&lt;br/&gt;&lt;br/&gt;</span>
+	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"05_mvc_class/1_mvcSimple/imgs/sponge_1.JPG"</span><span class="nt">/&gt;&lt;br/&gt;&lt;br/&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+:ET

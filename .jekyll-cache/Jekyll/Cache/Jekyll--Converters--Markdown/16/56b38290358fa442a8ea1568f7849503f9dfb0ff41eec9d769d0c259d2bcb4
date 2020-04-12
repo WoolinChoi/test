@@ -1,0 +1,21 @@
+I"�<h1 id="innerclass"><a href="">innerclass</a></h1>
+
+<h2 id="innertest">InnerTest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Outer</span> <span class="o">{</span>
+	<span class="kd">static</span> <span class="kd">class</span> <span class="nc">Inner</span> <span class="o">{</span>
+		<span class="kd">static</span> <span class="kt">void</span> <span class="nf">najabara</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"호출해주세요"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">InnerTest</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//		Outer o = new Outer();</span>
+<span class="c1">//		Outer.Inner in = o.new Inner();</span>
+<span class="c1">//		Outer.Inner in = new Outer.Inner();</span>
+<span class="c1">//		in.najabara();</span>
+		<span class="nc">Outer</span><span class="o">.</span><span class="na">Inner</span><span class="o">.</span><span class="na">najabara</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

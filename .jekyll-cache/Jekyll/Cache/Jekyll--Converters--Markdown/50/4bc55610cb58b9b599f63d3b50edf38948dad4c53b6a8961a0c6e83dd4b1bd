@@ -1,0 +1,422 @@
+I"��<h1 id="form"><a href="">form</a></h1>
+
+<h2 id="post">Post</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"EUC-KR"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Post<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"http://dmaps.daum.net/map_js_init/postcode.v2.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="c1">// 본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.</span>
+    <span class="kd">function</span> <span class="nx">sample4_execDaumPostcode</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">new</span> <span class="nx">daum</span><span class="p">.</span><span class="nx">Postcode</span><span class="p">({</span>
+            <span class="na">oncomplete</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.</span>
+
+                <span class="c1">// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.</span>
+                <span class="c1">// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.</span>
+                <span class="kd">var</span> <span class="nx">roadAddr</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">roadAddress</span><span class="p">;</span> <span class="c1">// 도로명 주소 변수</span>
+                <span class="kd">var</span> <span class="nx">extraRoadAddr</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span> <span class="c1">// 참고 항목 변수</span>
+
+                <span class="c1">// 법정동명이 있을 경우 추가한다. (법정리는 제외)</span>
+                <span class="c1">// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">bname</span> <span class="o">!==</span> <span class="dl">''</span> <span class="o">&amp;&amp;</span> <span class="sr">/</span><span class="se">[</span><span class="sr">동|로|가</span><span class="se">]</span><span class="sr">$/g</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">bname</span><span class="p">)){</span>
+                    <span class="nx">extraRoadAddr</span> <span class="o">+=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">bname</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="c1">// 건물명이 있고, 공동주택일 경우 추가한다.</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">buildingName</span> <span class="o">!==</span> <span class="dl">''</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">apartment</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">Y</span><span class="dl">'</span><span class="p">){</span>
+                   <span class="nx">extraRoadAddr</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">extraRoadAddr</span> <span class="o">!==</span> <span class="dl">''</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">, </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">buildingName</span> <span class="p">:</span> <span class="nx">data</span><span class="p">.</span><span class="nx">buildingName</span><span class="p">);</span>
+                <span class="p">}</span>
+                <span class="c1">// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">extraRoadAddr</span> <span class="o">!==</span> <span class="dl">''</span><span class="p">){</span>
+                    <span class="nx">extraRoadAddr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1"> (</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">extraRoadAddr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">)</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="c1">// 우편번호와 주소 정보를 해당 필드에 넣는다.</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample4_postcode</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">zonecode</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample4_roadAddress</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">roadAddr</span><span class="p">;</span>
+                <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample4_jibunAddress</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">jibunAddress</span><span class="p">;</span>
+                
+                <span class="c1">// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">roadAddr</span> <span class="o">!==</span> <span class="dl">''</span><span class="p">){</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample4_extraAddress</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">extraRoadAddr</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">sample4_extraAddress</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="kd">var</span> <span class="nx">guideTextBox</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">guide</span><span class="dl">'</span><span class="p">);</span>
+                <span class="c1">// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">autoRoadAddress</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">expRoadAddr</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">autoRoadAddress</span> <span class="o">+</span> <span class="nx">extraRoadAddr</span><span class="p">;</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">(예상 도로명 주소 : </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">expRoadAddr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">)</span><span class="dl">'</span><span class="p">;</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">block</span><span class="dl">'</span><span class="p">;</span>
+
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">autoJibunAddress</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">expJibunAddr</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">autoJibunAddress</span><span class="p">;</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">(예상 지번 주소 : </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">expJibunAddr</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">)</span><span class="dl">'</span><span class="p">;</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">block</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+                    <span class="nx">guideTextBox</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">none</span><span class="dl">'</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}).</span><span class="nx">open</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"sample4_postcode"</span> <span class="na">placeholder=</span><span class="s">"우편번호"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">onclick=</span><span class="s">"sample4_execDaumPostcode()"</span> <span class="na">value=</span><span class="s">"우편번호 찾기"</span><span class="nt">&gt;&lt;br&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"sample4_roadAddress"</span> <span class="na">placeholder=</span><span class="s">"도로명주소"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"sample4_jibunAddress"</span> <span class="na">placeholder=</span><span class="s">"지번주소"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"guide"</span> <span class="na">style=</span><span class="s">"color:#999;display:none"</span><span class="nt">&gt;&lt;/span&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"sample4_detailAddress"</span> <span class="na">placeholder=</span><span class="s">"상세주소"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">id=</span><span class="s">"sample4_extraAddress"</span> <span class="na">placeholder=</span><span class="s">"참고항목"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="select">Select</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Select<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="c1">// select태그까지 변수를 잡아준다.</span>
+	<span class="kd">var</span> <span class="nx">mango</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">mango</span><span class="p">;</span>
+	<span class="kd">var</span> <span class="nx">avocado</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">avocado</span><span class="p">;</span>
+	
+	<span class="c1">// 같은 기능을 사용할 때는 축약형을 쓰지 않는다.</span>
+	<span class="nx">mango</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="nx">cal</span><span class="p">;</span>
+	<span class="nx">avocado</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="nx">cal</span><span class="p">;</span>
+	
+	<span class="kd">function</span> <span class="nx">cal</span><span class="p">(){</span>
+		<span class="c1">// value값은 total값에서 잡아준다.</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">total</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">mango</span><span class="p">.</span><span class="nx">value</span> <span class="o">*</span> <span class="mi">4000</span> <span class="o">+</span> <span class="nx">avocado</span><span class="p">.</span><span class="nx">value</span> <span class="o">*</span> <span class="mi">5000</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+주문서 <span class="nt">&lt;hr&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;table</span> <span class="na">border=</span><span class="s">'1'</span> <span class="nt">&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;th&gt;</span> 상품 <span class="nt">&lt;/th&gt;</span> <span class="nt">&lt;th&gt;</span> 단가 <span class="nt">&lt;/th&gt;</span> <span class="nt">&lt;th&gt;</span> 주문수량 <span class="nt">&lt;/th&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 망고 <span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;td&gt;</span> 4000원 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>
+				<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"mango"</span> <span class="nt">&gt;</span>
+					<span class="nt">&lt;option&gt;</span>0<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>1<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>2<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>3<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;/select&gt;</span> 뭉치
+			<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td&gt;</span> 아보카도 <span class="nt">&lt;/td&gt;</span> 
+			<span class="nt">&lt;td&gt;</span> 5000원 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;</span>
+				<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"avocado"</span> <span class="nt">&gt;</span>
+					<span class="nt">&lt;option&gt;</span>0<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>1<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>2<span class="nt">&lt;/option&gt;</span>
+					<span class="nt">&lt;option&gt;</span>3<span class="nt">&lt;/option&gt;</span>
+				<span class="nt">&lt;/select&gt;</span> 봉다리
+			<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+		<span class="nt">&lt;tr&gt;</span>
+			<span class="nt">&lt;td</span> <span class="na">colspan=</span><span class="s">2</span><span class="nt">&gt;</span> 합계 <span class="nt">&lt;/td&gt;</span>
+			<span class="nt">&lt;td&gt;&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"total"</span> <span class="na">size=</span><span class="s">6</span><span class="nt">&gt;</span>원<span class="nt">&lt;/td&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>		
+		<span class="nt">&lt;tr&gt;</span>
+		<span class="nt">&lt;/tr&gt;</span>
+	<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="select2">Select2</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Select2<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="kd">var</span> <span class="nx">upBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">up</span><span class="dl">'</span><span class="p">);</span> 
+	<span class="nx">upBtn</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="c1">// name은 form을 거쳐 찾는다.</span>
+		<span class="kd">var</span> <span class="nx">idx</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">play</span><span class="p">.</span><span class="nx">selectedIndex</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">optSel</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">play</span><span class="p">.</span><span class="nx">options</span><span class="p">;</span>
+		<span class="c1">// 옵션 값을 가져오기위해 text나 value를 사용한다.</span>
+		<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span><span class="p">].</span><span class="nx">text</span><span class="p">;</span>
+		
+		<span class="c1">// 선택한 옵션을 맞바꿔주기, 단 바뀐 값을 잡아주기위해 selected를 해준다.</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">idx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span><span class="p">].</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">text</span><span class="p">;</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">str</span><span class="p">;</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">selected</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">down</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">idx</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">play</span><span class="p">.</span><span class="nx">selectedIndex</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">optSel</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">.</span><span class="nx">play</span><span class="p">.</span><span class="nx">options</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span><span class="p">].</span><span class="nx">text</span><span class="p">;</span>
+		<span class="k">if</span><span class="p">(</span><span class="nx">idx</span> <span class="o">&lt;</span> <span class="nx">optSel</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">){</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span><span class="p">].</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">text</span><span class="p">;</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">str</span><span class="p">;</span>
+			<span class="nx">optSel</span><span class="p">[</span><span class="nx">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">selected</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+내가 제일 좋아하는 놀이 순서대로 한다면 <span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">"play"</span> <span class="na">size=</span><span class="s">"6"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;option</span> <span class="na">selected</span><span class="nt">&gt;</span> 숨쉬기 <span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;option&gt;</span> 밥먹기 <span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;option&gt;</span> 그냥있기 <span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;option&gt;</span> 잠자기 <span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;option&gt;</span> 술먹기 <span class="nt">&lt;/option&gt;</span>
+	<span class="nt">&lt;option&gt;</span> 멍때리기 <span class="nt">&lt;/option&gt;</span>
+<span class="nt">&lt;/select&gt;</span> <span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">id=</span><span class="s">'up'</span>	<span class="na">value=</span><span class="s">"▲"</span><span class="nt">&gt;&lt;br&gt;&lt;br&gt;</span>
+<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">id=</span><span class="s">'down'</span>	<span class="na">value=</span><span class="s">"▼"</span><span class="nt">&gt;&lt;br&gt;&lt;br&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span> 
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="calselect">CalSelect</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>CalSelect<span class="nt">&lt;/title&gt;</span>
+<span class="c">&lt;!--  1. 자바스크립트에서 select 태그에 option 값들을 추가하고 오늘 날짜로 지정한다.
+			1) 년도는 올해년도를 기준으로 -5 ~ +5 으로 option 값을 지정한다.
+			2) 월은 1~12월 지정한다.
+			3) 일을 해당 달에 맞는 1일부터 마지막날까지 지정한다.
+				[hint] Option 클래스 이용
+		
+		2. 년과 월을 변경할 때마다 해당되는 일이 마지막날이 변경되어야 한다.
+		
+		3. 오늘 날짜로 선택되어 있어야 한다.
+--&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="c1">//오늘 날짜 구하기</span>
+<span class="kd">var</span> <span class="nx">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">year</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">month</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">day</span> <span class="o">=</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getDay</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">lastDays</span> <span class="o">=</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">31</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">weeks</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">일</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">월</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">화</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">수</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">목</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">금</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">토</span><span class="dl">'</span><span class="p">];</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="kd">var</span> <span class="nx">frm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">frm</span><span class="p">;</span>
+	<span class="c1">// 년 구하기</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">year</span> <span class="o">-</span> <span class="mi">5</span><span class="p">;</span>  <span class="nx">j</span> <span class="o">&lt;=</span> <span class="nx">year</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+		<span class="nx">frm</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Option</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span> <span class="nx">j</span><span class="p">));</span>				<span class="c1">// 만들고 브라우저 F12에서 Elements로 확인 : Option(j)와 Option(j,j) 차이</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 월 구하기</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+		<span class="nx">frm</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Option</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span> <span class="nx">j</span><span class="p">));</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 일 구하기</span>
+	<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;=</span> <span class="nx">lastDays</span><span class="p">[</span><span class="nx">month</span><span class="p">];</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+		<span class="nx">frm</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Option</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span> <span class="nx">j</span><span class="p">));</span>
+	<span class="p">}</span>
+	
+	<span class="c1">// 오늘을 날짜로 화면을 지정</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">year</span><span class="p">;</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">month</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">date</span><span class="p">;</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">w</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">weeks</span><span class="p">[</span><span class="nx">day</span><span class="p">];</span>
+
+	<span class="c1">// 날짜를 지정하면 요일을 출력</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="nx">calDate</span><span class="p">;</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="nx">calDate</span><span class="p">;</span>
+	<span class="nx">frm</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">onchange</span> <span class="o">=</span> <span class="nx">calDate</span><span class="p">;</span>
+	<span class="kd">function</span> <span class="nx">calDate</span><span class="p">(){</span>
+		<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">frm</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">frm</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">frm</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+		<span class="kd">var</span> <span class="nx">newDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">y</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">m</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">/</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">d</span><span class="p">);</span>
+		<span class="nx">frm</span><span class="p">.</span><span class="nx">w</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">weeks</span><span class="p">[</span><span class="nx">newDate</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()];</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'frm'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">'y'</span><span class="nt">&gt;&lt;/select&gt;</span> 년
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">'m'</span><span class="nt">&gt;&lt;/select&gt;</span>월
+	<span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">'d'</span><span class="nt">&gt;&lt;/select&gt;</span>일
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'w'</span> <span class="na">size=</span><span class="s">'4'</span><span class="nt">&gt;</span>요일
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="day">Day</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Day<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="c1">// id는 getElementById로 바로 찾을 수 있다.</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+<span class="cm">/* 		
+		// 사용자 입력값으로 년, 월, 일을 지정(변경) 
+		var y = frm1.y.value;
+		var m = frm1.m.value;
+		var d = frm1.d.value;
+		var mydate = new Date(y + '/' + m + '/' + d); 
+*/</span>
+		<span class="kd">var</span> <span class="nx">mydate</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+		<span class="c1">// Date값은 set을 해주면 내가 입력한 값을 가져올 수 있다. 이때 document는 생략가능</span>
+		<span class="nx">mydate</span><span class="p">.</span><span class="nx">setFullYear</span><span class="p">(</span><span class="nx">frm1</span><span class="p">.</span><span class="nx">y</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+		<span class="nx">mydate</span><span class="p">.</span><span class="nx">setMonth</span><span class="p">(</span><span class="nx">frm1</span><span class="p">.</span><span class="nx">m</span><span class="p">.</span><span class="nx">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+		<span class="nx">mydate</span><span class="p">.</span><span class="nx">setDate</span><span class="p">(</span><span class="nx">frm1</span><span class="p">.</span><span class="nx">d</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+		
+		<span class="kd">var</span> <span class="nx">weeks</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="dl">'</span><span class="s1">일</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">월</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">화</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">수</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">목</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">금</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">토</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 		var weeks = ['일', '월', '화', '수', '목', '금', '토'];</span>
+		<span class="c1">// 값을 넣고싶으면 '원하는 갑위치 = 넣고싶은 값'을 해준다.</span>
+		<span class="nb">document</span><span class="p">.</span><span class="nx">frm1</span><span class="p">.</span><span class="nx">w</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">weeks</span><span class="p">[</span><span class="nx">mydate</span><span class="p">.</span><span class="nx">getDay</span><span class="p">()];</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+요일을 알아봅시다. <span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm1"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"y"</span> <span class="na">size=</span><span class="s">4</span><span class="nt">&gt;</span>년 
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"m"</span> <span class="na">size=</span><span class="s">2</span><span class="nt">&gt;</span>월
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"d"</span> <span class="na">size=</span><span class="s">2</span><span class="nt">&gt;</span>일
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">value=</span><span class="s">"☞"</span> <span class="na">id=</span><span class="s">"btn"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"w"</span> <span class="na">size=</span><span class="s">4</span><span class="nt">&gt;</span>요일입니다.
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;hr&gt;&lt;hr&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="formvar">FormVar</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>FormVar<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+<span class="c1">// 	document.myForm.txt0.value = '하하';</span>
+<span class="c1">// 	document.myForm['txt1'].value = '호호';</span>
+	<span class="c1">// 이벤트가 발생했을 때 네 곳의 input 태그에 '테이타' 글씨를 지정</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">btn</span><span class="dl">'</span><span class="p">).</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+		<span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+			<span class="nb">document</span><span class="p">.</span><span class="nx">myForm</span><span class="p">[</span><span class="dl">'</span><span class="s1">txt</span><span class="dl">'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">].</span><span class="nx">value</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">데이타</span><span class="dl">'</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+	<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">'myForm'</span><span class="nt">&gt;</span>
+		첫번째 :  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'txt0'</span><span class="nt">&gt;&lt;br/&gt;</span>
+		두번째 :  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'txt1'</span><span class="nt">&gt;&lt;br/&gt;</span>
+		세번째 :  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'txt2'</span><span class="nt">&gt;&lt;br/&gt;</span>
+		네번째 :  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'text'</span> <span class="na">name=</span><span class="s">'txt3'</span><span class="nt">&gt;&lt;br/&gt;</span>
+		<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">'button'</span> <span class="na">value=</span><span class="s">'값지정'</span>  <span class="na">id=</span><span class="s">'btn'</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="formcheck">FormCheck</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ko"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">'text/javascript'</span> <span class="na">src= </span><span class="s">'./js/formCheck.js'</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;title&gt;</span>FormCheck<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+아래의 폼을 완성하시렵니까<span class="nt">&lt;br&gt;&lt;br&gt;</span>
+<span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">"frm"</span> <span class="na">id=</span><span class="s">'frm'</span> <span class="na">method=</span><span class="s">'get'</span> <span class="na">action=</span><span class="s">"something.jsp"</span><span class="nt">&gt;</span> <span class="c">&lt;!-- method =&gt; get --&gt;</span>
+
+   <span class="c">&lt;!-- 이름 입력 텍스트 필드 추가(한글만 가능 2~5자 사이) --&gt;</span>
+   
+   <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">'name'</span><span class="nt">&gt;</span>이름<span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">'name'</span> <span class="na">pattern =</span><span class="s">"[ㄱ-힣]{2,5}"</span>  <span class="na">maxlength=</span><span class="s">"5"</span> <span class="na">placeholder =</span><span class="s">'이름'</span> <span class="na">required</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;br&gt;</span>
+   <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"nickname"</span><span class="nt">&gt;</span>별명<span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"nickname"</span> <span class="na">pattern=</span><span class="s">"[A-Za-z]{3,}"</span> <span class="na">maxlength=</span><span class="s">"10"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;br&gt;</span>
+      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"myemail"</span><span class="nt">&gt;</span>이메일<span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"email"</span> <span class="na">id=</span><span class="s">"myemail"</span> <span class="na">required</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;br&gt;</span>
+      <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"myage"</span><span class="nt">&gt;</span>나이<span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"number"</span> <span class="na">id=</span><span class="s">"myage"</span> <span class="na">min=</span><span class="s">"0"</span> <span class="na">max=</span><span class="s">"100"</span> <span class="na">step=</span><span class="s">"20"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;br&gt;</span>
+      
+   <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">'rule'</span><span class="nt">&gt;</span>약관<span class="nt">&lt;/label&gt;</span>
+      <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">'rule'</span> <span class="na">type=</span><span class="s">'checkbox'</span> <span class="nt">/&gt;</span>약관에 동의합니다
+      <span class="nt">&lt;br&gt;</span>
+   <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"눌려봐"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="formcheckjs">FormCheckJs</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">window</span><span class="o">.</span><span class="na">onload</span> <span class="o">=</span> <span class="n">function</span><span class="o">(){</span>
+	<span class="c1">// var inputs = document.querySelectorAll('input');</span>
+	<span class="c1">// var frm = document.getElementById('frm');</span>
+	<span class="c1">// var inputs = document.getElementsByTagName("input");</span>
+    <span class="kt">var</span> <span class="n">frm</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelector</span><span class="o">(</span><span class="err">'#</span><span class="n">frm</span><span class="err">'</span><span class="o">);</span>
+    <span class="kt">var</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="na">querySelectorAll</span><span class="o">(</span><span class="err">'</span><span class="n">input</span><span class="err">'</span><span class="o">);</span> 
+    <span class="kt">var</span> <span class="n">arr</span> <span class="o">=</span>  <span class="o">[</span><span class="err">'</span><span class="n">babo</span><span class="sc">','</span><span class="n">geni</span><span class="sc">','</span><span class="n">idiot</span><span class="sc">','</span><span class="n">gdb</span><span class="err">'</span><span class="o">];</span>
+      
+    <span class="c1">//submit,a태그의 역할을 제한하기 위해  </span>
+    <span class="n">frm</span><span class="o">.</span><span class="na">onsubmit</span> <span class="o">=</span> <span class="n">function</span><span class="o">(</span><span class="n">e</span><span class="o">){</span>    
+	    <span class="n">e</span><span class="o">.</span><span class="na">preventDefault</span><span class="o">();</span>
+	    <span class="c1">// e.stopPropagation(); </span>
+	    <span class="c1">// 윗단계 이벤트도 막아라</span>
+	    <span class="kt">var</span> <span class="n">rule</span> <span class="o">=</span> <span class="n">frm</span><span class="o">.</span><span class="na">rule</span><span class="o">;</span>
+	    <span class="kt">var</span> <span class="n">nickname</span> <span class="o">=</span> <span class="n">frm</span><span class="o">.</span><span class="na">nickname</span><span class="o">;</span>
+	    <span class="c1">// alert(rule.checked) </span>
+	    <span class="c1">// checked에서는 value말고 checked </span>
+	    <span class="c1">// T/F반환</span>
+	    <span class="k">if</span><span class="o">(!</span><span class="n">rule</span><span class="o">.</span><span class="na">checked</span><span class="o">){</span>
+	        <span class="n">alert</span><span class="o">(</span><span class="err">'</span><span class="n">동의해주세요</span><span class="err">'</span><span class="o">)</span>
+	        <span class="k">return</span><span class="o">;</span> <span class="c1">//끝내기</span>
+	    <span class="o">}</span>
+	    <span class="k">for</span><span class="o">(</span><span class="kt">var</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">arr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+	        <span class="k">if</span><span class="o">(!(</span><span class="n">inputs</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">value</span> <span class="o">==</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">])){</span>
+	           <span class="n">alert</span><span class="o">(</span><span class="err">'</span><span class="n">별명확인</span><span class="err">'</span><span class="o">);</span>
+	           <span class="k">return</span><span class="o">;</span>
+	        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+	           <span class="k">break</span><span class="o">;</span>
+	        <span class="o">}</span>
+	    <span class="o">}</span>
+	    <span class="n">frm</span><span class="o">.</span><span class="na">submit</span><span class="o">();</span> <span class="c1">// 여기서 한번 더 불러줘야 넘어감</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET

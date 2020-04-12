@@ -1,0 +1,340 @@
+I";�<h1 id="inherit"><a href="">inherit</a></h1>
+
+<h2 id="test">Test</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * ***** overriding
+ *     - 부모자식간의 메소드명이 동일
+ *     - 인자동일/리턴형동일
+ *     - 접근지정자는 같거나 크지만 헷갈리지않게 같게한다.
+ *     * 부모변수에서 자식의 멤버 호출
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 1. 클래스 생성과 메소드</span>
+		<span class="nc">Umma</span> <span class="n">u</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Umma</span><span class="o">();</span>
+		<span class="n">u</span><span class="o">.</span><span class="na">gene</span><span class="o">();</span>
+		<span class="n">u</span><span class="o">.</span><span class="na">job</span><span class="o">();</span>
+		<span class="c1">// u.study();</span>
+		<span class="nc">Ddal</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Ddal</span><span class="o">();</span>
+		<span class="n">d</span><span class="o">.</span><span class="na">gene</span><span class="o">();</span>
+		<span class="n">d</span><span class="o">.</span><span class="na">study</span><span class="o">();</span>
+		<span class="n">d</span><span class="o">.</span><span class="na">job</span><span class="o">();</span>
+		<span class="c1">// 2. 부모 변수의 자식 객체 생성</span>
+		<span class="nc">Ddal</span> <span class="n">dd</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Umma</span><span class="o">();</span>  
+		<span class="nc">Umma</span> <span class="n">uu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Ddal</span><span class="o">();</span>
+		<span class="c1">// Ddal에는 Umma의 변수가 생성될 수있다.</span>
+		<span class="n">uu</span><span class="o">.</span><span class="na">gene</span><span class="o">();</span> <span class="c1">// *****</span>
+		<span class="n">uu</span><span class="o">.</span><span class="na">job</span><span class="o">();</span>
+		<span class="c1">// uu.study();</span>
+		<span class="c1">// 3. 형변환(casting) - 상속관계에서만 가능</span>
+		<span class="c1">// Umma u = new Umma();</span>
+		<span class="c1">// Ddal d = (Ddal)u;</span>
+		<span class="nc">Ddal</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Ddal</span><span class="o">();</span>
+		<span class="nc">Umma</span> <span class="n">u</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Umma</span><span class="o">)</span><span class="n">d</span><span class="o">;</span>
+		<span class="n">d</span><span class="o">.</span><span class="na">study</span><span class="o">();</span>
+		<span class="nc">Umma</span> <span class="n">uu</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Ddal</span><span class="o">();</span>
+		<span class="n">uu</span><span class="o">.</span><span class="na">gene</span><span class="o">();</span>
+		<span class="n">uu</span><span class="o">.</span><span class="na">job</span><span class="o">();</span>
+		<span class="nc">Ddal</span> <span class="n">dd</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Ddal</span><span class="o">)</span><span class="n">uu</span><span class="o">;</span>
+		<span class="n">dd</span><span class="o">.</span><span class="na">study</span><span class="o">();</span>
+		<span class="c1">// 4. instanceof 연산자</span>
+		<span class="nc">Ddal</span> <span class="n">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Ddal</span><span class="o">();</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">d</span> <span class="k">instanceof</span> <span class="nc">Ddal</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// d가 Ddal의 속하니?</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Ddal 객체임"</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">d</span> <span class="k">instanceof</span> <span class="nc">Umma</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// d가 Umma의 속하니?</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Umma 객체임"</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">if</span><span class="o">(</span><span class="n">d</span> <span class="k">instanceof</span> <span class="nc">Object</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// d가 object의 속하니?</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Object 객체임"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="umma-extends-object">Umma extends Object</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Umma</span> <span class="kd">extends</span> <span class="nc">Object</span> <span class="o">{</span> <span class="c1">// Object 자동 생성</span>
+	<span class="kd">public</span> <span class="nf">Umma</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"부모생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">gene</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"부모는 부모다"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">job</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"엄마는 대장"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h2 id="ddal-extends-umma">Ddal extends Umma</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// *** 상속 관계 : 한번만 허용하고 서로 허용은 안된다.</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Ddal</span> <span class="kd">extends</span> <span class="nc">Umma</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="nf">Ddal</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"자식생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">gene</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"자식은 자식이다"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">study</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"딸은 학생"</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="hasatest">HasATest</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HasATest</span> <span class="o">{</span>
+	<span class="nc">HasATest</span><span class="o">()</span> <span class="o">{</span>
+		<span class="c1">// has - a</span>
+		<span class="nc">Frame</span> <span class="n">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Frame</span><span class="o">(</span><span class="s">"나의 첫 화면"</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+		<span class="n">f</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">HasATest</span> <span class="n">test</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HasATest</span><span class="o">();</span>	
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="isatest-extends-frame">IsATest extends Frame</h2>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.awt.Frame</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IsATest</span> <span class="kd">extends</span> <span class="nc">Frame</span><span class="o">{</span>
+	<span class="nc">IsATest</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">setSize</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">400</span><span class="o">);</span>
+		<span class="n">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">IsATest</span> <span class="n">test</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">IsATest</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="연습">연습</h2>
+<p>[Main]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">h_inherit</span><span class="n">연습</span><span class="o">.</span><span class="na">sub</span><span class="o">.</span><span class="na">Item</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">//		Book b = new Book();</span>
+<span class="c1">//		b.output();</span>
+		<span class="nc">Item</span> <span class="n">i</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+		<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"항목을 선택하세요-&gt;(1.Book 2.Dvd 3.Cd)"</span><span class="o">);</span>
+		<span class="kt">int</span> <span class="n">sel</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+<span class="c1">//		int sel = 2; // 입력값</span>
+		<span class="k">switch</span><span class="o">(</span><span class="n">sel</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Book</span><span class="o">(</span><span class="s">"0001"</span><span class="o">,</span> <span class="s">"책"</span><span class="o">,</span> <span class="s">"아무개"</span><span class="o">,</span> <span class="s">"엔코아"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Dvd</span><span class="o">(</span><span class="s">"0001"</span><span class="o">,</span> <span class="s">"영화"</span><span class="o">,</span> <span class="s">"아무개"</span><span class="o">,</span> <span class="s">"엔코아 "</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Cd</span><span class="o">(</span><span class="s">"0001"</span><span class="o">,</span> <span class="s">"노래"</span><span class="o">,</span> <span class="s">"아무개"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+		<span class="n">i</span><span class="o">.</span><span class="na">output</span><span class="o">();</span>		
+<span class="c1">//		Book b2 = new Book("0001", "자바", "아무개", "엔코아 \n");</span>
+<span class="c1">//		b2.output();</span>
+<span class="c1">//		Dvd d = new Dvd("0001", "파이썬", "아무개", "엔코아 \n");</span>
+<span class="c1">//		d.output();</span>
+<span class="c1">//		Cd c = new Cd("0001", "씨", "아무개 \n");</span>
+<span class="c1">//		c.output();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Item]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 부모클래스</span>
+<span class="kn">package</span> <span class="nn">h_inherit</span><span class="n">연습</span><span class="o">.</span><span class="na">sub</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Item</span> <span class="o">{</span>
+	<span class="kd">protected</span> <span class="nc">String</span> <span class="n">no</span><span class="o">;</span>
+	<span class="kd">protected</span> <span class="nc">String</span> <span class="n">title</span><span class="o">;</span>
+	<span class="nc">Item</span><span class="o">(){</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Item 기본생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="nf">Item</span><span class="o">(</span><span class="nc">String</span> <span class="n">no</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">){</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Item 인자생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">()</span> <span class="o">{</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Book extends Item]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h_inherit</span><span class="n">연습</span><span class="o">.</span><span class="na">sub</span><span class="o">.</span><span class="na">Item</span><span class="o">;</span>
+<span class="c1">// 자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="kd">extends</span> <span class="nc">Item</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">writer</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">publisher</span><span class="o">;</span>
+	<span class="nc">Book</span><span class="o">(</span><span class="nc">String</span> <span class="n">no</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="nc">String</span> <span class="n">writer</span><span class="o">,</span> <span class="nc">String</span> <span class="n">publisher</span><span class="o">){</span>
+        <span class="c1">// 자식 멤버로 들어가는건 this이고 부모 멤버로 들어가는건 super이다.</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">no</span><span class="o">,</span> <span class="n">title</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">writer</span> <span class="o">=</span> <span class="n">writer</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">publisher</span> <span class="o">=</span> <span class="n">publisher</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Book 인자생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"책번호: "</span> <span class="o">+</span> <span class="n">no</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"책제목: "</span> <span class="o">+</span> <span class="n">title</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"작가: "</span> <span class="o">+</span> <span class="n">writer</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"출판사: "</span> <span class="o">+</span> <span class="n">publisher</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Cd extends Item]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h_inherit</span><span class="n">연습</span><span class="o">.</span><span class="na">sub</span><span class="o">.</span><span class="na">Item</span><span class="o">;</span>
+<span class="c1">// 자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Cd</span> <span class="kd">extends</span> <span class="nc">Item</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">singer</span><span class="o">;</span>
+	<span class="nc">Cd</span><span class="o">(</span><span class="nc">String</span> <span class="n">no</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="nc">String</span> <span class="n">singer</span><span class="o">){</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">no</span><span class="o">,</span> <span class="n">title</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">singer</span> <span class="o">=</span> <span class="n">singer</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Cd 인자생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"책번호: "</span> <span class="o">+</span> <span class="n">no</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"책제목: "</span> <span class="o">+</span> <span class="n">title</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"가수: "</span> <span class="o">+</span> <span class="n">singer</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Dvd extends Item]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">h_inherit</span><span class="n">연습</span><span class="o">.</span><span class="na">sub</span><span class="o">.</span><span class="na">Item</span><span class="o">;</span>
+<span class="c1">// 자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Dvd</span> <span class="kd">extends</span> <span class="nc">Item</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">actor</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">director</span><span class="o">;</span>
+	<span class="nc">Dvd</span><span class="o">(</span><span class="nc">String</span> <span class="n">no</span><span class="o">,</span> <span class="nc">String</span> <span class="n">title</span><span class="o">,</span> <span class="nc">String</span> <span class="n">actor</span><span class="o">,</span> <span class="nc">String</span> <span class="n">director</span><span class="o">){</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">no</span><span class="o">,</span> <span class="n">title</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">no</span> <span class="o">=</span> <span class="n">no</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">actor</span> <span class="o">=</span> <span class="n">actor</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">director</span> <span class="o">=</span> <span class="n">director</span><span class="o">;</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Dvd 인자생성자"</span><span class="o">);</span>
+	<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">()</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"영화번호: "</span> <span class="o">+</span> <span class="n">no</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"영화제목: "</span> <span class="o">+</span> <span class="n">title</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"배우: "</span> <span class="o">+</span> <span class="n">actor</span><span class="o">);</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"감독: "</span> <span class="o">+</span> <span class="n">director</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="연습2">연습2</h2>
+<p>[Main]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span> 
+			<span class="nc">Lan</span> <span class="n">l</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+			<span class="nc">Scanner</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"언어를 선택하세요-&gt;(1.한국어 2.영어 3.일본어)"</span><span class="o">);</span>
+			<span class="kt">int</span> <span class="n">sel</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"메세지를 선택하세요-&gt;(1.인사말 2.자기소개말 3.하고픈말)"</span><span class="o">);</span>
+			<span class="kt">int</span> <span class="n">sel2</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+			<span class="k">switch</span><span class="o">(</span><span class="n">sel</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Kor</span><span class="o">(</span><span class="s">"안녕하세요"</span><span class="o">,</span> <span class="s">"나는홍길동입니다"</span><span class="o">,</span> <span class="s">"감사합니다"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Eng</span><span class="o">(</span><span class="s">"헬로우"</span><span class="o">,</span> <span class="s">"아임홍길동"</span><span class="o">,</span> <span class="s">"땡큐"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="n">l</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Jap</span><span class="o">(</span><span class="s">"오하요"</span><span class="o">,</span> <span class="s">"와따시와홍길동"</span><span class="o">,</span> <span class="s">"아리가또"</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span>		
+			<span class="n">l</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">sel2</span><span class="o">);</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"다시하겠습니까?(y/n)"</span><span class="o">);</span>
+			<span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">next</span><span class="o">().</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+			<span class="k">if</span><span class="o">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">'n'</span><span class="o">)</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"종료합니다"</span><span class="o">);</span>
+				<span class="k">break</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">'y'</span><span class="o">){</span>
+				<span class="k">continue</span><span class="o">;</span>
+			<span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+				<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"다시입력하세요"</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Lan]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//부모클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Lan</span> <span class="o">{</span>
+	<span class="nc">String</span> <span class="n">greeting</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">introduction</span><span class="o">;</span>
+	<span class="nc">String</span> <span class="n">say</span><span class="o">;</span>
+	<span class="nc">Lan</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="nc">Lan</span><span class="o">(</span><span class="nc">String</span> <span class="n">greeting</span><span class="o">,</span> <span class="nc">String</span> <span class="n">introduction</span><span class="o">,</span> <span class="nc">String</span> <span class="n">say</span><span class="o">){</span>
+	<span class="k">this</span><span class="o">.</span><span class="na">greeting</span> <span class="o">=</span> <span class="n">greeting</span><span class="o">;</span>
+	<span class="k">this</span><span class="o">.</span><span class="na">introduction</span> <span class="o">=</span> <span class="n">introduction</span><span class="o">;</span>
+	<span class="k">this</span><span class="o">.</span><span class="na">say</span> <span class="o">=</span> <span class="n">say</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel2</span><span class="o">)</span> <span class="o">{</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Kor extends Lan]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Kor</span> <span class="kd">extends</span> <span class="nc">Lan</span> <span class="o">{</span>
+	<span class="nc">Kor</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="nc">Kor</span><span class="o">(</span><span class="nc">String</span> <span class="n">greeting</span><span class="o">,</span> <span class="nc">String</span> <span class="n">introduction</span><span class="o">,</span> <span class="nc">String</span> <span class="n">say</span><span class="o">){</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">greeting</span><span class="o">,</span> <span class="n">introduction</span><span class="o">,</span> <span class="n">say</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">greeting</span> <span class="o">=</span> <span class="n">greeting</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">introduction</span> <span class="o">=</span> <span class="n">introduction</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">say</span> <span class="o">=</span> <span class="n">say</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel2</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">sel2</span><span class="o">;</span>
+		<span class="k">switch</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">1</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">greeting</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">2</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">introduction</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">3</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">say</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Eng extends Lan]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Eng</span> <span class="kd">extends</span> <span class="nc">Lan</span> <span class="o">{</span>
+	<span class="nc">Eng</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="nc">Eng</span><span class="o">(</span><span class="nc">String</span> <span class="n">greeting</span><span class="o">,</span> <span class="nc">String</span> <span class="n">introduction</span><span class="o">,</span> <span class="nc">String</span> <span class="n">say</span><span class="o">){</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">greeting</span><span class="o">,</span> <span class="n">introduction</span><span class="o">,</span> <span class="n">say</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">greeting</span> <span class="o">=</span> <span class="n">greeting</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">introduction</span> <span class="o">=</span> <span class="n">introduction</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">say</span> <span class="o">=</span> <span class="n">say</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel2</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">sel2</span><span class="o">;</span>
+		<span class="k">switch</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">1</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">greeting</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">2</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">introduction</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">3</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">say</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>[Jap extends Lan]</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//자식클래스</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Jap</span> <span class="kd">extends</span> <span class="nc">Lan</span> <span class="o">{</span>
+	<span class="nc">Jap</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="nc">Jap</span><span class="o">(</span><span class="nc">String</span> <span class="n">greeting</span><span class="o">,</span> <span class="nc">String</span> <span class="n">introduction</span><span class="o">,</span> <span class="nc">String</span> <span class="n">say</span><span class="o">){</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">greeting</span><span class="o">,</span> <span class="n">introduction</span><span class="o">,</span> <span class="n">say</span><span class="o">);</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">greeting</span> <span class="o">=</span> <span class="n">greeting</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">introduction</span> <span class="o">=</span> <span class="n">introduction</span><span class="o">;</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">say</span> <span class="o">=</span> <span class="n">say</span><span class="o">;</span>
+	<span class="o">}</span>	
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">output</span><span class="o">(</span><span class="kt">int</span> <span class="n">sel2</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">sel2</span><span class="o">;</span>
+		<span class="k">switch</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">case</span> <span class="mi">1</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">greeting</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">2</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">introduction</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="k">case</span> <span class="mi">3</span> <span class="o">:</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">say</span><span class="o">);</span> <span class="k">break</span><span class="o">;</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+:ET
